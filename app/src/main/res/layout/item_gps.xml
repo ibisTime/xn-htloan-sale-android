@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/gray" />
+
+    <com.cdkj.wzcd.view.MyNormalLayout
+        android:id="@+id/mnl_user_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:txt_normal_content="状态"
+        app:txt_normal_title="申领人">
+
+    </com.cdkj.wzcd.view.MyNormalLayout>
+
+    <com.cdkj.wzcd.view.MyNormalLayout
+        android:id="@+id/mnl_company"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:txt_normal_title="所属公司">
+
+    </com.cdkj.wzcd.view.MyNormalLayout>
+
+    <com.cdkj.wzcd.view.MyNormalLayout
+        android:id="@+id/mnl_number_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:txt_normal_content="申请时间"
+        app:txt_normal_title="申领个数">
+
+    </com.cdkj.wzcd.view.MyNormalLayout>
+
+</LinearLayout>

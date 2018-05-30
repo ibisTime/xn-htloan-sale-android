@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/gray" />
+
+
+    <com.cdkj.wzcd.view.MyNormalLayout
+        android:id="@+id/mnl_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:txt_normal_title="业务编号">
+
+    </com.cdkj.wzcd.view.MyNormalLayout>
+
+    <com.cdkj.wzcd.view.MyNormalLayout
+        android:id="@+id/mnl_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:txt_normal_title="客户姓名">
+
+    </com.cdkj.wzcd.view.MyNormalLayout>
+
+    <com.cdkj.wzcd.view.MyNormalLayout
+        android:id="@+id/mnl_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:txt_normal_title="快递单号">
+
+    </com.cdkj.wzcd.view.MyNormalLayout>
+
+
+    <TextView
+        android:id="@+id/tv_mesg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:textColor="@color/text_666"
+        tools:text="银行放款:业务团队车辆落户--业务袋后审核材料" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_send"
+            android:layout_width="wrap_content"
+            android:layout_height="30sp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/btn_check_bg"
+            android:text="发件"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_receive_and_check"
+            android:layout_width="wrap_content"
+            android:layout_height="30sp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/btn_check_bg"
+            android:text="收件并审核"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+
+    </LinearLayout>
+</LinearLayout>

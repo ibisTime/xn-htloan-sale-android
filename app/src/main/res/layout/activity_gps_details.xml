@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.cdkj.wzcd.module.cartool.gps.GpsActivity">
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_normal_title="状态">
+
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_normal_title="申请个数">
+
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_normal_title="申请说明">
+
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="GPS列表"
+            android:textSize="17sp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+</layout>

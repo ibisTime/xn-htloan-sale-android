@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.cdkj.wzcd.module.datatransfer.SendAndExamineActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="客户姓名"></com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="业务编号"></com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="贷款银行"></com.cdkj.wzcd.view.MyNormalLayout>
+
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="贷款金额"></com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="寄送节点"></com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="参考材料清单"></com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="寄送材料清单"></com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="寄送方式"></com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="快递公司"></com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="快递单号"></com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="发货时间"></com.cdkj.wzcd.view.MyNormalLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:background="@null"
+                android:hint="备注"
+                android:padding="5dp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+
+
+                <Button
+
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_check_bg"
+                    android:text="收件并审核通过"
+                    android:textColor="@color/white" />
+
+                <Button
+
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_check_bg"
+                    android:text="收件待补件"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</layout>

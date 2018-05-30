@@ -3,28 +3,40 @@
     package="com.cdkj.wzcd">
 
     <application
-        android:name="com.cdkj.wzcd.MyApplication"
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name="com.cdkj.wzcd.SplashActivity">
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".module.business.zxdc.BssZxdcListActivity" />
         <activity android:name=".module.business.zxdc.ZxLaunchActivity" />
         <activity android:name=".module.user.SignInActivity" />
-
+        <activity android:name=".module.business.cllh.CllhListActivity" />
+        <activity android:name=".module.business.cllh.CllhInputMessageActivity" />
+        <activity android:name=".module.business.cldy.BssCldyListActivity" />
+        <activity android:name=".module.business.cldy.CldyInputMessageActivity" />
+        <activity android:name=".module.datatransfer.DataTransferActivity" />
+        <activity android:name=".module.datatransfer.SendActivity" />
+        <activity android:name=".module.datatransfer.SendAndExamineActivity" />
+        <activity android:name=".module.cartool.uservoid.UserToVoidActivity" />
+        <activity android:name=".module.cartool.uservoid.BlankOutActivity" />
+        <activity android:name=".module.cartool.uservoid.UserToVoidDetailsActivity" />
+        <activity android:name=".module.cartool.gps.GpsActivity" />
+        <activity android:name=".module.cartool.gps.GpsRequestActivity" />
+        <activity android:name=".module.cartool.gps.GpsDetailsActivity" />
+        <activity android:name=".module.cartool.history.HistoryUserActivity" />
+        <activity android:name=".module.cartool.history.HistoryUserDetailsActivity" />
+        <activity android:name=".module.cartool.history.RepaymentListActivity"></activity>
     </application>
 
 </manifest>
