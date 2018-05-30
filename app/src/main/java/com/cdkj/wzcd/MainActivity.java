@@ -15,6 +15,9 @@ import com.cdkj.wzcd.module.cartool.gps.GpsActivity;
 import com.cdkj.wzcd.module.cartool.history.HistoryUserActivity;
 import com.cdkj.wzcd.module.cartool.uservoid.UserToVoidActivity;
 import com.cdkj.wzcd.module.datatransfer.DataTransferActivity;
+import com.cdkj.wzcd.module.business.zxdc.face_view.FaceInterviewActivity;
+import com.cdkj.wzcd.module.business.zxdc.gps_install.GPSInstallListActivity;
+import com.cdkj.wzcd.module.business.zxdc.join_approval.JoinApplyActivity;
 
 public class MainActivity extends AbsBaseLoadActivity {
 
@@ -49,6 +52,21 @@ public class MainActivity extends AbsBaseLoadActivity {
     private void initListener() {
         mBinding.mySrZxdc.setOnClickListener(view -> {
             BssZxdcListActivity.open(this);
+        });
+
+        //准入申请
+        mBinding.mySrZrsq.setOnClickListener(v -> {
+            JoinApplyActivity.open(this);
+        });
+
+        //面签
+        mBinding.mySrMq.setOnClickListener(v -> {
+            FaceInterviewActivity.open(this);
+        });
+
+        //gps 安装
+        mBinding.mySrSpsaz.setOnClickListener(v -> {
+            GPSInstallListActivity.open(this);
         });
         mBinding.mySrCllh.setOnClickListener(view -> {
             //车辆落户
