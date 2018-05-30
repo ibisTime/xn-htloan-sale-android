@@ -26,7 +26,6 @@ public class MyApplyListFragment extends AbsRefreshListFragment {
         fragment.setArguments(bundle);
         return fragment;
     }
-
     @Override
     protected void lazyLoad() {
 
