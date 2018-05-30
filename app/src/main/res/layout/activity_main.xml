@@ -95,6 +95,7 @@
 
                         <TextView
                             android:id="@+id/tv_level"
+                            android:text="[业务员]"
                             android:layout_marginLeft="2dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -261,13 +262,10 @@
                     </com.cdkj.wzcd.view.MyTitleBarLayout>
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:weightSum="3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-
-
-
-
 
                         <com.cdkj.wzcd.view.MySquareRowLayout
                             android:id="@+id/mySr_fpbpp"

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.cdkj.baselibrary.activitys.ImageSelectActivity;
+import com.cdkj.baselibrary.utils.ImgUtils;
+import com.cdkj.baselibrary.utils.ToastUtil;
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.databinding.LayoutMyImageBinding;
 
@@ -23,14 +26,20 @@ import com.cdkj.wzcd.databinding.LayoutMyImageBinding;
 public class MyImageLayout extends LinearLayout {
 
     private Context context;
-    private Activity mActivity;
     private LayoutMyImageBinding mBinding;
+
+    private Activity mActivity;
+    private int mRequestCode;
+    private int mRightRequestCode;
 
     private String txtHint;
     private String txtTitle;
     private boolean isSingle;
 
     private String txtHintRight;
+
+    private String FlImgUrl;
+    private String FlImgRightUrl;
 
     public MyImageLayout(Context context) {
         this(context, null);
@@ -53,10 +62,10 @@ public class MyImageLayout extends LinearLayout {
         typedArray.recycle();
 
         init(context);
-        setData();
+        setActivity();
     }
 
-    private void setData() {
+    private void setActivity() {
         mBinding.tvTitle.setText(txtTitle);
         mBinding.tvHint.setHint(txtHint);
 
@@ -74,39 +83,79 @@ public class MyImageLayout extends LinearLayout {
         initListener();
     }
 
-    public void setData(Activity activity){
+    public void setActivity(Activity activity, int requestCode, int rightRequestCode){
         mActivity = activity;
+        mRequestCode = requestCode;
+        mRightRequestCode = rightRequestCode;
     }
 
     private void initListener() {
         mBinding.flImg.setOnClickListener(view -> {
 
-            ImageSelectActivity.launch(mActivity, formatViewId(mBinding.flImg), false);
+            if (mActivity == null)
+                ToastUtil.show(context, "请先setActivity");
+
+            ImageSelectActivity.launch(mActivity, mRequestCode, false);
 
         });
 
         mBinding.flImgRight.setOnClickListener(view -> {
 
-            // 处理ViewId 不能为负值,也不能大于16位bit值65536
-            String str = mBinding.flImgRight.getId()+"";
-            String id = str.substring(str.length()-5, str.length());
+            if (mActivity == null)
+                ToastUtil.show(context, "请先setActivity");
 
-            ImageSelectActivity.launch(mActivity, formatViewId(mBinding.flImgRight), false);
+            ImageSelectActivity.launch(mActivity, mRightRequestCode, false);
 
         });
     }
 
-    public int getFlImgViewId(){
+    public int getRequestCode(){
+        return mRequestCode;
+    }
 
-        return formatViewId(mBinding.flImg);
+    public int getRightRequestCode(){
+        return mRightRequestCode;
+    }
+
+    public String getFlImgUrl(){
+        if (TextUtils.isEmpty(FlImgUrl)){
+            ToastUtil.show(context, "请上传"+mBinding.tvHint.getHint().toString());
+            return null;
+        }
+
+        return FlImgUrl;
+    }
+
+    public String getFlImgRightUrl(){
+        if (TextUtils.isEmpty(FlImgUrl)){
+            ToastUtil.show(context, "请上传"+mBinding.tvHintRight.getHint().toString());
+            return null;
+        }
+
+        return FlImgRightUrl;
+    }
+
+    public void setFlImgImageView(String url){
+        FlImgUrl = url;
+        ImgUtils.loadQiniuImg(mActivity, FlImgUrl, mBinding.ivImg);
+
+        mBinding.ivHint.setImageResource(R.mipmap.modifi);
+        mBinding.tvHint.setText("点击修改");
+        mBinding.tvHint.setTextColor(ContextCompat.getColor(mActivity, R.color.white));
     }
 
     public ImageView getFlImgImageView(){
         return mBinding.ivImg;
     }
 
-    public int getFlImgRithtViewId(){
-        return formatViewId(mBinding.flImgRight);
+
+    public void setFlImgRightImageView(String url){
+        FlImgRightUrl = url;
+        ImgUtils.loadQiniuImg(mActivity, FlImgRightUrl, mBinding.ivImgRight);
+
+        mBinding.ivHintRight.setImageResource(R.mipmap.modifi);
+        mBinding.tvHintRight.setText("点击修改");
+        mBinding.tvHintRight.setTextColor(ContextCompat.getColor(mActivity, R.color.white));
     }
 
     public ImageView getFlImgRightImageView(){
@@ -119,9 +168,12 @@ public class MyImageLayout extends LinearLayout {
         int id = Integer.parseInt(str.substring(str.length()-5, str.length()));
 
         if (id > 65536){
-            id = id - (100000 - 65536);
+            id = id - 65536;
         }
 
         return id;
     }
+
+
+
 }

@@ -28,6 +28,13 @@
     <declare-styleable name="MyInputHorizontalLayout">
         <attr name="txt_input_title" format="string"></attr>
         <attr name="txt_input_hint" format="string"></attr>
+        <attr name="inputType" format="string">
+
+            <enum name="phone" value="0"/>
+            <enum name="id" value="1"/>
+            <enum name="text" value="2"/>
+
+        </attr>
     </declare-styleable>
 
     <declare-styleable name="MyImageLayout">
@@ -36,6 +43,15 @@
         <attr name="isSingle" format="boolean"></attr>
 
         <attr name="txt_image_hint_right" format="string"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="MyItemRootLayout">
+        <attr name="background" format="reference"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="MyItemNormalLayout">
+        <attr name="txt_item_normal_title" format="string"></attr>
+        <attr name="txt_item_normal_content" format="string"></attr>
     </declare-styleable>
 
 </resources>

@@ -2,13 +2,16 @@ package com.cdkj.baselibrary.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.ColorRes;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.cdkj.baselibrary.R;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
+import com.cdkj.baselibrary.utils.glidetransforms.GlideCircleBorderTransform;
 import com.cdkj.baselibrary.utils.glidetransforms.GlideCircleTransform;
 
 /**
@@ -18,7 +21,7 @@ import com.cdkj.baselibrary.utils.glidetransforms.GlideCircleTransform;
 public class ImgUtils {
 
     public static void loadQiniuImg(Object obj, String imgid, ImageView img) {
-        loadMarketImg(obj, MyCdConfig.QINIU_URL + imgid, img);
+        loadImg(obj, MyCdConfig.QINIU_URL + imgid, img);
     }
 
     public static void loadQiniuLogo(Object obj, String imgid, ImageView img) {
@@ -64,56 +67,6 @@ public class ImgUtils {
         }
     }
 
-    public static void loadMarketImg(Object obj, String imgid, ImageView img) {
-        if (!isHaveHttp(imgid)) {
-
-            //如果没有http头 则加上七牛头
-            imgid = MyCdConfig.QINIU_URL + imgid;
-
-        }
-        if (obj instanceof Activity) {
-
-            if (!AppUtils.isActivityExist((Activity) obj)) {
-
-                LogUtil.E("图片加载界面销毁");
-                return;
-            }
-            if (obj == null || img == null) {
-                return;
-            }
-            try {
-                Glide.with((Activity) obj)
-                        .load(imgid)
-                        .placeholder(R.drawable.market_symbol_default_icon)
-                        .error(R.drawable.market_symbol_default_icon)
-                        .into(img);
-            } catch (Exception e) {
-                LogUtil.E("图片加载错误");
-            }
-
-        } else if (obj instanceof Fragment) {
-            try {
-                Glide.with((Fragment) obj)
-                        .load(imgid)
-                        .placeholder(R.drawable.market_symbol_default_icon)
-                        .error(R.drawable.market_symbol_default_icon)
-                        .into(img);
-            } catch (Exception e) {
-                LogUtil.E("图片加载错误");
-            }
-        } else if (obj instanceof Context) {
-            try {
-                Glide.with((Context) obj)
-                        .load(imgid)
-                        .placeholder(R.drawable.market_symbol_default_icon)
-                        .error(R.drawable.market_symbol_default_icon)
-                        .into(img);
-            } catch (Exception e) {
-                LogUtil.E("图片加载错误");
-            }
-        }
-    }
-
 
 
     public static void loadLogo(Object obj, Object imgid, ImageView img) {
@@ -151,6 +104,16 @@ public class ImgUtils {
             }
         }
 
+    }
+
+    public static void loadQiNiuBorderLogo(Context context, String url, ImageView imageView, @ColorRes int borderColor) {
+        try {
+/*.skipMemoryCache(true)   .diskCacheStrategy(DiskCacheStrategy.NONE)*/
+            Glide.with(context).load(MyCdConfig.QINIU_URL + url).error(R.drawable.photo_default).transform(new GlideCircleBorderTransform(context, 2, ContextCompat.getColor(context, borderColor))).into(imageView);
+
+        } catch (Exception e) {
+
+        }
     }
 
     /**

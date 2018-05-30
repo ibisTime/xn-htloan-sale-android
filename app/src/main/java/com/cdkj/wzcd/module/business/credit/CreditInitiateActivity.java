@@ -1,4 +1,4 @@
-package com.cdkj.wzcd.module.business.zxdc;
+package com.cdkj.wzcd.module.business.credit;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,15 +9,19 @@ import android.view.View;
 import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.model.BankModel;
+import com.cdkj.baselibrary.model.DataDictionary;
 import com.cdkj.baselibrary.nets.BaseResponseListCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.CameraHelper;
-import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.baselibrary.utils.QiNiuHelper;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.wzcd.R;
+import com.cdkj.wzcd.adpter.CreditPersonAdapter;
 import com.cdkj.wzcd.databinding.ActivityZxLaunchBinding;
+import com.cdkj.wzcd.model.CreditPersonModel;
 import com.cdkj.wzcd.model.MySelectModel;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,18 +35,21 @@ import retrofit2.Call;
  * Created by cdkj on 2018/5/29.
  */
 
-public class ZxLaunchActivity extends AbsBaseLoadActivity {
+public class CreditInitiateActivity extends AbsBaseLoadActivity {
 
     private ActivityZxLaunchBinding mBinding;
 
     // 银行
     private List<MySelectModel> mMapBank;
     // 购车途径
-    private List<MySelectModel> mMapWay;
+    private List<DataDictionary> mMapWay;
     // 行驶证正面
     private String mDocPositive;
     // 行驶证反面
     private String mDocNegative;
+
+    private CreditPersonAdapter mAdapter;
+    private List<CreditPersonModel> mList = new ArrayList<>();
 
     /**
      * @param context
@@ -51,7 +58,7 @@ public class ZxLaunchActivity extends AbsBaseLoadActivity {
         if (context == null) {
             return;
         }
-        Intent intent = new Intent(context, ZxLaunchActivity.class);
+        Intent intent = new Intent(context, CreditInitiateActivity.class);
         context.startActivity(intent);
     }
 
@@ -71,6 +78,7 @@ public class ZxLaunchActivity extends AbsBaseLoadActivity {
 
 //        getBank();
         initCustomView();
+        initListAdapter();
     }
 
     private void init() {
@@ -80,7 +88,7 @@ public class ZxLaunchActivity extends AbsBaseLoadActivity {
 
     private void initListener() {
         mBinding.llAdd.setOnClickListener(view -> {
-
+            CreditPersonAddActivity.open(this);
         });
     }
 
@@ -129,17 +137,28 @@ public class ZxLaunchActivity extends AbsBaseLoadActivity {
 
     private void initCustomView() {
 
-//        mBinding.mySlBank.setData(mMapBank);
+//        mBinding.mySlBank.setActivity(mMapBank);
 
-        mMapWay.add(new MySelectModel().setKey("新车").setValue("1"));
-        mMapWay.add(new MySelectModel().setKey("二手车").setValue("2"));
+        mMapWay.add(new DataDictionary().setDkey("1").setDvalue("新车"));
+        mMapWay.add(new DataDictionary().setDkey("2").setDvalue("二手车"));
 
         mBinding.mySlWay.setData(mMapWay, (dialog, which) -> {
             // 新车则隐藏证件
             mBinding.myIlDocuments.setVisibility(which == 0 ? View.GONE : View.VISIBLE);
         });
 
-        mBinding.myIlDocuments.setData(this);
+        mBinding.myIlDocuments.setActivity(this,1,2);
+    }
+
+    public void initListAdapter() {
+        mAdapter = new CreditPersonAdapter(mList);
+
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            CreditPersonModel model = mAdapter.getItem(position);
+        });
+
+        mBinding.rvZxr.setLayoutManager(getLinearLayoutManager(false));
+        mBinding.rvZxr.setAdapter(mAdapter);
     }
 
     @Override
@@ -154,15 +173,15 @@ public class ZxLaunchActivity extends AbsBaseLoadActivity {
             @Override
             public void onSuccess(String key) {
 
-                if (requestCode == mBinding.myIlDocuments.getFlImgViewId()){
+                if (requestCode == mBinding.myIlDocuments.getRequestCode()){
                     mDocPositive = key;
-                    ImgUtils.loadQiniuImg(ZxLaunchActivity.this, mDocPositive, mBinding.myIlDocuments.getFlImgImageView());
+                    mBinding.myIlDocuments.setFlImgImageView(mDocPositive);
                 }else {
                     mDocNegative = key;
-                    ImgUtils.loadQiniuImg(ZxLaunchActivity.this, mDocNegative, mBinding.myIlDocuments.getFlImgRightImageView());
+                    mBinding.myIlDocuments.setFlImgRightImageView(mDocNegative);
                 }
-                disMissLoading();
 
+                disMissLoading();
             }
 
             @Override
@@ -170,6 +189,15 @@ public class ZxLaunchActivity extends AbsBaseLoadActivity {
                 disMissLoading();
             }
         }, path);
+    }
+
+    @Subscribe
+    public void doAddCreditPerson(CreditPersonModel model){
+
+        mList.add(model);
+
+        mAdapter.notifyDataSetChanged();
+
     }
 
 }

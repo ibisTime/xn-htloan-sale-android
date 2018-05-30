@@ -2,7 +2,9 @@ package com.cdkj.baselibrary.base;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.cdkj.baselibrary.R;
@@ -117,5 +119,19 @@ public abstract class AbsBaseLoadActivity extends BaseActivity {
 //        }
     }
 
+    /**
+     * 获取布局管理器
+     *
+     * @return
+     */
+    @NonNull
+    public LinearLayoutManager getLinearLayoutManager(boolean canScrollVertically) {
+        return new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false) {
+            @Override
+            public boolean canScrollVertically() {  //禁止自滚动
+                return canScrollVertically;
+            }
+        };
+    }
 
 }

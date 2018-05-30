@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.databinding.LayoutMyConfirmBtnBinding;
+import com.cdkj.wzcd.view.interfaces.MyConfirmInterface;
 
 /**
  * Created by cdkj on 2018/5/29.
@@ -19,6 +20,8 @@ public class MyConfirmBtn extends LinearLayout {
 
     private Context context;
     private LayoutMyConfirmBtnBinding mBinding;
+
+    private MyConfirmInterface mConfirmInterface;
 
     private String txtContent;
 
@@ -44,10 +47,23 @@ public class MyConfirmBtn extends LinearLayout {
 
     private void setData() {
         mBinding.btnConfirm.setText(txtContent);
+
+    }
+
+    public void onConfirmListener(MyConfirmInterface confirmInterface){
+        mConfirmInterface = confirmInterface;
     }
 
     private void init(Context context) {
         this.context = context;
         mBinding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.layout_my_confirm_btn, this, true);
+
+        initListener();
     }
+
+    private void initListener() {
+        mBinding.btnConfirm.setOnClickListener(view -> mConfirmInterface.onClick(view));
+    }
+
+
 }

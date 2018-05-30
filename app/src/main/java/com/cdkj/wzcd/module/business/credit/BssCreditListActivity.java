@@ -1,4 +1,4 @@
-package com.cdkj.wzcd.module.business.zxdc;
+package com.cdkj.wzcd.module.business.credit;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import java.util.List;
  * Created by cdkj on 2018/5/29.
  */
 
-public class BssZxdcListActivity extends AbsTabLayoutActivity {
+public class BssCreditListActivity extends AbsTabLayoutActivity {
 
     private List<String> mTitleList;
     private List<Fragment> mFragmentList;
@@ -28,7 +28,7 @@ public class BssZxdcListActivity extends AbsTabLayoutActivity {
         if (context == null) {
             return;
         }
-        Intent intent = new Intent(context, BssZxdcListActivity.class);
+        Intent intent = new Intent(context, BssCreditListActivity.class);
         context.startActivity(intent);
     }
 
@@ -39,7 +39,7 @@ public class BssZxdcListActivity extends AbsTabLayoutActivity {
 
         mBaseBinding.titleView.setRightTitle("发起征信");
         mBaseBinding.titleView.setRightFraClickListener(view -> {
-            ZxLaunchActivity.open(this);
+            CreditInitiateActivity.open(this);
         });
 
         mTitleList = new ArrayList<>();
@@ -61,10 +61,10 @@ public class BssZxdcListActivity extends AbsTabLayoutActivity {
     private void initViewPagerData() {
 
         mTitleList.add("待办事宜");
-        mFragmentList.add(ZxdcListFragment.getInstance(true, ""));
+        mFragmentList.add(CreditListFragment.getInstance(true, ""));
 
         mTitleList.add("我的申请");
-        mFragmentList.add(ZxdcListFragment.getInstance(false, ""));
+        mFragmentList.add(CreditListFragment.getInstance(false, ""));
 
         initViewPager();
         mTabLayoutBinding.viewpager.setOffscreenPageLimit(2);

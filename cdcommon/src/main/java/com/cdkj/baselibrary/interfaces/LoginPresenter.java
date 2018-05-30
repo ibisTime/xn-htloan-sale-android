@@ -43,11 +43,12 @@ public class LoginPresenter {
 
         hashMap.put("loginName", username);
         hashMap.put("loginPwd", password);
-        hashMap.put("kind", MyCdConfig.USER_TYPE);
+//        hashMap.put("kind", MyCdConfig.USER_TYPE);
+        hashMap.put("type", "P");
         hashMap.put("systemCode", MyCdConfig.SYSTEM_CODE);
 
 
-        call = RetrofitUtils.getBaseAPiService().userLogin("805050", StringUtils.getJsonToString(hashMap));
+        call = RetrofitUtils.getBaseAPiService().userLogin("630051", StringUtils.getJsonToString(hashMap));
 
         mListener.StartLogin();
         call.enqueue(new BaseResponseModelCallBack<UserLoginModel>(mContext) {

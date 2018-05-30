@@ -1,4 +1,4 @@
-package com.cdkj.wzcd.module.business.zxdc;
+package com.cdkj.wzcd.module.business.credit;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,14 +18,14 @@ import static com.cdkj.baselibrary.appmanager.CdRouteHelper.IS_FIRST_REQUEST;
  * Created by cdkj on 2018/5/29.
  */
 
-public class ZxdcListFragment extends AbsRefreshListFragment {
+public class CreditListFragment extends AbsRefreshListFragment {
 
     /**
      * @param
      * @return
      */
-    public static ZxdcListFragment getInstance(Boolean isFirstRequest, String status) {
-        ZxdcListFragment fragment = new ZxdcListFragment();
+    public static CreditListFragment getInstance(Boolean isFirstRequest, String status) {
+        CreditListFragment fragment = new CreditListFragment();
         Bundle bundle = new Bundle();
         bundle.putString(DATA_SIGN, status);
         bundle.putBoolean(IS_FIRST_REQUEST, isFirstRequest);

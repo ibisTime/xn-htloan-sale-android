@@ -11,7 +11,7 @@ public class MyCdConfig {
     public final static String SYSTEM_CODE = "CD-CHTWT000020";
     public final static String COMPANY_CODE = "CD-CHTWT000020";
 
-    public final static String USER_TYPE = "C";//用户类型
+    public final static String USER_TYPE = "B";//用户类型
 
     public final static String QINIU_URL = "http://ounm8iw2d.bkt.clouddn.com/";
 
