@@ -9,6 +9,9 @@ import android.view.View;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.wzcd.databinding.ActivityMainBinding;
 import com.cdkj.wzcd.module.business.zxdc.BssZxdcListActivity;
+import com.cdkj.wzcd.module.business.zxdc.face_view.FaceInterviewActivity;
+import com.cdkj.wzcd.module.business.zxdc.gps_install.GPSInstallListActivity;
+import com.cdkj.wzcd.module.business.zxdc.join_approval.JoinApplyActivity;
 
 public class MainActivity extends AbsBaseLoadActivity {
 
@@ -36,13 +39,27 @@ public class MainActivity extends AbsBaseLoadActivity {
     @Override
     public void afterCreate(Bundle savedInstanceState) {
 
-
         initListener();
     }
 
     private void initListener() {
         mBinding.mySrZxdc.setOnClickListener(view -> {
             BssZxdcListActivity.open(this);
+        });
+
+        //准入申请
+        mBinding.mySrZrsq.setOnClickListener(v -> {
+            JoinApplyActivity.open(this);
+        });
+
+        //面签
+        mBinding.mySrMq.setOnClickListener(v -> {
+            FaceInterviewActivity.open(this);
+        });
+
+        //gps 安装
+        mBinding.mySrSpsaz.setOnClickListener(v -> {
+            GPSInstallListActivity.open(this);
         });
     }
 }

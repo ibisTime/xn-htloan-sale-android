@@ -19,11 +19,17 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".module.business.zxdc.BssZxdcListActivity" />
         <activity android:name=".module.business.zxdc.ZxLaunchActivity" />
         <activity android:name=".module.user.SignInActivity" />
+        <activity android:name=".module.business.zxdc.join_approval.JoinApplyActivity" />
+        <activity android:name=".module.business.zxdc.face_view.FaceInterviewActivity" />
+        <activity android:name=".module.business.zxdc.face_view.FaceViewStartActivity" />
+        <activity android:name=".module.business.zxdc.gps_install.GPSInstallListActivity" />
+        <activity android:name=".module.business.zxdc.gps_install.GPSInstallInfoActivity" />
+        <activity android:name=".module.business.zxdc.gps_install.GPSInfoAddActivity" />
+        <activity android:name=".module.business.zxdc.join_approval.JoinApplyInfoInputActivity" />
 
     </application>
 

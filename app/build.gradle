@@ -34,14 +34,14 @@ android {
     }
 
 
-    signingConfigs {
-        config {
-            storeFile file('/Users/lei/AndroidStudioProjects/xn-wzcd-android/keystore.jks')
-            storePassword "wzcd123456"
-            keyAlias "wzcd"
-            keyPassword "wzcd123456"
-        }
-    }
+//    signingConfigs {
+//        config {
+//            storeFile file('/Users/lei/AndroidStudioProjects/xn-wzcd-android/keystore.jks')
+//            storePassword "wzcd123456"
+//            keyAlias "wzcd"
+//            keyPassword "wzcd123456"
+//        }
+//    }
 
     buildTypes {
         release {
@@ -53,10 +53,10 @@ android {
                     outputFileName = "${rootProject.ext.packageName}_${rootProject.ext.android["versionName"]}_${releaseTime()}.apk"
                 }
             }
-            signingConfig signingConfigs.config
+//            signingConfig signingConfigs.config
         }
         debug {
-            signingConfig signingConfigs.config
+//            signingConfig signingConfigs.config
             buildConfigField "boolean", "LOG_DEBUG", "true"
         }
     }
