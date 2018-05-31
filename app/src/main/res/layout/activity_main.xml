@@ -175,11 +175,26 @@
                         </com.cdkj.wzcd.view.MySquareRowLayout>
 
                         <View
+                            android:id="@+id/line_zrsq"
                             style="@style/style_split_line_vertical"/>
 
                         <com.cdkj.wzcd.view.MySquareRowLayout
                             android:id="@+id/mySr_mq"
                             app:txt_content="面签"
+                            app:img_content="@mipmap/main_fbh"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+
+
+                        </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                        <View
+                            style="@style/style_split_line_vertical"/>
+
+                        <com.cdkj.wzcd.view.MySquareRowLayout
+                            android:id="@+id/mySr_loan"
+                            app:txt_content="银行放款"
                             app:img_content="@mipmap/main_fbh"
                             android:layout_weight="1"
                             android:layout_width="0dp"
@@ -196,7 +211,7 @@
                         android:layout_height="wrap_content">
 
                         <com.cdkj.wzcd.view.MySquareRowLayout
-                            android:id="@+id/mySr_spsaz"
+                            android:id="@+id/mySr_gpsaz"
                             app:txt_content="GPS安装"
                             app:img_content="@mipmap/main_gpsaz"
                             android:layout_weight="1"
@@ -207,6 +222,7 @@
                         </com.cdkj.wzcd.view.MySquareRowLayout>
 
                         <View
+                            android:id="@+id/line_gpsaz"
                             style="@style/style_split_line_vertical"/>
 
                         <com.cdkj.wzcd.view.MySquareRowLayout
@@ -221,10 +237,11 @@
                         </com.cdkj.wzcd.view.MySquareRowLayout>
 
                         <View
+                            android:id="@+id/line_cllh"
                             style="@style/style_split_line_vertical"/>
 
                         <com.cdkj.wzcd.view.MySquareRowLayout
-                            android:id="@+id/mySr_cwdz"
+                            android:id="@+id/mySr_cldy"
                             app:txt_content="车辆抵押"
                             app:img_content="@mipmap/main_cwdz"
                             android:layout_weight="1"
@@ -233,6 +250,9 @@
 
 
                         </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                        <View
+                            style="@style/style_split_line_vertical"/>
 
                     </LinearLayout>
 
@@ -244,6 +264,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_util"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -324,6 +345,8 @@
 
                         </com.cdkj.wzcd.view.MySquareRowLayout>
 
+                        <View
+                            style="@style/style_split_line_vertical"/>
 
                     </LinearLayout>
 

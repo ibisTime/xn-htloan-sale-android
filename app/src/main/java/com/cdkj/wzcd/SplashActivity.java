@@ -3,7 +3,9 @@ package com.cdkj.wzcd;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.BaseActivity;
+import com.cdkj.wzcd.module.user.SignInActivity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -37,11 +39,11 @@ public class SplashActivity extends BaseActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(aLong -> {
 
-//                    if (!SPUtilHelper.isLoginNoStart()) {  //没有登录
-//                        SignInActivity.open(this, false);
-//                    }else {
+                    if (!SPUtilHelper.isLoginNoStart()) {  //没有登录
+                        SignInActivity.open(this, false);
+                    }else {
                         MainActivity.open(this);
-//                    }
+                    }
                     finish();
 
                 }, Throwable::printStackTrace));

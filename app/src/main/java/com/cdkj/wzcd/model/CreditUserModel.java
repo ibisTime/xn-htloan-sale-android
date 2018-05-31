@@ -4,8 +4,10 @@ package com.cdkj.wzcd.model;
  * Created by cdkj on 2018/5/30.
  */
 
-public class CreditPersonModel {
+public class CreditUserModel {
 
+    private String code;
+    private String creditCode;
     private String authPdf;
     private String idNo;
     private String idNoFront;
@@ -15,6 +17,22 @@ public class CreditPersonModel {
     private String mobile;
     private String relation;
     private String userName;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getCreditCode() {
+        return creditCode;
+    }
+
+    public void setCreditCode(String creditCode) {
+        this.creditCode = creditCode;
+    }
 
     public String getAuthPdf() {
         return authPdf;

@@ -39,7 +39,7 @@ public class BssCreditListActivity extends AbsTabLayoutActivity {
 
         mBaseBinding.titleView.setRightTitle("发起征信");
         mBaseBinding.titleView.setRightFraClickListener(view -> {
-            CreditInitiateActivity.open(this);
+            CreditInitiateActivity.open(this, null);
         });
 
         mTitleList = new ArrayList<>();

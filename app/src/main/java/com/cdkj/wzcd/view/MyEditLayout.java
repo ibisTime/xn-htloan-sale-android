@@ -19,30 +19,32 @@ import com.cdkj.wzcd.databinding.LayoutMyInputHorizontalBinding;
  * Created by cdkj on 2018/5/29.
  */
 
-public class MyInputHorizontalLayout extends LinearLayout {
+public class MyEditLayout extends LinearLayout {
 
     private LayoutMyInputHorizontalBinding mBinding;
     private Context context;
 
     private String txtHint;
     private String txtTitle;
+    private String txtTitleRight;
     private String inputType;
 
-    public MyInputHorizontalLayout(Context context) {
+    public MyEditLayout(Context context) {
         this(context, null);
     }
 
-    public MyInputHorizontalLayout(Context context, @Nullable AttributeSet attrs) {
+    public MyEditLayout(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public MyInputHorizontalLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public MyEditLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.MyInputHorizontalLayout, 0, 0);
-        txtHint = typedArray.getString(R.styleable.MyInputHorizontalLayout_txt_input_hint);
-        txtTitle = typedArray.getString(R.styleable.MyInputHorizontalLayout_txt_input_title);
-        inputType = typedArray.getString(R.styleable.MyInputHorizontalLayout_inputType);
+        final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.MyEditLayout, 0, 0);
+        txtHint = typedArray.getString(R.styleable.MyEditLayout_txt_input_hint);
+        txtTitle = typedArray.getString(R.styleable.MyEditLayout_txt_input_title);
+        txtTitleRight = typedArray.getString(R.styleable.MyEditLayout_txt_input_title_right);
+        inputType = typedArray.getString(R.styleable.MyEditLayout_inputType);
 
         typedArray.recycle();
 
@@ -52,6 +54,10 @@ public class MyInputHorizontalLayout extends LinearLayout {
 
     private void setData() {
         mBinding.tvTitle.setText(txtTitle);
+        mBinding.tvTitleRight.setText(txtTitleRight);
+        mBinding.tvTitleRight.setVisibility(!TextUtils.isEmpty(txtTitleRight)? VISIBLE : GONE);
+
+
         if (!TextUtils.isEmpty(txtHint))
             mBinding.edtInput.setHint(txtHint);
 
@@ -92,5 +98,9 @@ public class MyInputHorizontalLayout extends LinearLayout {
         }
 
         return mBinding.edtInput.getText().toString();
+    }
+
+    public void setText(String content){
+        mBinding.edtInput.setText(content);
     }
 }

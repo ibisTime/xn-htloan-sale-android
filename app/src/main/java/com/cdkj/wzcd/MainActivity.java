@@ -17,7 +17,16 @@ import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.databinding.ActivityMainBinding;
+import com.cdkj.wzcd.module.business.cldy.BssCldyListActivity;
+import com.cdkj.wzcd.module.business.cllh.CllhListActivity;
 import com.cdkj.wzcd.module.business.credit.BssCreditListActivity;
+import com.cdkj.wzcd.module.business.zxdc.face_view.FaceInterviewActivity;
+import com.cdkj.wzcd.module.business.zxdc.gps_install.GPSInstallListActivity;
+import com.cdkj.wzcd.module.business.zxdc.join_approval.JoinApplyActivity;
+import com.cdkj.wzcd.module.cartool.gps.GpsActivity;
+import com.cdkj.wzcd.module.cartool.history.HistoryUserActivity;
+import com.cdkj.wzcd.module.cartool.uservoid.UserToVoidActivity;
+import com.cdkj.wzcd.module.datatransfer.DataTransferActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -114,11 +123,66 @@ public class MainActivity extends AbsBaseLoadActivity {
         ImgUtils.loadQiNiuBorderLogo(this, data.getPhoto(), mBinding.imAvatar, R.color.white);
         mBinding.tvNick.setText(TextUtils.isEmpty(data.getLoginName()) ? "暂无" : data.getLoginName());
 
+        if (false){
+            mBinding.mySrZrsq.setVisibility(View.GONE);
+            mBinding.lineZrsq.setVisibility(View.GONE);
+
+            mBinding.mySrGpsaz.setVisibility(View.GONE);
+            mBinding.lineGpsaz.setVisibility(View.GONE);
+
+            mBinding.mySrCllh.setVisibility(View.GONE);
+            mBinding.lineCllh.setVisibility(View.GONE);
+
+            mBinding.llUtil.setVisibility(View.GONE);
+        }
+
     }
 
     private void initListener() {
         mBinding.mySrZxdc.setOnClickListener(view -> {
             BssCreditListActivity.open(this);
         });
+
+        //准入申请
+        mBinding.mySrZrsq.setOnClickListener(v -> {
+            JoinApplyActivity.open(this);
+        });
+
+        //面签
+        mBinding.mySrMq.setOnClickListener(v -> {
+            FaceInterviewActivity.open(this);
+        });
+
+        //gps 安装
+        mBinding.mySrGpsaz.setOnClickListener(v -> {
+            GPSInstallListActivity.open(this);
+        });
+
+        mBinding.mySrCllh.setOnClickListener(view -> {
+            //车辆落户
+            CllhListActivity.open(this);
+        });
+        mBinding.mySrCldy.setOnClickListener(view -> {
+            //车辆抵押
+            BssCldyListActivity.open(this);
+        });
+        mBinding.mySrZlcd.setOnClickListener(view -> {
+            //资料上传
+            DataTransferActivity.open(this);
+        });
+        mBinding.mySrKhzf.setOnClickListener(view -> {
+            //客户作废
+            UserToVoidActivity.open(this);
+        });
+        mBinding.mySrGpssl.setOnClickListener(view -> {
+            //GPS申领
+            GpsActivity.open(this);
+        });
+        mBinding.mySrLskh.setOnClickListener(view -> {
+            //历史客户
+            HistoryUserActivity.open(this);
+        });
+
+
     }
 }

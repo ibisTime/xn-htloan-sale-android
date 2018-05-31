@@ -47,10 +47,9 @@ public class MyConfirmBtn extends LinearLayout {
 
     private void setData() {
         mBinding.btnConfirm.setText(txtContent);
-
     }
 
-    public void onConfirmListener(MyConfirmInterface confirmInterface){
+    public void setOnConfirmListener(MyConfirmInterface confirmInterface){
         mConfirmInterface = confirmInterface;
     }
 
@@ -62,8 +61,18 @@ public class MyConfirmBtn extends LinearLayout {
     }
 
     private void initListener() {
-        mBinding.btnConfirm.setOnClickListener(view -> mConfirmInterface.onClick(view));
+        mBinding.btnConfirm.setOnClickListener(view -> {
+            if (mConfirmInterface == null)
+                return;
+
+            mConfirmInterface.onClick(view);
+        });
     }
+
+    public void setText(String content) {
+        mBinding.btnConfirm.setText(content);
+    }
+
 
 
 }

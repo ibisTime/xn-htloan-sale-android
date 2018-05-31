@@ -18,16 +18,16 @@
             <View
                 style="@style/style_split_line_horizontal_broad"/>
 
-            <com.cdkj.wzcd.view.MyInputHorizontalLayout
+            <com.cdkj.wzcd.view.MyEditLayout
                 android:id="@+id/myEl_name"
                 app:txt_input_title="姓名"
                 app:txt_input_hint="请输入姓名"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            </com.cdkj.wzcd.view.MyInputHorizontalLayout>
+            </com.cdkj.wzcd.view.MyEditLayout>
 
-            <com.cdkj.wzcd.view.MyInputHorizontalLayout
+            <com.cdkj.wzcd.view.MyEditLayout
                 android:id="@+id/myEl_phone"
                 app:txt_input_title="手机号"
                 app:inputType="phone"
@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            </com.cdkj.wzcd.view.MyInputHorizontalLayout>
+            </com.cdkj.wzcd.view.MyEditLayout>
 
             <com.cdkj.wzcd.view.MySelectLayout
                 android:id="@+id/mySl_role"
@@ -53,7 +53,7 @@
 
             </com.cdkj.wzcd.view.MySelectLayout>
 
-            <com.cdkj.wzcd.view.MyInputHorizontalLayout
+            <com.cdkj.wzcd.view.MyEditLayout
                 android:id="@+id/myEl_id"
                 app:txt_input_title="身份证号"
                 app:inputType="id"
@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            </com.cdkj.wzcd.view.MyInputHorizontalLayout>
+            </com.cdkj.wzcd.view.MyEditLayout>
 
             <com.cdkj.wzcd.view.MyImageLayout
                 android:id="@+id/myIl_idCard"
@@ -96,7 +96,7 @@
 
             <com.cdkj.wzcd.view.MyConfirmBtn
                 android:id="@+id/myCb_confirm"
-                app:txt_confirm_content="查询征信"
+                app:txt_confirm_content="保存"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

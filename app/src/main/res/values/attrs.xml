@@ -25,8 +25,9 @@
         <attr name="txt_confirm_content" format="string"></attr>
     </declare-styleable>
 
-    <declare-styleable name="MyInputHorizontalLayout">
+    <declare-styleable name="MyEditLayout">
         <attr name="txt_input_title" format="string"></attr>
+        <attr name="txt_input_title_right" format="string"></attr>
         <attr name="txt_input_hint" format="string"></attr>
         <attr name="inputType" format="string">
 
@@ -52,6 +53,13 @@
     <declare-styleable name="MyItemNormalLayout">
         <attr name="txt_item_normal_title" format="string"></attr>
         <attr name="txt_item_normal_content" format="string"></attr>
+        <attr name="txt_item_normal_content_right" format="string"></attr>
+        <attr name="txt_item_normal_content_middle" format="string"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="MyItemDoubleLayout">
+        <attr name="txt_item_double_content" format="string"></attr>
+        <attr name="txt_item_double_content_right" format="string"></attr>
     </declare-styleable>
 
 </resources>

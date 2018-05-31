@@ -90,6 +90,41 @@ public class MySelectLayout extends LinearLayout {
             mBinding.tvContent.setText(txtContent);
     }
 
+    public void setContent(String content) {
+
+        mBinding.tvContent.setText(content);
+
+    }
+    public void setContentByKey(String key){
+
+        int i = 0;
+
+        for(String str : mKeyList){
+            if (TextUtils.equals(str, key)){
+                selectIndex = i;
+            }
+            i++;
+        }
+
+        mBinding.tvContent.setText(mValueList[selectIndex]);
+    }
+
+    public void setData(Activity activity, int requestType, String requestKey, MySelectInterface selectInterface){
+        mActivity = activity;
+        mRequestType = requestType;
+        mRequestKey = requestKey;
+
+        mySelectInterface = selectInterface;
+
+        mIsRequest = true;
+    }
+
+    public void setData(List<DataDictionary> data, MySelectInterface selectInterface){
+        mData = data;
+        mySelectInterface = selectInterface;
+
+        mIsRequest = false;
+    }
 
     private void init(Context context) {
         this.context = context;
@@ -116,32 +151,6 @@ public class MySelectLayout extends LinearLayout {
         });
     }
 
-
-    public void setData(Activity activity, int requestType, String requestKey, MySelectInterface selectInterface){
-        mActivity = activity;
-        mRequestType = requestType;
-        mRequestKey = requestKey;
-
-        mySelectInterface = selectInterface;
-
-        mIsRequest = true;
-    }
-    public void setData(List<DataDictionary> data, MySelectInterface selectInterface){
-        mData = data;
-        mySelectInterface = selectInterface;
-
-        mIsRequest = false;
-    }
-
-    public String getDataKey(){
-
-        if (selectIndex == -1){
-            ToastUtil.show(context, "请选择"+mBinding.tvTitle.getText());
-            return null;
-        }
-
-        return mKeyList[selectIndex];
-    }
 
     public void getRequest() {
 
@@ -203,9 +212,31 @@ public class MySelectLayout extends LinearLayout {
                 }).setNegativeButton("取消", null).show();
     }
 
+
+    public String getDataKey(){
+
+        if (selectIndex == -1){
+            ToastUtil.show(context, "请选择"+mBinding.tvTitle.getText());
+            return null;
+        }
+
+        return mKeyList[selectIndex];
+    }
+
+    public String getDataValue(){
+
+        if (selectIndex == -1){
+            ToastUtil.show(context, "请选择"+mBinding.tvTitle.getText());
+            return null;
+        }
+
+        return mValueList[selectIndex];
+    }
+
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+        clearCall();
     }
 
     /**
@@ -227,6 +258,11 @@ public class MySelectLayout extends LinearLayout {
         if (null != loadingDialog) {
             loadingDialog.showDialog();
         }
+    }
+
+    private void clearCall(){
+        if (call != null)
+            call.cancel();
     }
 
 }

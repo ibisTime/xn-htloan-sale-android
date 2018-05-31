@@ -13,7 +13,7 @@ import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.baselibrary.utils.QiNiuHelper;
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.databinding.ActivityCreditPersonAddBinding;
-import com.cdkj.wzcd.model.CreditPersonModel;
+import com.cdkj.wzcd.model.CreditUserModel;
 import com.cdkj.wzcd.view.MySelectLayout;
 
 import org.greenrobot.eventbus.EventBus;
@@ -22,7 +22,7 @@ import org.greenrobot.eventbus.EventBus;
  * Created by cdkj on 2018/5/30.
  */
 
-public class CreditPersonAddActivity extends AbsBaseLoadActivity {
+public class CreditUserAddActivity extends AbsBaseLoadActivity {
 
     private ActivityCreditPersonAddBinding mBinding;
 
@@ -33,7 +33,7 @@ public class CreditPersonAddActivity extends AbsBaseLoadActivity {
         if (context == null) {
             return;
         }
-        Intent intent = new Intent(context, CreditPersonAddActivity.class);
+        Intent intent = new Intent(context, CreditUserAddActivity.class);
         context.startActivity(intent);
     }
 
@@ -65,10 +65,10 @@ public class CreditPersonAddActivity extends AbsBaseLoadActivity {
     }
 
     private void initListener() {
-        mBinding.myCbConfirm.onConfirmListener(view -> {
+        mBinding.myCbConfirm.setOnConfirmListener(view -> {
             if (check()){
                 // 组装数据
-                CreditPersonModel model = new CreditPersonModel();
+                CreditUserModel model = new CreditUserModel();
                 model.setUserName(mBinding.myElName.getText());
                 model.setMobile(mBinding.myElPhone.getText());
                 model.setLoanRole(mBinding.mySlRole.getDataKey());

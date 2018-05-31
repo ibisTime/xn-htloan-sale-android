@@ -127,7 +127,7 @@ public class MyImageLayout extends LinearLayout {
     }
 
     public String getFlImgRightUrl(){
-        if (TextUtils.isEmpty(FlImgUrl)){
+        if (TextUtils.isEmpty(FlImgRightUrl)){
             ToastUtil.show(context, "请上传"+mBinding.tvHintRight.getHint().toString());
             return null;
         }

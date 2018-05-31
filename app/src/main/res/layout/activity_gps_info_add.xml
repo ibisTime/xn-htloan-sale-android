@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.cdkj.wzcd.view.MySelectLayout
+                    android:id="@+id/mySl_bank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:txt_select_title="*GPS设备号">
+
+                </com.cdkj.wzcd.view.MySelectLayout>
+
+                <com.cdkj.wzcd.view.MyEditLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:txt_input_hint="请输入GPS类型"
+                    app:txt_input_title="*GPS类型">
+
+                </com.cdkj.wzcd.view.MyEditLayout>
+
+                <com.cdkj.wzcd.view.MyEditLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:txt_input_hint="请输入安装位置"
+                    app:txt_input_title="*安装位置">
+
+                </com.cdkj.wzcd.view.MyEditLayout>
+
+                <com.cdkj.wzcd.view.MyEditLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:txt_input_hint="请输入安装时间"
+                    app:txt_input_title="*安装时间">
+
+                </com.cdkj.wzcd.view.MyEditLayout>
+
+                <com.cdkj.wzcd.view.MyEditLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:txt_input_hint="请输入安装时间"
+                    app:txt_input_title="*安装人员">
+
+                </com.cdkj.wzcd.view.MyEditLayout>
+
+                <com.cdkj.wzcd.view.MyEditLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:txt_input_hint="请输入备注"
+                    app:txt_input_title="备注">
+
+                </com.cdkj.wzcd.view.MyEditLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="@dimen/layout_left_interval"
+            android:layout_marginRight="@dimen/layout_right_interval"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/common_my_confirm_btn"
+            android:text="@string/confirm"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+
+    </LinearLayout>
+
+
+</layout>

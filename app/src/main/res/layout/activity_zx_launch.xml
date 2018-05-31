@@ -2,9 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
+    <!--<data>-->
 
-    </data>
+    <!--</data>-->
 
     <ScrollView
         android:background="@color/page_bg"
@@ -35,13 +35,27 @@
 
             </com.cdkj.wzcd.view.MySelectLayout>
 
-            <com.cdkj.wzcd.view.MyInputHorizontalLayout
-                app:txt_input_title="贷款金额"
+            <com.cdkj.wzcd.view.MyEditLayout
+                android:id="@+id/myEl_amount"
                 app:txt_input_hint="请输入贷款金额"
+                app:txt_input_title="贷款金额"
+                app:txt_input_title_right="@string/money_sing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            </com.cdkj.wzcd.view.MyInputHorizontalLayout>
+            </com.cdkj.wzcd.view.MyEditLayout>
+
+            <com.cdkj.wzcd.view.MyImageLayout
+                android:id="@+id/myIl_report"
+                android:visibility="gone"
+                app:txt_image_title="二手车评估报告"
+                app:txt_image_hint="评估报告"
+                app:isSingle="true"
+                app:txt_image_hint_right="行驶证反面"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.cdkj.wzcd.view.MyImageLayout>
 
             <com.cdkj.wzcd.view.MyImageLayout
                 android:id="@+id/myIl_documents"
@@ -109,7 +123,7 @@
 
             <com.cdkj.wzcd.view.MyConfirmBtn
                 android:id="@+id/myCb_confirm"
-                app:txt_confirm_content="查询征信"
+                app:txt_confirm_content="发起"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

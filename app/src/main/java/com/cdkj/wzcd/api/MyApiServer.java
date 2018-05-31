@@ -2,8 +2,10 @@ package com.cdkj.wzcd.api;
 
 import com.cdkj.baselibrary.api.BaseResponseListModel;
 import com.cdkj.baselibrary.api.BaseResponseModel;
+import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.model.DataDictionary;
 import com.cdkj.baselibrary.model.UserModel;
+import com.cdkj.wzcd.model.CreditModel;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -38,5 +40,31 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseListModel<DataDictionary>> getDataDictionary(@Field("code") String code, @Field("json") String json);
+
+
+    //--------------------------------------------征信API--------------------------------------------
+
+
+    /**
+     * 获征信列表
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<ResponseInListModel<CreditModel>>> getCreditList(@Field("code") String code, @Field("json") String json);
+
+    /**
+     * 获征信列表
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<CreditModel>> getCredit(@Field("code") String code, @Field("json") String json);
 
 }

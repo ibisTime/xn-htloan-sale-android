@@ -24,7 +24,14 @@
         <activity android:name=".module.business.credit.BssCreditListActivity" />
         <activity android:name=".module.business.credit.CreditInitiateActivity" />
         <activity android:name=".module.user.SignInActivity" />
-        <activity android:name=".module.business.credit.CreditPersonAddActivity" />
+        <activity android:name=".module.business.zxdc.join_approval.JoinApplyActivity" />
+        <activity android:name=".module.business.zxdc.face_view.FaceInterviewActivity" />
+        <activity android:name=".module.business.zxdc.face_view.FaceViewStartActivity" />
+        <activity android:name=".module.business.zxdc.gps_install.GPSInstallListActivity" />
+        <activity android:name=".module.business.zxdc.gps_install.GPSInstallInfoActivity" />
+        <activity android:name=".module.business.zxdc.gps_install.GPSInfoAddActivity" />
+        <activity android:name=".module.business.zxdc.join_approval.JoinApplyInfoInputActivity" />
+        <activity android:name=".module.business.credit.CreditUserAddActivity" />
 
         <!--数据请求-->
         <activity
@@ -33,6 +40,22 @@
             android:theme="@style/ActivityDialogStyleBottom"
             android:windowSoftInputMode="adjustPan" />
 
+        <activity android:name=".module.business.cllh.CllhListActivity" />
+        <activity android:name=".module.business.cllh.CllhInputMessageActivity" />
+        <activity android:name=".module.business.cldy.BssCldyListActivity" />
+        <activity android:name=".module.business.cldy.CldyInputMessageActivity" />
+        <activity android:name=".module.datatransfer.DataTransferActivity" />
+        <activity android:name=".module.datatransfer.SendActivity" />
+        <activity android:name=".module.datatransfer.SendAndExamineActivity" />
+        <activity android:name=".module.cartool.uservoid.UserToVoidActivity" />
+        <activity android:name=".module.cartool.uservoid.BlankOutActivity" />
+        <activity android:name=".module.cartool.uservoid.UserToVoidDetailsActivity" />
+        <activity android:name=".module.cartool.gps.GpsActivity" />
+        <activity android:name=".module.cartool.gps.GpsRequestActivity" />
+        <activity android:name=".module.cartool.gps.GpsDetailsActivity" />
+        <activity android:name=".module.cartool.history.HistoryUserActivity" />
+        <activity android:name=".module.cartool.history.HistoryUserDetailsActivity" />
+        <activity android:name=".module.cartool.history.RepaymentListActivity"></activity>
     </application>
 
 </manifest>
