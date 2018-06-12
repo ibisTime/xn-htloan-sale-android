@@ -22,6 +22,9 @@
 
     <color name="color_myNormal_txt">#333333</color>
 
+    <color name="color_myListItem_title">#999999</color>
+    <color name="color_myListItem_txt">#333333</color>
+
     <color name="color_myInputHorizontal_txt">#333333</color>
     <color name="color_myInputHorizontal_hint">#999999</color>
     <color name="text_666">#666666</color>

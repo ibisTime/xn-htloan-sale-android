@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.view.View;
 
 import com.cdkj.baselibrary.base.AbsTabLayoutActivity;
 
@@ -62,5 +63,7 @@ public class BssCldyListActivity extends AbsTabLayoutActivity {
         initViewPager();
         mTabLayoutBinding.viewpager.setOffscreenPageLimit(2);
         mTabLayoutBinding.tablayout.setTabMode(TabLayout.MODE_FIXED);
+
+        mTabLayoutBinding.tablayout.setVisibility(View.GONE);
     }
 }

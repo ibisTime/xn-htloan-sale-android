@@ -20,7 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author cginechen
+ * @author cdkj
  * @date 2016-08-11
  */
 public class DeviceHelper {

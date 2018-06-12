@@ -20,7 +20,7 @@ import java.lang.reflect.Field;
 import java.util.Locale;
 
 /**
- * @author cginechen
+ * @author cdkj
  * @date 2016-03-17
  */
 public class DisplayHelper {

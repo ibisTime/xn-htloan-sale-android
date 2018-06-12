@@ -65,6 +65,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activitys.FindPwdActivity" />
         <activity android:name=".activitys.NickModifyActivity" />
+        <activity android:name=".activitys.ExpectActivity" />
 
     </application>
 

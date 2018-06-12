@@ -1,33 +1,44 @@
 package com.cdkj.wzcd.adapter;
 
+import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 
+import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.wzcd.R;
-import com.cdkj.wzcd.model.UserToVoidBean;
-import com.cdkj.wzcd.view.MyNormalLayout;
+import com.cdkj.wzcd.databinding.ItemUserToVoidBinding;
+import com.cdkj.wzcd.model.NodeListModel;
+import com.cdkj.wzcd.util.BizTypeHelper;
+import com.cdkj.wzcd.util.NodeHelper;
+import com.cdkj.wzcd.util.RequestUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
 /**
- * @author qi
+ * @author cdkj
  * @updateDts 2018/5/30
  */
 
-public class UserToVoidAdapter extends BaseQuickAdapter<UserToVoidBean, BaseViewHolder> {
-    public UserToVoidAdapter(@Nullable List<UserToVoidBean> data) {
+public class UserToVoidAdapter extends BaseQuickAdapter<NodeListModel, BaseViewHolder> {
+
+    private ItemUserToVoidBinding mBinding;
+
+    public UserToVoidAdapter(@Nullable List<NodeListModel> data) {
         super(R.layout.item_user_to_void, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, UserToVoidBean item) {
+    protected void convert(BaseViewHolder helper, NodeListModel item) {
+        mBinding = DataBindingUtil.bind(helper.itemView);
 
-        MyNormalLayout mnl_code_type = helper.getView(R.id.mnl_code_type);//业务编号--状态
-        MyNormalLayout mnl_name_money = helper.getView(R.id.mnl_name_money);//客户姓名--金额
-        MyNormalLayout mnl_bank_name = helper.getView(R.id.mnl_bank_name);//贷款银行   只有一个
-        MyNormalLayout mnl_is_time = helper.getView(R.id.mnl_is_time);//是否垫资--申请日期
+        mBinding.myTlIdStatus.setText(item.getCode(), NodeHelper.getNameOnTheCode(item.getCurNodeCode()));
 
+        mBinding.myIlName.setText(item.getApplyUserName());
+        mBinding.myIlType.setText(BizTypeHelper.getNameOnTheKey(item.getBizType()));
+        mBinding.myIlAmount.setText(RequestUtil.formatAmountDivSign(item.getLoanAmount()));
+        mBinding.myIlBank.setText(item.getLoanBankName());
+        mBinding.myIlDateTime.setText(DateUtil.formatStringData(item.getApplyDatetime(), DateUtil.DEFAULT_DATE_FMT));
 
     }
 }

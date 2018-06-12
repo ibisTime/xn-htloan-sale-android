@@ -1,144 +1,57 @@
-<?xml version="1.0" encoding="utf-8"?><!--贷款准入 item-->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/layout_right_interval"
-    android:layout_marginRight="@dimen/layout_right_interval"
-    android:layout_marginTop="10dp"
-    android:background="@color/white"
-    android:orientation="vertical">
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingLeft="@dimen/layout_left_interval"
-        android:paddingRight="@dimen/layout_right_interval"
-        android:paddingTop="10dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_business_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="业务编号"
-            android:textColor="@color/text_black_cd"
-            android:textSize="14sp" />
+        <LinearLayout
+            style="@style/style_my_item_root">
 
-        <TextView
-            android:id="@+id/tv_state"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/layout_left_interval"
-            android:text="待发起准入申请"
-            android:textColor="@color/text_black_cd"
-            android:textSize="14sp" />
+            <com.cdkj.wzcd.view.item.MyItemDoubleLayout
+                android:id="@+id/myItemNl_code_and_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+            </com.cdkj.wzcd.view.item.MyItemDoubleLayout>
+
+            <com.cdkj.wzcd.view.item.MyItemNormalLayout
+                android:id="@+id/myItemNl_name_and_type_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.cdkj.wzcd.view.item.MyItemNormalLayout>
+
+            <com.cdkj.wzcd.view.item.MyItemNormalLayout
+                android:id="@+id/myItemNl_bank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.cdkj.wzcd.view.item.MyItemNormalLayout>
+
+            <com.cdkj.wzcd.view.item.MyItemDoubleLayout
+                android:id="@+id/myItemNl_dz_and_dateTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.cdkj.wzcd.view.item.MyItemDoubleLayout>
+
+
+        </LinearLayout>
+
+        <com.cdkj.wzcd.view.list.MyListItemBtnLayout
+            android:id="@+id/myItemCbl_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.cdkj.wzcd.view.list.MyListItemBtnLayout>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingLeft="@dimen/layout_left_interval"
-        android:paddingRight="@dimen/layout_right_interval"
-        android:paddingTop="10dp">
-
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="客户姓名"
-            android:textColor="@color/text_black_cd"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/tv_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="待发起准入申请"
-            android:textColor="@color/text_black_cd"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/tv_money"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/layout_left_interval"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="贷款金额"
-            android:textColor="@color/text_black_cd"
-            android:textSize="14sp" />
-
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingLeft="@dimen/layout_left_interval"
-        android:paddingRight="@dimen/layout_right_interval"
-        android:paddingTop="10dp">
-
-        <TextView
-            android:id="@+id/tv_bank"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="贷款银行"
-            android:textColor="@color/text_black_cd"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/tv_bank_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/layout_left_interval"
-            android:text="中国人们银行"
-            android:textColor="@color/text_black_cd"
-            android:textSize="14sp" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingLeft="@dimen/layout_left_interval"
-        android:paddingRight="@dimen/layout_right_interval"
-        android:paddingTop="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="是否垫资"
-            android:textColor="@color/text_black_cd"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/layout_left_interval"
-            android:text="申请日期"
-            android:textColor="@color/text_black_cd"
-            android:textSize="14sp" />
-
-
-    </LinearLayout>
-
-
-</LinearLayout>
+</layout>

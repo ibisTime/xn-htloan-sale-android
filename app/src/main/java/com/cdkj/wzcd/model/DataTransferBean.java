@@ -1,7 +1,7 @@
 package com.cdkj.wzcd.model;
 
 /**
- * @author qi
+ * @author cdkj
  * @updateDts 2018/5/30
  */
 

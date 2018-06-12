@@ -1,13 +1,14 @@
 package com.cdkj.wzcd.util;
 
 import android.content.Context;
+import android.text.TextUtils;
 
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.model.DataDictionary;
 import com.cdkj.baselibrary.nets.BaseResponseListCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.wzcd.api.MyApiServer;
-import com.cdkj.wzcd.view.item.MyItemNormalLayout;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,15 +25,30 @@ public class DataDictionaryHelper {
     public static String credit_user_relation = "credit_user_relation";
     public static String credit_user_loan_role = "credit_user_loan_role";
     public static String budget_orde_biz_typer = "budget_orde_biz_typer";
+    public static String loan_period = "loan_period";
 
-    private Call call;
-    private Context mContext;
+    // 寄送方式
+    public static String send_type = "send_type";
+    // 快递公司
+    public static String kd_company = "kd_company";
+    // GPS申领状态
+    public static String gps_apply_status = "gps_apply_status";
+    // 还款业务状态
+    public static String status = "status";
 
-    public DataDictionaryHelper(Context context){
-        mContext = context;
+    private static Call call;
+
+    public static String getValueOnTheKey(String key, List<DataDictionary> data){
+
+        for (DataDictionary dataDictionary : data){
+            if (TextUtils.equals(key, dataDictionary.getDkey()))
+                return dataDictionary.getDvalue();
+        }
+
+        return "";
     }
 
-    public void getValueOnTheKey(String parentKey, String key, MyItemNormalLayout myItemNormalLayout, DataDictionaryInterface dataDictionaryInterface){
+    public static void getValueOnTheKeyRequest(Context context, String parentKey, String key, DataDictionaryInterface dataDictionaryInterface){
         Map<String, String> map = new HashMap<>();
         map.put("dkey", key);
         map.put("orderColumn", "");
@@ -40,18 +56,17 @@ public class DataDictionaryHelper {
         map.put("parentKey", parentKey);
         map.put("type", "");
         map.put("updater", "");
+        map.put("token", SPUtilHelper.getUserToken());
+
 
         call = RetrofitUtils.createApi(MyApiServer.class).getDataDictionary("630036", StringUtils.getJsonToString(map));
 
-        call.enqueue(new BaseResponseListCallBack<DataDictionary>(mContext) {
+        call.enqueue(new BaseResponseListCallBack<DataDictionary>(context) {
 
             @Override
             protected void onSuccess(List<DataDictionary> data, String SucMessage) {
                 if (data == null || data.size() == 0)
                     return;
-
-                if (myItemNormalLayout != null)
-                    myItemNormalLayout.setContext(data.get(0).getDvalue());
 
                 if (dataDictionaryInterface != null)
                     dataDictionaryInterface.onSuccess(data.get(0));
@@ -70,7 +85,42 @@ public class DataDictionaryHelper {
 
     }
 
-    private void clearCall(){
+    public static void getDataDictionaryRequest(Context context, String parentKey, String key, DataDictionaryListInterface listInterface){
+        Map<String, String> map = new HashMap<>();
+        map.put("dkey", key);
+        map.put("orderColumn", "");
+        map.put("orderDir", "");
+        map.put("parentKey", parentKey);
+        map.put("type", "");
+        map.put("updater", "");
+
+        call = RetrofitUtils.createApi(MyApiServer.class).getDataDictionary("630036", StringUtils.getJsonToString(map));
+
+        call.enqueue(new BaseResponseListCallBack<DataDictionary>(context) {
+
+            @Override
+            protected void onSuccess(List<DataDictionary> data, String SucMessage) {
+                if (data == null || data.size() == 0)
+                    return;
+
+                if (listInterface != null)
+                    listInterface.onSuccess(data);
+            }
+
+            @Override
+            protected void onFinish() {
+                clearCall();
+            }
+        });
+    }
+
+    public interface DataDictionaryListInterface{
+
+        void onSuccess(List<DataDictionary> list);
+
+    }
+
+    private static void clearCall(){
         if (call != null)
             call.cancel();
     }

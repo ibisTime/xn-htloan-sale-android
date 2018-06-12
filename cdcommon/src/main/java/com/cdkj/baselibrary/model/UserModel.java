@@ -52,6 +52,7 @@ public class UserModel implements Parcelable {
     private String updater;
     private String updateDatetime;
     private String remark;
+    private String companyName;
     private String companyCode;
     private String systemCode;
     private String gender;
@@ -59,7 +60,24 @@ public class UserModel implements Parcelable {
     private String slogan;
     private String styleName;
     private String signStatus;
+    private String roleCode;
     private int maxNumber;
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
+    }
 
     public int getMaxNumber() {
         return maxNumber;

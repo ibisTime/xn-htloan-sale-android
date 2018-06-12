@@ -1,32 +1,44 @@
 package com.cdkj.wzcd.adapter;
 
+import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 
+import com.cdkj.baselibrary.model.DataDictionary;
+import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.wzcd.R;
-import com.cdkj.wzcd.model.GpsBean;
-import com.cdkj.wzcd.view.MyNormalLayout;
+import com.cdkj.wzcd.databinding.ItemGpsBinding;
+import com.cdkj.wzcd.model.GpsApplyModel;
+import com.cdkj.wzcd.util.DataDictionaryHelper;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
 /**
- * @author qi
+ * @author cdkj
  * @updateDts 2018/5/30
  */
 
-public class GpsAdapter extends BaseQuickAdapter<GpsBean, BaseViewHolder> {
-    public GpsAdapter(@Nullable List<GpsBean> data) {
+public class GpsAdapter extends BaseQuickAdapter<GpsApplyModel, BaseViewHolder> {
+
+    private ItemGpsBinding mBinding;
+    private List<DataDictionary> mList;
+
+    public GpsAdapter(@Nullable List<GpsApplyModel> data, List<DataDictionary> list) {
         super(R.layout.item_gps, data);
+
+        this.mList = list;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, GpsBean item) {
+    protected void convert(BaseViewHolder helper, GpsApplyModel item) {
+        mBinding = DataBindingUtil.bind(helper.itemView);
 
-        MyNormalLayout mnl_number_time = helper.getView(R.id.mnl_number_time);//申请数量--时间
-        MyNormalLayout mnl_company = helper.getView(R.id.mnl_company);//所属公司  就一个
-        MyNormalLayout mnl_bank_name = helper.getView(R.id.mnl_user_type);//申领人   状态
+        mBinding.myTlIdNode.setText(item.getApplyUserName(), DataDictionaryHelper.getValueOnTheKey(item.getStatus(), mList));
 
+        mBinding.myIlCompany.setText("");
+        mBinding.myIlNumber.setText(item.getApplyCount()+"");
+        mBinding.myIlDateTime.setText(DateUtil.formatStringData(item.getApplyDatetime(), DateUtil.DEFAULT_DATE_FMT));
 
     }
 }

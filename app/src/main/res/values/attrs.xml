@@ -19,10 +19,23 @@
     <declare-styleable name="MyNormalLayout">
         <attr name="txt_normal_title" format="string"></attr>
         <attr name="txt_normal_content" format="string"></attr>
+        <attr name="txt_normal_hint" format="string"></attr>
+        <attr name="img_normal_right" format="reference"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="MyListItemTitleLayout">
+        <attr name="txt_list_item_left" format="string"></attr>
+        <attr name="txt_list_item_right" format="string"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="MyListItemLayout">
+        <attr name="txt_list_item_title" format="string"></attr>
+        <attr name="txt_list_item_content" format="string"></attr>
     </declare-styleable>
 
     <declare-styleable name="MyConfirmBtn">
         <attr name="txt_confirm_content" format="string"></attr>
+        <attr name="txt_confirm_content_right" format="string"></attr>
     </declare-styleable>
 
     <declare-styleable name="MyEditLayout">
@@ -31,9 +44,10 @@
         <attr name="txt_input_hint" format="string"></attr>
         <attr name="inputType" format="string">
 
-            <enum name="phone" value="0"/>
-            <enum name="id" value="1"/>
-            <enum name="text" value="2"/>
+            <enum name="phone" value="0"/> <!-- 电话 -->
+            <enum name="id" value="1"/> <!-- 身份证类型 -->
+            <enum name="text" value="2"/> <!-- 文本 -->
+            <enum name="money" value="3"/> <!-- 金钱类型 -->
 
         </attr>
     </declare-styleable>
@@ -61,5 +75,16 @@
         <attr name="txt_item_double_content" format="string"></attr>
         <attr name="txt_item_double_content_right" format="string"></attr>
     </declare-styleable>
+
+    <declare-styleable name="MyListItemBtnLayout">
+        <attr name="txt_item_confirm_content_left" format="string"></attr>
+        <attr name="txt_item_confirm_content_right" format="string"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="MyItemChoiceLayout">
+        <attr name="txt_item_choice_title" format="string"></attr>
+        <attr name="txt_item_choice_img" format="reference"></attr>
+    </declare-styleable>
+
 
 </resources>

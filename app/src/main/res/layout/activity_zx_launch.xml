@@ -29,7 +29,7 @@
 
             <com.cdkj.wzcd.view.MySelectLayout
                 android:id="@+id/mySl_way"
-                app:txt_select_title="购车途径"
+                app:txt_select_title="业务种类"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -89,6 +89,7 @@
             </android.support.v7.widget.RecyclerView>
 
             <LinearLayout
+                android:id="@+id/ll_add_root"
                 android:paddingTop="10dp"
                 android:paddingBottom="15dp"
                 android:paddingLeft="@dimen/layout_left_interval"

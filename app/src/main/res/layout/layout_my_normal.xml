@@ -32,6 +32,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" />
 
+            <ImageView
+                android:id="@+id/iv_right"
+
+                android:visibility="gone"
+                android:layout_marginLeft="@dimen/layout_left_interval"
+                android:layout_width="9dp"
+                android:layout_height="14dp"
+                android:layout_gravity="center"
+                android:src="@drawable/more_right" />
+
         </LinearLayout>
 
         <View

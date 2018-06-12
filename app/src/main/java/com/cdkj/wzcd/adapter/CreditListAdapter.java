@@ -2,15 +2,21 @@ package com.cdkj.wzcd.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
+import com.cdkj.baselibrary.model.DataDictionary;
 import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.MoneyUtils;
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.databinding.ItemCreditListBinding;
 import com.cdkj.wzcd.model.CreditModel;
+import com.cdkj.wzcd.module.business.credit.CreditInitiateActivity;
+import com.cdkj.wzcd.module.business.credit.audit.AuditCreditActivity;
 import com.cdkj.wzcd.util.BankHelper;
 import com.cdkj.wzcd.util.DataDictionaryHelper;
+import com.cdkj.wzcd.util.NodeHelper;
 import com.cdkj.wzcd.util.RequestUtil;
+import com.cdkj.wzcd.util.UserHelper;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -23,26 +29,50 @@ import java.util.List;
 public class CreditListAdapter extends BaseQuickAdapter<CreditModel, BaseViewHolder> {
 
     private ItemCreditListBinding mBinding;
+    private List<DataDictionary> mType;
 
-    public CreditListAdapter(@Nullable List<CreditModel> data) {
+    public CreditListAdapter(@Nullable List<CreditModel> data, List<DataDictionary> type) {
         super(R.layout.item_credit_list, data);
+
+        mType = type;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, CreditModel item) {
         mBinding = DataBindingUtil.bind(helper.itemView);
 
-        mBinding.myItemNlIdStatus.setContext(item.getCode(),item.getStatus());
+        mBinding.myTlIdStatus.setText(item.getCode(), NodeHelper.getNameOnTheCode(item.getCurNodeCode()));
 
-        if (item.getCreditUser() != null)
-            mBinding.myItemNlNameAmount.setContext(item.getCreditUser().getUserName(),
-                    MoneyUtils.MONEYSING + RequestUtil.formatAmountDiv(item.getLoanAmount()));
+        mBinding.myIlType.setText(DataDictionaryHelper.getValueOnTheKey(item.getBizType(), mType));
+        mBinding.myIlName.setText(item.getCreditUser().getUserName());
+        mBinding.myIlAmount.setText(MoneyUtils.MONEYSING + RequestUtil.formatAmountDiv(item.getLoanAmount()));
+        mBinding.myIlDateTime.setText(DateUtil.formatStringData(item.getApplyDatetime(), DateUtil.DEFAULT_DATE_FMT));
 
-        new DataDictionaryHelper(mContext).getValueOnTheKey(DataDictionaryHelper.budget_orde_biz_typer, item.getBizType(),
-                mBinding.myItemNlType, null);
+        new BankHelper(mContext).getValueOnTheKey(item.getLoanBankCode(), mBinding.myIlBank, null);
 
-        new BankHelper(mContext).getValueOnTheKey(item.getLoanBankCode(), mBinding.myItemNlBank, null);
+        mBinding.myItemCblConfirm.setContent("","");
 
-        mBinding.myItemNlDateTime.setContext(DateUtil.formatStringData(item.getApplyDatetime(), DateUtil.DEFAULT_DATE_FMT));
+        if (UserHelper.isZHRY()){
+
+            if (TextUtils.equals(item.getCurNodeCode(), "001_02")){ // 录入征信结果
+                mBinding.myItemCblConfirm.setRightTextAndListener("录入银行征信结果", view -> {
+                    AuditCreditActivity.open(mContext, item.getCode());
+                });
+            }else {
+                mBinding.myItemCblConfirm.setContent("","");
+            }
+
+        }else {
+
+            if (TextUtils.equals(item.getCurNodeCode(), "001_04")){ // 风控专员审核不通过
+                mBinding.myItemCblConfirm.setRightTextAndListener("修改征信信息", view -> {
+                    CreditInitiateActivity.open(mContext, item.getCode());
+                });
+            }else {
+                mBinding.myItemCblConfirm.setContent("","");
+            }
+
+        }
+
     }
 }

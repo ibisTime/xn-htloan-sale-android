@@ -1,6 +1,5 @@
 package com.cdkj.baselibrary.dialog;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -20,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cdkj.baselibrary.R;
-import com.cdkj.baselibrary.utils.AppUtils;
 import com.cdkj.baselibrary.views.LoadingView;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 
@@ -35,7 +33,7 @@ import io.reactivex.functions.Consumer;
 /**
  * QMUI
  *
- * @author cginechen
+ * @author cdkj
  * @date 2016-10-14
  */
 

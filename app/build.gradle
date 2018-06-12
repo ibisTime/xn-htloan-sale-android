@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     defaultConfig {
-        applicationId "com.cdkj.htwtloan"
-        minSdkVersion 19
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        applicationId rootProject.ext.applicationId
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -34,14 +34,14 @@ android {
     }
 
 
-//    signingConfigs {
-//        config {
-//            storeFile file('/Users/lei/AndroidStudioProjects/xn-wzcd-android/keystore.jks')
-//            storePassword "wzcd123456"
-//            keyAlias "wzcd"
-//            keyPassword "wzcd123456"
-//        }
-//    }
+    signingConfigs {
+        config {
+            storeFile file('/Users/lei/AndroidStudioProjects/xn-htwt-sale-android/keystore.jks')
+            storePassword "htwt123456"
+            keyAlias "htwt_b"
+            keyPassword "htwt123456"
+        }
+    }
 
     buildTypes {
         release {

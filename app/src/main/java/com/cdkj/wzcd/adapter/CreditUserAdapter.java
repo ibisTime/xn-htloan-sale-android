@@ -3,6 +3,7 @@ package com.cdkj.wzcd.adapter;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 
+import com.cdkj.baselibrary.model.DataDictionary;
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.databinding.ItemCreditPersonBinding;
 import com.cdkj.wzcd.model.CreditUserModel;
@@ -10,6 +11,7 @@ import com.cdkj.wzcd.util.DataDictionaryHelper;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,23 +22,34 @@ public class CreditUserAdapter extends BaseQuickAdapter<CreditUserModel, BaseVie
 
     private ItemCreditPersonBinding mBinding;
 
-    public CreditUserAdapter(@Nullable List<CreditUserModel> data) {
+    List<DataDictionary> mRole = new ArrayList<>();
+    List<DataDictionary> mRelation = new ArrayList<>();
+
+    public CreditUserAdapter(@Nullable List<CreditUserModel> data, List<DataDictionary> role, List<DataDictionary> relation) {
         super(R.layout.item_credit_person, data);
+
+        mRole.addAll(role);
+        mRelation.addAll(relation);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, CreditUserModel item) {
         mBinding = DataBindingUtil.bind(helper.itemView);
 
-        mBinding.myItemNlName.setContext(item.getUserName());
-        mBinding.myItemNlPhone.setContext(item.getMobile());
-        mBinding.myItemNlId.setContext(item.getIdNo());
+        mBinding.myItemNlName.setContent(item.getUserName());
+        mBinding.myItemNlPhone.setContent(item.getMobile());
+        mBinding.myItemNlId.setContent(item.getIdNo());
 
-        new DataDictionaryHelper(mContext).getValueOnTheKey(DataDictionaryHelper.credit_user_loan_role,
-                 item.getLoanRole(), mBinding.myItemNlRole,null);
+        mBinding.myItemNlRole.setContent(DataDictionaryHelper.getValueOnTheKey(item.getLoanRole(), mRole));
+        mBinding.myItemNlRelation.setContent(DataDictionaryHelper.getValueOnTheKey(item.getRelation(), mRelation));
 
-        new DataDictionaryHelper(mContext).getValueOnTheKey(DataDictionaryHelper.credit_user_relation,
-                item.getRelation() ,mBinding.myItemNlRelation,null);
+
+//
+//        DataDictionaryHelper.getValueOnTheKeyRequest(mContext, DataDictionaryHelper.credit_user_loan_role,
+//                 item.getLoanRole(), ,null);
+//
+//        DataDictionaryHelper.getValueOnTheKeyRequest(mContext, DataDictionaryHelper.credit_user_relation,
+//                item.getRelation() ,,null);
 
 
     }

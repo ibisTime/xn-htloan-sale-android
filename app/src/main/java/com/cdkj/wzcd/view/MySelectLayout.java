@@ -43,7 +43,7 @@ public class MySelectLayout extends LinearLayout {
     private Activity mActivity;
     private boolean mIsRequest;
     private int mRequestType;
-    private String mRequestKey;
+    private String mParentKey;
 
     private List<DataDictionary> mData;
     private MySelectInterface mySelectInterface;
@@ -51,13 +51,17 @@ public class MySelectLayout extends LinearLayout {
     private String txtTitle;
     private String txtContent;
 
-    // 
+    //
+    private String mKey;
     private String[] mKeyList;
 
+    private String mValue;
     private String[] mValueList;
 
     // 初始默认不选中
-    private int selectIndex = -1;
+    private int selectIndex = -1; // -1:下拉数据已初始化，但还未选择 ，-2:直接通过请求数据添加Layout内容，不需要初始化下拉数据，也不需要选择
+
+    private boolean isOnClickEnable = true;
 
     protected LoadingDialog loadingDialog;
 
@@ -90,11 +94,45 @@ public class MySelectLayout extends LinearLayout {
             mBinding.tvContent.setText(txtContent);
     }
 
-    public void setContent(String content) {
+    public void setText(String text) {
 
-        mBinding.tvContent.setText(content);
+        mBinding.tvContent.setText(text);
+
+        selectIndex = -2;
 
     }
+
+
+    public void setTextAndKey(String key, String value) {
+
+        mKey = key;
+        mValue = value;
+
+        mBinding.tvContent.setText(mValue);
+
+        selectIndex = -2;
+
+    }
+
+    /**
+     * 设置布局内容，内容来自于详情或其他请求，此时布局不应相应点击时间
+     * @param text
+     */
+    public void setTextByRequest(String text){
+        // 隐藏更多
+        mBinding.ivMore.setVisibility(GONE);
+        // 设置不可弹出下拉
+        isOnClickEnable = false;
+        // 设置内容
+        mBinding.tvContent.setText(text);
+
+        selectIndex = -2;
+    }
+
+    public void setOnClickEnable(boolean onClickEnable){
+        isOnClickEnable = onClickEnable;
+    }
+
     public void setContentByKey(String key){
 
         int i = 0;
@@ -109,10 +147,17 @@ public class MySelectLayout extends LinearLayout {
         mBinding.tvContent.setText(mValueList[selectIndex]);
     }
 
-    public void setData(Activity activity, int requestType, String requestKey, MySelectInterface selectInterface){
+    /**
+     * 设置通过请求获取数据
+     * @param activity 上下文
+     * @param requestType 请求类型（数据字典，系统参数）
+     * @param parentKey 请求数据key
+     * @param selectInterface 下拉框选择回调
+     */
+    public void setData(Activity activity, int requestType, String parentKey, MySelectInterface selectInterface){
         mActivity = activity;
+        mParentKey = parentKey;
         mRequestType = requestType;
-        mRequestKey = requestKey;
 
         mySelectInterface = selectInterface;
 
@@ -136,6 +181,9 @@ public class MySelectLayout extends LinearLayout {
     private void initListener() {
         mBinding.llRoot.setOnClickListener(view -> {
 
+            if (!isOnClickEnable)
+                return;
+
             if (mIsRequest) {
                 if (mActivity == null)
                     return;
@@ -158,7 +206,7 @@ public class MySelectLayout extends LinearLayout {
         map.put("dkey", "");
         map.put("orderColumn", "");
         map.put("orderDir", "");
-        map.put("parentKey", mRequestKey);
+        map.put("parentKey", mParentKey);
         map.put("type", "");
         map.put("updater", "");
 
@@ -203,7 +251,11 @@ public class MySelectLayout extends LinearLayout {
                 mValueList, selectIndex, (dialog, which) -> {
 
                     selectIndex = which;
-                    mBinding.tvContent.setText(mValueList[which]);
+
+                    mKey = mKeyList[which];
+                    mValue = mValueList[which];
+
+                    mBinding.tvContent.setText(mValue);
 
                     if (mySelectInterface != null)
                         mySelectInterface.onClick(dialog,which);
@@ -212,15 +264,17 @@ public class MySelectLayout extends LinearLayout {
                 }).setNegativeButton("取消", null).show();
     }
 
-
-    public String getDataKey(){
-
+    public boolean check(){
         if (selectIndex == -1){
             ToastUtil.show(context, "请选择"+mBinding.tvTitle.getText());
-            return null;
+            return true;
         }
 
-        return mKeyList[selectIndex];
+        return false;
+    }
+
+    public String getDataKey(){
+        return mKey;
     }
 
     public String getDataValue(){
@@ -230,7 +284,17 @@ public class MySelectLayout extends LinearLayout {
             return null;
         }
 
-        return mValueList[selectIndex];
+        return mValue;
+    }
+
+    public String getDataId(){
+
+        if (selectIndex == -1){
+            ToastUtil.show(context, "请选择"+mBinding.tvTitle.getText());
+            return null;
+        }
+
+        return mData.get(selectIndex).getId();
     }
 
     @Override

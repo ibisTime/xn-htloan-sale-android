@@ -9,36 +9,73 @@
         android:orientation="vertical"
         tools:context="com.cdkj.wzcd.module.cartool.uservoid.BlankOutActivity">
 
-        <com.cdkj.wzcd.view.MySelectLayout
-            android:id="@+id/msl_name"
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_code"
+            app:img_normal_right="@drawable/more_right"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:txt_select_title="客户姓名"></com.cdkj.wzcd.view.MySelectLayout>
+            app:txt_normal_title="业务编号">
 
-        <EditText
-            android:id="@+id/et_reason"
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="@null"
-            android:gravity="left"
-            android:hint="作废原因"
-            android:maxLines="5"
-            android:minLines="5"
-            android:padding="5dp" />
+            app:txt_normal_title="客户姓名">
 
-        <Button
-            android:id="@+id/btn_submit"
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_bank"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/btn_check_bg"
-            android:text="提交"
+            android:layout_height="wrap_content"
+            app:txt_normal_title="贷款银行">
 
-            android:textColor="@color/white" />
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_loan_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_normal_content="0.00"
+            app:txt_normal_title="贷款金额">
+
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <View
+            style="@style/style_split_line_horizontal_broad"/>
+
+        <com.cdkj.wzcd.view.MyEditLayout
+            android:id="@+id/myEl_reason"
+            app:txt_input_title="作废原因"
+            app:txt_input_hint="请输入作废原因"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        </com.cdkj.wzcd.view.MyEditLayout>
+
+        <!--<EditText-->
+            <!--android:id="@+id/et_reason"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_marginRight="15dp"-->
+            <!--android:background="@null"-->
+            <!--android:gravity="left"-->
+            <!--android:hint="作废原因"-->
+            <!--android:maxLines="5"-->
+            <!--android:minLines="5"-->
+            <!--android:padding="5dp" />-->
+
+        <com.cdkj.wzcd.view.MyConfirmBtn
+            android:id="@+id/myCb_confirm"
+            app:txt_confirm_content="确定"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        </com.cdkj.wzcd.view.MyConfirmBtn>
     </LinearLayout>
 </layout>

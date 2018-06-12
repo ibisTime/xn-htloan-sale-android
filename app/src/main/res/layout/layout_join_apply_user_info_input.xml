@@ -10,11 +10,6 @@
         tools:showIn="@layout/activity_join_apply_input">
 
 
-        <com.cdkj.wzcd.view.MyTitleBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:txt_title="申请人信息" />
-
         <com.cdkj.wzcd.view.MyEditLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -137,7 +132,6 @@
             android:layout_height="wrap_content"
             app:txt_input_hint="请输入月收入"
             app:txt_input_title="*月收入（元）" />
-
 
     </LinearLayout>
 </layout>

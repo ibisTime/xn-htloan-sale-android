@@ -21,24 +21,20 @@
 
         <activity android:name=".MainActivity">
         </activity>
-        <activity android:name=".module.business.credit.BssCreditListActivity" />
-        <activity android:name=".module.business.credit.CreditInitiateActivity" />
         <activity android:name=".module.user.SignInActivity" />
-        <activity android:name=".module.business.zxdc.join_approval.JoinApplyActivity" />
-        <activity android:name=".module.business.zxdc.face_view.FaceInterviewActivity" />
-        <activity android:name=".module.business.zxdc.face_view.FaceViewStartActivity" />
-        <activity android:name=".module.business.zxdc.gps_install.GPSInstallListActivity" />
-        <activity android:name=".module.business.zxdc.gps_install.GPSInstallInfoActivity" />
-        <activity android:name=".module.business.zxdc.gps_install.GPSInfoAddActivity" />
-        <activity android:name=".module.business.zxdc.join_approval.JoinApplyInfoInputActivity" />
-        <activity android:name=".module.business.credit.CreditUserAddActivity" />
+        <activity android:name=".module.business.credit.BssCreditListActivity" />
+        <activity android:name=".module.business.credit.audit.AuditCreditActivity" />
+
+        <activity android:name=".module.business.join_approval.JoinApplyListActivity" />
+        <activity android:name=".module.business.face_view.InterviewActivity" />
+        <activity android:name=".module.business.face_view.InterviewStartActivity" />
+        <activity android:name=".module.business.gps_install.GPSInstallListActivity" />
+        <activity android:name=".module.business.gps_install.GPSInstallInfoActivity" />
+        <activity android:name=".module.business.gps_install.GPSInfoAddActivity" />
+        <activity android:name=".module.business.join_approval.edit.JoinStep1Activity" />
+        <activity android:name=".module.business.credit.CreditUserActivity" />
 
         <!--数据请求-->
-        <activity
-            android:name=".view.DataRequestActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/ActivityDialogStyleBottom"
-            android:windowSoftInputMode="adjustPan" />
 
         <activity android:name=".module.business.cllh.CllhListActivity" />
         <activity android:name=".module.business.cllh.CllhInputMessageActivity" />
@@ -50,12 +46,29 @@
         <activity android:name=".module.cartool.uservoid.UserToVoidActivity" />
         <activity android:name=".module.cartool.uservoid.BlankOutActivity" />
         <activity android:name=".module.cartool.uservoid.UserToVoidDetailsActivity" />
-        <activity android:name=".module.cartool.gps.GpsActivity" />
-        <activity android:name=".module.cartool.gps.GpsRequestActivity" />
+        <activity android:name=".module.cartool.gps.GpsListActivity" />
+        <activity android:name=".module.cartool.gps.GpsApplyActivity" />
         <activity android:name=".module.cartool.gps.GpsDetailsActivity" />
         <activity android:name=".module.cartool.history.HistoryUserActivity" />
         <activity android:name=".module.cartool.history.HistoryUserDetailsActivity" />
         <activity android:name=".module.cartool.history.RepaymentListActivity"></activity>
+        <activity android:name=".module.user.UserInfoActivity" />
+        <activity android:name=".module.business.bank_loan.BankLoanListActivity" />
+        <activity android:name=".module.business.bank_loan.BankLoanCommitActivity" />
+        <activity android:name=".module.business.bank_loan.BankLoanInputActivity" />
+        <activity android:name=".module.business.join_approval.edit.JoinStep2Activity" />
+        <activity android:name=".module.business.join_approval.edit.JoinStep3Activity" />
+        <activity android:name=".module.business.join_approval.edit.JoinStep4Activity" />
+        <activity android:name=".module.business.join_approval.edit.JoinStep5Activity" />
+        <activity android:name=".module.business.join_approval.edit.JoinStep6Activity" />
+        <activity android:name=".module.business.join_approval.JoinApplyActivity" />
+        <activity android:name=".module.business.credit.AuditResultInputActivity" />
+        <activity android:name=".module.business.credit.CreditDetailActivity" />
+        <activity android:name=".module.business.credit.CreditInitiateActivity" />
+        <activity android:name=".module.business.credit.audit.AuditUserActivity" />
+        <activity android:name=".module.business.cldy.MortgageFinishActivity" />
+        <activity android:name=".module.cartool.uservoid.ZrdListActivity" />
+        <activity android:name=".module.business.gps_install.GpsDetailActivity" />
     </application>
 
 </manifest>

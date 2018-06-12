@@ -44,7 +44,7 @@ public abstract class AbsBaseLoadActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     if (!canFinish()) {
-                        topTitleViewleftClick();
+                        topTitleViewLeftClick();
                     }
                     finish();
                 }
@@ -87,7 +87,7 @@ public abstract class AbsBaseLoadActivity extends BaseActivity {
      */
     public abstract void afterCreate(Bundle savedInstanceState);
 
-    public void topTitleViewleftClick() {
+    public void topTitleViewLeftClick() {
 
     }
 
@@ -110,7 +110,7 @@ public abstract class AbsBaseLoadActivity extends BaseActivity {
      */
     protected void setTitleBg() {
         mBaseBinding.titleView.setBackgroundColor(ContextCompat.getColor(this, R.color.title_bg));
-        mBaseBinding.titleView.setLeftTitleColor(R.color.title_bg);
+        mBaseBinding.titleView.setLeftTitleColor(R.color.white);
         mBaseBinding.titleView.setRightTitleColor(R.color.white);
         mBaseBinding.titleView.setMidTitleColor(R.color.white);
         mBaseBinding.titleView.setLeftImg(R.drawable.back_img);

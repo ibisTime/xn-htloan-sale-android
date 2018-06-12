@@ -7,34 +7,57 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.cdkj.baselibrary.activitys.ExpectActivity;
 import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.dialog.UITipDialog;
+import com.cdkj.baselibrary.model.DataDictionary;
 import com.cdkj.baselibrary.model.UserModel;
+import com.cdkj.baselibrary.model.eventmodels.EventFinishMain;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.databinding.ActivityMainBinding;
+import com.cdkj.wzcd.model.NodeModel;
+import com.cdkj.wzcd.module.business.bank_loan.BankLoanListActivity;
 import com.cdkj.wzcd.module.business.cldy.BssCldyListActivity;
 import com.cdkj.wzcd.module.business.cllh.CllhListActivity;
 import com.cdkj.wzcd.module.business.credit.BssCreditListActivity;
-import com.cdkj.wzcd.module.business.zxdc.face_view.FaceInterviewActivity;
-import com.cdkj.wzcd.module.business.zxdc.gps_install.GPSInstallListActivity;
-import com.cdkj.wzcd.module.business.zxdc.join_approval.JoinApplyActivity;
-import com.cdkj.wzcd.module.cartool.gps.GpsActivity;
+import com.cdkj.wzcd.module.business.face_view.InterviewActivity;
+import com.cdkj.wzcd.module.business.gps_install.GPSInstallListActivity;
+import com.cdkj.wzcd.module.cartool.gps.GpsListActivity;
 import com.cdkj.wzcd.module.cartool.history.HistoryUserActivity;
 import com.cdkj.wzcd.module.cartool.uservoid.UserToVoidActivity;
 import com.cdkj.wzcd.module.datatransfer.DataTransferActivity;
+import com.cdkj.wzcd.module.user.SignInActivity;
+import com.cdkj.wzcd.util.BizTypeHelper;
+import com.cdkj.wzcd.util.NodeHelper;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
 
+import static com.cdkj.wzcd.util.DataDictionaryHelper.budget_orde_biz_typer;
+import static com.cdkj.wzcd.util.UserHelper.NQZY;
+import static com.cdkj.wzcd.util.UserHelper.YWY;
+import static com.cdkj.wzcd.util.UserHelper.ZHRY;
+
 public class MainActivity extends AbsBaseLoadActivity {
 
+    // 节点列表
+    public static List<NodeModel> BASE_NODE_LIST = new ArrayList<>();
+    // 业务种类
+    public static List<DataDictionary> BASE_BIZ_TYPE = new ArrayList<>();
+
+    private UserModel mUserModel;
     private ActivityMainBinding mBinding;
 
     public static void open(Context context) {
@@ -59,16 +82,46 @@ public class MainActivity extends AbsBaseLoadActivity {
     @Override
     public void afterCreate(Bundle savedInstanceState) {
 
-        getUserInfoRequest(true);
-
         initListener();
+
+        NodeHelper.getNodeBaseDataRequest(this, "", "", new NodeHelper.NodeInterface() {
+            @Override
+            public void onSuccess(List<NodeModel> list) {
+                BASE_NODE_LIST.clear();
+                BASE_NODE_LIST.addAll(list);
+
+
+                BizTypeHelper.getBizTypeBaseDataRequest(MainActivity.this, budget_orde_biz_typer, new BizTypeHelper.BizTypeInterface() {
+                    @Override
+                    public void onSuccess(List<DataDictionary> list) {
+
+                        BASE_BIZ_TYPE.clear();
+                        BASE_BIZ_TYPE.addAll(list);
+
+                        getUserInfoRequest(true);
+                    }
+
+                    @Override
+                    public void onReqFailure(String errorCode, String errorMessage) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onReqFailure(String errorCode, String errorMessage) {
+
+            }
+        });
+
     }
 
 
     /**
      * 获取用户信息
      */
-    public void getUserInfoRequest(boolean isShowdialog) {
+    public void getUserInfoRequest(boolean isShowDialog) {
 
         if (!SPUtilHelper.isLoginNoStart()) {  //没有登录不用请求
             return;
@@ -83,11 +136,12 @@ public class MainActivity extends AbsBaseLoadActivity {
 
         addCall(call);
 
-        if (isShowdialog) showLoadingDialog();
+        if (isShowDialog) showLoadingDialog();
 
         call.enqueue(new BaseResponseModelCallBack<UserModel>(this) {
             @Override
             protected void onSuccess(UserModel data, String SucMessage) {
+                mUserModel = data;
 
                 saveUserInfo(data);
                 setView(data);
@@ -100,7 +154,7 @@ public class MainActivity extends AbsBaseLoadActivity {
 
             @Override
             protected void onFinish() {
-                if (isShowdialog) disMissLoading();
+                if (isShowDialog) disMissLoading();
             }
         });
     }
@@ -116,14 +170,18 @@ public class MainActivity extends AbsBaseLoadActivity {
         SPUtilHelper.saveUserName(data.getRealName());
         SPUtilHelper.saveUserNickName(data.getNickname());
         SPUtilHelper.saveUserPhoto(data.getPhoto());
+        SPUtilHelper.saveRoleCode(data.getRoleCode());
     }
 
     private void setView(UserModel data) {
 
         ImgUtils.loadQiNiuBorderLogo(this, data.getPhoto(), mBinding.imAvatar, R.color.white);
         mBinding.tvNick.setText(TextUtils.isEmpty(data.getLoginName()) ? "暂无" : data.getLoginName());
+        mBinding.tvCompany.setText(data.getCompanyName());
 
-        if (false){
+        if (TextUtils.equals(data.getRoleCode(), ZHRY)){ // 驻行人员
+            mBinding.tvRole.setText("[驻行人员]");
+
             mBinding.mySrZrsq.setVisibility(View.GONE);
             mBinding.lineZrsq.setVisibility(View.GONE);
 
@@ -134,23 +192,43 @@ public class MainActivity extends AbsBaseLoadActivity {
             mBinding.lineCllh.setVisibility(View.GONE);
 
             mBinding.llUtil.setVisibility(View.GONE);
+        }else if (TextUtils.equals(data.getRoleCode(), YWY)){// 业务员
+            mBinding.tvRole.setText("[业务员]");
+
+        }else if (TextUtils.equals(data.getRoleCode(), NQZY)){// 内勤专员
+            mBinding.tvRole.setText("[内勤专员]");
+
+        }else {
+            mBinding.tvRole.setText("[其他]");
         }
 
     }
 
     private void initListener() {
-        mBinding.mySrZxdc.setOnClickListener(view -> {
+        mBinding.llUser.setOnClickListener(view -> {
+//            if (mUserModel == null)
+//                return;
+
+//            UserInfoActivity.open(this, mUserModel);
+        });
+
+        mBinding.flRight.setOnClickListener(view -> {
+            logOut();
+        });
+
+        mBinding.mySrCredit.setOnClickListener(view -> {
             BssCreditListActivity.open(this);
         });
 
         //准入申请
         mBinding.mySrZrsq.setOnClickListener(v -> {
-            JoinApplyActivity.open(this);
+//            JoinApplyListActivity.open(this);
+            ExpectActivity.open(this);
         });
 
         //面签
         mBinding.mySrMq.setOnClickListener(v -> {
-            FaceInterviewActivity.open(this);
+            InterviewActivity.open(this);
         });
 
         //gps 安装
@@ -158,31 +236,63 @@ public class MainActivity extends AbsBaseLoadActivity {
             GPSInstallListActivity.open(this);
         });
 
+        //车辆落户
         mBinding.mySrCllh.setOnClickListener(view -> {
-            //车辆落户
             CllhListActivity.open(this);
         });
+
+        //车辆抵押
         mBinding.mySrCldy.setOnClickListener(view -> {
-            //车辆抵押
             BssCldyListActivity.open(this);
         });
+
+        //资料上传
         mBinding.mySrZlcd.setOnClickListener(view -> {
-            //资料上传
             DataTransferActivity.open(this);
         });
+
+        //客户作废
         mBinding.mySrKhzf.setOnClickListener(view -> {
-            //客户作废
             UserToVoidActivity.open(this);
         });
+
+        //GPS申领
         mBinding.mySrGpssl.setOnClickListener(view -> {
-            //GPS申领
-            GpsActivity.open(this);
+            GpsListActivity.open(this);
         });
+
+        //历史客户
         mBinding.mySrLskh.setOnClickListener(view -> {
-            //历史客户
             HistoryUserActivity.open(this);
         });
 
+        // 银行放款
+        mBinding.mySrLoan.setOnClickListener(view -> {
+            BankLoanListActivity.open(this);
+//            BankLoanInputActivity.open(this,"12");
 
+        });
+
+    }
+
+    @Subscribe
+    public void doClose(EventFinishMain eventFinishMain){
+        finish();
+    }
+
+    /**
+     * 退出登录
+     */
+    private void logOut() {
+        showDoubleWarnListen("你确定要退出当前账号吗?", view -> {
+            SPUtilHelper.logOutClear();
+            UITipDialog.showSuccess(this, "退出成功",dialogInterface -> {
+                finish();
+
+                EventBus.getDefault().post(new EventFinishMain());
+
+                SignInActivity.open(this,false);
+            });
+        });
     }
 }

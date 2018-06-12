@@ -1,10 +1,12 @@
 package com.cdkj.baselibrary.model;
 
+import java.io.Serializable;
+
 /**
  * Created by cdkj on 2018/5/30.
  */
 
-public class DataDictionary {
+public class DataDictionary implements Serializable {
 
 
     /**
@@ -20,7 +22,7 @@ public class DataDictionary {
 
     private String dkey;
     private String dvalue;
-    private int id;
+    private String id;
     private String remark;
     private String systemCode;
     private String type;
@@ -47,11 +49,11 @@ public class DataDictionary {
         return this;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

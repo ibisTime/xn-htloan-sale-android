@@ -4,15 +4,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
+import com.cdkj.baselibrary.api.ResponseInListModel;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsRefreshListActivity;
+import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
+import com.cdkj.baselibrary.nets.RetrofitUtils;
+import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.wzcd.adapter.CllhListAdapter;
+import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.model.CllhListBean;
-import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.cdkj.wzcd.model.NodeListModel;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
 
 /**
  * 车辆落户
@@ -32,23 +39,21 @@ public class CllhListActivity extends AbsRefreshListActivity<CllhListBean> {
         mBaseBinding.titleView.setMidTitle("车辆落户");
 
         initRefreshHelper(10);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         mRefreshHelper.onDefaultMRefresh(true);
     }
 
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
-        ArrayList<CllhListBean> data = new ArrayList<CllhListBean>();
-        data.add(null);
-        data.add(null);
-        data.add(null);
-        data.add(null);
-        CllhListAdapter mAdapter = new CllhListAdapter(data);
+        CllhListAdapter mAdapter = new CllhListAdapter(listData);
 
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                CllhInputMessageActivity.open(CllhListActivity.this);
-            }
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            CllhInputMessageActivity.open(CllhListActivity.this, mAdapter.getItem(position).getCode());
         });
 
         return mAdapter;
@@ -56,19 +61,29 @@ public class CllhListActivity extends AbsRefreshListActivity<CllhListBean> {
 
     @Override
     public void getListRequest(int pageIndex, int limit, boolean isShowDialog) {
-        initDatas(pageIndex, limit, isShowDialog);
+        Map<String, String> map = RetrofitUtils.getNodeListMap();
+
+        map.put("start", pageIndex + "");
+        map.put("limit", limit + "");
+        map.put("saleUserId", SPUtilHelper.getUserId());
+
+        if (isShowDialog) showLoadingDialog();
+
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getNodeList("632148", StringUtils.getJsonToString(map));
+        addCall(call);
+
+        call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<NodeListModel>>(this) {
+            @Override
+            protected void onSuccess(ResponseInListModel<NodeListModel> data, String SucMessage) {
+                mRefreshHelper.setData(data.getList(), "暂无落户记录", 0);
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
     }
 
-    /**
-     * 获取数据
-     *
-     * @param pageIndex
-     * @param limit
-     * @param isShowDialog
-     */
-    private void initDatas(int pageIndex, int limit, boolean isShowDialog) {
-
-
-    }
 
 }

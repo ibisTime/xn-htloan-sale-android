@@ -11,11 +11,6 @@
         tools:showIn="@layout/activity_join_apply_input">
 
 
-        <com.cdkj.wzcd.view.MyTitleBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:txt_title="配偶信息" />
-
         <com.cdkj.wzcd.view.MyEditLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:txt_input_hint="请输入身份证号"
+            app:inputType="id"
             app:txt_input_title="*身份证号" />
 
         <com.cdkj.wzcd.view.MySelectLayout
@@ -56,6 +52,7 @@
             android:layout_height="wrap_content"
             app:txt_input_hint="请输入工作单位联系电话"
             app:txt_input_title="*工作单位联系电话" />
+
 
     </LinearLayout>
 </layout>

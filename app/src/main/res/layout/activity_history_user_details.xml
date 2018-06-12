@@ -3,75 +3,100 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="com.cdkj.wzcd.module.cartool.history.HistoryUserDetailsActivity">
-
-        <com.cdkj.wzcd.view.MyNormalLayout
-            android:id="@+id/mnl_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:txt_normal_title="状态">
-
-        </com.cdkj.wzcd.view.MyNormalLayout>
-
-        <com.cdkj.wzcd.view.MyNormalLayout
-            android:id="@+id/mnl_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:txt_normal_title="客户姓名">
-
-        </com.cdkj.wzcd.view.MyNormalLayout>
-
-        <com.cdkj.wzcd.view.MyNormalLayout
-            android:id="@+id/mnl_code"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:txt_normal_title="业务编号">
-
-        </com.cdkj.wzcd.view.MyNormalLayout>
-
-        <com.cdkj.wzcd.view.MyNormalLayout
-            android:id="@+id/mnl_company_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:txt_normal_title="公司名称"></com.cdkj.wzcd.view.MyNormalLayout>
-
-        <com.cdkj.wzcd.view.MyNormalLayout
-            android:id="@+id/mnl_money"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:txt_normal_title="贷款金额"></com.cdkj.wzcd.view.MyNormalLayout>
-
-        <com.cdkj.wzcd.view.MyNormalLayout
-            android:id="@+id/mnl_bank"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:txt_normal_title="贷款银行"></com.cdkj.wzcd.view.MyNormalLayout>
+        android:layout_height="fill_parent">
 
         <LinearLayout
-            android:id="@+id/ll_more"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:gravity="center_vertical">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context="com.cdkj.wzcd.module.cartool.history.HistoryUserDetailsActivity">
 
-            <TextView
-                android:layout_width="0dp"
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_status"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="还款计划列表" />
+                app:txt_normal_title="状态">
 
-            <ImageView
-                android:layout_width="wrap_content"
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_name"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/more_right" />
+                app:txt_normal_title="客户姓名">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="业务编号">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_company_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="公司名称">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_periods"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="贷款期数">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="贷款金额">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_rest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="剩余欠债">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_bank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="贷款银行">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="还款计划">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_plan"
+                android:paddingBottom="10dp"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            </android.support.v7.widget.RecyclerView>
+
 
         </LinearLayout>
 
+    </ScrollView>
 
-    </LinearLayout>
 </layout>

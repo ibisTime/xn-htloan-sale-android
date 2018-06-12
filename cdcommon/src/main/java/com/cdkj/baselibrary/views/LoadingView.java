@@ -17,7 +17,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 /**
  * 用于显示 Loading 的 {@link View}，支持颜色和大小的设置。
  *
- * @author cginechen
+ * @author cdkj
  * @date 2016-09-21
  */
 public class LoadingView extends View {

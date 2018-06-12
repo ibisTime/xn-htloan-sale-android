@@ -1,49 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:background="@color/white"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
 
-
-    <com.cdkj.wzcd.view.MyNormalLayout
-        android:id="@+id/mnl_code_type"
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:txt_normal_content="cd45555622478"
-        app:txt_normal_title="业务编号">
+        android:layout_height="wrap_content">
 
-    </com.cdkj.wzcd.view.MyNormalLayout>
+        <View
+            style="@style/style_split_line_horizontal_broad"/>
 
+        <com.cdkj.wzcd.view.list.MyListItemTitleLayout
+            android:id="@+id/myTl_idStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <com.cdkj.wzcd.view.MyNormalLayout
-        android:id="@+id/mnl_name_money"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:txt_normal_content="0.0"
-        app:txt_normal_title="客户姓名">
+        </com.cdkj.wzcd.view.list.MyListItemTitleLayout>
 
-    </com.cdkj.wzcd.view.MyNormalLayout>
+        <com.cdkj.wzcd.view.list.MyListItemLayout
+            android:id="@+id/myIl_type"
+            app:txt_list_item_title="业务种类"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <com.cdkj.wzcd.view.MyNormalLayout
-        android:id="@+id/mnl_bank_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:txt_normal_title="平顶山银行">
+        </com.cdkj.wzcd.view.list.MyListItemLayout>
 
-    </com.cdkj.wzcd.view.MyNormalLayout>
+        <com.cdkj.wzcd.view.list.MyListItemLayout
+            android:id="@+id/myIl_name"
+            app:txt_list_item_title="客户姓名"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <com.cdkj.wzcd.view.MyNormalLayout
-        android:id="@+id/mnl_is_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:txt_normal_content="2018-1-1"
-        app:txt_normal_title="是否垫资(是)">
+        </com.cdkj.wzcd.view.list.MyListItemLayout>
 
-    </com.cdkj.wzcd.view.MyNormalLayout>
+        <com.cdkj.wzcd.view.list.MyListItemLayout
+            android:id="@+id/myIl_amount"
+            app:txt_list_item_title="贷款金额"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-</LinearLayout>
+        </com.cdkj.wzcd.view.list.MyListItemLayout>
+
+        <com.cdkj.wzcd.view.list.MyListItemLayout
+            android:id="@+id/myIl_bank"
+            app:txt_list_item_title="贷款银行"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.cdkj.wzcd.view.list.MyListItemLayout>
+
+        <com.cdkj.wzcd.view.list.MyListItemLayout
+            android:id="@+id/myIl_date_time"
+            app:txt_list_item_title="申请时间"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.cdkj.wzcd.view.list.MyListItemLayout>
+
+    </LinearLayout>
+</layout>

@@ -55,14 +55,14 @@ public class MyItemDoubleLayout extends LinearLayout {
 
     }
 
-    public void setContext(String context){
-        mBinding.tvContent.setText(context);
+    public void setContent(String content){
+        mBinding.tvContent.setText(content);
     }
 
-    public void setContext(String context, String contextRight){
-        mBinding.tvContent.setText(context);
+    public void setContent(String content, String contentRight){
+        mBinding.tvContent.setText(content);
 
-        mBinding.tvContentRight.setText(contextRight);
+        mBinding.tvContentRight.setText(contentRight);
         mBinding.tvContentRight.setVisibility(VISIBLE);
     }
 

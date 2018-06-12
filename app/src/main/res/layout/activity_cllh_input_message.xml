@@ -17,7 +17,7 @@
 
 
             <com.cdkj.wzcd.view.MyNormalLayout
-                android:id="@+id/mnl_name"
+                android:id="@+id/myNl_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:txt_normal_title="客户姓名">
@@ -25,7 +25,7 @@
             </com.cdkj.wzcd.view.MyNormalLayout>
 
             <com.cdkj.wzcd.view.MyNormalLayout
-                android:id="@+id/mnl_code"
+                android:id="@+id/myNl_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:txt_normal_title="业务编号">
@@ -33,7 +33,7 @@
             </com.cdkj.wzcd.view.MyNormalLayout>
 
             <com.cdkj.wzcd.view.MyNormalLayout
-                android:id="@+id/mnl_bank"
+                android:id="@+id/myNl_bank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:txt_normal_title="贷款银行">
@@ -41,7 +41,7 @@
             </com.cdkj.wzcd.view.MyNormalLayout>
 
             <com.cdkj.wzcd.view.MyNormalLayout
-                android:id="@+id/mnl_monry"
+                android:id="@+id/myNl_loan_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:txt_normal_content="0.00"
@@ -49,15 +49,15 @@
 
             </com.cdkj.wzcd.view.MyNormalLayout>
 
-            <com.cdkj.wzcd.view.MyEditLayout
-
-                android:id="@+id/mihl_time"
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_date_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:txt_input_hint="请输入落户日期"
-                app:txt_input_title="落户日期">
+                app:txt_normal_title="落户日期"
+                app:txt_normal_hint="请选择落户日期"
+                app:img_normal_right="@drawable/more_right">
 
-            </com.cdkj.wzcd.view.MyEditLayout>
+            </com.cdkj.wzcd.view.MyNormalLayout>
 
             <!--<EditText-->
             <!--android:id="@+id/et_time"-->
@@ -71,16 +71,8 @@
             <!--android:paddingRight="5dp"-->
             <!--android:singleLine="true" />-->
 
-            <com.cdkj.wzcd.view.MySelectLayout
-                android:id="@+id/mySl_bank"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:txt_select_title="车牌号">
-
-            </com.cdkj.wzcd.view.MySelectLayout>
-
             <com.cdkj.wzcd.view.MyImageLayout
-
+                android:id="@+id/myIl_receipt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:isSingle="true"
@@ -90,7 +82,7 @@
             </com.cdkj.wzcd.view.MyImageLayout>
 
             <com.cdkj.wzcd.view.MyImageLayout
-
+                android:id="@+id/myIl_qualified"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:isSingle="true"
@@ -100,6 +92,7 @@
             </com.cdkj.wzcd.view.MyImageLayout>
 
             <com.cdkj.wzcd.view.MyImageLayout
+                android:id="@+id/myIl_jqx"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:isSingle="true"
@@ -107,52 +100,31 @@
                 app:txt_image_title="交强险"></com.cdkj.wzcd.view.MyImageLayout>
 
             <com.cdkj.wzcd.view.MyImageLayout
+                android:id="@+id/myIl_syx"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:isSingle="true"
                 app:txt_image_hint="商业险"
                 app:txt_image_title="商业险"></com.cdkj.wzcd.view.MyImageLayout>
 
-            <com.cdkj.wzcd.view.MyImageLayout
+            <com.cdkj.wzcd.view.MyConfirmBtn
+                android:id="@+id/myCb_confirm"
+                app:txt_confirm_content="保存"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:isSingle="true"
-                app:txt_image_hint="二手车必传"
-                app:txt_image_title="机动车证书"></com.cdkj.wzcd.view.MyImageLayout>
+                android:layout_height="wrap_content"></com.cdkj.wzcd.view.MyConfirmBtn>
 
-            <com.cdkj.wzcd.view.MyImageLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:isSingle="true"
-                app:txt_image_hint="批单"
-                app:txt_image_title="批单"></com.cdkj.wzcd.view.MyImageLayout>
-
-            <com.cdkj.wzcd.view.MyImageLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:isSingle="true"
-                app:txt_image_hint="车钥匙"
-                app:txt_image_title="车钥匙"></com.cdkj.wzcd.view.MyImageLayout>
-
-            <com.cdkj.wzcd.view.MyImageLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:isSingle="true"
-                app:txt_image_hint="大本扫描件"
-                app:txt_image_title="大本扫描件"></com.cdkj.wzcd.view.MyImageLayout>
-
-
-            <Button
-                android:id="@+id/btn_save"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/btn_check_bg"
-                android:text="保存"
-                android:textColor="@color/white" />
+            <!--<Button-->
+                <!--android:id="@+id/btn_save"-->
+                <!--android:visibility="gone"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:layout_marginBottom="10dp"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_marginRight="15dp"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:background="@drawable/btn_check_bg"-->
+                <!--android:text="保存"-->
+                <!--android:textColor="@color/white" />-->
         </LinearLayout>
 
     </ScrollView>

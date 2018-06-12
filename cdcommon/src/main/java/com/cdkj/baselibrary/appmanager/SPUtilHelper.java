@@ -153,7 +153,6 @@ public class SPUtilHelper {
         return SPUtils.getString(CdApplication.getContext(), "user_email", "");
     }
 
-
     /**
      * 设置用户token
      *
@@ -164,6 +163,24 @@ public class SPUtilHelper {
 
     }
 
+    /**
+     * 设置用户token
+     *
+     * @param s
+     */
+    public static void saveRoleCode(String s) {
+        SPUtils.put(CdApplication.getContext(), "roleCode", s);
+    }
+
+    /**
+     * 设置用户token
+     *
+     * @param
+     */
+    public static String getRoleCode() {
+        return SPUtils.getString(CdApplication.getContext(), "roleCode", "");
+
+    }
 
     /**
      * 判断用户是否登录
@@ -231,6 +248,7 @@ public class SPUtilHelper {
      */
     public static void logOutClear() {
         saveUserToken("");
+        saveRoleCode("");
         saveUserId("");
         saveUserPhoneNum("");
         saveAmountaccountNumber("");

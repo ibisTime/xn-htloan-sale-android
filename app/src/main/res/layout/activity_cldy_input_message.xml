@@ -11,6 +11,7 @@
         tools:context="com.cdkj.wzcd.module.business.cldy.CldyInputMessageActivity">
 
         <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:txt_normal_title="用户姓名">
@@ -18,6 +19,7 @@
         </com.cdkj.wzcd.view.MyNormalLayout>
 
         <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:txt_normal_title="业务编号">
@@ -25,6 +27,7 @@
         </com.cdkj.wzcd.view.MyNormalLayout>
 
         <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_bank"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:txt_normal_title="贷款银行">
@@ -32,25 +35,27 @@
         </com.cdkj.wzcd.view.MyNormalLayout>
 
         <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_loan_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:txt_normal_title="贷款金额">
 
         </com.cdkj.wzcd.view.MyNormalLayout>
 
-        <EditText
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_date_time"
+            app:txt_normal_title="抵押日期"
+            app:txt_normal_hint="请选择抵押日期"
+            app:img_normal_right="@drawable/more_right"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="@null"
-            android:hint="抵押日期"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:singleLine="true" />
+            android:layout_height="wrap_content">
+
+
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
 
         <com.cdkj.wzcd.view.MyImageLayout
-
+            android:id="@+id/myIl_ldb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:isSingle="true"
@@ -64,17 +69,28 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <Button
-            android:id="@+id/btn_save"
+        <com.cdkj.wzcd.view.MyConfirmBtn
+            android:id="@+id/myCb_confirm"
+            app:txt_confirm_content="保存"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/btn_check_bg"
-            android:text="保存"
-            android:textColor="@color/white" />
+            android:layout_height="wrap_content">
+
+
+        </com.cdkj.wzcd.view.MyConfirmBtn>
+
+
+
+        <!--<Button-->
+            <!--android:id="@+id/btn_save"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_marginRight="15dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="@drawable/btn_check_bg"-->
+            <!--android:text="保存"-->
+            <!--android:textColor="@color/white" />-->
 
 
     </LinearLayout>

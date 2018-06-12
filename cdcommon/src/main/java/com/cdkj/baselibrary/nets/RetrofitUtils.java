@@ -2,7 +2,6 @@ package com.cdkj.baselibrary.nets;
 
 
 import com.cdkj.baselibrary.api.BaseApiServer;
-import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 
 import java.util.HashMap;
@@ -43,6 +42,7 @@ public class RetrofitUtils {
 //                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build();
         }
+
         return retrofitInstance;
     }
 
@@ -88,9 +88,20 @@ public class RetrofitUtils {
      */
     public static Map getRequestMap() {
         Map map = new HashMap();
-        map.put("systemCode", MyCdConfig.SYSTEM_CODE);
-        map.put("companyCode", MyCdConfig.COMPANY_CODE);
         map.put("token", SPUtilHelper.getUserToken());
+        return map;
+    }
+
+
+    /**
+     * 节点请求参数
+     *
+     * @return
+     */
+    public static Map getNodeListMap() {
+        Map map = new HashMap();
+        map.put("token", SPUtilHelper.getUserToken());
+        map.put("roleCode", SPUtilHelper.getRoleCode());
         return map;
     }
 

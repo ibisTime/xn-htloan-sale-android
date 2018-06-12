@@ -1,10 +1,12 @@
 package com.cdkj.wzcd.model;
 
+import java.io.Serializable;
+
 /**
  * Created by cdkj on 2018/5/30.
  */
 
-public class CreditUserModel {
+public class CreditUserModel implements Serializable {
 
     private String code;
     private String creditCode;
@@ -17,6 +19,24 @@ public class CreditUserModel {
     private String mobile;
     private String relation;
     private String userName;
+    private String bankCreditResultPdf;
+    private String bankCreditResultRemark;
+
+    public String getBankCreditResultPdf() {
+        return bankCreditResultPdf;
+    }
+
+    public void setBankCreditResultPdf(String bankCreditResultPdf) {
+        this.bankCreditResultPdf = bankCreditResultPdf;
+    }
+
+    public String getBankCreditResultRemark() {
+        return bankCreditResultRemark;
+    }
+
+    public void setBankCreditResultRemark(String bankCreditResultRemark) {
+        this.bankCreditResultRemark = bankCreditResultRemark;
+    }
 
     public String getCode() {
         return code;

@@ -2,44 +2,88 @@ package com.cdkj.wzcd.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
-import android.widget.Button;
 
+import com.cdkj.baselibrary.model.DataDictionary;
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.databinding.ItemDataTransferBinding;
-import com.cdkj.wzcd.model.DataTransferBean;
-import com.cdkj.wzcd.view.MyNormalLayout;
+import com.cdkj.wzcd.model.DataTransferModel;
+import com.cdkj.wzcd.module.datatransfer.SendActivity;
+import com.cdkj.wzcd.module.datatransfer.SendAndExamineActivity;
+import com.cdkj.wzcd.util.DataDictionaryHelper;
+import com.cdkj.wzcd.util.NodeHelper;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
 /**
- * @author qi
+ * @author cdkj
  * @updateDts 2018/5/30
  */
 
-public class DataTransferAdapter extends BaseQuickAdapter<DataTransferBean, BaseViewHolder> {
-    private ItemDataTransferBinding mBinding;
+public class DataTransferAdapter extends BaseQuickAdapter<DataTransferModel, BaseViewHolder> {
 
-    public DataTransferAdapter(@Nullable List<DataTransferBean> data) {
+    private ItemDataTransferBinding mBinding;
+    private List<DataDictionary> mCompany;
+
+    public DataTransferAdapter(@Nullable List<DataTransferModel> data, List<DataDictionary> company) {
         super(R.layout.item_data_transfer, data);
+
+        mCompany = company;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, DataTransferBean item) {
+    protected void convert(BaseViewHolder helper, DataTransferModel item) {
 
         mBinding  = DataBindingUtil.bind(helper.itemView);
 
-        helper.setText(R.id.tv_mesg, "银行放款:业务团队车辆落户--业务袋后审核材料");//节点信息
+        mBinding.myTlIdStatus.setText(item.getBizCode(), "");
 
-        Button btn_input = helper.getView(R.id.btn_send);//发件
-        Button btn_receive_and_check = helper.getView(R.id.btn_receive_and_check);//收件并审核
-        MyNormalLayout mnl_code = helper.getView(R.id.mnl_code);//业务编号
-        MyNormalLayout mnl_name = helper.getView(R.id.mnl_name);//客户姓名
-        MyNormalLayout mnl_number = helper.getView(R.id.mnl_number);//快递单号
+        mBinding.myIlFrom.setText(NodeHelper.getNameOnTheCode(item.getFromNodeCode()));
+        mBinding.myIlTo.setText(NodeHelper.getNameOnTheCode(item.getToNodeCode()));
 
-        helper.addOnClickListener(R.id.btn_send);
-        helper.addOnClickListener(R.id.btn_receive_and_check);
+        mBinding.myIlName.setText(item.getUserName());
+        mBinding.myIlCompany.setText(DataDictionaryHelper.getValueOnTheKey(item.getLogisticsCompany(), mCompany));
+        mBinding.myIlExpress.setText(item.getLogisticsCode());
 
+
+        mBinding.myItemCblConfirm.setContent("", "");
+        mBinding.myIlStatus.setText(getStatus(item));
+
+
+    }
+
+    private String getStatus(DataTransferModel item){
+        // 状态(0 待发件 1已发件待收件 2已收件审核 3已收件待补件)
+
+        switch (item.getStatus()){
+
+            case "0":
+
+
+                mBinding.myItemCblConfirm.setRightTextAndListener("发件", view -> {
+                    //发件
+                    SendActivity.open(mContext, item.getCode());
+                });
+                return "待发件";
+
+            case "1":
+
+                mBinding.myItemCblConfirm.setRightTextAndListener("收件并审核", view -> {
+                    //收件并审核
+                    SendAndExamineActivity.open(mContext, item.getCode());
+                });
+                return "已发件待收件";
+
+            case "2":
+                return "已收件审核";
+
+            case "3":
+                return "已收件待补件";
+
+            default:
+                return "";
+
+        }
     }
 }

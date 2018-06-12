@@ -11,13 +11,16 @@ import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsRefreshListFragment;
+import com.cdkj.baselibrary.model.DataDictionary;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.wzcd.adapter.CreditListAdapter;
 import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.model.CreditModel;
+import com.cdkj.wzcd.util.DataDictionaryHelper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +38,9 @@ public class CreditListFragment extends AbsRefreshListFragment {
 
     private boolean isFirstRequest;
 
+    // 业务种类
+    private List<DataDictionary> mType = new ArrayList<>();
+
     /**
      * @param
      * @return
@@ -46,6 +52,14 @@ public class CreditListFragment extends AbsRefreshListFragment {
         bundle.putBoolean(IS_FIRST_REQUEST, isFirstRequest);
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getUserVisibleHint()){
+            mRefreshHelper.onDefaultMRefresh(true);
+        }
     }
 
     @Override
@@ -78,11 +92,11 @@ public class CreditListFragment extends AbsRefreshListFragment {
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
 
-        CreditListAdapter mAdapter = new CreditListAdapter(listData);
+        CreditListAdapter mAdapter = new CreditListAdapter(listData, mType);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             CreditModel model = mAdapter.getItem(position);
 
-            CreditInitiateActivity.open(mActivity, model.getCode());
+            CreditDetailActivity.open(mActivity, model.getCode());
         });
 
         return mAdapter;
@@ -90,27 +104,40 @@ public class CreditListFragment extends AbsRefreshListFragment {
 
     @Override
     public void getListRequest(int pageIndex, int limit, boolean isShowDialog) {
-        Map<String, String> map = new HashMap<>();
 
-        map.put("userId", SPUtilHelper.getUserId());
-        map.put("start", pageIndex + "");
-        map.put("limit", limit + "");
+        DataDictionaryHelper.getDataDictionaryRequest(mActivity, DataDictionaryHelper.budget_orde_biz_typer, "", data -> {
 
-        if (isShowDialog) showLoadingDialog();
-
-        Call call = RetrofitUtils.createApi(MyApiServer.class).getCreditList("632116", StringUtils.getJsonToString(map));
-        addCall(call);
-
-        call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CreditModel>>(mActivity) {
-            @Override
-            protected void onSuccess(ResponseInListModel<CreditModel> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), "暂无资信", 0);
+            if (data == null || data.size() == 0){
+                return;
             }
 
-            @Override
-            protected void onFinish() {
-                disMissLoading();
-            }
+            mType.addAll(data);
+
+            Map<String, String> map = new HashMap<>();
+
+            map.put("roleCode", SPUtilHelper.getRoleCode());
+            map.put("start", pageIndex + "");
+            map.put("limit", limit + "");
+
+            if (isShowDialog) showLoadingDialog();
+
+            Call call = RetrofitUtils.createApi(MyApiServer.class).getCreditList("632115", StringUtils.getJsonToString(map));
+            addCall(call);
+
+            call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CreditModel>>(mActivity) {
+                @Override
+                protected void onSuccess(ResponseInListModel<CreditModel> data, String SucMessage) {
+                    mRefreshHelper.setData(data.getList(), "暂无资信", 0);
+                }
+
+                @Override
+                protected void onFinish() {
+                    disMissLoading();
+                }
+            });
+
         });
+
+
     }
 }

@@ -28,7 +28,6 @@
                 android:id="@+id/tv_content"
                 android:textSize="16sp"
                 android:gravity="right"
-                android:layout_marginRight="@dimen/layout_right_interval"
                 android:textColor="@color/color_mySelectHorizontal_txt"
                 android:layout_weight="1"
                 android:layout_width="0dp"
@@ -36,6 +35,7 @@
 
             <ImageView
                 android:id="@+id/iv_more"
+                android:layout_marginLeft="@dimen/layout_left_interval"
                 android:background="@mipmap/pulldown"
                 android:layout_width="10dp"
                 android:layout_height="7dp" />

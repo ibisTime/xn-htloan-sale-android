@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
@@ -22,8 +23,10 @@ public class MyConfirmBtn extends LinearLayout {
     private LayoutMyConfirmBtnBinding mBinding;
 
     private MyConfirmInterface mConfirmInterface;
+    private MyConfirmInterface mConfirmInterfaceRight;
 
     private String txtContent;
+    private String txtContentRight;
 
     public MyConfirmBtn(Context context) {
         this(context, null);
@@ -38,6 +41,7 @@ public class MyConfirmBtn extends LinearLayout {
 
         final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.MyConfirmBtn, 0, 0);
         txtContent = typedArray.getString(R.styleable.MyConfirmBtn_txt_confirm_content);
+        txtContentRight = typedArray.getString(R.styleable.MyConfirmBtn_txt_confirm_content_right);
 
         typedArray.recycle();
 
@@ -47,10 +51,11 @@ public class MyConfirmBtn extends LinearLayout {
 
     private void setData() {
         mBinding.btnConfirm.setText(txtContent);
-    }
 
-    public void setOnConfirmListener(MyConfirmInterface confirmInterface){
-        mConfirmInterface = confirmInterface;
+        if (!TextUtils.isEmpty(txtContentRight)){
+            mBinding.btnConfirmRight.setVisibility(VISIBLE);
+            mBinding.btnConfirmRight.setText(txtContentRight);
+        }
     }
 
     private void init(Context context) {
@@ -60,6 +65,16 @@ public class MyConfirmBtn extends LinearLayout {
         initListener();
     }
 
+    public void setOnConfirmListener(MyConfirmInterface confirmInterface){
+        mConfirmInterface = confirmInterface;
+    }
+
+    public void setOnConfirmRightListener(MyConfirmInterface confirmInterface){
+        mConfirmInterfaceRight = confirmInterface;
+    }
+
+
+
     private void initListener() {
         mBinding.btnConfirm.setOnClickListener(view -> {
             if (mConfirmInterface == null)
@@ -67,12 +82,16 @@ public class MyConfirmBtn extends LinearLayout {
 
             mConfirmInterface.onClick(view);
         });
+
+        mBinding.btnConfirmRight.setOnClickListener(view -> {
+            if (mConfirmInterfaceRight == null)
+                return;
+
+            mConfirmInterfaceRight.onClick(view);
+        });
     }
 
     public void setText(String content) {
         mBinding.btnConfirm.setText(content);
     }
-
-
-
 }

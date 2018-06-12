@@ -1,19 +1,11 @@
 package com.cdkj.baselibrary.utils;
 
-import android.app.Activity;
-import android.content.DialogInterface;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.widget.EditText;
 
 import com.alibaba.fastjson.JSON;
-import com.cdkj.baselibrary.R;
-import com.cdkj.baselibrary.appmanager.MyCdConfig;
-import com.cdkj.baselibrary.dialog.UITipDialog;
-import com.cdkj.baselibrary.model.CodeModel;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -310,6 +302,7 @@ public class StringUtils {
         return input != null && input.length() > 0 && Pattern.matches(regex, input);
     }
 
+
     public static final String REGEX_IP = "((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)";
 
     /**
@@ -408,5 +401,19 @@ public class StringUtils {
 
     }
 
+
+    /**
+     * 判断是否符合身份证号码的规范
+     *
+     * @param IDCard
+     * @return
+     */
+    public static boolean isIDCard(String IDCard) {
+        if (IDCard != null) {
+            String IDCardRegex = "(^\\d{15}$)|(^\\d{18}$)|(^\\d{17}(\\d|X|x|Y|y)$)";
+            return IDCard.matches(IDCardRegex);
+        }
+        return false;
+    }
 
 }

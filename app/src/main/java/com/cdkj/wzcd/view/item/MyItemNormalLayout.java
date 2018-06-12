@@ -74,28 +74,28 @@ public class MyItemNormalLayout extends LinearLayout {
         mBinding.tvTitle.setText(title);
     }
 
-    public void setContext(String context){
-        mBinding.tvContent.setText(context);
+    public void setContent(String content){
+        mBinding.tvContent.setText(content);
     }
 
-    public void setMiddleContext(String context){
-        mBinding.tvContentMiddle.setText(context);
+    public void setMiddleContent(String content){
+        mBinding.tvContentMiddle.setText(content);
         mBinding.tvContentMiddle.setVisibility(VISIBLE);
     }
 
-    public void setContext(String context, String contextRight){
-        mBinding.tvContent.setText(context);
-        mBinding.tvContentRight.setText(contextRight);
+    public void setContent(String content, String contentRight){
+        mBinding.tvContent.setText(content);
+        mBinding.tvContentRight.setText(contentRight);
         mBinding.tvContentRight.setVisibility(VISIBLE);
     }
 
-    public void setContext(String context, String contextMiddle, String contextRight){
-        mBinding.tvContent.setText(context);
+    public void setContent(String content, String contentMiddle, String contentRight){
+        mBinding.tvContent.setText(content);
 
-        mBinding.tvContentMiddle.setText(contextMiddle);
+        mBinding.tvContentMiddle.setText(contentMiddle);
         mBinding.tvContentMiddle.setVisibility(VISIBLE);
 
-        mBinding.tvContentRight.setText(contextRight);
+        mBinding.tvContentRight.setText(contentRight);
         mBinding.tvContentRight.setVisibility(VISIBLE);
     }
 

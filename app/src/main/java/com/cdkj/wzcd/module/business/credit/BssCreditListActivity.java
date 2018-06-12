@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.view.View;
 
 import com.cdkj.baselibrary.base.AbsTabLayoutActivity;
+import com.cdkj.wzcd.util.UserHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,10 +39,12 @@ public class BssCreditListActivity extends AbsTabLayoutActivity {
     public void afterCreate(Bundle savedInstanceState) {
         mBaseBinding.titleView.setMidTitle("资信调查");
 
-        mBaseBinding.titleView.setRightTitle("发起征信");
-        mBaseBinding.titleView.setRightFraClickListener(view -> {
-            CreditInitiateActivity.open(this, null);
-        });
+        if (!UserHelper.isZHRY()){
+            mBaseBinding.titleView.setRightTitle("发起征信");
+            mBaseBinding.titleView.setRightFraClickListener(view -> {
+                CreditInitiateActivity.open(this, null);
+            });
+        }
 
         mTitleList = new ArrayList<>();
         mFragmentList = new ArrayList<>();
@@ -69,5 +73,9 @@ public class BssCreditListActivity extends AbsTabLayoutActivity {
         initViewPager();
         mTabLayoutBinding.viewpager.setOffscreenPageLimit(2);
         mTabLayoutBinding.tablayout.setTabMode(TabLayout.MODE_FIXED);
+
+//        if (UserHelper.isZHRY()){
+            mTabLayoutBinding.tablayout.setVisibility(View.GONE);
+//        }
     }
 }

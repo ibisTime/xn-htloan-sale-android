@@ -38,8 +38,8 @@ public class MyImageLayout extends LinearLayout {
 
     private String txtHintRight;
 
-    private String FlImgUrl;
-    private String FlImgRightUrl;
+    private String FlImgUrl = "";
+    private String FlImgRightUrl = "";
 
     public MyImageLayout(Context context) {
         this(context, null);
@@ -62,10 +62,10 @@ public class MyImageLayout extends LinearLayout {
         typedArray.recycle();
 
         init(context);
-        setActivity();
+        setData();
     }
 
-    private void setActivity() {
+    private void setData() {
         mBinding.tvTitle.setText(txtTitle);
         mBinding.tvHint.setHint(txtHint);
 
@@ -117,7 +117,7 @@ public class MyImageLayout extends LinearLayout {
         return mRightRequestCode;
     }
 
-    public String getFlImgUrl(){
+    public String check(){
         if (TextUtils.isEmpty(FlImgUrl)){
             ToastUtil.show(context, "请上传"+mBinding.tvHint.getHint().toString());
             return null;
@@ -126,7 +126,12 @@ public class MyImageLayout extends LinearLayout {
         return FlImgUrl;
     }
 
-    public String getFlImgRightUrl(){
+    public String getFlImgUrl(){
+
+        return FlImgUrl;
+    }
+
+    public String checkRight(){
         if (TextUtils.isEmpty(FlImgRightUrl)){
             ToastUtil.show(context, "请上传"+mBinding.tvHintRight.getHint().toString());
             return null;
@@ -135,9 +140,17 @@ public class MyImageLayout extends LinearLayout {
         return FlImgRightUrl;
     }
 
-    public void setFlImgImageView(String url){
+    public String getFlImgRightUrl(){
+
+        return FlImgRightUrl;
+    }
+
+    public void setFlImg(String url){
+        if (TextUtils.isEmpty(url))
+            return;
+
         FlImgUrl = url;
-        ImgUtils.loadQiniuImg(mActivity, FlImgUrl, mBinding.ivImg);
+        ImgUtils.loadQiniuImg(context, FlImgUrl, mBinding.ivImg);
 
         mBinding.ivHint.setImageResource(R.mipmap.modifi);
         mBinding.tvHint.setText("点击修改");
@@ -149,9 +162,12 @@ public class MyImageLayout extends LinearLayout {
     }
 
 
-    public void setFlImgRightImageView(String url){
+    public void setFlImgRight(String url){
+        if (TextUtils.isEmpty(url))
+            return;
+
         FlImgRightUrl = url;
-        ImgUtils.loadQiniuImg(mActivity, FlImgRightUrl, mBinding.ivImgRight);
+        ImgUtils.loadQiniuImg(context, FlImgRightUrl, mBinding.ivImgRight);
 
         mBinding.ivHintRight.setImageResource(R.mipmap.modifi);
         mBinding.tvHintRight.setText("点击修改");
@@ -174,6 +190,33 @@ public class MyImageLayout extends LinearLayout {
         return id;
     }
 
+    /**
+     * 加载图片并取消点击事件和隐藏View
+     * @param url
+     */
+    public void setFlImgByRequest(String url){
+
+        mBinding.llHint.setVisibility(GONE);
+        mBinding.flImg.setOnClickListener(null);
+
+        FlImgUrl = url;
+        ImgUtils.loadQiniuImg(context, FlImgUrl, mBinding.ivImg);
 
 
+    }
+
+    /**
+     * 加载图片并取消点击事件和隐藏View
+     * @param url
+     */
+    public void setFlImgRightByRequest(String url){
+
+        mBinding.llHintRight.setVisibility(GONE);
+        mBinding.flImgRight.setOnClickListener(null);
+
+        FlImgRightUrl = url;
+        ImgUtils.loadQiniuImg(context, FlImgRightUrl, mBinding.ivImgRight);
+
+
+    }
 }
