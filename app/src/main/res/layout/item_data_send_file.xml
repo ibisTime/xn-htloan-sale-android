@@ -6,8 +6,7 @@
     </data>
 
     <LinearLayout
-        style="@style/style_my_item_root"
-        >
+        style="@style/style_my_item_root">
 
         <LinearLayout
             android:layout_width="match_parent"
