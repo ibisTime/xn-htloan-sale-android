@@ -98,8 +98,6 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
         mBinding.myNlBank.setText(data.getLoanBankName());
         mBinding.myNlLoanAmount.setText(RequestUtil.formatAmountDivSign(data.getLoanAmount()));
 
-
-
         if (!TextUtils.equals(data.getCurNodeCode(), "002_11")) { // 业务团队车辆落户
 
             mBinding.myNlDateTime.setText(DateUtil.formatStringData(data.getCarSettleDatetime(), DateUtil.DEFAULT_DATE_FMT));
@@ -108,6 +106,7 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
             mBinding.myIlQualified.setFlImgByRequest(data.getCarHgz());
             mBinding.myIlJqx.setFlImgByRequest(data.getCarJqx());
             mBinding.myIlSyx.setFlImgByRequest(data.getCarSyx());
+            mBinding.myIlOther.setFlImgByRequest(data.getCarSettleOtherPdf());
 
             mBinding.myCbConfirm.setVisibility(View.GONE);
         }
@@ -119,6 +118,7 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
         mBinding.myIlQualified.setActivity(this,2,0);
         mBinding.myIlJqx.setActivity(this,3,0);
         mBinding.myIlSyx.setActivity(this,4,0);
+        mBinding.myIlOther.setActivity(this,5,0);
     }
 
     @Override
@@ -147,6 +147,10 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
 
                 if (requestCode == mBinding.myIlSyx.getRequestCode()){
                     mBinding.myIlSyx.setFlImg(key);
+                }
+
+                if (requestCode == mBinding.myIlOther.getRequestCode()){
+                    mBinding.myIlOther.setFlImg(key);
                 }
 
                 disMissLoading();
@@ -205,6 +209,7 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
         map.put("carHgz", mBinding.myIlQualified.getFlImgUrl());
         map.put("carJqx", mBinding.myIlJqx.getFlImgUrl());
         map.put("carSyx", mBinding.myIlSyx.getFlImgUrl());
+        map.put("carSettleOtherPdf", mBinding.myIlOther.getFlImgUrl());
         map.put("operator", SPUtilHelper.getUserId());
 
         Call call = RetrofitUtils.getBaseAPiService().codeRequest("632128", StringUtils.getJsonToString(map));

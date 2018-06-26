@@ -180,8 +180,8 @@ public class BankLoanInputActivity extends AbsBaseLoadActivity {
         map.put("repayBillDate", mBinding.myNlRepayBillDate.getText());
         map.put("repayBankDate", mBinding.myNlRepayBankDate.getText());
         map.put("repayCompanyDate", mBinding.myNlRepayCompanyDate.getText());
-        map.put("repayFirstMonthAmount", mBinding.myElRepayFirstMonthAmount.getText());
-        map.put("repayMonthAmount", mBinding.myElRepayMonthAmount.getText());
+        map.put("repayFirstMonthAmount", mBinding.myElRepayFirstMonthAmount.getMoneyText());
+        map.put("repayMonthAmount", mBinding.myElRepayMonthAmount.getMoneyText());
         map.put("bankFkDate", mBinding.myNlBankFkDate.getText());
         map.put("repayFirstMonthDatetime", mBinding.myNlFirstRepayDate.getText());
 

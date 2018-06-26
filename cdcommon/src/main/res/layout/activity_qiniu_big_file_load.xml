@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.cdkj.baselibrary.views.CircleProgressView
+            android:id="@+id/cp_percent"
+            android:layout_width="74dp"
+            android:layout_height="74dp" />
+
+
+    </LinearLayout>
+</layout>

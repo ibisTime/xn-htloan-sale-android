@@ -14,6 +14,7 @@ import com.cdkj.wzcd.model.LoanProductModel;
 import com.cdkj.wzcd.model.NodeListModel;
 import com.cdkj.wzcd.model.NodeModel;
 import com.cdkj.wzcd.model.RepaymentModel;
+import com.cdkj.wzcd.model.TencentSignModel;
 import com.cdkj.wzcd.model.ZrdModel;
 
 import retrofit2.Call;
@@ -26,6 +27,16 @@ import retrofit2.http.POST;
  */
 
 public interface MyApiServer {
+
+    /**
+     * 获取腾讯用户签名
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<TencentSignModel>> getTencentSign(@Field("code") String code, @Field("json") String json);
 
     /**
      * 获取用户信息详情
@@ -169,6 +180,17 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseModel<ResponseInListModel<DataTransferModel>>> getDataTransfer(@Field("code") String code, @Field("json") String json);
+
+    /**
+     * 获取申领列表
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseListModel<DataTransferModel>> getDataTransferList(@Field("code") String code, @Field("json") String json);
 
     /**
      * 获取节列表

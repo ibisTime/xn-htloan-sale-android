@@ -18,6 +18,7 @@ import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.databinding.ActivityGpsInfoAddBinding;
 import com.cdkj.wzcd.model.GpsInstallModel;
+import com.cdkj.wzcd.model.GpsInstallReplaceModel;
 import com.cdkj.wzcd.model.GpsModel;
 import com.cdkj.wzcd.util.DatePickerHelper;
 
@@ -101,9 +102,19 @@ public class GPSInfoAddActivity extends AbsBaseLoadActivity {
                     model.setGpsDevNo(mBinding.mySlCode.getDataValue());
                     model.setRemark(mBinding.myElRemark.getText());
 
+
                     // 发送数据
-                    EventBus.getDefault().post(model);
-                    finish();
+                    if (getIntent() != null && getIntent().getExtras() != null){
+                        // 替换
+                        EventBus.getDefault().post(new GpsInstallReplaceModel().setLocation(position).setGpsInstallModel(model));
+                        finish();
+                    }else {
+                        // 发送数据
+                        EventBus.getDefault().post(model);
+                        finish();
+                    }
+
+
                 }catch (Exception e){
                     e.printStackTrace();
                 }

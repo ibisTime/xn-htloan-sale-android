@@ -2,6 +2,7 @@ package com.cdkj.wzcd.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.cdkj.baselibrary.model.DataDictionary;
 import com.cdkj.baselibrary.utils.DateUtil;
@@ -9,6 +10,7 @@ import com.cdkj.baselibrary.utils.MoneyUtils;
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.databinding.ItemInterviewBinding;
 import com.cdkj.wzcd.model.NodeListModel;
+import com.cdkj.wzcd.module.business.face_view.InterviewStartActivity;
 import com.cdkj.wzcd.util.DataDictionaryHelper;
 import com.cdkj.wzcd.util.NodeHelper;
 import com.cdkj.wzcd.util.RequestUtil;
@@ -44,5 +46,14 @@ public class InterviewListAdapter extends BaseQuickAdapter<NodeListModel, BaseVi
         mBinding.myIlBank.setText(item.getLoanBankName());
         mBinding.myIlAmount.setText(MoneyUtils.MONEYSING + RequestUtil.formatAmountDiv(item.getLoanAmount()));
         mBinding.myIlDateTime.setText(DateUtil.formatStringData(item.getApplyDatetime(), DateUtil.DEFAULT_DATE_FMT));
+
+        if (TextUtils.equals(item.getCurNodeCode(),"002_05") || TextUtils.equals(item.getCurNodeCode(),"002_08")){ // 面签 / 重新面签
+
+            mBinding.myItemCblConfirm.setRightTextAndListener("面签", view -> {
+                InterviewStartActivity.open(mContext, item.getCode());
+            });
+        }else {
+            mBinding.myItemCblConfirm.setContent("","");
+        }
     }
 }

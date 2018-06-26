@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 app:isSingle="true"
                 app:txt_image_hint="交强险"
-                app:txt_image_title="交强险"></com.cdkj.wzcd.view.MyImageLayout>
+                app:txt_image_title="交强险" />
 
             <com.cdkj.wzcd.view.MyImageLayout
                 android:id="@+id/myIl_syx"
@@ -105,13 +105,22 @@
                 android:layout_height="wrap_content"
                 app:isSingle="true"
                 app:txt_image_hint="商业险"
-                app:txt_image_title="商业险"></com.cdkj.wzcd.view.MyImageLayout>
+                app:txt_image_title="商业险" />
+
+            <com.cdkj.wzcd.view.MyImageLayout
+                android:id="@+id/myIl_other"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isSingle="true"
+                app:txt_image_hint="其他资料"
+                app:txt_image_title="其他资料" />
 
             <com.cdkj.wzcd.view.MyConfirmBtn
                 android:id="@+id/myCb_confirm"
                 app:txt_confirm_content="保存"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></com.cdkj.wzcd.view.MyConfirmBtn>
+                android:layout_height="wrap_content"/>
+
 
             <!--<Button-->
                 <!--android:id="@+id/btn_save"-->

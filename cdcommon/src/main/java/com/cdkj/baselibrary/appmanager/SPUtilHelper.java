@@ -164,7 +164,7 @@ public class SPUtilHelper {
     }
 
     /**
-     * 设置用户token
+     * 设置用户RoleCode
      *
      * @param s
      */
@@ -173,12 +173,31 @@ public class SPUtilHelper {
     }
 
     /**
-     * 设置用户token
+     * 设置用户RoleCode
      *
      * @param
      */
     public static String getRoleCode() {
         return SPUtils.getString(CdApplication.getContext(), "roleCode", "");
+
+    }
+
+    /**
+     * 设置用户token
+     *
+     * @param s
+     */
+    public static void saveTeamCode(String s) {
+        SPUtils.put(CdApplication.getContext(), "teamCode", s);
+    }
+
+    /**
+     * 设置用户token
+     *
+     * @param
+     */
+    public static String getTeamCode() {
+        return SPUtils.getString(CdApplication.getContext(), "teamCode", "");
 
     }
 
@@ -206,6 +225,7 @@ public class SPUtilHelper {
     public static boolean isLoginNoStart() {
         return !TextUtils.isEmpty(getUserId());
     }
+
 
     /**
      * 保存流水账户信息
@@ -249,6 +269,7 @@ public class SPUtilHelper {
     public static void logOutClear() {
         saveUserToken("");
         saveRoleCode("");
+        saveTeamCode("");
         saveUserId("");
         saveUserPhoneNum("");
         saveAmountaccountNumber("");

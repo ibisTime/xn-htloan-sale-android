@@ -33,6 +33,14 @@ public class InterviewActivity extends AbsTabLayoutActivity {
         super.afterCreate(savedInstanceState);
         mBaseBinding.titleView.setMidTitle(getString(R.string.face_view));
         mTabLayoutBinding.tablayout.setVisibility(View.GONE);
+
+//        mBaseBinding.titleView.setRightTitle("MQ");
+//        mBaseBinding.titleView.setRightFraClickListener(view -> {
+//            InterviewStartActivity.open(this,"BO201806121135203066628");
+
+//            Intent intent = new Intent(InterviewActivity.this, MainActivity.class);
+//            startActivity(intent);
+//        });
     }
 
     @Override

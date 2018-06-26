@@ -4,8 +4,8 @@ ext {
             buildToolsVersion: "27.0.2",
             minSdkVersion    : 19,
             targetSdkVersion : 26,
-            versionCode      : 1,
-            versionName      : "1.0.0",
+            versionCode      : 2,
+            versionName      : "1.0.1",
     ]
 
     cdcommon = [
@@ -15,6 +15,23 @@ ext {
             targetSdkVersion : 26,
             versionCode      : 2,
             versionName      : "1.1.0",
+    ]
+
+    cfgs = [
+            compileSdkVersion    : 27,
+            buildToolsVersion    : "27.0.2",
+            minSdkVersion        : 14,
+            targetSdkVersion     : 26,
+            versionCode          : 10,
+            versionName          : "2.0.0",
+            ucropVersionCode     : 22,
+            ucropVersionName     : "2.2.0-native",
+
+            //open version control
+            androidSupportVersion: "27.0.2",
+            glide                : "4.5.0",
+            rxjava               : "2.0.5",
+            rxandroid            : "2.0.1"
     ]
 
     arouterApi = 'com.alibaba:arouter-api:1.3.1'

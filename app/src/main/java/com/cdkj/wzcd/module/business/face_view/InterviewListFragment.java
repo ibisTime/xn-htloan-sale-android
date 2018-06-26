@@ -18,6 +18,7 @@ import com.cdkj.wzcd.adapter.InterviewListAdapter;
 import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.model.NodeListModel;
 import com.cdkj.wzcd.util.DataDictionaryHelper;
+import com.cdkj.wzcd.util.UserHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,7 @@ public class InterviewListFragment extends AbsRefreshListFragment {
     @Override
     protected void afterCreate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         initRefreshHelper(10);
+
     }
 
     @Override
@@ -69,7 +71,7 @@ public class InterviewListFragment extends AbsRefreshListFragment {
     public RecyclerView.Adapter getListAdapter(List listData) {
         InterviewListAdapter interviewListAdapter = new InterviewListAdapter(listData, mType);
         interviewListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            InterviewStartActivity.open(mActivity);
+//            InterviewStartActivity.open(mActivity, interviewListAdapter.getItem(position).getCode());
         });
         return interviewListAdapter;
     }
@@ -85,12 +87,15 @@ public class InterviewListFragment extends AbsRefreshListFragment {
 
             mType.addAll(data);
 
-
             Map<String, String> map = RetrofitUtils.getNodeListMap();
 
-            map.put("start", pageIndex + "");
             map.put("limit", limit + "");
-            map.put("saleUserId", SPUtilHelper.getUserId());
+            map.put("start", pageIndex + "");
+
+            if (!UserHelper.isZHRY()) {
+                map.put("saleUserId", SPUtilHelper.getUserId());
+                map.put("teamCode", SPUtilHelper.getTeamCode());
+            }
 
             if (isShowDialog) showLoadingDialog();
 

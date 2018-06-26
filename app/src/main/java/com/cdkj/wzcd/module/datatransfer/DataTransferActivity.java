@@ -17,6 +17,7 @@ import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.model.CllhListBean;
 import com.cdkj.wzcd.model.DataTransferModel;
 import com.cdkj.wzcd.util.DataDictionaryHelper;
+import com.cdkj.wzcd.util.UserHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -73,7 +74,9 @@ public class DataTransferActivity extends AbsRefreshListActivity<CllhListBean> {
 
             map.put("start", pageIndex + "");
             map.put("limit", limit + "");
-            map.put("userId", SPUtilHelper.getUserId());
+
+            if (UserHelper.isYWY())
+                map.put("userId", SPUtilHelper.getUserId());
 
             if (isShowDialog) showLoadingDialog();
 

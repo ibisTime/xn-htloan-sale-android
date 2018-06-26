@@ -85,7 +85,7 @@ public class FindPwdActivity extends AbsBaseLoadActivity implements SendCodeInte
         mBinding.tvSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSendCOdePresenter.sendCodeRequest(mBinding.edtPhone.getText().toString(),"805063", MyCdConfig.USER_TYPE,FindPwdActivity.this);
+                mSendCOdePresenter.sendCodeRequest(mBinding.edtPhone.getText().toString(),"630053", MyCdConfig.USER_TYPE,FindPwdActivity.this);
             }
         });
 
@@ -151,7 +151,7 @@ public class FindPwdActivity extends AbsBaseLoadActivity implements SendCodeInte
         hashMap.put("systemCode", MyCdConfig.SYSTEM_CODE);
         hashMap.put("companyCode", MyCdConfig.COMPANY_CODE);
 
-        Call call= RetrofitUtils.getBaseAPiService().successRequest("805063", StringUtils.getJsonToString(hashMap));
+        Call call= RetrofitUtils.getBaseAPiService().successRequest("630053", StringUtils.getJsonToString(hashMap));
 
         addCall(call);
 

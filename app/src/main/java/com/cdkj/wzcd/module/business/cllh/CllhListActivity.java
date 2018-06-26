@@ -15,6 +15,7 @@ import com.cdkj.wzcd.adapter.CllhListAdapter;
 import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.model.CllhListBean;
 import com.cdkj.wzcd.model.NodeListModel;
+import com.cdkj.wzcd.util.UserHelper;
 
 import java.util.List;
 import java.util.Map;
@@ -65,7 +66,11 @@ public class CllhListActivity extends AbsRefreshListActivity<CllhListBean> {
 
         map.put("start", pageIndex + "");
         map.put("limit", limit + "");
-        map.put("saleUserId", SPUtilHelper.getUserId());
+        if (!UserHelper.isZHRY()) {
+            map.put("saleUserId", SPUtilHelper.getUserId());
+            map.put("teamCode", SPUtilHelper.getTeamCode());
+        }
+
 
         if (isShowDialog) showLoadingDialog();
 

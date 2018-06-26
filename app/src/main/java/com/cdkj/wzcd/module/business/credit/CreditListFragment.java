@@ -116,6 +116,7 @@ public class CreditListFragment extends AbsRefreshListFragment {
             Map<String, String> map = new HashMap<>();
 
             map.put("roleCode", SPUtilHelper.getRoleCode());
+            map.put("teamCode", SPUtilHelper.getTeamCode());
             map.put("start", pageIndex + "");
             map.put("limit", limit + "");
 

@@ -20,16 +20,30 @@
 
                 <ImageView
                     android:id="@+id/iv_content"
+                    android:layout_gravity="center"
+                    android:background="@mipmap/main_zlcd"
                     android:layout_width="35dp"
                     android:layout_height="35dp"/>
 
-                <View
-                    android:id="@+id/v_red_point"
+                <!--<View-->
+                    <!--android:id="@+id/v_"-->
+                    <!--android:visibility="gone"-->
+                    <!--android:layout_gravity="right"-->
+                    <!--android:background="@drawable/common_square_row_red_point"-->
+                    <!--android:layout_width="8dp"-->
+                    <!--android:layout_height="8dp"/>-->
+
+                <TextView
+                    android:id="@+id/tv_red_point"
                     android:visibility="gone"
-                    android:layout_gravity="right"
-                    android:background="@drawable/common_square_row_red_point"
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"/>
+                    android:text="0"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginLeft="30dp"
+                    android:background="@drawable/common_list_count"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="9sp"/>
 
             </FrameLayout>
 
@@ -37,6 +51,7 @@
                 android:id="@+id/tv_content"
                 android:layout_marginTop="10dp"
                 android:textSize="14sp"
+                android:text="hahahha"
                 android:textColor="@color/color_mySquareRow_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

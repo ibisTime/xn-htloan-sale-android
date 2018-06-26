@@ -36,7 +36,7 @@ public class RetrofitUtils {
 
         if (retrofitInstance == null) {
             retrofitInstance = new Retrofit.Builder()
-                    .baseUrl(getBaseURL(DEBUG))
+                    .baseUrl(getBaseURL(RELEASE))
                     .client(OkHttpUtils.getInstance())
                     .addConverterFactory(FastJsonConverter.create())
 //                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -44,10 +44,6 @@ public class RetrofitUtils {
         }
 
         return retrofitInstance;
-    }
-
-    public static int getAppDevelopment(){
-        return DEBUG;
     }
 
     /**

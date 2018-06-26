@@ -13,14 +13,18 @@ import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.model.DataDictionary;
 import com.cdkj.baselibrary.model.UserModel;
-import com.cdkj.baselibrary.model.eventmodels.EventFinishMain;
+import com.cdkj.baselibrary.nets.BaseResponseListCallBack;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.ImgUtils;
+import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.baselibrary.utils.StringUtils;
+import com.cdkj.baselibrary.utils.ToastUtil;
 import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.databinding.ActivityMainBinding;
+import com.cdkj.wzcd.model.DataTransferModel;
 import com.cdkj.wzcd.model.NodeModel;
+import com.cdkj.wzcd.module.business.audit.AuditListActivity;
 import com.cdkj.wzcd.module.business.bank_loan.BankLoanListActivity;
 import com.cdkj.wzcd.module.business.cldy.BssCldyListActivity;
 import com.cdkj.wzcd.module.business.cllh.CllhListActivity;
@@ -32,11 +36,11 @@ import com.cdkj.wzcd.module.cartool.history.HistoryUserActivity;
 import com.cdkj.wzcd.module.cartool.uservoid.UserToVoidActivity;
 import com.cdkj.wzcd.module.datatransfer.DataTransferActivity;
 import com.cdkj.wzcd.module.user.SignInActivity;
+import com.cdkj.wzcd.tencent.TencentLogoutHelper;
+import com.cdkj.wzcd.tencent.logininterface.TencentLogoutInterface;
 import com.cdkj.wzcd.util.BizTypeHelper;
 import com.cdkj.wzcd.util.NodeHelper;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
+import com.cdkj.wzcd.util.UserHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,12 +54,14 @@ import static com.cdkj.wzcd.util.UserHelper.NQZY;
 import static com.cdkj.wzcd.util.UserHelper.YWY;
 import static com.cdkj.wzcd.util.UserHelper.ZHRY;
 
-public class MainActivity extends AbsBaseLoadActivity {
+public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutInterface {
 
     // 节点列表
     public static List<NodeModel> BASE_NODE_LIST = new ArrayList<>();
     // 业务种类
     public static List<DataDictionary> BASE_BIZ_TYPE = new ArrayList<>();
+
+    private TencentLogoutHelper mLogoutHelper;
 
     private UserModel mUserModel;
     private ActivityMainBinding mBinding;
@@ -82,6 +88,8 @@ public class MainActivity extends AbsBaseLoadActivity {
     @Override
     public void afterCreate(Bundle savedInstanceState) {
 
+        mLogoutHelper = new TencentLogoutHelper(this);
+
         initListener();
 
         NodeHelper.getNodeBaseDataRequest(this, "", "", new NodeHelper.NodeInterface() {
@@ -99,6 +107,7 @@ public class MainActivity extends AbsBaseLoadActivity {
                         BASE_BIZ_TYPE.addAll(list);
 
                         getUserInfoRequest(true);
+
                     }
 
                     @Override
@@ -117,6 +126,12 @@ public class MainActivity extends AbsBaseLoadActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        getDataCount();
+    }
 
     /**
      * 获取用户信息
@@ -171,6 +186,7 @@ public class MainActivity extends AbsBaseLoadActivity {
         SPUtilHelper.saveUserNickName(data.getNickname());
         SPUtilHelper.saveUserPhoto(data.getPhoto());
         SPUtilHelper.saveRoleCode(data.getRoleCode());
+        SPUtilHelper.saveTeamCode(data.getTeamCode());
     }
 
     private void setView(UserModel data) {
@@ -192,6 +208,9 @@ public class MainActivity extends AbsBaseLoadActivity {
             mBinding.lineCllh.setVisibility(View.GONE);
 
             mBinding.llUtil.setVisibility(View.GONE);
+
+            mBinding.mySrAudit.setVisibility(View.VISIBLE);
+            mBinding.lineAudit.setVisibility(View.VISIBLE);
         }else if (TextUtils.equals(data.getRoleCode(), YWY)){// 业务员
             mBinding.tvRole.setText("[业务员]");
 
@@ -213,7 +232,8 @@ public class MainActivity extends AbsBaseLoadActivity {
         });
 
         mBinding.flRight.setOnClickListener(view -> {
-            logOut();
+
+            mLogoutHelper.logout();
         });
 
         mBinding.mySrCredit.setOnClickListener(view -> {
@@ -246,7 +266,12 @@ public class MainActivity extends AbsBaseLoadActivity {
             BssCldyListActivity.open(this);
         });
 
-        //资料上传
+        //结清审核
+        mBinding.mySrAudit.setOnClickListener(view -> {
+            AuditListActivity.open(this);
+        });
+
+        //资料传递
         mBinding.mySrZlcd.setOnClickListener(view -> {
             DataTransferActivity.open(this);
         });
@@ -275,10 +300,6 @@ public class MainActivity extends AbsBaseLoadActivity {
 
     }
 
-    @Subscribe
-    public void doClose(EventFinishMain eventFinishMain){
-        finish();
-    }
 
     /**
      * 退出登录
@@ -289,10 +310,54 @@ public class MainActivity extends AbsBaseLoadActivity {
             UITipDialog.showSuccess(this, "退出成功",dialogInterface -> {
                 finish();
 
-                EventBus.getDefault().post(new EventFinishMain());
-
                 SignInActivity.open(this,false);
             });
+        });
+    }
+
+    @Override
+    public void emptyLoginUser() {
+        // 未登陆腾讯云直接退出
+        logOut();
+    }
+
+    @Override
+    public void onLogoutSDKSuccess() {
+        // 退出腾讯云成功
+        logOut();
+    }
+
+    @Override
+    public void onLogoutSDKFailed(String module, int errCode, String errMsg) {
+        LogUtil.E("退出腾讯云失败 errCode = " + errCode + ", errMsg = " + errMsg);
+        ToastUtil.show(this, errMsg);
+    }
+
+    /**
+     * 资料传递待处理数量
+     */
+    private void getDataCount(){
+        Map<String, String> map = new HashMap<>();
+
+        if (UserHelper.isYWY())
+            map.put("userId", SPUtilHelper.getUserId());
+
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getDataTransferList("632157", StringUtils.getJsonToString(map));
+        addCall(call);
+
+        call.enqueue(new BaseResponseListCallBack<DataTransferModel>(this) {
+            @Override
+            protected void onSuccess(List<DataTransferModel> data, String SucMessage) {
+                if (data == null || data.size() == 0)
+                    return;
+
+                mBinding.mySrZlcd.setPointCount(data.size());
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
         });
     }
 }

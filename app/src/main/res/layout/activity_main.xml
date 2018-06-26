@@ -283,6 +283,22 @@
                             <View
                                 style="@style/style_split_line_vertical"/>
 
+                            <com.cdkj.wzcd.view.MySquareRowLayout
+                                android:id="@+id/mySr_audit"
+                                android:visibility="gone"
+                                app:txt_content="结清审核"
+                                app:img_content="@mipmap/main_fpbpp"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content">
+
+                            </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                            <View
+                                android:id="@+id/line_audit"
+                                android:visibility="gone"
+                                style="@style/style_split_line_vertical"/>
+
                         </LinearLayout>
 
                     </LinearLayout>

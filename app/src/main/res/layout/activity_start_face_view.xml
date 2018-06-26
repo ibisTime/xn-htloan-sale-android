@@ -1,23 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btn_confirm"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginBottom="25dp"
-            android:layout_marginLeft="@dimen/layout_left_interval"
-            android:layout_marginRight="@dimen/layout_right_interval"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/common_my_confirm_btn"
-            android:text="@string/start_face_view"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:layout_height="match_parent">
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.cdkj.wzcd.view.MyVideoLayout
+                    android:id="@+id/myVl_yh"
+                    app:title="银行视频"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </com.cdkj.wzcd.view.MyVideoLayout>
+
+                <com.cdkj.wzcd.view.MyVideoLayout
+                    android:id="@+id/myVl_gs"
+                    app:title="公司视频"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </com.cdkj.wzcd.view.MyVideoLayout>
+
+                <com.cdkj.wzcd.view.MyImageLayout
+                    android:id="@+id/myIl_contract"
+                    app:txt_image_title="面签合同"
+                    app:txt_image_hint="请上传面签合同"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </com.cdkj.wzcd.view.MyImageLayout>
+
+                <com.cdkj.wzcd.view.MyConfirmBtn
+                    android:id="@+id/myCb_load"
+                    app:txt_confirm_content="上传"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                </com.cdkj.wzcd.view.MyConfirmBtn>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/ll_percent"
+            android:gravity="center"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:background="#50000000"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.cdkj.baselibrary.views.CircleProgressView
+                android:id="@+id/cp_percent"
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
+
+            <TextView
+                android:id="@+id/tv_count"
+                android:text=""
+                android:layout_marginTop="20dp"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+    
 </layout>

@@ -1,6 +1,7 @@
 package com.cdkj.baselibrary.utils;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -15,16 +16,17 @@ import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
+import com.qiniu.android.storage.UploadOptions;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -52,6 +54,13 @@ public class QiNiuHelper {
     private int upLoadListIndex; //多张图片上传索引
 
     private CompositeDisposable mSubscription;
+
+    // 初始化、执行上传 为true时停止上传
+    private volatile boolean isCancelled = false;
+
+
+    // 多文件上传结果集合
+    List<String> fileResultList = new ArrayList<>();
 
     /**
      * @param context
@@ -251,48 +260,40 @@ public class QiNiuHelper {
         mSubscription.add(Observable.just(dataList.get(upLoadListIndex))
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                .map(new Function<String, byte[]>() {
-                    @Override
-                    public byte[] apply(@NonNull String s) throws Exception {
-                        return mImageCompressInterface.onCompress(context, s);
-                    }
-                })
+                .map(s -> mImageCompressInterface.onCompress(context, s))
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<byte[]>() {
-                    @Override
-                    public void accept(byte[] bytes) throws Exception {
-                        if (bytes == null || bytes.length == 0) {
-                            if (listListener != null) {
-                                listListener.onFal(CdApplication.getContext().getString(R.string.upload_pic_fail));
-                            }
-                            return;
+                .subscribe(bytes -> {
+                    if (bytes == null || bytes.length == 0) {
+                        if (listListener != null) {
+                            listListener.onFal(CdApplication.getContext().getString(R.string.upload_pic_fail));
                         }
-                        uploadSingle(new QiNiuCallBack() {
-                            @Override
-                            public void onSuccess(String key) {
-                                if (listListener != null) {
-                                    listListener.onChange(upLoadListIndex, key);
-                                }
-                                if (upLoadListIndex < dataList.size() - 1) {
-                                    upLoadListIndex++;
-                                    upLoadListPic(upLoadListIndex, dataList, token, listListener);
-                                } else {
-                                    upLoadListIndex = 0;
-                                    if (listListener != null) {
-                                        listListener.onSuccess();
-                                    }
-
-                                }
-                            }
-
-                            @Override
-                            public void onFal(String info) {
-                                if (listListener != null) {
-                                    listListener.onFal(info);
-                                }
-                            }
-                        }, bytes, token);
+                        return;
                     }
+                    uploadSingle(new QiNiuCallBack() {
+                        @Override
+                        public void onSuccess(String key) {
+                            if (listListener != null) {
+                                listListener.onChange(upLoadListIndex, key);
+                            }
+                            if (upLoadListIndex < dataList.size() - 1) {
+                                upLoadListIndex++;
+                                upLoadListPic(upLoadListIndex, dataList, token, listListener);
+                            } else {
+                                upLoadListIndex = 0;
+                                if (listListener != null) {
+                                    listListener.onSuccess();
+                                }
+
+                            }
+                        }
+
+                        @Override
+                        public void onFal(String info) {
+                            if (listListener != null) {
+                                listListener.onFal(info);
+                            }
+                        }
+                    }, bytes, token);
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
@@ -377,6 +378,15 @@ public class QiNiuHelper {
         void onFal(String info);
     }
 
+    public interface QiNiuFileCallBack {
+
+        void onSuccess(String key);
+
+        void onFal(String info);
+
+        void progress(String key, double percent);
+    }
+
     /**
      * 用于实现图片压缩 把图片压缩后返回byte[]用于上传
      */
@@ -406,6 +416,214 @@ public class QiNiuHelper {
         public byte[] onCompress(Context context, String path) {
             return BitmapUtils.compressLogoImage(path);
         }
+    }
+
+
+    /**
+     * 上传单视频
+     *
+     * @param callBack
+     */
+    public void uploadSingleVideo(final QiNiuFileCallBack callBack, final String filePath) {
+
+        getQiniuToeknRequest().enqueue(new BaseResponseModelCallBack<QiniuGetTokenModel>(context) {
+            @Override
+            protected void onSuccess(QiniuGetTokenModel mo, String SucMessage) {
+                if (mo == null || TextUtils.isEmpty(mo.getUploadToken()) || TextUtils.isEmpty(filePath)) {
+                    if (callBack != null) {
+                        callBack.onFal(CdApplication.getContext().getString(R.string.upload_pic_fail));
+                    }
+                    return;
+                }
+                String token = mo.getUploadToken();
+
+                isCancelled = false;
+
+                uploadVideo(callBack, filePath, token);
+            }
+
+            @Override
+            protected void onReqFailure(String errorCode, String errorMessage) {
+                if (callBack != null) {
+                    callBack.onFal(CdApplication.getContext().getString(R.string.upload_pic_fail));
+                }
+            }
+
+            @Override
+            protected void onFinish() {
+
+            }
+        });
+
+    }
+
+    /**
+     * 单个视频上传
+     *
+     * @param callBack
+     * @param url
+     */
+    public void uploadVideo(final QiNiuFileCallBack callBack, final String url, final String token) {
+
+        Configuration config = new Configuration.Builder().build();
+
+        final UploadManager uploadManager = new UploadManager(config);
+
+        final String key = ANDROID + timestamp() + "_video" + ".mp4";
+
+        uploadManager.put(url, key, token, (key12, info, response) -> {
+
+            //res包含hash、key等信息，具体字段取决于上传策略的设置
+            if (info != null && info.isOK()) {
+                if (callBack != null) {
+
+                    Observable.just("")
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(s -> callBack.onSuccess(key12));
+                }
+
+            } else {
+                if (callBack != null) {
+                    Observable.just(CdApplication.getContext().getString(R.string.upload_video_fail))
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(s -> callBack.onFal(s));
+                }
+            }
+
+
+        },new UploadOptions(null, null, false, (key13, percent) -> {
+            Log.e("qiniu key13 = ", key13 + ": " + percent);
+            if (callBack != null) {
+                callBack.progress(key13, percent);
+            }
+
+
+        }, () -> isCancelled));
+
+    }
+
+    // 点击取消按钮，让UpCancellationSignal##isCancelled()方法返回true，以停止上传
+    public void cancelLoadVideo() {
+        isCancelled = true;
+    }
+
+    /**
+     * 多图片上传
+     *
+     * @param dataList
+     * @param listListener
+     */
+    public void upLoadListVideo(final List<String> dataList, final UpLoadListFileListener listListener) {
+        if (dataList == null || dataList.isEmpty()) {
+            return;
+        }
+        getQiniuToeknRequest().enqueue(new BaseResponseModelCallBack<QiniuGetTokenModel>(context) {
+            @Override
+            protected void onSuccess(QiniuGetTokenModel data, String SucMessage) {
+                if (data == null || TextUtils.isEmpty(data.getUploadToken())) {
+                    if (listListener != null) {
+                        listListener.onFal(CdApplication.getContext().getString(R.string.upload_pic_fail));
+                    }
+                    return;
+                }
+
+                listListener.start();
+                fileResultList.clear();
+
+                upLoadListVideo(0, dataList, data.getUploadToken(), listListener);
+            }
+
+            @Override
+            protected void onReqFailure(String errorCode, String errorMessage) {
+                if (listListener != null) {
+                    listListener.onFal(CdApplication.getContext().getString(R.string.upload_pic_fail));
+                }
+            }
+
+            @Override
+            protected void onFinish() {
+
+            }
+        });
+    }
+
+    /**
+     * 递归实现多图片上传
+     *
+     * @param dataList
+     * @param token
+     * @param listListener
+     */
+    public void upLoadListVideo(int index, final List<String> dataList, final String token, final UpLoadListFileListener listListener) {
+        this.upLoadListIndex = index;
+        if (TextUtils.isEmpty(token)) {
+            if (listListener != null) {
+                listListener.onFal(CdApplication.getContext().getString(R.string.upload_pic_fail));
+            }
+            return;
+        }
+
+        mSubscription.add(Observable.just(dataList.get(upLoadListIndex))
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(str -> QiNiuHelper.this.uploadVideo(new QiNiuFileCallBack() {
+                    @Override
+                    public void onSuccess(String key) {
+
+                        // 添加结果集合
+                        fileResultList.add(key);
+
+                        if (listListener != null) {
+                            listListener.onChange(upLoadListIndex, key);
+                        }
+                        if (upLoadListIndex < dataList.size() - 1) {
+                            upLoadListIndex++;
+                            upLoadListVideo(upLoadListIndex, dataList, token, listListener);
+                        } else {
+                            upLoadListIndex = 0;
+                            if (listListener != null) {
+                                listListener.onSuccess(fileResultList);
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onFal(String info) {
+                        if (listListener != null) {
+                            listListener.onFal(info);
+                        }
+                    }
+
+                    @Override
+                    public void progress(String key, double percent) {
+                        listListener.progress(key, percent);
+                    }
+                }, str, token), (Consumer<Throwable>) throwable -> {
+                    if (listListener != null) {
+                        listListener.onError(CdApplication.getContext().getString(R.string.error_unknown));
+                    }
+                }));
+
+    }
+
+    /**
+     * 多文件上传
+     */
+    public interface UpLoadListFileListener {
+
+        void start();
+
+        void onChange(int index, String url);
+
+        void progress(String key, double percent);
+
+        void onSuccess(List<String> result);
+
+        void onFal(String info);
+
+        void onError(String info);
     }
 
 

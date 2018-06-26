@@ -7,33 +7,22 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.cdkj.baselibrary.CdApplication;
 import com.cdkj.baselibrary.R;
-import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.interfaces.CameraPhotoListener;
 
 import java.io.File;
 import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * 拍照、相册辅助类

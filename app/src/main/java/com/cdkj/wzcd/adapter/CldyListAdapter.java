@@ -8,6 +8,7 @@ import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.databinding.ItemCllhListBinding;
 import com.cdkj.wzcd.model.NodeListModel;
+import com.cdkj.wzcd.module.business.cldy.CldyApplyActivity;
 import com.cdkj.wzcd.module.business.cldy.CldyInputMessageActivity;
 import com.cdkj.wzcd.module.business.cldy.MortgageFinishActivity;
 import com.cdkj.wzcd.util.BizTypeHelper;
@@ -46,14 +47,18 @@ public class CldyListAdapter extends BaseQuickAdapter<NodeListModel, BaseViewHol
         mBinding.myIlAdvanceFund.setText(TextUtils.equals(item.getIsAdvanceFund(),"1") ? "已垫资" : "未垫资");
         mBinding.myIlDateTime.setText(DateUtil.formatStringData(item.getApplyDatetime(), DateUtil.DEFAULT_DATE_FMT));
 
+        mBinding.myItemCblConfirm.setContent("","");
+
         if (UserHelper.isZHRY()){
 
             if (TextUtils.equals(item.getCurNodeCode(),"002_21")){ // 抵押完成
                 mBinding.myItemCblConfirm.setRightTextAndListener("抵押完成", view -> {
                     MortgageFinishActivity.open(mContext, item.getCode());
                 });
-            }else {
-                mBinding.myItemCblConfirm.setContent("","");
+            }else if (TextUtils.equals(item.getCurNodeCode(),"002_20")){ // 抵押完成
+                mBinding.myItemCblConfirm.setRightTextAndListener("抵押提交银行", view -> {
+                    CldyApplyActivity.open(mContext, item.getCode());
+                });
             }
 
         }else if (UserHelper.isYWY()){
@@ -61,11 +66,7 @@ public class CldyListAdapter extends BaseQuickAdapter<NodeListModel, BaseViewHol
                 mBinding.myItemCblConfirm.setRightTextAndListener("录入抵押信息", view -> {
                     CldyInputMessageActivity.open(mContext, item.getCode());
                 });
-            }else {
-                mBinding.myItemCblConfirm.setContent("","");
             }
-        }else {
-            mBinding.myItemCblConfirm.setContent("","");
         }
 
 

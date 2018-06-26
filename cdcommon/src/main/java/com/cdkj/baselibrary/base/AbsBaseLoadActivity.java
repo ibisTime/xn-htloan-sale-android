@@ -38,23 +38,16 @@ public abstract class AbsBaseLoadActivity extends BaseActivity {
      */
     private void initTitleView() {
         mBaseBinding.titleView.setVisibility(canLoadTopTitleView() ? View.VISIBLE : View.GONE);
-        mBaseBinding.viewV.setVisibility(canLoadTopTitleView() ? View.VISIBLE : View.GONE);
+//        mBaseBinding.viewV.setVisibility(canLoadTopTitleView() ? View.VISIBLE : View.GONE);
         if (canLoadTopTitleView()) {
-            mBaseBinding.titleView.setLeftFraClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!canFinish()) {
-                        topTitleViewLeftClick();
-                    }
+            mBaseBinding.titleView.setLeftFraClickListener(v -> {
+                if (!canFinish()) {
+                    topTitleViewLeftClick();
+                }else {
                     finish();
                 }
             });
-            mBaseBinding.titleView.setRightFraClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    topTitleViewRightClick();
-                }
-            });
+            mBaseBinding.titleView.setRightFraClickListener(v -> topTitleViewRightClick());
             setTitleBg();
         }
     }
@@ -102,7 +95,7 @@ public abstract class AbsBaseLoadActivity extends BaseActivity {
      */
     protected void setShowTitle(boolean isShow) {
         mBaseBinding.titleView.setVisibility(isShow ? View.VISIBLE : View.GONE);
-        mBaseBinding.viewV.setVisibility(isShow ? View.VISIBLE : View.GONE);
+//        mBaseBinding.viewV.setVisibility(isShow ? View.VISIBLE : View.GONE);
     }
 
     /**

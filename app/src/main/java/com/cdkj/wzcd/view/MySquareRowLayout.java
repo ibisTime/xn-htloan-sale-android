@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,11 +22,10 @@ public class MySquareRowLayout extends LinearLayout {
 
     private TextView tvContent;
     private ImageView ivContent;
-    private View vRedPoint;
+    private TextView tvRedPoint;
 
     private int imgContentId;
     private String txtContent;
-    private boolean isShowRedPoint;
 
     public MySquareRowLayout(Context context) {
         this(context, null);
@@ -42,7 +40,6 @@ public class MySquareRowLayout extends LinearLayout {
 
         final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.MySquareRowLayout, 0, 0);
         txtContent = typedArray.getString(R.styleable.MySquareRowLayout_txt_content);
-        isShowRedPoint = typedArray.getBoolean(R.styleable.MySquareRowLayout_isShowRedPoint, false);
         imgContentId = typedArray.getResourceId(R.styleable.MySquareRowLayout_img_content, R.drawable.default_pic);
 
         typedArray.recycle();
@@ -55,7 +52,16 @@ public class MySquareRowLayout extends LinearLayout {
     private void setData() {
         tvContent.setText(txtContent);
         ivContent.setImageResource(imgContentId);
-        vRedPoint.setVisibility(isShowRedPoint ? VISIBLE : GONE);
+    }
+
+    public void setPointCount(int count){
+
+        tvRedPoint.setText(count+"");
+        if (count == 0){
+            tvRedPoint.setVisibility(GONE);
+        }else {
+            tvRedPoint.setVisibility(VISIBLE);
+        }
     }
 
 
@@ -65,6 +71,6 @@ public class MySquareRowLayout extends LinearLayout {
 
         tvContent = findViewById(R.id.tv_content);
         ivContent = findViewById(R.id.iv_content);
-        vRedPoint = findViewById(R.id.v_red_point);
+        tvRedPoint = findViewById(R.id.tv_red_point);
     }
 }

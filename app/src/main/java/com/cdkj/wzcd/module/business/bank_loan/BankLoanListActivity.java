@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
 import com.cdkj.baselibrary.api.ResponseInListModel;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsRefreshListActivity;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
@@ -14,7 +15,7 @@ import com.cdkj.wzcd.adapter.BankLoanListAdapter;
 import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.model.CllhListBean;
 import com.cdkj.wzcd.model.NodeListModel;
-import com.cdkj.wzcd.module.business.cllh.CllhInputMessageActivity;
+import com.cdkj.wzcd.util.UserHelper;
 
 import java.util.List;
 import java.util.Map;
@@ -53,9 +54,9 @@ public class BankLoanListActivity extends AbsRefreshListActivity<CllhListBean> {
     public RecyclerView.Adapter getListAdapter(List listData) {
         BankLoanListAdapter mAdapter = new BankLoanListAdapter(listData);
 
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            CllhInputMessageActivity.open(BankLoanListActivity.this, mAdapter.getItem(position).getCode());
-        });
+//        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+//            CllhInputMessageActivity.open(BankLoanListActivity.this, mAdapter.getItem(position).getCode());
+//        });
 
         return mAdapter;
     }
@@ -66,6 +67,11 @@ public class BankLoanListActivity extends AbsRefreshListActivity<CllhListBean> {
 
         map.put("start", pageIndex + "");
         map.put("limit", limit + "");
+        if (!UserHelper.isZHRY()) {
+            map.put("saleUserId", SPUtilHelper.getUserId());
+            map.put("teamCode", SPUtilHelper.getTeamCode());
+        }
+
 
         if (isShowDialog) showLoadingDialog();
 

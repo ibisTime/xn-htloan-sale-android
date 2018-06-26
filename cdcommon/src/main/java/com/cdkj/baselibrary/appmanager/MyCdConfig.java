@@ -28,4 +28,9 @@ public class MyCdConfig {
     public static final String ALBUM_NAME = "pic_" + PROJECT_NAME;
 
 
+    // 腾讯 实时音视频
+    public static final int SDKAPP_ID = 1400102217;
+    public static final int ACCOUNT_TYPE = 29061;
+
+
 }

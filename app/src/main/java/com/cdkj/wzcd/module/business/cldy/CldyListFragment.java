@@ -74,7 +74,7 @@ public class CldyListFragment extends AbsRefreshListFragment {
 
         CldyListAdapter mAdapter = new CldyListAdapter(listData);
 
-        mAdapter.setOnItemClickListener((adapter, view, position) -> CldyInputMessageActivity.open(mActivity, mAdapter.getItem(position).getCode()));
+//        mAdapter.setOnItemClickListener((adapter, view, position) -> CldyInputMessageActivity.open(mActivity, mAdapter.getItem(position).getCode()));
         return mAdapter;
     }
 
@@ -84,12 +84,13 @@ public class CldyListFragment extends AbsRefreshListFragment {
 
         map.put("start", pageIndex + "");
         map.put("limit", limit + "");
+
         if (UserHelper.isYWY())
             map.put("saleUserId", SPUtilHelper.getUserId());
 
         if (isShowDialog) showLoadingDialog();
 
-        Call call = RetrofitUtils.createApi(MyApiServer.class).getNodeList("632148", StringUtils.getJsonToString(map));
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getNodeList("632145", StringUtils.getJsonToString(map));
         addCall(call);
 
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<NodeListModel>>(mActivity) {

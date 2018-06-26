@@ -145,7 +145,7 @@ public class BitmapUtils {
             return baos.toByteArray();
         }
 
-//        final BitmapFactory.Options boptions = new BitmapFactory.Options();
+//        final BitmapFactory.UCropMultiOptions boptions = new BitmapFactory.UCropMultiOptions();
 
 //        boptions.inJustDecodeBounds = true;//只解析图片边沿，获取宽高
 //        // 计算缩放比

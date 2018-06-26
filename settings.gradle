@@ -1,1 +1,1 @@
-include ':app', ':cdcommon'
+include ':app', ':cdcommon', ':picture_library', ':ucrop'

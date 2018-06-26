@@ -33,5 +33,6 @@
     <color name="color_myItemNormal_title_txt">#666666</color>
     <color name="color_myItemNormal_content_txt">#333333</color>
 
+    <color name="color_f6">#f6f6f6</color>
 
 </resources>

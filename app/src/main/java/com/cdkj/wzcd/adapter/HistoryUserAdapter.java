@@ -36,7 +36,7 @@ public class HistoryUserAdapter extends BaseQuickAdapter<RepaymentModel, BaseVie
     protected void convert(BaseViewHolder helper, RepaymentModel item) {
         mBinding = DataBindingUtil.bind(helper.itemView);
 
-        mBinding.myTlIdStatus.setText(item.getCode(), NodeHelper.getNameOnTheCode(item.getBudgetOrder().getCurNodeCode()));
+        mBinding.myTlIdStatus.setText(item.getCode(), NodeHelper.getNameOnTheCode(item.getCurNodeCode()));
 
         mBinding.myIlName.setText(item.getUser().getRealName());
         mBinding.myIlType.setText(BizTypeHelper.getNameOnTheKey(item.getBudgetOrder().getBizType()));

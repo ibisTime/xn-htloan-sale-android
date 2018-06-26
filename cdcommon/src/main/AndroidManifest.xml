@@ -29,7 +29,7 @@
         <!--申明为true，你才能获取临时共享权限-->
         <!--false表示我们的provider不需要对外开放-->
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name=".utils.MyFileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
@@ -38,8 +38,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
-
 
         <!--图片选择-->
         <activity

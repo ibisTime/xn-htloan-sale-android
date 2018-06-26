@@ -8,11 +8,11 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.cdkj.baselibrary.R;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.utils.glidetransforms.GlideCircleBorderTransform;
 import com.cdkj.baselibrary.utils.glidetransforms.GlideCircleTransform;
+import com.yalantis.ucrop.util.GlideApp;
 
 /**
  * 图片加载工具类
@@ -47,20 +47,20 @@ public class ImgUtils {
                 return;
             }
             try {
-                Glide.with((Activity) obj).load(imgid).placeholder(R.drawable.default_pic).error(R.drawable.default_pic).into(img);
+                GlideApp.with((Activity) obj).load(imgid).placeholder(R.drawable.default_pic).error(R.drawable.default_pic).into(img);
             } catch (Exception e) {
                 LogUtil.E("图片加载错误");
             }
 
         } else if (obj instanceof Fragment) {
             try {
-                Glide.with((Fragment) obj).load(imgid).placeholder(R.drawable.default_pic).error(R.drawable.default_pic).into(img);
+                GlideApp.with((Fragment) obj).load(imgid).placeholder(R.drawable.default_pic).error(R.drawable.default_pic).into(img);
             } catch (Exception e) {
                 LogUtil.E("图片加载错误");
             }
         } else if (obj instanceof Context) {
             try {
-                Glide.with((Context) obj).load(imgid).placeholder(R.drawable.default_pic).error(R.drawable.default_pic).into(img);
+                GlideApp.with((Context) obj).load(imgid).placeholder(R.drawable.default_pic).error(R.drawable.default_pic).into(img);
             } catch (Exception e) {
                 LogUtil.E("图片加载错误");
             }
@@ -84,20 +84,20 @@ public class ImgUtils {
                     return;
                 }
                 try {
-                    Glide.with((Activity) obj).load(imgid).placeholder(R.drawable.photo_default).error(R.drawable.photo_default).transform(new GlideCircleTransform(((Activity) obj))).into(img);
+                    GlideApp.with((Activity) obj).load(imgid).placeholder(R.drawable.photo_default).error(R.drawable.photo_default).transform(new GlideCircleTransform(((Activity) obj))).into(img);
                 } catch (Exception e) {
                     LogUtil.E("图片加载错误");
                 }
 
             } else if (obj instanceof Fragment) {
                 try {
-                    Glide.with((Fragment) obj).load(imgid).placeholder(R.drawable.photo_default).error(R.drawable.photo_default).transform(new GlideCircleTransform(((Fragment) obj).getContext())).into(img);
+                    GlideApp.with((Fragment) obj).load(imgid).placeholder(R.drawable.photo_default).error(R.drawable.photo_default).transform(new GlideCircleTransform(((Fragment) obj).getContext())).into(img);
                 } catch (Exception e) {
                     LogUtil.E("图片加载错误");
                 }
             } else if (obj instanceof Context) {
                 try {
-                    Glide.with((Context) obj).load(imgid).placeholder(R.drawable.photo_default).error(R.drawable.photo_default).transform(new GlideCircleTransform(((Context) obj))).into(img);
+                    GlideApp.with((Context) obj).load(imgid).placeholder(R.drawable.photo_default).error(R.drawable.photo_default).transform(new GlideCircleTransform(((Context) obj))).into(img);
                 } catch (Exception e) {
                     LogUtil.E("图片加载错误");
                 }
@@ -109,7 +109,7 @@ public class ImgUtils {
     public static void loadQiNiuBorderLogo(Context context, String url, ImageView imageView, @ColorRes int borderColor) {
         try {
 /*.skipMemoryCache(true)   .diskCacheStrategy(DiskCacheStrategy.NONE)*/
-            Glide.with(context).load(MyCdConfig.QINIU_URL + url).error(R.drawable.photo_default).transform(new GlideCircleBorderTransform(context, 2, ContextCompat.getColor(context, borderColor))).into(imageView);
+            GlideApp.with(context).load(MyCdConfig.QINIU_URL + url).error(R.drawable.photo_default).transform(new GlideCircleBorderTransform(context, 2, ContextCompat.getColor(context, borderColor))).into(imageView);
 
         } catch (Exception e) {
 

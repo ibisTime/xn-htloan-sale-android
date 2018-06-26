@@ -213,6 +213,7 @@ public class NodeListModel {
     private String carHgz;
     private String carJqx;
     private String carSyx;
+    private String carSettleOtherPdf;
     private String carRegcerti;
     private String carPd;
     private String carKey;
@@ -927,6 +928,14 @@ public class NodeListModel {
 
     public void setCarJqx(String carJqx) {
         this.carJqx = carJqx;
+    }
+
+    public String getCarSettleOtherPdf() {
+        return carSettleOtherPdf;
+    }
+
+    public void setCarSettleOtherPdf(String carSettleOtherPdf) {
+        this.carSettleOtherPdf = carSettleOtherPdf;
     }
 
     public String getCarSyx() {

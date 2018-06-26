@@ -61,7 +61,16 @@ public class UserModel implements Parcelable {
     private String styleName;
     private String signStatus;
     private String roleCode;
+    private String teamCode;
     private int maxNumber;
+
+    public String getTeamCode() {
+        return teamCode;
+    }
+
+    public void setTeamCode(String teamCode) {
+        this.teamCode = teamCode;
+    }
 
     public String getCompanyName() {
         return companyName;

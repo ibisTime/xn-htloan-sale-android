@@ -19,6 +19,7 @@ import com.cdkj.wzcd.adapter.GpsInstallAdapter;
 import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.databinding.ActivityGpsInfoInputBinding;
 import com.cdkj.wzcd.model.GpsInstallModel;
+import com.cdkj.wzcd.model.GpsInstallReplaceModel;
 import com.cdkj.wzcd.model.NodeListModel;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -94,7 +95,7 @@ public class GPSInstallInfoActivity extends AbsBaseLoadActivity {
 
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
 //            CreditUserModel model = );
-            GPSInfoAddActivity.open(this,mAdapter.getItem(position),position);
+            GPSInfoAddActivity.open(this,mAdapter.getItem(position), position);
         });
 
         mBinding.rvGps.setLayoutManager(getLinearLayoutManager(false));
@@ -132,21 +133,21 @@ public class GPSInstallInfoActivity extends AbsBaseLoadActivity {
         mBinding.myNlBank.setText(data.getLoanBankName());
 
 
-        if (data.getBudgetOrderGpsList() != null || data.getBudgetOrderGpsList().size() !=0){
-            mList.clear();
-            for (NodeListModel.BudgetOrderGpsListBean bean : data.getBudgetOrderGpsList()){
-
-                GpsInstallModel model = new GpsInstallModel();
-                model.setCode(bean.getCode());
-                model.setGpsDevNo(bean.getGpsDevNo());
-                model.setAzLocation(bean.getAzLocation());
-                model.setAzUser(bean.getAzUser());
-                model.setAzDatetime(bean.getAzDatetime());
-
-                mList.add(model);
-            }
-            mAdapter.notifyDataSetChanged();
-        }
+//        if (data.getBudgetOrderGpsList() != null || data.getBudgetOrderGpsList().size() !=0){
+//            mList.clear();
+//            for (NodeListModel.BudgetOrderGpsListBean bean : data.getBudgetOrderGpsList()){
+//
+//                GpsInstallModel model = new GpsInstallModel();
+//                model.setCode(bean.getCode());
+//                model.setGpsDevNo(bean.getGpsDevNo());
+//                model.setAzLocation(bean.getAzLocation());
+//                model.setAzUser(bean.getAzUser());
+//                model.setAzDatetime(bean.getAzDatetime());
+//
+//                mList.add(model);
+//            }
+//            mAdapter.notifyDataSetChanged();
+//        }
 
     }
 
@@ -155,6 +156,14 @@ public class GPSInstallInfoActivity extends AbsBaseLoadActivity {
     public void doAddCreditPerson(GpsInstallModel model){
         mList.add(model);
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Subscribe
+    public void doReplaceCreditPerson(GpsInstallReplaceModel model){
+
+        mList.set(model.getLocation(), model.getGpsInstallModel());
+        mAdapter.notifyDataSetChanged();
+
     }
 
     private boolean check(){

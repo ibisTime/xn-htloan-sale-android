@@ -60,6 +60,7 @@ public class RepaymentModel {
     private int restPeriods;
     private int bankRate;
     private String loanStartDatetime;
+    private String curNodeCode;
     private String loanEndDatetime;
     private String firstRepayDatetime;
     private int firstRepayAmount;
@@ -84,6 +85,14 @@ public class RepaymentModel {
     private int loanBalance;
     private String loanBankName;
     private List<RepayPlanListBean> repayPlanList;
+
+    public String getCurNodeCode() {
+        return curNodeCode;
+    }
+
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
+    }
 
     public String getCode() {
         return code;

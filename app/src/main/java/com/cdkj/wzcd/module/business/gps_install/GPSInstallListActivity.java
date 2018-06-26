@@ -17,6 +17,7 @@ import com.cdkj.wzcd.adapter.GpsInstallListAdapter;
 import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.model.NodeListModel;
 import com.cdkj.wzcd.util.DataDictionaryHelper;
+import com.cdkj.wzcd.util.UserHelper;
 
 import java.util.List;
 import java.util.Map;
@@ -76,7 +77,11 @@ public class GPSInstallListActivity extends AbsRefreshListActivity {
 
             map.put("start", pageIndex + "");
             map.put("limit", limit + "");
-            map.put("saleUserId", SPUtilHelper.getUserId());
+            if (!UserHelper.isZHRY()) {
+                map.put("saleUserId", SPUtilHelper.getUserId());
+                map.put("teamCode", SPUtilHelper.getTeamCode());
+            }
+
 
             if (isShowDialog) showLoadingDialog();
 

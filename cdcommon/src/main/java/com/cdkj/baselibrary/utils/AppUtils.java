@@ -17,9 +17,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.jakewharton.rxbinding2.view.RxView;
-import com.jakewharton.rxbinding2.widget.RxTextView;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -143,25 +140,30 @@ public class AppUtils {
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
                     public void accept(Disposable disposable) throws Exception {
-                        RxView.enabled(btn).accept(false);
-                        RxTextView.text(btn).accept(count + "秒后重发");
+                        btn.setEnabled(false);
+                        btn.setText(count + "秒后重发");
+
                     }
                 })
 
                 .subscribe(new Consumer<Long>() {
                                @Override
                                public void accept(Long aLong) throws Exception {
-                                   RxView.enabled(btn).accept(false);
-                                   RxTextView.text(btn).accept((count - aLong) + "秒后重发");
+
+                                   btn.setEnabled(false);
+                                   btn.setText((count - aLong) + "秒后重发");
+
+//                                   RxView.enabled(btn).accept(false);
+//                                   RxTextView.text(btn).accept();
 //                                   btn.setBackgroundResource(R.drawable.btn_no_click_gray);
                                }
                            }, throwable -> {
-                            RxView.enabled(btn).accept(true);
-                            RxTextView.text(btn).accept("重发验证码");
+//                            RxView.enabled(btn).accept(true);
+//                            RxTextView.text(btn).accept("重发验证码");
 //                            btn.setBackgroundResource(R.drawable.selector_blue);
                         }, () -> {
-                            RxView.enabled(btn).accept(true);
-                            RxTextView.text(btn).accept("重发验证码");
+//                            RxView.enabled(btn).accept(true);
+//                            RxTextView.text(btn).accept("重发验证码");
 //                            btn.setBackgroundResource(R.drawable.selector_blue);
                         }
                 );

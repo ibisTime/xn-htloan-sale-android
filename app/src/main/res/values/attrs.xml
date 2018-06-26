@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <declare-styleable name="MyTitleBarLayout">
-        <attr name="txt_title" format="string"></attr>
+        <attr name="txt_title" format="string" />
     </declare-styleable>
 
     <declare-styleable name="MySquareRowLayout">
-        <attr name="txt_content" format="string"></attr>
-        <attr name="img_content" format="reference"></attr>
-        <attr name="isShowRedPoint" format="boolean"></attr>
+        <attr name="txt_content" format="string" />
+        <attr name="img_content" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="MySelectLayout">
-        <attr name="txt_select_title" format="string"></attr>
-        <attr name="txt_select_content" format="string"></attr>
+        <attr name="txt_select_title" format="string" />
+        <attr name="txt_select_content" format="string" />
     </declare-styleable>
 
     <declare-styleable name="MyNormalLayout">
         <attr name="txt_normal_title" format="string"></attr>
-        <attr name="txt_normal_content" format="string"></attr>
+        <attr name="txt_normal_content" format="string" />
         <attr name="txt_normal_hint" format="string"></attr>
         <attr name="img_normal_right" format="reference"></attr>
     </declare-styleable>
@@ -59,6 +58,11 @@
 
         <attr name="txt_image_hint_right" format="string"></attr>
     </declare-styleable>
+    
+    <declare-styleable name="MyVideoLayout">
+        <attr name="title" />
+        
+    </declare-styleable>
 
     <declare-styleable name="MyItemRootLayout">
         <attr name="background" format="reference"></attr>
@@ -77,14 +81,13 @@
     </declare-styleable>
 
     <declare-styleable name="MyListItemBtnLayout">
-        <attr name="txt_item_confirm_content_left" format="string"></attr>
-        <attr name="txt_item_confirm_content_right" format="string"></attr>
+        <attr name="txt_item_confirm_content_left" format="string" />
+        <attr name="txt_item_confirm_content_right" format="string" />
     </declare-styleable>
 
     <declare-styleable name="MyItemChoiceLayout">
-        <attr name="txt_item_choice_title" format="string"></attr>
-        <attr name="txt_item_choice_img" format="reference"></attr>
+        <attr name="txt_item_choice_title" format="string" />
+        <attr name="txt_item_choice_img" format="reference" />
     </declare-styleable>
-
 
 </resources>
