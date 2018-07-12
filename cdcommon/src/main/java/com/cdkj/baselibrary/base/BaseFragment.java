@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 
+import com.cdkj.baselibrary.R;
+import com.cdkj.baselibrary.dialog.CommonDialog;
 import com.cdkj.baselibrary.dialog.LoadingDialog;
 
 import org.greenrobot.eventbus.EventBus;
@@ -111,6 +113,19 @@ public abstract class BaseFragment extends Fragment {
         };
     }
 
+    protected void showDoubleWarnListen(String str, CommonDialog.OnPositiveListener onPositiveListener) {
+
+        if (isHidden()) {
+            return;
+        }
+
+        CommonDialog commonDialog = new CommonDialog(mActivity).builder()
+                .setTitle(getString(R.string.tips)).setContentMsg(str)
+                .setPositiveBtn(getString(R.string.sure), onPositiveListener)
+                .setNegativeBtn(getString(R.string.cancel), null, false);
+
+        commonDialog.show();
+    }
 
 }
 

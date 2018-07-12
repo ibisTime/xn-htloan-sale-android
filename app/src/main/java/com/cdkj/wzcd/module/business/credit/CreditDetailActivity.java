@@ -16,7 +16,7 @@ import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.adapter.CreditUserAdapter;
 import com.cdkj.wzcd.api.MyApiServer;
-import com.cdkj.wzcd.databinding.ActivityZxLaunchBinding;
+import com.cdkj.wzcd.databinding.ActivityCreditDetailBinding;
 import com.cdkj.wzcd.model.CreditModel;
 import com.cdkj.wzcd.model.CreditUserModel;
 import com.cdkj.wzcd.util.BankHelper;
@@ -39,7 +39,7 @@ import static com.cdkj.baselibrary.appmanager.CdRouteHelper.DATA_SIGN;
 
 public class CreditDetailActivity extends AbsBaseLoadActivity {
 
-    private ActivityZxLaunchBinding mBinding;
+    private ActivityCreditDetailBinding mBinding;
 
     private String creditCode;
     private CreditModel mData;
@@ -66,7 +66,7 @@ public class CreditDetailActivity extends AbsBaseLoadActivity {
 
     @Override
     public View addMainView() {
-        mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_zx_launch, null, false);
+        mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_credit_detail, null, false);
         return mBinding.getRoot();
     }
 
@@ -183,11 +183,10 @@ public class CreditDetailActivity extends AbsBaseLoadActivity {
             mBinding.myIlReport.setFlImgByRequest(mData.getSecondCarReport());
         }
 
-        mBinding.llAdd.setVisibility(View.GONE);
-        mBinding.myCbConfirm.setVisibility(View.GONE);
-
         mList.addAll(mData.getCreditUserList());
         mAdapter.notifyDataSetChanged();
+
+        mBinding.myElNote.setTextByRequest(mData.getNote());
 
     }
 

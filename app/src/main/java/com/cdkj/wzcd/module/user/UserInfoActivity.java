@@ -156,7 +156,7 @@ public class UserInfoActivity extends AbsBaseLoadActivity{
         map.put("userId", SPUtilHelper.getUserId());
         map.put("photo", key);
         map.put("token", SPUtilHelper.getUserToken());
-        Call call = RetrofitUtils.getBaseAPiService().successRequest("805080", StringUtils.getJsonToString(map));
+        Call call = RetrofitUtils.getBaseAPiService().successRequest("630059", StringUtils.getJsonToString(map));
         addCall(call);
         call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(this) {
             @Override

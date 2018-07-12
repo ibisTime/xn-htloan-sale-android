@@ -31,8 +31,8 @@
         <activity android:name=".module.business.credit.audit.AuditCreditActivity" />
 
         <activity android:name=".module.business.join_approval.JoinApplyListActivity" />
-        <activity android:name=".module.business.face_view.InterviewActivity" />
-        <activity android:name=".module.business.face_view.InterviewStartActivity" />
+        <activity android:name=".module.business.interview.InterviewActivity" />
+        <activity android:name=".module.business.interview.InterviewStartActivity" />
         <activity android:name=".module.business.gps_install.GPSInstallListActivity" />
         <activity android:name=".module.business.gps_install.GPSInstallInfoActivity" />
         <activity android:name=".module.business.gps_install.GPSInfoAddActivity" />
@@ -45,7 +45,7 @@
         <activity android:name=".module.business.cllh.CllhInputMessageActivity" />
         <activity android:name=".module.business.cldy.BssCldyListActivity" />
         <activity android:name=".module.business.cldy.CldyInputMessageActivity" />
-        <activity android:name=".module.datatransfer.DataTransferActivity" />
+        <activity android:name=".module.datatransfer.DataTransferListFragment" />
         <activity android:name=".module.datatransfer.SendActivity" />
         <activity android:name=".module.datatransfer.SendAndExamineActivity" />
         <activity android:name=".module.cartool.uservoid.UserToVoidActivity" />
@@ -67,22 +67,22 @@
         <activity android:name=".module.business.join_approval.edit.JoinStep5Activity" />
         <activity android:name=".module.business.join_approval.edit.JoinStep6Activity" />
         <activity android:name=".module.business.join_approval.JoinApplyActivity" />
-        <activity android:name=".module.business.credit.AuditResultInputActivity" />
         <activity android:name=".module.business.credit.CreditDetailActivity" />
         <activity android:name=".module.business.credit.CreditInitiateActivity" />
         <activity android:name=".module.business.credit.audit.AuditUserActivity" />
         <activity android:name=".module.business.cldy.MortgageFinishActivity" />
         <activity android:name=".module.cartool.uservoid.ZrdListActivity" />
         <activity android:name=".module.business.gps_install.GpsDetailActivity" />
-        <activity android:name=".module.business.face_view.RoomActivity" />
-        <activity android:name=".module.business.face_view.MainActivity" />
+        <activity android:name=".module.business.interview.RoomActivity" />
+        <activity android:name=".module.business.interview.MainActivity" />
         <activity android:name=".module.business.audit.AuditActivity" />
         <activity android:name=".module.business.audit.AuditListActivity" />
         <activity android:name=".module.business.cldy.CldyApplyActivity" />
+        <activity android:name=".module.datatransfer.DataTransferActivity2" />
 
         <!--<meta-data-->
             <!--android:nacom.yalantis.ucrop.util.MyAppGlideModuledule"-->
-            <!--android:value="GlideModule"/>-->
+            <!--andrsearchValuealue="GlideModule"/>-->
     </application>
 
 </manifest>

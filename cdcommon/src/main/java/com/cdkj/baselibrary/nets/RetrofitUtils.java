@@ -20,8 +20,6 @@ public class RetrofitUtils {
     public static final int RELEASE = 0; //正式环境
     public static final int DEBUG = 1;//研发环境
     public static final int TEST = 2;//测试环境
-    public static final String FORWARD_SERVICE = "/forward-service/";
-
 
     private RetrofitUtils() {
 

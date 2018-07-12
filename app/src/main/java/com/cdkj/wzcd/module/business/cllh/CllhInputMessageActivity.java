@@ -102,11 +102,11 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
 
             mBinding.myNlDateTime.setText(DateUtil.formatStringData(data.getCarSettleDatetime(), DateUtil.DEFAULT_DATE_FMT));
 
-            mBinding.myIlReceipt.setFlImgByRequest(data.getCarInvoice());
-            mBinding.myIlQualified.setFlImgByRequest(data.getCarHgz());
-            mBinding.myIlJqx.setFlImgByRequest(data.getCarJqx());
-            mBinding.myIlSyx.setFlImgByRequest(data.getCarSyx());
-            mBinding.myIlOther.setFlImgByRequest(data.getCarSettleOtherPdf());
+            mBinding.myMlReceipt.setListDataByRequest(data.getCarInvoice());
+            mBinding.myMlQualified.setListDataByRequest(data.getCarHgz());
+            mBinding.myMlJqx.setListDataByRequest(data.getCarJqx());
+            mBinding.myMlSyx.setListDataByRequest(data.getCarSyx());
+            mBinding.myMlOther.setListDataByRequest(data.getCarSettleOtherPdf());
 
             mBinding.myCbConfirm.setVisibility(View.GONE);
         }
@@ -114,11 +114,11 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
     }
 
     private void initCustomView() {
-        mBinding.myIlReceipt.setActivity(this,1,0);
-        mBinding.myIlQualified.setActivity(this,2,0);
-        mBinding.myIlJqx.setActivity(this,3,0);
-        mBinding.myIlSyx.setActivity(this,4,0);
-        mBinding.myIlOther.setActivity(this,5,0);
+        mBinding.myMlReceipt.build(this,1);
+        mBinding.myMlQualified.build(this,2);
+        mBinding.myMlJqx.build(this,3);
+        mBinding.myMlSyx.build(this,4);
+        mBinding.myMlOther.build(this,5);
     }
 
     @Override
@@ -133,24 +133,24 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
             @Override
             public void onSuccess(String key) {
 
-                if (requestCode == mBinding.myIlReceipt.getRequestCode()){
-                    mBinding.myIlReceipt.setFlImg(key);
+                if (requestCode == mBinding.myMlReceipt.getRequestCode()){
+                    mBinding.myMlReceipt.addList(key);
                 }
 
-                if (requestCode == mBinding.myIlQualified.getRequestCode()){
-                    mBinding.myIlQualified.setFlImg(key);
+                if (requestCode == mBinding.myMlQualified.getRequestCode()){
+                    mBinding.myMlQualified.addList(key);
                 }
 
-                if (requestCode == mBinding.myIlJqx.getRequestCode()){
-                    mBinding.myIlJqx.setFlImg(key);
+                if (requestCode == mBinding.myMlJqx.getRequestCode()){
+                    mBinding.myMlJqx.addList(key);
                 }
 
-                if (requestCode == mBinding.myIlSyx.getRequestCode()){
-                    mBinding.myIlSyx.setFlImg(key);
+                if (requestCode == mBinding.myMlSyx.getRequestCode()){
+                    mBinding.myMlSyx.addList(key);
                 }
 
-                if (requestCode == mBinding.myIlOther.getRequestCode()){
-                    mBinding.myIlOther.setFlImg(key);
+                if (requestCode == mBinding.myMlOther.getRequestCode()){
+                    mBinding.myMlOther.addList(key);
                 }
 
                 disMissLoading();
@@ -181,19 +181,19 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
             return false;
         }
         // 发票
-        if (TextUtils.isEmpty(mBinding.myIlReceipt.check())){
+        if (mBinding.myMlReceipt.check()){
             return false;
         }
         // 合格证
-        if (TextUtils.isEmpty(mBinding.myIlQualified.check())){
+        if (mBinding.myMlQualified.check()){
             return false;
         }
         // 交强险
-        if (TextUtils.isEmpty(mBinding.myIlJqx.check())){
+        if (mBinding.myMlJqx.check()){
             return false;
         }
         // 商业险
-        if (TextUtils.isEmpty(mBinding.myIlSyx.check())){
+        if (mBinding.myMlSyx.check()){
             return false;
         }
 
@@ -205,11 +205,11 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
 
         map.put("code", code);
         map.put("carSettleDatetime", mBinding.myNlDateTime.getText());
-        map.put("carInvoice", mBinding.myIlReceipt.getFlImgUrl());
-        map.put("carHgz", mBinding.myIlQualified.getFlImgUrl());
-        map.put("carJqx", mBinding.myIlJqx.getFlImgUrl());
-        map.put("carSyx", mBinding.myIlSyx.getFlImgUrl());
-        map.put("carSettleOtherPdf", mBinding.myIlOther.getFlImgUrl());
+        map.put("carInvoice", mBinding.myMlReceipt.getListData());
+        map.put("carHgz", mBinding.myMlQualified.getListData());
+        map.put("carJqx", mBinding.myMlJqx.getListData());
+        map.put("carSyx", mBinding.myMlSyx.getListData());
+        map.put("carSettleOtherPdf", mBinding.myMlOther.getListData());
         map.put("operator", SPUtilHelper.getUserId());
 
         Call call = RetrofitUtils.getBaseAPiService().codeRequest("632128", StringUtils.getJsonToString(map));

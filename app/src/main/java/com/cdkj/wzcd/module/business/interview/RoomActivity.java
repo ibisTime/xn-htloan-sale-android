@@ -1,4 +1,4 @@
-package com.cdkj.wzcd.module.business.face_view;
+package com.cdkj.wzcd.module.business.interview;
 
 import android.content.Context;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.cdkj.wzcd.module.business.face_view;
+package com.cdkj.wzcd.module.business.interview;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -87,8 +87,14 @@ public class InterviewListFragment extends AbsRefreshListFragment {
 
             mType.addAll(data);
 
-            Map<String, String> map = RetrofitUtils.getNodeListMap();
+            Map<String, Object> map = RetrofitUtils.getNodeListMap();
 
+            List<String> curNodeCodeList = new ArrayList<>();
+            curNodeCodeList.add("002_05");
+            curNodeCodeList.add("002_06");
+            curNodeCodeList.add("002_08");
+
+            map.put("curNodeCodeList", curNodeCodeList);
             map.put("limit", limit + "");
             map.put("start", pageIndex + "");
 

@@ -1,4 +1,4 @@
-package com.cdkj.wzcd.module.business.face_view;
+package com.cdkj.wzcd.view.manager;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
@@ -6,13 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * author：luck
- * project：PictureSelector
- * package：com.luck.picture.ui
- * email：893855882@qq.com
- * data：16/12/31
- */
 
 public class FullyGridLayoutManager extends GridLayoutManager {
     public FullyGridLayoutManager(Context context, int spanCount) {

@@ -17,6 +17,8 @@ public class MyCdConfig {
 
     public final static String PROJECT_NAME = "bige";
 
+    public final static String IMAGE_URL = "";
+
     /**
      * 保存的SharedPreferences工具类文件名
      */

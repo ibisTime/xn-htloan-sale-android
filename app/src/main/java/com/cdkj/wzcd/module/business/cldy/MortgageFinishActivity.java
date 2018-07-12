@@ -81,19 +81,19 @@ public class MortgageFinishActivity extends AbsBaseLoadActivity {
             return false;
         }
         // 机动车登记证书
-        if (TextUtils.isEmpty(mBinding.myIlCarRegcerti.check())){
+        if (mBinding.myMlCarRegcerti.check()){
             return false;
         }
         // 批单
-        if (TextUtils.isEmpty(mBinding.myIlCarPd.check())){
+        if (mBinding.myMlCarPd.check()){
             return false;
         }
         // 车钥匙
-        if (TextUtils.isEmpty(mBinding.myIlCarKey.check())){
+        if (mBinding.myMlCarKey.check()){
             return false;
         }
         // 绿大本扫描件
-        if (TextUtils.isEmpty(mBinding.myIlCarBigSmj.check())){
+        if (mBinding.myMlCarBigSmj.check()){
             return false;
         }
 
@@ -134,10 +134,10 @@ public class MortgageFinishActivity extends AbsBaseLoadActivity {
     }
 
     private void initCustomView() {
-        mBinding.myIlCarRegcerti.setActivity(this,1,0);
-        mBinding.myIlCarPd.setActivity(this,2,0);
-        mBinding.myIlCarKey.setActivity(this,3,0);
-        mBinding.myIlCarBigSmj.setActivity(this,4,0);
+        mBinding.myMlCarRegcerti.build(this,1);
+        mBinding.myMlCarPd.build(this,2);
+        mBinding.myMlCarKey.build(this,3);
+        mBinding.myMlCarBigSmj.build(this,4);
     }
 
     @Override
@@ -152,20 +152,20 @@ public class MortgageFinishActivity extends AbsBaseLoadActivity {
             @Override
             public void onSuccess(String key) {
 
-                if (requestCode == mBinding.myIlCarRegcerti.getRequestCode()){
-                    mBinding.myIlCarRegcerti.setFlImg(key);
+                if (requestCode == mBinding.myMlCarRegcerti.getRequestCode()){
+                    mBinding.myMlCarRegcerti.addList(key);
                 }
 
-                if (requestCode == mBinding.myIlCarPd.getRequestCode()){
-                    mBinding.myIlCarPd.setFlImg(key);
+                if (requestCode == mBinding.myMlCarPd.getRequestCode()){
+                    mBinding.myMlCarPd.addList(key);
                 }
 
-                if (requestCode == mBinding.myIlCarKey.getRequestCode()){
-                    mBinding.myIlCarKey.setFlImg(key);
+                if (requestCode == mBinding.myMlCarKey.getRequestCode()){
+                    mBinding.myMlCarKey.addList(key);
                 }
 
-                if (requestCode == mBinding.myIlCarBigSmj.getRequestCode()){
-                    mBinding.myIlCarBigSmj.setFlImg(key);
+                if (requestCode == mBinding.myMlCarBigSmj.getRequestCode()){
+                    mBinding.myMlCarBigSmj.addList(key);
                 }
 
                 disMissLoading();
@@ -183,10 +183,10 @@ public class MortgageFinishActivity extends AbsBaseLoadActivity {
 
         map.put("code", code);
         map.put("carNumber", mBinding.myElCarNumber.getText());
-        map.put("carRegcerti", mBinding.myIlCarRegcerti.getFlImgUrl());
-        map.put("carPd", mBinding.myIlCarPd.getFlImgUrl());
-        map.put("carKey", mBinding.myIlCarKey.getFlImgUrl());
-        map.put("carBigSmj", mBinding.myIlCarBigSmj.getFlImgUrl());
+        map.put("carRegcerti", mBinding.myMlCarRegcerti.getListData());
+        map.put("carPd", mBinding.myMlCarPd.getListData());
+        map.put("carKey", mBinding.myMlCarKey.getListData());
+        map.put("carBigSmj", mBinding.myMlCarBigSmj.getListData());
         map.put("operator", SPUtilHelper.getUserId());
 
         Call call = RetrofitUtils.getBaseAPiService().codeRequest("632133", StringUtils.getJsonToString(map));

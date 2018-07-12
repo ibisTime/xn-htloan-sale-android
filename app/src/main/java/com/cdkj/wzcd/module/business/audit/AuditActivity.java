@@ -87,7 +87,7 @@ public class AuditActivity extends AbsBaseLoadActivity {
 
     private void initCustomView() {
 
-        mBinding.myIlProve.setActivity(this, 1, -1);
+        mBinding.myMlProve.build(this, 1);
 
     }
 
@@ -135,7 +135,7 @@ public class AuditActivity extends AbsBaseLoadActivity {
             return false;
         }
 
-        if (TextUtils.isEmpty(mBinding.myIlProve.check())){
+        if (mBinding.myMlProve.check()){
             return false;
         }
 
@@ -154,7 +154,7 @@ public class AuditActivity extends AbsBaseLoadActivity {
         map.put("operator", SPUtilHelper.getUserId());
         map.put("remark", mBinding.myElRemark.getText());
         map.put("settleDatetime", mBinding.myNlDateTime.getText());
-        map.put("settlePdf", mBinding.myIlProve.getFlImgUrl());
+        map.put("settlePdf", mBinding.myMlProve.getListData());
 
         Call call = RetrofitUtils.getBaseAPiService().codeRequest("630551", StringUtils.getJsonToString(map));
 
@@ -197,8 +197,8 @@ public class AuditActivity extends AbsBaseLoadActivity {
             public void onSuccess(String key) {
 
 
-                if (requestCode == mBinding.myIlProve.getRequestCode()){
-                    mBinding.myIlProve.setFlImg(key);
+                if (requestCode == mBinding.myMlProve.getRequestCode()){
+                    mBinding.myMlProve.addList(key);
                 }
 
                 disMissLoading();

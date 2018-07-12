@@ -113,8 +113,9 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
             mBinding.myElId.setText(model.getIdNo());
             mBinding.myIlIdCard.setFlImg(model.getIdNoFront());
             mBinding.myIlIdCard.setFlImgRight(model.getIdNoReverse());
-            mBinding.myIlCredit.setFlImg(model.getAuthPdf());
-            mBinding.myIlInterview.setFlImg(model.getInterviewPic());
+            mBinding.myMlCredit.setListData(model.getAuthPdf());
+            mBinding.myMlInterview.setListData(model.getInterviewPic());
+
         }else {
             mBinding.myElName.setTextByRequest(model.getUserName());
             mBinding.myElPhone.setTextByRequest(model.getMobile());
@@ -125,15 +126,19 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
             mBinding.myElId.setTextByRequest(model.getIdNo());
             mBinding.myIlIdCard.setFlImgByRequest(model.getIdNoFront());
             mBinding.myIlIdCard.setFlImgRightByRequest(model.getIdNoReverse());
-            mBinding.myIlCredit.setFlImgByRequest(model.getAuthPdf());
-            mBinding.myIlInterview.setFlImgByRequest(model.getInterviewPic());
+            mBinding.myMlCredit.setListDataByRequest(model.getAuthPdf());
+            mBinding.myMlInterview.setListDataByRequest(model.getInterviewPic());
+
+            mBinding.myElCreditCardOccupation.setVisibility(View.VISIBLE);
+            mBinding.myMlBankCreditResultPdf.setVisibility(View.VISIBLE);
+            mBinding.myElBankCreditResultRemark.setVisibility(View.VISIBLE);
+
+            mBinding.myElCreditCardOccupation.setTextByRequest(model.getCreditCardOccupation());
+            mBinding.myMlBankCreditResultPdf.setListDataByRequest(model.getBankCreditResultPdf());
+            mBinding.myElBankCreditResultRemark.setTextByRequest(model.getBankCreditResultRemark());
 
             mBinding.myCbConfirm.setVisibility(View.GONE);
         }
-
-
-        mBinding.myIlBankCreditResultPdf.setVisibility(View.GONE);
-        mBinding.myElBankCreditResultRemark.setVisibility(View.GONE);
 
     }
 
@@ -143,8 +148,10 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
         mBinding.mySlRelation.setData(this, MySelectLayout.DATA_DICTIONARY, DataDictionaryHelper.credit_user_relation,null);
 
         mBinding.myIlIdCard.setActivity(this,1,2);
-        mBinding.myIlCredit.setActivity(this,3,0);
-        mBinding.myIlInterview.setActivity(this,4,0);
+        mBinding.myMlCredit.build(this,3);
+        mBinding.myMlInterview.build(this,4);
+
+        mBinding.myMlBankCreditResultPdf.build(this,5);
     }
 
     private void initListener() {
@@ -159,8 +166,8 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
                 model.setIdNo(mBinding.myElId.getText());
                 model.setIdNoFront(mBinding.myIlIdCard.getFlImgUrl());
                 model.setIdNoReverse(mBinding.myIlIdCard.getFlImgRightUrl());
-                model.setAuthPdf(mBinding.myIlCredit.getFlImgUrl());
-                model.setInterviewPic(mBinding.myIlInterview.getFlImgUrl());
+                model.setAuthPdf(mBinding.myMlCredit.getListData());
+                model.setInterviewPic(mBinding.myMlInterview.getListData());
 
                 // 发送数据
                 if (getIntent() != null && getIntent().getExtras() != null){
@@ -215,11 +222,11 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
             return false;
         }
         // 征信查询授权书
-        if (TextUtils.isEmpty(mBinding.myIlCredit.check())){
+        if (mBinding.myMlCredit.check()){
             return false;
         }
         // 面签照片
-        if (TextUtils.isEmpty(mBinding.myIlInterview.check())){
+        if (mBinding.myMlInterview.check()){
             return false;
         }
         return true;
@@ -249,16 +256,16 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
                     mBinding.myIlIdCard.setFlImgRight(key);
                 }
 
-                if (requestCode == mBinding.myIlCredit.getRequestCode()){
-                    mBinding.myIlCredit.setFlImg(key);
+                if (requestCode == mBinding.myMlCredit.getRequestCode()){
+                    mBinding.myMlCredit.addList(key);
                 }
 
-                if (requestCode == mBinding.myIlInterview.getRequestCode()){
-                    mBinding.myIlInterview.setFlImg(key);
+                if (requestCode == mBinding.myMlInterview.getRequestCode()){
+                    mBinding.myMlInterview.addList(key);
                 }
 
-                if (requestCode == mBinding.myIlBankCreditResultPdf.getRequestCode()){
-                    mBinding.myIlBankCreditResultPdf.setFlImg(key);
+                if (requestCode == mBinding.myMlBankCreditResultPdf.getRequestCode()){
+                    mBinding.myMlBankCreditResultPdf.addList(key);
                 }
 
                 disMissLoading();

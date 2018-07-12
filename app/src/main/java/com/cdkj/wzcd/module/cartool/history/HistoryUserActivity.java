@@ -70,8 +70,16 @@ public class HistoryUserActivity extends AbsRefreshListActivity<HistoryBean> {
 
             mList.addAll(list);
 
-            Map<String, String> map = RetrofitUtils.getRequestMap();
+            Map<String, Object> map = RetrofitUtils.getRequestMap();
 
+            List<String> curNodeCodeList = new ArrayList<>();
+            curNodeCodeList.add("003_14");
+            curNodeCodeList.add("003_15");
+            curNodeCodeList.add("003_16");
+            curNodeCodeList.add("003_17");
+            curNodeCodeList.add("007_04");
+
+            map.put("curNodeCodeList", curNodeCodeList);
             map.put("limit", limit + "");
             map.put("start", pageIndex + "");
             map.put("userId", SPUtilHelper.getUserId());

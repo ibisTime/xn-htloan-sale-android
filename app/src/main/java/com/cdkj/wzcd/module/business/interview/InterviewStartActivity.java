@@ -1,4 +1,4 @@
-package com.cdkj.wzcd.module.business.face_view;
+package com.cdkj.wzcd.module.business.interview;
 
 import android.Manifest;
 import android.content.Context;
@@ -19,7 +19,6 @@ import com.cdkj.baselibrary.model.IsSuccessModes;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.CameraHelper;
-import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.baselibrary.utils.QiNiuHelper;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.baselibrary.utils.ToastUtil;
@@ -58,7 +57,12 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
     private List<String> mList = new ArrayList<>();
 
     private String bankVideo = "";
+    private String otherVideo = "";
     private String companyVideo = "";
+
+    private int vlYhCode = 1000;
+    private int vlGsCode = 999;
+    private int vlOtherCode = 998;
 
     public static void open(Context context, String code) {
         if (context == null) {
@@ -113,11 +117,15 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
     }
 
     private void initCustomView() {
-        mBinding.myIlContract.setActivity(this,1,0);
+        mBinding.myIlAdvanceFundAmountPdf.setActivity(this,1,-1);
+        mBinding.myIlBankPhoto.setActivity(this,2,-1);
+        mBinding.myIlCompanyContract.setActivity(this,3,-1);
+        mBinding.myIlBankContract.setActivity(this,4,-1);
+        mBinding.myIlInterviewOtherPdf.setActivity(this,5,-1);
 
-        mBinding.myVlYh.build(this, 10, 1000);
-        mBinding.myVlGs.build(this, 10, 999);
-
+        mBinding.myVlBankVideo.build(this, 10, vlYhCode);
+        mBinding.myVlCompanyVideo.build(this, 10, vlGsCode);
+        mBinding.myVlOtherVideo.build(this, 20, vlOtherCode);
     }
 
     private void initListener() {
@@ -126,10 +134,9 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
 
             if (check()){
 
-                upLoad(mBinding.myVlYh.getList(), true);
+                upLoad(mBinding.myVlBankVideo.getList(), vlYhCode);
 
             }
-
 
         });
 
@@ -138,11 +145,20 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
         });
     }
 
-    private void upLoad(List<LocalMedia> list, boolean isYh){
+    private void upLoad(List<LocalMedia> list, int which){
         List<String> urlList = new ArrayList<>();
 
         for (LocalMedia localMedia : list){
             urlList.add(localMedia.getPath());
+        }
+
+        String title;
+        if (which == vlYhCode){
+            title="银行视频";
+        } else if(which == vlGsCode) {
+            title="公司视频";
+        }else {
+            title="其它视频";
         }
 
         mQiNiuHelper.upLoadListVideo(urlList, new QiNiuHelper.UpLoadListFileListener(){
@@ -151,13 +167,13 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
             public void start() {
                 // 初始化上传UI
                 mBinding.llPercent.setVisibility(View.VISIBLE);
-                mBaseBinding.titleView.setMidTitle((isYh ? "银行视频:" : "公司视频:") + "1/" + urlList.size());
+                mBaseBinding.titleView.setMidTitle(title + "1/" + urlList.size());
             }
 
             @Override
             public void onChange(int index, String url) {
 
-                mBaseBinding.titleView.setMidTitle((isYh ? "银行视频:" : "公司视频:") + (index+2) + "/"+urlList.size());
+                mBaseBinding.titleView.setMidTitle(title + (index+2) + "/"+urlList.size());
             }
 
             @Override
@@ -180,16 +196,21 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
 
                 mBaseBinding.titleView.setMidTitle(getString(R.string.face_view));
 
-                if (isYh){
+                if (which == vlYhCode){
 
                     bankVideo = StringUtils.listToString(result, "||");
+                    upLoad(mBinding.myVlCompanyVideo.getList(), vlGsCode);
 
-                    upLoad(mBinding.myVlGs.getList(), false);
-                }else {
+                } else if(which == vlGsCode) {
 
                     companyVideo = StringUtils.listToString(result, "||");
+                    upLoad(mBinding.myVlCompanyVideo.getList(), vlOtherCode);
 
+                }else {
+
+                    otherVideo = StringUtils.listToString(result, "||");
                     interview();
+
                 }
 
             }
@@ -248,7 +269,6 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
     public void onLoginSDKSuccess() {
         if (checkPermission()){
             String roomId = code.substring(code.length()-7, code.length());
-            LogUtil.E("roomId="+roomId);
 
             try {
                 RoomActivity.open(this, Integer.parseInt(roomId));
@@ -297,7 +317,8 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
 
-            if (requestCode == mBinding.myIlContract.getRequestCode()){
+            // 最小的视频回调请求码
+            if (requestCode < vlOtherCode){
 
                 String path = data.getStringExtra(CameraHelper.staticPath);
                 showLoadingDialog();
@@ -305,8 +326,31 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
                     @Override
                     public void onSuccess(String key) {
 
-                        mBinding.myIlContract.setFlImg(key);
-                        disMissLoading();
+                        if (requestCode == mBinding.myIlAdvanceFundAmountPdf.getRequestCode()){
+                            mBinding.myIlAdvanceFundAmountPdf.setFlImg(key);
+                            disMissLoading();
+                        }
+
+                        if (requestCode == mBinding.myIlBankPhoto.getRequestCode()){
+                            mBinding.myIlBankPhoto.setFlImg(key);
+                            disMissLoading();
+                        }
+
+                        if (requestCode == mBinding.myIlCompanyContract.getRequestCode()){
+                            mBinding.myIlCompanyContract.setFlImg(key);
+                            disMissLoading();
+                        }
+
+                        if (requestCode == mBinding.myIlBankContract.getRequestCode()){
+                            mBinding.myIlBankContract.setFlImg(key);
+                            disMissLoading();
+                        }
+
+                        if (requestCode == mBinding.myIlInterviewOtherPdf.getRequestCode()){
+                            mBinding.myIlInterviewOtherPdf.setFlImg(key);
+                            disMissLoading();
+                        }
+
                     }
 
                     @Override
@@ -314,20 +358,30 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
                         disMissLoading();
                     }
                 }, path);
-            }
 
-            if (requestCode == mBinding.myVlYh.getRequestCode()){
-                // 图片、视频、音频选择结果回调
-                List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+            }else {
 
-                mBinding.myVlYh.setList(selectList);
-            }
+                if (requestCode == mBinding.myVlBankVideo.getRequestCode()){
+                    // 图片、视频、音频选择结果回调
+                    List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
 
-            if (requestCode == mBinding.myVlGs.getRequestCode()){
-                // 图片、视频、音频选择结果回调
-                List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+                    mBinding.myVlBankVideo.setList(selectList);
+                }
 
-                mBinding.myVlGs.setList(selectList);
+                if (requestCode == mBinding.myVlCompanyVideo.getRequestCode()){
+                    // 图片、视频、音频选择结果回调
+                    List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+
+                    mBinding.myVlCompanyVideo.setList(selectList);
+                }
+
+                if (requestCode == mBinding.myVlOtherVideo.getRequestCode()){
+                    // 图片、视频、音频选择结果回调
+                    List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+
+                    mBinding.myVlOtherVideo.setList(selectList);
+                }
+
             }
 
         }
@@ -356,16 +410,21 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
     }
 
     private boolean check(){
-        if (mBinding.myVlYh.check()){
+        if (mBinding.myVlBankVideo.check()){
             return false;
         }
 
-        if (mBinding.myVlGs.check()){
+        if (mBinding.myVlCompanyVideo.check()){
             return false;
         }
 
-        // 合同
-        if (TextUtils.isEmpty(mBinding.myIlContract.check())){
+        // 资金划账授权书
+        if (TextUtils.isEmpty(mBinding.myIlAdvanceFundAmountPdf.check())){
+            return false;
+        }
+
+        // 面签照片
+        if (TextUtils.isEmpty(mBinding.myIlBankPhoto.check())){
             return false;
         }
 
@@ -383,8 +442,14 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
         map.put("code", code);
         map.put("operator", SPUtilHelper.getUserId());
         map.put("bankVideo", bankVideo);
+        map.put("otherVideo", otherVideo);
         map.put("companyVideo", companyVideo);
-        map.put("interviewContract", mBinding.myIlContract.getFlImgUrl());
+
+        map.put("advanceFundAmountPdf", mBinding.myIlAdvanceFundAmountPdf.getFlImgUrl());
+        map.put("bankPhoto", mBinding.myIlBankPhoto.getFlImgUrl());
+        map.put("companyContract", mBinding.myIlCompanyContract.getFlImgUrl());
+        map.put("bankContract", mBinding.myIlBankContract.getFlImgUrl());
+        map.put("interviewOtherPdf", mBinding.myIlInterviewOtherPdf.getFlImgUrl());
 
         Call call = RetrofitUtils.getBaseAPiService().codeRequest("632123", StringUtils.getJsonToString(map));
 

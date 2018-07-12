@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.model.IsSuccessModes;
@@ -25,7 +26,6 @@ import com.cdkj.wzcd.util.NodeHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -122,7 +122,7 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
 
     private void setView(DataTransferModel data) {
         mBinding.myNlName.setText(data.getUserName());
-        mBinding.myNlCode.setText(data.getCode());
+        mBinding.myNlCode.setText(data.getBizCode());
         mBinding.myNlNodeSend.setText(NodeHelper.getNameOnTheCode(data.getToNodeCode()));
         mBinding.myNlNodeRe.setText(NodeHelper.getNameOnTheCode(data.getFromNodeCode()));
 
@@ -200,12 +200,13 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
         if (TextUtils.isEmpty(code))
             return;
 
-        HashMap<String, String> hashMap = new LinkedHashMap<String, String>();
+        Map<String, String> map = RetrofitUtils.getRequestMap();
 
-        hashMap.put("code", code);
-        hashMap.put("remark", mBinding.myElSendNote.getText());
+        map.put("code", code);
+        map.put("operator", SPUtilHelper.getUserId());
+        map.put("remark", mBinding.myElSendNote.getText());
 
-        Call call= RetrofitUtils.getBaseAPiService().successRequest("632151", StringUtils.getJsonToString(hashMap));
+        Call call= RetrofitUtils.getBaseAPiService().successRequest("632151", StringUtils.getJsonToString(map));
 
         addCall(call);
 
@@ -236,12 +237,13 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
         if (TextUtils.isEmpty(code))
             return;
 
-        HashMap<String, String> hashMap = new LinkedHashMap<String, String>();
+        Map<String, String> map = RetrofitUtils.getRequestMap();
 
-        hashMap.put("code", code);
-        hashMap.put("remark", mBinding.myElSendNote.getText());
+        map.put("code", code);
+        map.put("operator", SPUtilHelper.getUserId());
+        map.put("remark", mBinding.myElSendNote.getText());
 
-        Call call= RetrofitUtils.getBaseAPiService().successRequest("632152", StringUtils.getJsonToString(hashMap));
+        Call call= RetrofitUtils.getBaseAPiService().successRequest("632152", StringUtils.getJsonToString(map));
 
         addCall(call);
 

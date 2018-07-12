@@ -64,6 +64,11 @@
         
     </declare-styleable>
 
+    <declare-styleable name="MyLayout">
+        <attr name="title" />
+
+    </declare-styleable>
+
     <declare-styleable name="MyItemRootLayout">
         <attr name="background" format="reference"></attr>
     </declare-styleable>

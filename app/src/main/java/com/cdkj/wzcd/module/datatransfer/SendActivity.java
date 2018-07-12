@@ -81,7 +81,7 @@ public class SendActivity extends AbsBaseLoadActivity {
 
     private void initListener() {
         mBinding.myNlDateTime.setOnClickListener(view -> {
-            new DatePickerHelper().build(this).getDate(mBinding.myNlDateTime, true, true,  true, false, false, false);
+            new DatePickerHelper().build(this).getDate(mBinding.myNlDateTime, true, true,  true, true, true, true);
         });
 
         mBinding.myCbConfirm.setOnConfirmListener(view -> {
@@ -136,7 +136,7 @@ public class SendActivity extends AbsBaseLoadActivity {
 
     private void setView(DataTransferModel data) {
         mBinding.myNlName.setText(data.getUserName());
-        mBinding.myNlCode.setText(data.getCode());
+        mBinding.myNlCode.setText(data.getBizCode());
 
         if (!TextUtils.isEmpty(data.getRefFileList())){
             mBinding.llRefFile.setVisibility(View.VISIBLE);
@@ -276,15 +276,13 @@ public class SendActivity extends AbsBaseLoadActivity {
         map.put("code", code);
         map.put("sendNote", mBinding.myElNote.getText());
         map.put("sendType", mBinding.mySlWay.getDataKey());
-        map.put("operater", SPUtilHelper.getUserId());
+        map.put("operator", SPUtilHelper.getUserId());
         map.put("sendDatetime", mBinding.myNlDateTime.getText());
         if (mBinding.llSendFile.getVisibility() == View.VISIBLE){
             map.put("sendFileList", getConfirmSendFile().substring(0, getConfirmSendFile().length()-1));
         }else {
-            map.put("sendFileList", "合同,材料"); // 要去掉!!!要去掉!!!要去掉!!!
+//            map.put("sendFileList", "合同,材料"); // 要去掉!!!要去掉!!!要去掉!!!
         }
-
-
 
         if (mBinding.llLogistics.getVisibility() == View.VISIBLE){
             map.put("logisticsCode", mBinding.myElNumber.getText());

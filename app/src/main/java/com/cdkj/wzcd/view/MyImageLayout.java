@@ -9,15 +9,20 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.cdkj.baselibrary.activitys.ImageSelectActivity;
+import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.baselibrary.utils.ToastUtil;
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.databinding.LayoutMyImageBinding;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.entity.LocalMedia;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by cdkj on 2018/5/29.
@@ -92,19 +97,47 @@ public class MyImageLayout extends LinearLayout {
     private void initListener() {
         mBinding.flImg.setOnClickListener(view -> {
 
-            if (mActivity == null)
-                ToastUtil.show(context, "请先setActivity");
+            if (TextUtils.isEmpty(FlImgUrl)){
 
-            ImageSelectActivity.launch(mActivity, mRequestCode, false);
+                if (mActivity == null)
+                    return;
+//                    ToastUtil.show(context, "请先setActivity");
+
+                ImageSelectActivity.launch(mActivity, mRequestCode, false);
+
+            }else {
+
+                List<LocalMedia> list = new ArrayList<>();
+                LocalMedia localMedia = new LocalMedia();
+                localMedia.setPath(MyCdConfig.QINIU_URL + FlImgUrl);
+                list.add(localMedia);
+                // 预览图片 可自定长按保存路径
+                PictureSelector.create(mActivity).themeStyle(R.style.picture_default_style).openExternalPreview(0, list);
+
+            }
 
         });
 
         mBinding.flImgRight.setOnClickListener(view -> {
 
-            if (mActivity == null)
-                ToastUtil.show(context, "请先setActivity");
+            if (TextUtils.isEmpty(FlImgRightUrl)){
 
-            ImageSelectActivity.launch(mActivity, mRightRequestCode, false);
+                if (mActivity == null)
+                    return;
+//                    ToastUtil.show(context, "请先setActivity");
+
+                ImageSelectActivity.launch(mActivity, mRightRequestCode, false);
+
+            }else {
+
+                List<LocalMedia> list = new ArrayList<>();
+                LocalMedia localMedia = new LocalMedia();
+                localMedia.setPath(MyCdConfig.QINIU_URL + FlImgUrl);
+                list.add(localMedia);
+                // 预览图片 可自定长按保存路径
+                PictureSelector.create(mActivity).themeStyle(R.style.picture_default_style).openExternalPreview(0, list);
+
+            }
 
         });
     }
@@ -178,17 +211,6 @@ public class MyImageLayout extends LinearLayout {
         return mBinding.ivImgRight;
     }
 
-    private int formatViewId(View view){
-        // 处理ViewId 不能为负值,也不能大于16位bit值65536
-        String str = view.getId()+"";
-        int id = Integer.parseInt(str.substring(str.length()-5, str.length()));
-
-        if (id > 65536){
-            id = id - 65536;
-        }
-
-        return id;
-    }
 
     /**
      * 加载图片并取消点击事件和隐藏View
@@ -197,11 +219,9 @@ public class MyImageLayout extends LinearLayout {
     public void setFlImgByRequest(String url){
 
         mBinding.llHint.setVisibility(GONE);
-        mBinding.flImg.setOnClickListener(null);
 
         FlImgUrl = url;
         ImgUtils.loadQiniuImg(context, FlImgUrl, mBinding.ivImg);
-
 
     }
 
@@ -212,11 +232,9 @@ public class MyImageLayout extends LinearLayout {
     public void setFlImgRightByRequest(String url){
 
         mBinding.llHintRight.setVisibility(GONE);
-        mBinding.flImgRight.setOnClickListener(null);
 
         FlImgRightUrl = url;
         ImgUtils.loadQiniuImg(context, FlImgRightUrl, mBinding.ivImgRight);
-
 
     }
 }

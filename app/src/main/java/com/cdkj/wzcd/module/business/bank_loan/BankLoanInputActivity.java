@@ -139,7 +139,7 @@ public class BankLoanInputActivity extends AbsBaseLoadActivity {
         if (TextUtils.isEmpty(mBinding.myElNumber.check())){
             return false;
         }
-        // 账单还款日
+        // 账单日
         if (TextUtils.isEmpty(mBinding.myNlRepayBillDate.check())){
             return false;
         }

@@ -66,8 +66,8 @@
 
             <com.cdkj.wzcd.view.MyNormalLayout
                 android:id="@+id/myNl_repayBillDate"
-                app:txt_normal_title="账单还款日"
-                app:txt_normal_hint="请选择账单还款日"
+                app:txt_normal_title="账单日"
+                app:txt_normal_hint="请选择账单日"
                 app:img_normal_right="@drawable/more_right"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

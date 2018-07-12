@@ -1,7 +1,9 @@
 package com.cdkj.baselibrary.base;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -174,6 +176,29 @@ public abstract class BaseActivity extends AppCompatActivity {
 //        commonDialog.getContentView().setGravity(Gravity.CENTER);
 
         commonDialog.show();
+    }
+
+    protected void showSingleChoiceDialog(String[] str, SingleChoiceInterface singleChoiceInterface){
+
+        if (isFinishing())
+            return;
+
+        if (str == null)
+            return;
+
+        new AlertDialog.Builder(this).setTitle("请选择").setSingleChoiceItems(
+                str, -1, (dialog, which) -> {
+
+                    if (singleChoiceInterface != null)
+                        singleChoiceInterface.onClick(dialog,which);
+
+                    dialog.dismiss();
+                }).setNegativeButton("取消", null).show();
+
+    }
+
+    public interface SingleChoiceInterface {
+        void onClick(DialogInterface dialog, int which);
     }
 
 

@@ -19,8 +19,17 @@ public class CreditUserModel implements Serializable {
     private String mobile;
     private String relation;
     private String userName;
+    private String creditCardOccupation;
     private String bankCreditResultPdf;
     private String bankCreditResultRemark;
+
+    public String getCreditCardOccupation() {
+        return creditCardOccupation;
+    }
+
+    public void setCreditCardOccupation(String creditCardOccupation) {
+        this.creditCardOccupation = creditCardOccupation;
+    }
 
     public String getBankCreditResultPdf() {
         return bankCreditResultPdf;

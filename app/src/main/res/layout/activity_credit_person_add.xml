@@ -74,41 +74,44 @@
 
             </com.cdkj.wzcd.view.MyImageLayout>
 
-            <com.cdkj.wzcd.view.MyImageLayout
-                android:id="@+id/myIl_credit"
-                app:txt_image_title="征信查询授权书"
-                app:txt_image_hint="征信查询授权书"
-                app:isSingle="true"
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myMl_credit"
+                app:title="征信查询授权书"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            </com.cdkj.wzcd.view.MyImageLayout>
+            </com.cdkj.wzcd.view.MyMultipleLayout>
 
-            <com.cdkj.wzcd.view.MyImageLayout
-                android:id="@+id/myIl_interview"
-                app:txt_image_title="面签照片"
-                app:txt_image_hint="面签照片"
-                app:isSingle="true"
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myMl_interview"
+                app:title="面签照片"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            </com.cdkj.wzcd.view.MyImageLayout>
+            </com.cdkj.wzcd.view.MyMultipleLayout>
 
-            <com.cdkj.wzcd.view.MyImageLayout
-                android:id="@+id/myIl_bankCreditResultPdf"
+            <com.cdkj.wzcd.view.MyEditLayout
+                android:id="@+id/myEl_creditCardOccupation"
+                app:inputType="money"
                 android:visibility="gone"
-                app:txt_image_title="征信报告"
-                app:txt_image_hint="征信报告"
-                app:isSingle="true"
+                app:txt_input_title_right="%"
+                app:txt_input_title="信用卡使用占比"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myMl_bankCreditResultPdf"
+                app:title="征信报告"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            </com.cdkj.wzcd.view.MyImageLayout>
+            </com.cdkj.wzcd.view.MyMultipleLayout>
 
             <com.cdkj.wzcd.view.MyEditLayout
                 android:id="@+id/myEl_bankCreditResultRemark"
-                android:visibility="gone"
                 app:txt_input_title="征信结果说明"
+                android:visibility="gone"
                 app:txt_input_hint="请输入征信结果说明"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

@@ -8,16 +8,20 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.cdkj.baselibrary.activitys.ExpectActivity;
+import com.cdkj.baselibrary.activitys.ImageSelectActivity;
 import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.model.DataDictionary;
+import com.cdkj.baselibrary.model.IsSuccessModes;
 import com.cdkj.baselibrary.model.UserModel;
 import com.cdkj.baselibrary.nets.BaseResponseListCallBack;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
+import com.cdkj.baselibrary.utils.CameraHelper;
 import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.baselibrary.utils.LogUtil;
+import com.cdkj.baselibrary.utils.QiNiuHelper;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.baselibrary.utils.ToastUtil;
 import com.cdkj.wzcd.api.MyApiServer;
@@ -29,12 +33,12 @@ import com.cdkj.wzcd.module.business.bank_loan.BankLoanListActivity;
 import com.cdkj.wzcd.module.business.cldy.BssCldyListActivity;
 import com.cdkj.wzcd.module.business.cllh.CllhListActivity;
 import com.cdkj.wzcd.module.business.credit.BssCreditListActivity;
-import com.cdkj.wzcd.module.business.face_view.InterviewActivity;
 import com.cdkj.wzcd.module.business.gps_install.GPSInstallListActivity;
+import com.cdkj.wzcd.module.business.interview.InterviewActivity;
 import com.cdkj.wzcd.module.cartool.gps.GpsListActivity;
 import com.cdkj.wzcd.module.cartool.history.HistoryUserActivity;
 import com.cdkj.wzcd.module.cartool.uservoid.UserToVoidActivity;
-import com.cdkj.wzcd.module.datatransfer.DataTransferActivity;
+import com.cdkj.wzcd.module.datatransfer.DataTransferActivity2;
 import com.cdkj.wzcd.module.user.SignInActivity;
 import com.cdkj.wzcd.tencent.TencentLogoutHelper;
 import com.cdkj.wzcd.tencent.logininterface.TencentLogoutInterface;
@@ -65,6 +69,8 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
 
     private UserModel mUserModel;
     private ActivityMainBinding mBinding;
+
+    private int PHOTOFLAG = 111;
 
     public static void open(Context context) {
         if (context == null) {
@@ -130,7 +136,7 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
     protected void onResume() {
         super.onResume();
 
-        getDataCount();
+        getUserInfoRequest(false);
     }
 
     /**
@@ -160,6 +166,8 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
 
                 saveUserInfo(data);
                 setView(data);
+
+                getDataCount();
             }
 
             @Override
@@ -192,7 +200,7 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
     private void setView(UserModel data) {
 
         ImgUtils.loadQiNiuBorderLogo(this, data.getPhoto(), mBinding.imAvatar, R.color.white);
-        mBinding.tvNick.setText(TextUtils.isEmpty(data.getLoginName()) ? "暂无" : data.getLoginName());
+        mBinding.tvNick.setText(data.getLoginName() + "——" + data.getRealName());
         mBinding.tvCompany.setText(data.getCompanyName());
 
         if (TextUtils.equals(data.getRoleCode(), ZHRY)){ // 驻行人员
@@ -225,10 +233,11 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
 
     private void initListener() {
         mBinding.llUser.setOnClickListener(view -> {
-//            if (mUserModel == null)
-//                return;
+            if (mUserModel == null)
+                return;
 
 //            UserInfoActivity.open(this, mUserModel);
+            ImageSelectActivity.launch(this, PHOTOFLAG, false);
         });
 
         mBinding.flRight.setOnClickListener(view -> {
@@ -273,7 +282,7 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
 
         //资料传递
         mBinding.mySrZlcd.setOnClickListener(view -> {
-            DataTransferActivity.open(this);
+            DataTransferActivity2.open(this);
         });
 
         //客户作废
@@ -337,10 +346,21 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
      * 资料传递待处理数量
      */
     private void getDataCount(){
-        Map<String, String> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
 
-        if (UserHelper.isYWY())
+        if (!SPUtilHelper.isLoginNoStart()) {  //没有登录不用请求
+            return;
+        }
+
+        List<String> statusList = new ArrayList<>();
+        statusList.add("0");
+        statusList.add("1");
+        statusList.add("3");
+
+        if (UserHelper.isYWY()){
             map.put("userId", SPUtilHelper.getUserId());
+            map.put("statusList", statusList);
+        }
 
         Call call = RetrofitUtils.createApi(MyApiServer.class).getDataTransferList("632157", StringUtils.getJsonToString(map));
         addCall(call);
@@ -348,10 +368,67 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
         call.enqueue(new BaseResponseListCallBack<DataTransferModel>(this) {
             @Override
             protected void onSuccess(List<DataTransferModel> data, String SucMessage) {
-                if (data == null || data.size() == 0)
+                if (data == null)
                     return;
 
                 mBinding.mySrZlcd.setPointCount(data.size());
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK || data == null) {
+            return;
+        }
+        if (requestCode == PHOTOFLAG) {
+            String path = data.getStringExtra(CameraHelper.staticPath);
+            LogUtil.E("拍照获取路径" + path);
+            showLoadingDialog();
+            new QiNiuHelper(this).uploadSinglePic(new QiNiuHelper.QiNiuCallBack() {
+                @Override
+                public void onSuccess(String key) {
+                    updateUserPhoto(key);
+                }
+
+                @Override
+                public void onFal(String info) {
+                    disMissLoading();
+                }
+            }, path);
+
+        }
+    }
+
+    /**
+     * 更新头像
+     *
+     * @param key
+     */
+    private void updateUserPhoto(final String key) {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("userId", SPUtilHelper.getUserId());
+        map.put("photo", key);
+        map.put("token", SPUtilHelper.getUserToken());
+        Call call = RetrofitUtils.getBaseAPiService().successRequest("630059", StringUtils.getJsonToString(map));
+        addCall(call);
+        call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(this) {
+            @Override
+            protected void onSuccess(IsSuccessModes data, String SucMessage) {
+                UITipDialog.showSuccess(MainActivity.this, "头像更改成功");
+                ImgUtils.loadQiniuLogo(MainActivity.this, key, mBinding.imAvatar);
+            }
+
+            @Override
+            protected void onReqFailure(String errorCode, String errorMessage) {
+                UITipDialog.showFail(MainActivity.this, errorMessage);
             }
 
             @Override

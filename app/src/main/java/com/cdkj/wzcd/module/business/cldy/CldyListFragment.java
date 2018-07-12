@@ -18,6 +18,7 @@ import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.model.NodeListModel;
 import com.cdkj.wzcd.util.UserHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -80,13 +81,23 @@ public class CldyListFragment extends AbsRefreshListFragment {
 
     @Override
     public void getListRequest(int pageIndex, int limit, boolean isShowDialog) {
-        Map<String, String> map = RetrofitUtils.getNodeListMap();
+        Map<String, Object> map = RetrofitUtils.getNodeListMap();
 
+        List<String> curNodeCodeList = new ArrayList<>();
+        curNodeCodeList.add("002_18");
+        curNodeCodeList.add("002_19");
+        curNodeCodeList.add("002_20");
+        curNodeCodeList.add("002_21");
+
+        map.put("curNodeCodeList", curNodeCodeList);
         map.put("start", pageIndex + "");
         map.put("limit", limit + "");
 
-        if (UserHelper.isYWY())
+        if (UserHelper.isYWY()){
             map.put("saleUserId", SPUtilHelper.getUserId());
+            map.put("teamCode", SPUtilHelper.getTeamCode());
+        }
+
 
         if (isShowDialog) showLoadingDialog();
 

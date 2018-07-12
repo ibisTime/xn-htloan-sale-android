@@ -16,14 +16,13 @@ import com.cdkj.baselibrary.nets.BaseResponseListCallBack;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.CameraHelper;
-import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.baselibrary.utils.QiNiuHelper;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.baselibrary.utils.ToastUtil;
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.adapter.CreditUserAdapter;
 import com.cdkj.wzcd.api.MyApiServer;
-import com.cdkj.wzcd.databinding.ActivityZxLaunchBinding;
+import com.cdkj.wzcd.databinding.ActivityCreditInitiateBinding;
 import com.cdkj.wzcd.model.CreditModel;
 import com.cdkj.wzcd.model.CreditUserModel;
 import com.cdkj.wzcd.model.CreditUserReplaceModel;
@@ -52,7 +51,7 @@ import static com.cdkj.wzcd.util.RequestUtil.formatAmountMul;
 
 public class CreditInitiateActivity extends AbsBaseLoadActivity {
 
-    private ActivityZxLaunchBinding mBinding;
+    private ActivityCreditInitiateBinding mBinding;
 
     private String creditCode;
     private CreditModel mData;
@@ -82,7 +81,7 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
 
     @Override
     public View addMainView() {
-        mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_zx_launch, null, false);
+        mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_credit_initiate, null, false);
         return mBinding.getRoot();
     }
 
@@ -91,12 +90,10 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
 
         mBaseBinding.titleView.setMidTitle("发起征信");
 
-        initListener();
-        initListAdapter();
-
         init();
 
-        getBank();
+        initListener();
+        initListAdapter();
 
 
     }
@@ -118,7 +115,15 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
         mBinding.myCbConfirm.setOnConfirmListener(view -> {
             if (check()){
 
-                creditAddRequest();
+                creditAddRequest("1");
+
+            }
+        });
+
+        mBinding.myCbConfirm.setOnConfirmRightListener(view -> {
+            if (check()){
+
+                creditAddRequest("0");
 
             }
         });
@@ -137,22 +142,22 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
         if (TextUtils.isEmpty(mBinding.myElAmount.check())){
             return false;
         }
-        if (mBinding.myIlDocuments.getVisibility() == View.VISIBLE && mBinding.myIlReport.getVisibility() == View.VISIBLE){
+        if (mBinding.myIlReport.getVisibility() == View.VISIBLE){
             // 二手车评估报告
-            if (TextUtils.isEmpty(mBinding.myIlReport.check())){
-                LogUtil.E("二手车评估报告");
-                return false;
-            }
-            // 行驶证正面
-            if (TextUtils.isEmpty(mBinding.myIlDocuments.check())){
-                LogUtil.E("行驶证正面");
-                return false;
-            }
-            // 行驶证反面
-            if (TextUtils.isEmpty(mBinding.myIlDocuments.check())){
-                LogUtil.E("行驶证反面");
-                return false;
-            }
+//            if (TextUtils.isEmpty(mBinding.myIlReport.check())){
+//                LogUtil.E("二手车评估报告");
+//                return false;
+//            }
+//            // 行驶证正面
+//            if (TextUtils.isEmpty(mBinding.myIlDocuments.check())){
+//                LogUtil.E("行驶证正面");
+//                return false;
+//            }
+//            // 行驶证反面
+//            if (TextUtils.isEmpty(mBinding.myIlDocuments.check())){
+//                LogUtil.E("行驶证反面");
+//                return false;
+//            }
         }
 
         // 征信人
@@ -214,11 +219,9 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
 
         mBinding.mySlWay.setData(this, MySelectLayout.DATA_DICTIONARY, DataDictionaryHelper.budget_orde_biz_typer, (dialog, which) -> {
             // 新车则隐藏证件
-            mBinding.myIlDocuments.setVisibility(which == 0 ? View.GONE : View.VISIBLE);
             mBinding.myIlReport.setVisibility(which == 0 ? View.GONE : View.VISIBLE);
         });
 
-        mBinding.myIlDocuments.setActivity(this,1,2);
         mBinding.myIlReport.setActivity(this,3,0);
     }
 
@@ -251,6 +254,7 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
                 mBinding.rvZxr.setLayoutManager(getLinearLayoutManager(false));
                 mBinding.rvZxr.setAdapter(mAdapter);
 
+                getBank();
             });
 
         });
@@ -269,14 +273,6 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
         new QiNiuHelper(this).uploadSinglePic(new QiNiuHelper.QiNiuCallBack() {
             @Override
             public void onSuccess(String key) {
-
-                if (requestCode == mBinding.myIlDocuments.getRequestCode()){
-                    mBinding.myIlDocuments.setFlImg(key);
-                }
-
-                if (requestCode == mBinding.myIlDocuments.getRightRequestCode()){
-                    mBinding.myIlDocuments.setFlImgRight(key);
-                }
 
                 if (requestCode == mBinding.myIlReport.getRequestCode()){
                     mBinding.myIlReport.setFlImg(key);
@@ -313,7 +309,7 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
     /**
      * 发起征信
      */
-    private void creditAddRequest(){
+    private void creditAddRequest(String buttonCode){
         Map<String, Object> map = new HashMap<>();
 
         if(!TextUtils.isEmpty(creditCode)){
@@ -321,14 +317,13 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
         }
 
         map.put("bizType", mBinding.mySlWay.getDataKey());
-        map.put("buttonCode", "1");
+        map.put("buttonCode", buttonCode);
         map.put("creditUserList", mList);
         map.put("loanAmount", formatAmountMul(mBinding.myElAmount.getText()));
         map.put("loanBankCode", mBinding.mySlBank.getDataKey());
         map.put("operator", SPUtilHelper.getUserId());
         map.put("secondCarReport", mBinding.myIlReport.getFlImgUrl());
-        map.put("xszFront", mBinding.myIlDocuments.getFlImgUrl());
-        map.put("xszReverse", mBinding.myIlDocuments.getFlImgRightUrl());
+        map.put("note", mBinding.myElNote.getText());
 
         Call call = RetrofitUtils.getBaseAPiService().codeRequest(TextUtils.isEmpty(creditCode) ? "632110" : "632112", StringUtils.getJsonToString(map));
 
@@ -340,7 +335,7 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
 
             @Override
             protected void onSuccess(CodeModel data, String SucMessage) {
-                UITipDialog.showSuccess(CreditInitiateActivity.this,TextUtils.isEmpty(creditCode) ? "发起成功" : "修改成功", dialogInterface -> {
+                UITipDialog.showSuccess(CreditInitiateActivity.this,TextUtils.equals(buttonCode, "1") ? "发起成功" : "保存成功", dialogInterface -> {
                     finish();
                 });
             }
@@ -411,17 +406,13 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
 
         if (TextUtils.equals(mData.getBizType(), "1")){ //二手车
             // 新车则隐藏证件
-            mBinding.myIlDocuments.setVisibility(View.VISIBLE);
             mBinding.myIlReport.setVisibility( View.VISIBLE);
 
-            mBinding.myIlDocuments.setFlImg(mData.getXszFront());
-            mBinding.myIlDocuments.setFlImgRight(mData.getXszReverse());
 
             mBinding.myIlReport.setFlImg(mData.getSecondCarReport());
         }
 
         mBaseBinding.titleView.setMidTitle("修改征信信息");
-        mBinding.myCbConfirm.setText("修改");
 
         mList.addAll(mData.getCreditUserList());
         mAdapter.notifyDataSetChanged();

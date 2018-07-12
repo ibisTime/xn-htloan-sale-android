@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_search_type"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_search_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/layout_left_interval"
+                    android:paddingRight="5dp"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/iv_open"
+                    android:background="@mipmap/more_down_white"
+                    android:layout_marginRight="7dp"
+                    android:layout_width="9dp"
+                    android:layout_height="5dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_search"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:background="@drawable/common_market_search"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_icon"
+                    android:layout_marginLeft="10dp"
+                    android:src="@mipmap/search_gray"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp" />
+
+                <EditText
+                    android:id="@+id/edit_searchView"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:background="@null"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLength="30"
+                    android:maxLines="1"
+                    android:layout_marginLeft="5dp"
+                    android:singleLine="true"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/iv_more_down"
+                    android:visibility="gone"
+                    android:background="@drawable/more_down"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="9dp"
+                    android:layout_height="5dp" />
+
+                <ImageView
+                    android:id="@+id/iv_more_right"
+                    android:layout_marginRight="10dp"
+                    android:visibility="gone"
+                    android:layout_width="9dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/more_right" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_operate"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="@dimen/layout_left_right_interval"
+                android:text="@string/cancel"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_list"
+                android:background="@color/gray_bg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_search_type"
+                android:visibility="gone"
+                android:background="@color/gray_bg"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </FrameLayout>
+
+    </LinearLayout>
+</layout>

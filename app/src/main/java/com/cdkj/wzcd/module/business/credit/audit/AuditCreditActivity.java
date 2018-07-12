@@ -21,7 +21,7 @@ import com.cdkj.baselibrary.utils.ToastUtil;
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.adapter.CreditUserAdapter;
 import com.cdkj.wzcd.api.MyApiServer;
-import com.cdkj.wzcd.databinding.ActivityZxLaunchBinding;
+import com.cdkj.wzcd.databinding.ActivityCreditAuditBinding;
 import com.cdkj.wzcd.model.CreditModel;
 import com.cdkj.wzcd.model.CreditResult;
 import com.cdkj.wzcd.model.CreditUserModel;
@@ -48,13 +48,11 @@ import static com.cdkj.baselibrary.appmanager.CdRouteHelper.DATA_SIGN;
 
 public class AuditCreditActivity extends AbsBaseLoadActivity {
 
-    private ActivityZxLaunchBinding mBinding;
+    private ActivityCreditAuditBinding mBinding;
 
     private String creditCode;
     private CreditModel mData;
 
-    // 银行
-    private List<DataDictionary> mBank;
 
     // 角色
     private List<DataDictionary> mRole = new ArrayList<>();
@@ -78,23 +76,23 @@ public class AuditCreditActivity extends AbsBaseLoadActivity {
 
     @Override
     public View addMainView() {
-        mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_zx_launch, null, false);
+        mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_credit_audit, null, false);
         return mBinding.getRoot();
     }
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
 
-        mBaseBinding.titleView.setMidTitle("发起征信");
+        mBaseBinding.titleView.setMidTitle("录入征信结果");
+
+        init();
 
         initListener();
         initListAdapter();
 
-        init();
     }
 
     private void init() {
-        mBank = new ArrayList<>();
 
         if (getIntent() != null){
             creditCode = getIntent().getStringExtra(DATA_SIGN);
@@ -105,13 +103,24 @@ public class AuditCreditActivity extends AbsBaseLoadActivity {
     private void initListener() {
         mBinding.myCbConfirm.setOnConfirmListener(view -> {
             if (check()){
-                inputResultRequest();
+                inputResultRequest(false);
             }
+        });
+
+        mBinding.myCbConfirm.setOnConfirmRightListener(view -> {
+            showDoubleWarnListen("您确定要退回此条征信调查单吗?",view1 -> {
+                inputResultRequest(true);
+            });
         });
     }
 
     private boolean check(){
         for (CreditUserModel model : mList){
+
+            if (TextUtils.isEmpty(model.getCreditCardOccupation())){
+                ToastUtil.show(this, "请上传"+DataDictionaryHelper.getValueOnTheKey(model.getLoanRole(), mRole)+"信用卡使用占比");
+                return false;
+            }
 
             if (TextUtils.isEmpty(model.getBankCreditResultPdf())){
                 ToastUtil.show(this, "请上传"+DataDictionaryHelper.getValueOnTheKey(model.getLoanRole(), mRole)+"征信报告");
@@ -151,7 +160,7 @@ public class AuditCreditActivity extends AbsBaseLoadActivity {
                 mAdapter.setOnItemClickListener((adapter, view, position) -> {
                     CreditUserModel model = mAdapter.getItem(position);
 
-                    AuditUserActivity.open(this, model, position);
+                    AuditUserActivity.open(this, model, position, mRole, mRelation);
 
                 });
 
@@ -223,20 +232,25 @@ public class AuditCreditActivity extends AbsBaseLoadActivity {
     /**
      * 录入征信结果
      */
-    private void inputResultRequest(){
+    private void inputResultRequest(boolean isReturn){
         Map<String, Object> map = new HashMap<>();
 
         List<CreditResult> creditResult = new ArrayList<>();
 
         for (CreditUserModel model : mList){
             creditResult.add(new CreditResult().setCreditUserCode(model.getCode())
+                    .setCreditCardOccupation(model.getCreditCardOccupation())
                     .setBankCreditResultPdf(model.getBankCreditResultPdf())
                     .setBankCreditResultRemark(model.getBankCreditResultRemark()));
         }
 
         map.put("creditCode", creditCode);
-        map.put("creditResult", creditResult);
         map.put("operator", SPUtilHelper.getUserId());
+        map.put("dealType", isReturn ? "0" : "1"); // 是否退回
+
+        if (!isReturn){
+            map.put("creditResult", creditResult);
+        }
 
         Call call = RetrofitUtils.getBaseAPiService().codeRequest("632111", StringUtils.getJsonToString(map));
 
@@ -329,13 +343,10 @@ public class AuditCreditActivity extends AbsBaseLoadActivity {
             mBinding.myIlReport.setFlImgByRequest(mData.getSecondCarReport());
         }
 
-        mBaseBinding.titleView.setMidTitle("录入征信结果");
-
-        mBinding.llAdd.setVisibility(View.GONE);
-        mBinding.myCbConfirm.setText("录入征信结果");
-
         mList.addAll(mData.getCreditUserList());
         mAdapter.notifyDataSetChanged();
+
+        mBinding.myElNote.setTextByRequest(mData.getNote());
 
     }
 

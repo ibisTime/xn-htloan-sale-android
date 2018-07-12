@@ -31,8 +31,26 @@ public class CreditModel {
     private String secondCarReport;
     private String xszFront;
     private String xszReverse;
+    private String operatorName;
+    private String note;
     private CreditUserModel creditUser;
     private List<CreditUserModel> creditUserList;
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getOperatorName() {
+        return operatorName;
+    }
+
+    public void setOperatorName(String operatorName) {
+        this.operatorName = operatorName;
+    }
 
     public List<CreditUserModel> getCreditUserList() {
         return creditUserList;

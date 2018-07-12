@@ -49,6 +49,17 @@ public interface MyApiServer {
     @POST("api")
     Call<BaseResponseModel<UserModel>> getUserInfoDetails(@Field("code") String code, @Field("json") String json);
 
+    /**
+     * 获取用户信息详情
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<ResponseInListModel<UserModel>>> getUserList(@Field("code") String code, @Field("json") String json);
+
 
     /**
      * 获取数据字典

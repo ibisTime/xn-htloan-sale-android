@@ -10,7 +10,7 @@ import com.cdkj.baselibrary.utils.MoneyUtils;
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.databinding.ItemInterviewBinding;
 import com.cdkj.wzcd.model.NodeListModel;
-import com.cdkj.wzcd.module.business.face_view.InterviewStartActivity;
+import com.cdkj.wzcd.module.business.interview.InterviewStartActivity;
 import com.cdkj.wzcd.util.DataDictionaryHelper;
 import com.cdkj.wzcd.util.NodeHelper;
 import com.cdkj.wzcd.util.RequestUtil;

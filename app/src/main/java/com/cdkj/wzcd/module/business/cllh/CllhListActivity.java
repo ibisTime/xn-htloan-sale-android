@@ -17,6 +17,7 @@ import com.cdkj.wzcd.model.CllhListBean;
 import com.cdkj.wzcd.model.NodeListModel;
 import com.cdkj.wzcd.util.UserHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -62,15 +63,24 @@ public class CllhListActivity extends AbsRefreshListActivity<CllhListBean> {
 
     @Override
     public void getListRequest(int pageIndex, int limit, boolean isShowDialog) {
-        Map<String, String> map = RetrofitUtils.getNodeListMap();
 
+        Map<String, Object> map = RetrofitUtils.getNodeListMap();
+
+        List<String> curNodeCodeList = new ArrayList<>();
+        curNodeCodeList.add("002_11");
+        curNodeCodeList.add("002_13");
+        curNodeCodeList.add("002_14");
+        curNodeCodeList.add("002_15");
+        curNodeCodeList.add("002_16");
+        curNodeCodeList.add("002_17");
+
+        map.put("curNodeCodeList", curNodeCodeList);
         map.put("start", pageIndex + "");
         map.put("limit", limit + "");
         if (!UserHelper.isZHRY()) {
             map.put("saleUserId", SPUtilHelper.getUserId());
             map.put("teamCode", SPUtilHelper.getTeamCode());
         }
-
 
         if (isShowDialog) showLoadingDialog();
 

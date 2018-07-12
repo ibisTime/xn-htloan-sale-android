@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--<data>-->
+
+    <!--</data>-->
+
+    <ScrollView
+        android:background="@color/page_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                style="@style/style_split_line_horizontal_broad"/>
+
+            <com.cdkj.wzcd.view.MySelectLayout
+                android:id="@+id/mySl_bank"
+                app:txt_select_title="银行"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.cdkj.wzcd.view.MySelectLayout>
+
+            <com.cdkj.wzcd.view.MySelectLayout
+                android:id="@+id/mySl_way"
+                app:txt_select_title="业务种类"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.cdkj.wzcd.view.MySelectLayout>
+
+            <com.cdkj.wzcd.view.MyEditLayout
+                android:id="@+id/myEl_amount"
+                app:txt_input_hint="请输入贷款金额"
+                app:txt_input_title="贷款金额"
+                app:txt_input_title_right="@string/money_sing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.cdkj.wzcd.view.MyEditLayout>
+
+            <com.cdkj.wzcd.view.MyImageLayout
+                android:id="@+id/myIl_report"
+                android:visibility="gone"
+                app:txt_image_title="二手车评估报告"
+                app:txt_image_hint="评估报告"
+                app:isSingle="true"
+                app:txt_image_hint_right="行驶证反面"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.cdkj.wzcd.view.MyImageLayout>
+
+            <com.cdkj.wzcd.view.MyImageLayout
+                android:id="@+id/myIl_documents"
+                android:visibility="gone"
+                app:txt_image_title="上传证件信息"
+                app:txt_image_hint="行驶证正面"
+                app:isSingle="false"
+                app:txt_image_hint_right="行驶证反面"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.cdkj.wzcd.view.MyImageLayout>
+
+            <View
+                style="@style/style_split_line_horizontal_broad"/>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                app:txt_normal_title="征信人"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_zxr"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <View
+                style="@style/style_split_line_horizontal"/>
+
+            <com.cdkj.wzcd.view.MyEditLayout
+                android:id="@+id/myEl_note"
+                app:txt_input_title="说明栏"
+                app:txt_input_hint=""
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>

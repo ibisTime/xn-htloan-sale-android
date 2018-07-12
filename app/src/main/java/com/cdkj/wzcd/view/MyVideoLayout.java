@@ -14,7 +14,7 @@ import com.cdkj.baselibrary.utils.ToastUtil;
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.adapter.GridImageAdapter;
 import com.cdkj.wzcd.databinding.LayoutMyVideoBinding;
-import com.cdkj.wzcd.module.business.face_view.FullyGridLayoutManager;
+import com.cdkj.wzcd.module.business.interview.FullyGridLayoutManager;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -103,7 +103,6 @@ public class MyVideoLayout extends LinearLayout {
                 switch (mediaType) {
                     case 1:
                         // 预览图片 可自定长按保存路径
-                        //PictureSelector.create(MainActivity.this).themeStyle(themeId).externalPicturePreview(position, "/custom_file", selectList);
                         PictureSelector.create(mActivity).themeStyle(themeId).openExternalPreview(position, selectList);
                         break;
                     case 2:

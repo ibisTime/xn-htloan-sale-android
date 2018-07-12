@@ -60,41 +60,29 @@
 
              </com.cdkj.wzcd.view.MyEditLayout>
 
-             <com.cdkj.wzcd.view.MyImageLayout
-                 android:id="@+id/myIl_carRegcerti"
-                 app:txt_image_title="机动车登记证书"
-                 app:txt_image_hint="请上传机动车登记证书"
+             <com.cdkj.wzcd.view.MyMultipleLayout
+                 android:id="@+id/myMl_carRegcerti"
+                 app:title="机动车登记证书"
                  android:layout_width="match_parent"
-                 android:layout_height="wrap_content">
+                 android:layout_height="wrap_content" />
 
-             </com.cdkj.wzcd.view.MyImageLayout>
-
-             <com.cdkj.wzcd.view.MyImageLayout
-                 android:id="@+id/myIl_carPd"
-                 app:txt_image_title="批单"
-                 app:txt_image_hint="请上传批单"
+             <com.cdkj.wzcd.view.MyMultipleLayout
+                 android:id="@+id/myMl_carPd"
+                 app:title="批单"
                  android:layout_width="match_parent"
-                 android:layout_height="wrap_content">
+                 android:layout_height="wrap_content" />
 
-             </com.cdkj.wzcd.view.MyImageLayout>
-
-             <com.cdkj.wzcd.view.MyImageLayout
-                 android:id="@+id/myIl_carKey"
-                 app:txt_image_title="车钥匙"
-                 app:txt_image_hint="请上传车钥匙"
+             <com.cdkj.wzcd.view.MyMultipleLayout
+                 android:id="@+id/myMl_carKey"
+                 app:title="车钥匙"
                  android:layout_width="match_parent"
-                 android:layout_height="wrap_content">
+                 android:layout_height="wrap_content" />
 
-             </com.cdkj.wzcd.view.MyImageLayout>
-
-             <com.cdkj.wzcd.view.MyImageLayout
-                 android:id="@+id/myIl_carBigSmj"
-                 app:txt_image_title="绿大本扫描件"
-                 app:txt_image_hint="请上传绿大本扫描件"
+             <com.cdkj.wzcd.view.MyMultipleLayout
+                 android:id="@+id/myMl_carBigSmj"
+                 app:title="绿大本扫描件"
                  android:layout_width="match_parent"
-                 android:layout_height="wrap_content">
-
-             </com.cdkj.wzcd.view.MyImageLayout>
+                 android:layout_height="wrap_content" />
 
              <com.cdkj.wzcd.view.MyConfirmBtn
                  android:id="@+id/myCb_confirm"

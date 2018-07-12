@@ -20,11 +20,11 @@ public class LocalMedia implements Parcelable {
     private long duration;
     private boolean isChecked;
     private boolean isCut;
+    private boolean compressed;
     public int position;
     private int num;
     private int mimeType;
     private String pictureType;
-    private boolean compressed;
     private int width;
     private int height;
 

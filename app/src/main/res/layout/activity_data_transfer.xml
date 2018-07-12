@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cdkj.wzcd.module.datatransfer.DataTransferActivity">
+    tools:context="com.cdkj.wzcd.module.datatransfer.DataTransferListFragment">
 
 </android.support.constraint.ConstraintLayout>

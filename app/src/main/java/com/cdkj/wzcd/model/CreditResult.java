@@ -6,9 +6,19 @@ package com.cdkj.wzcd.model;
 
 public class CreditResult {
 
+    private String creditCardOccupation;
     private String bankCreditResultPdf;
     private String bankCreditResultRemark;
     private String creditUserCode;
+
+    public String getCreditCardOccupation() {
+        return creditCardOccupation;
+    }
+
+    public CreditResult setCreditCardOccupation(String creditCardOccupation) {
+        this.creditCardOccupation = creditCardOccupation;
+        return this;
+    }
 
     public String getBankCreditResultPdf() {
         return bankCreditResultPdf;

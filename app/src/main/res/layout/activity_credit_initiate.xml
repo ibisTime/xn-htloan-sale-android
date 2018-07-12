@@ -57,18 +57,6 @@
 
             </com.cdkj.wzcd.view.MyImageLayout>
 
-            <com.cdkj.wzcd.view.MyImageLayout
-                android:id="@+id/myIl_documents"
-                android:visibility="gone"
-                app:txt_image_title="上传证件信息"
-                app:txt_image_hint="行驶证正面"
-                app:isSingle="false"
-                app:txt_image_hint_right="行驶证反面"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </com.cdkj.wzcd.view.MyImageLayout>
-
             <View
                 style="@style/style_split_line_horizontal_broad"/>
 
@@ -122,9 +110,20 @@
 
             </LinearLayout>
 
+            <View
+                style="@style/style_split_line_horizontal"/>
+
+            <com.cdkj.wzcd.view.MyEditLayout
+                android:id="@+id/myEl_note"
+                app:txt_input_title="说明栏"
+                app:txt_input_hint=""
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <com.cdkj.wzcd.view.MyConfirmBtn
                 android:id="@+id/myCb_confirm"
                 app:txt_confirm_content="发起"
+                app:txt_confirm_content_right="保存"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

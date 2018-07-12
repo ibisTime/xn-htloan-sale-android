@@ -76,14 +76,13 @@
 
             </com.cdkj.wzcd.view.MyNormalLayout>
 
-            <com.cdkj.wzcd.view.MyImageLayout
-                android:id="@+id/myIl_prove"
-                app:txt_image_title="结清证明"
-                app:txt_image_hint="请上传结清证明"
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myMl_prove"
+                app:title="结清证明"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            </com.cdkj.wzcd.view.MyImageLayout>
+            </com.cdkj.wzcd.view.MyMultipleLayout>
 
             <com.cdkj.wzcd.view.MyEditLayout
                 android:id="@+id/myEl_remark"

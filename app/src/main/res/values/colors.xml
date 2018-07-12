@@ -12,6 +12,8 @@
 
     <color name="bgColorBlue">#028eff</color>
 
+    <color name="text_color_999999">#999999</color>
+
 
     <color name="color_myTitleBar_blue">#028eff</color>
     <color name="color_myTitleBar_txt">#484848</color>

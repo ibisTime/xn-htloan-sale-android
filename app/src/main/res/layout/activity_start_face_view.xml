@@ -16,7 +16,7 @@
                 android:orientation="vertical">
 
                 <com.cdkj.wzcd.view.MyVideoLayout
-                    android:id="@+id/myVl_yh"
+                    android:id="@+id/myVl_bankVideo"
                     app:title="银行视频"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -24,16 +24,60 @@
                 </com.cdkj.wzcd.view.MyVideoLayout>
 
                 <com.cdkj.wzcd.view.MyVideoLayout
-                    android:id="@+id/myVl_gs"
+                    android:id="@+id/myVl_companyVideo"
                     app:title="公司视频"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                 </com.cdkj.wzcd.view.MyVideoLayout>
 
+                <com.cdkj.wzcd.view.MyVideoLayout
+                    android:id="@+id/myVl_otherVideo"
+                    app:title="其它视频(选填)"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </com.cdkj.wzcd.view.MyVideoLayout>
+
                 <com.cdkj.wzcd.view.MyImageLayout
-                    android:id="@+id/myIl_contract"
-                    app:txt_image_title="面签合同"
+                    android:id="@+id/myIl_advanceFundAmountPdf"
+                    app:txt_image_title="资金划账授权书"
+                    app:txt_image_hint="请上传资金划账授权书"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </com.cdkj.wzcd.view.MyImageLayout>
+
+                <com.cdkj.wzcd.view.MyImageLayout
+                    android:id="@+id/myIl_bankPhoto"
+                    app:txt_image_title="面签照片"
+                    app:txt_image_hint="请上传面签合同"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </com.cdkj.wzcd.view.MyImageLayout>
+
+                <com.cdkj.wzcd.view.MyImageLayout
+                    android:id="@+id/myIl_companyContract"
+                    app:txt_image_title="公司合同(选填)"
+                    app:txt_image_hint="请上传面签合同"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </com.cdkj.wzcd.view.MyImageLayout>
+
+                <com.cdkj.wzcd.view.MyImageLayout
+                    android:id="@+id/myIl_bankContract"
+                    app:txt_image_title="银行合同(选填)"
+                    app:txt_image_hint="请上传面签合同"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </com.cdkj.wzcd.view.MyImageLayout>
+
+                <com.cdkj.wzcd.view.MyImageLayout
+                    android:id="@+id/myIl_interviewOtherPdf"
+                    app:txt_image_title="其它资料(选填)"
                     app:txt_image_hint="请上传面签合同"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">

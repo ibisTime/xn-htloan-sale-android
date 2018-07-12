@@ -54,6 +54,14 @@
         </com.cdkj.wzcd.view.list.MyListItemLayout>
 
         <com.cdkj.wzcd.view.list.MyListItemLayout
+            android:id="@+id/myIl_operatorName"
+            app:txt_list_item_title="驻行内勤"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.cdkj.wzcd.view.list.MyListItemLayout>
+
+        <com.cdkj.wzcd.view.list.MyListItemLayout
             android:id="@+id/myIl_date_time"
             app:txt_list_item_title="申请时间"
             android:layout_width="match_parent"

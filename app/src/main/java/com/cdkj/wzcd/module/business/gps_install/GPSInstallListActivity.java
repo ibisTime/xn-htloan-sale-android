@@ -19,6 +19,7 @@ import com.cdkj.wzcd.model.NodeListModel;
 import com.cdkj.wzcd.util.DataDictionaryHelper;
 import com.cdkj.wzcd.util.UserHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -73,8 +74,14 @@ public class GPSInstallListActivity extends AbsRefreshListActivity {
 
             mList = list;
 
-            Map<String, String> map = RetrofitUtils.getNodeListMap();
+            Map<String, Object> map = RetrofitUtils.getNodeListMap();
 
+            List<String> curNodeCodeList = new ArrayList<>();
+            curNodeCodeList.add("002_09");
+            curNodeCodeList.add("002_10");
+            curNodeCodeList.add("002_12");
+
+            map.put("curNodeCodeList", curNodeCodeList);
             map.put("start", pageIndex + "");
             map.put("limit", limit + "");
             if (!UserHelper.isZHRY()) {

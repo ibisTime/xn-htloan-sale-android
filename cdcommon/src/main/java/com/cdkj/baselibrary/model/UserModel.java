@@ -38,6 +38,7 @@ public class UserModel implements Parcelable {
     private String userId;
     private String loginName;
     private String mobile;
+    private String type;
     private String photo;
     private String nickname;
     private String loginPwdStrength;
@@ -63,6 +64,14 @@ public class UserModel implements Parcelable {
     private String roleCode;
     private String teamCode;
     private int maxNumber;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getTeamCode() {
         return teamCode;

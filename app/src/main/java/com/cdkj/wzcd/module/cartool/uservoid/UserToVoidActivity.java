@@ -16,6 +16,7 @@ import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.model.NodeListModel;
 import com.cdkj.wzcd.model.UserToVoidBean;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -64,11 +65,20 @@ public class UserToVoidActivity extends AbsRefreshListActivity<UserToVoidBean> {
 
     @Override
     public void getListRequest(int pageIndex, int limit, boolean isShowDialog) {
-        Map<String, String> map = RetrofitUtils.getNodeListMap();
+        Map<String, Object> map = RetrofitUtils.getNodeListMap();
 
+        List<String> curNodeCodeList = new ArrayList<>();
+        curNodeCodeList.add("007_01");
+        curNodeCodeList.add("007_02");
+        curNodeCodeList.add("007_03");
+        curNodeCodeList.add("007_04");
+        curNodeCodeList.add("007_05");
+
+        map.put("curNodeCodeList", curNodeCodeList);
         map.put("start", pageIndex + "");
         map.put("limit", limit + "");
         map.put("saleUserId", SPUtilHelper.getUserId());
+
 
         if (isShowDialog) showLoadingDialog();
 
