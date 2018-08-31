@@ -57,10 +57,9 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
     }
 
     /**
-     *
      * @param context 上下文
-     * @param model 征信人Model
-//     * @param isCanEdit 当前页面是否可编辑,true:可编辑,false:不可编辑
+     * @param model   征信人Model
+     *                //     * @param isCanEdit 当前页面是否可编辑,true:可编辑,false:不可编辑
      */
     public static void open(Context context, CreditUserModel model, int position, boolean isCanEdit, List<DataDictionary> role, List<DataDictionary> relation) {
         if (context == null) {
@@ -89,7 +88,7 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
         initCustomView();
         initListener();
 
-        if (getIntent() != null && getIntent().getExtras() != null){
+        if (getIntent() != null && getIntent().getExtras() != null) {
             model = (CreditUserModel) getIntent().getSerializableExtra(DATA_SIGN);
             position = getIntent().getIntExtra("position", 0);
             isCanEdit = getIntent().getBooleanExtra("isCanEdit", false);
@@ -103,7 +102,7 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
     }
 
     private void setView() {
-        if (isCanEdit){
+        if (isCanEdit) {
             mBinding.myElName.setText(model.getUserName());
             mBinding.myElPhone.setText(model.getMobile());
 
@@ -116,7 +115,7 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
             mBinding.myMlCredit.setListData(model.getAuthPdf());
             mBinding.myMlInterview.setListData(model.getInterviewPic());
 
-        }else {
+        } else {
             mBinding.myElName.setTextByRequest(model.getUserName());
             mBinding.myElPhone.setTextByRequest(model.getMobile());
 
@@ -133,7 +132,7 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
             mBinding.myMlBankCreditResultPdf.setVisibility(View.VISIBLE);
             mBinding.myElBankCreditResultRemark.setVisibility(View.VISIBLE);
 
-            mBinding.myElCreditCardOccupation.setTextByRequest(model.getCreditCardOccupation());
+            mBinding.myElCreditCardOccupation.setTextByRequest(model.getCreditCardOccupation() == null ? "暂无" : model.getCreditCardOccupation());
             mBinding.myMlBankCreditResultPdf.setListDataByRequest(model.getBankCreditResultPdf());
             mBinding.myElBankCreditResultRemark.setTextByRequest(model.getBankCreditResultRemark());
 
@@ -144,19 +143,19 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
 
     private void initCustomView() {
 
-        mBinding.mySlRole.setData(this, MySelectLayout.DATA_DICTIONARY, DataDictionaryHelper.credit_user_loan_role,null);
-        mBinding.mySlRelation.setData(this, MySelectLayout.DATA_DICTIONARY, DataDictionaryHelper.credit_user_relation,null);
+        mBinding.mySlRole.setData(this, MySelectLayout.DATA_DICTIONARY, DataDictionaryHelper.credit_user_loan_role, null);
+        mBinding.mySlRelation.setData(this, MySelectLayout.DATA_DICTIONARY, DataDictionaryHelper.credit_user_relation, null);
 
-        mBinding.myIlIdCard.setActivity(this,1,2);
-        mBinding.myMlCredit.build(this,3);
-        mBinding.myMlInterview.build(this,4);
+        mBinding.myIlIdCard.setActivity(this, 1, 2);
+        mBinding.myMlCredit.build(this, 3);
+        mBinding.myMlInterview.build(this, 4);
 
-        mBinding.myMlBankCreditResultPdf.build(this,5);
+        mBinding.myMlBankCreditResultPdf.build(this, 5);
     }
 
     private void initListener() {
         mBinding.myCbConfirm.setOnConfirmListener(view -> {
-            if (check()){
+            if (check()) {
                 // 组装数据
                 CreditUserModel model = new CreditUserModel();
                 model.setUserName(mBinding.myElName.getText());
@@ -170,11 +169,11 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
                 model.setInterviewPic(mBinding.myMlInterview.getListData());
 
                 // 发送数据
-                if (getIntent() != null && getIntent().getExtras() != null){
+                if (getIntent() != null && getIntent().getExtras() != null) {
                     // 替换
                     EventBus.getDefault().post(new CreditUserReplaceModel().setLocation(position).setCreditUserModel(model));
                     finish();
-                }else {
+                } else {
                     // 新增
                     EventBus.getDefault().post(model);
                     finish();
@@ -185,53 +184,52 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
         });
     }
 
-    private boolean check(){
+    private boolean check() {
 
         // 姓名
-        if (TextUtils.isEmpty(mBinding.myElName.check())){
+        if (TextUtils.isEmpty(mBinding.myElName.check())) {
             return false;
         }
         // 手机号
-        if (TextUtils.isEmpty(mBinding.myElPhone.check())){
+        if (TextUtils.isEmpty(mBinding.myElPhone.check())) {
             return false;
         }
         // 贷款角色
-        if (mBinding.mySlRole.check()){
+        if (mBinding.mySlRole.check()) {
             return false;
         }
         // 与借款人关系
-        if (mBinding.mySlRelation.check()){
+        if (mBinding.mySlRelation.check()) {
             return false;
         }
         // 身份证号
-        if (TextUtils.isEmpty(mBinding.myElId.check())){
+        if (TextUtils.isEmpty(mBinding.myElId.check())) {
             return false;
         }
 
-        if(!isIDCard(mBinding.myElId.getText())){
+        if (!isIDCard(mBinding.myElId.getText())) {
             ToastUtil.show(this, "请输入合法身份证号");
             return false;
         }
 
         // 身份证正面
-        if (TextUtils.isEmpty(mBinding.myIlIdCard.check())){
+        if (TextUtils.isEmpty(mBinding.myIlIdCard.check())) {
             return false;
         }
         // 身份证反面
-        if (TextUtils.isEmpty(mBinding.myIlIdCard.check())){
+        if (TextUtils.isEmpty(mBinding.myIlIdCard.check())) {
             return false;
         }
         // 征信查询授权书
-        if (mBinding.myMlCredit.check()){
+        if (mBinding.myMlCredit.check()) {
             return false;
         }
         // 面签照片
-        if (mBinding.myMlInterview.check()){
+        if (mBinding.myMlInterview.check()) {
             return false;
         }
         return true;
     }
-
 
 
     @Override
@@ -246,25 +244,25 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
             @Override
             public void onSuccess(String key) {
 
-                LogUtil.E("requestCode="+requestCode);
+                LogUtil.E("requestCode=" + requestCode);
 
-                if (requestCode == mBinding.myIlIdCard.getRequestCode()){
+                if (requestCode == mBinding.myIlIdCard.getRequestCode()) {
                     mBinding.myIlIdCard.setFlImg(key);
                 }
 
-                if (requestCode == mBinding.myIlIdCard.getRightRequestCode()){
+                if (requestCode == mBinding.myIlIdCard.getRightRequestCode()) {
                     mBinding.myIlIdCard.setFlImgRight(key);
                 }
 
-                if (requestCode == mBinding.myMlCredit.getRequestCode()){
+                if (requestCode == mBinding.myMlCredit.getRequestCode()) {
                     mBinding.myMlCredit.addList(key);
                 }
 
-                if (requestCode == mBinding.myMlInterview.getRequestCode()){
+                if (requestCode == mBinding.myMlInterview.getRequestCode()) {
                     mBinding.myMlInterview.addList(key);
                 }
 
-                if (requestCode == mBinding.myMlBankCreditResultPdf.getRequestCode()){
+                if (requestCode == mBinding.myMlBankCreditResultPdf.getRequestCode()) {
                     mBinding.myMlBankCreditResultPdf.addList(key);
                 }
 

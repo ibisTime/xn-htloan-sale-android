@@ -71,17 +71,17 @@ public class CldyInputMessageActivity extends AbsBaseLoadActivity {
 
     private void initListener() {
         mBinding.myNlDateTime.setOnClickListener(view -> {
-            new DatePickerHelper().build(this).getDate(mBinding.myNlDateTime, true, true,  true, false, false, false);
+            new DatePickerHelper().build(this).getDate(mBinding.myNlDateTime, true, true, true, false, false, false);
         });
 
         mBinding.myCbConfirm.setOnConfirmListener(view -> {
-            if (check()){
+            if (check()) {
                 inputRequest();
             }
         });
     }
 
-    public void getNode(){
+    public void getNode() {
         Map<String, String> map = RetrofitUtils.getRequestMap();
 
         map.put("code", code);
@@ -115,10 +115,10 @@ public class CldyInputMessageActivity extends AbsBaseLoadActivity {
 
     private void initCustomView() {
         mBinding.myNlDateTime.setOnClickListener(view -> {
-            new DatePickerHelper().build(this).getDate(mBinding.myNlDateTime, true, true,  true, false, false, false);
+            new DatePickerHelper().build(this).getDate(mBinding.myNlDateTime, true, true, true, false, false, false);
         });
 
-        mBinding.myIlLdb.setActivity(this,1,0);
+        mBinding.myIlLdb.setActivity(this, 1, 0);
 
     }
 
@@ -134,7 +134,7 @@ public class CldyInputMessageActivity extends AbsBaseLoadActivity {
             @Override
             public void onSuccess(String key) {
 
-                if (requestCode == mBinding.myIlLdb.getRequestCode()){
+                if (requestCode == mBinding.myIlLdb.getRequestCode()) {
                     mBinding.myIlLdb.setFlImg(key);
                 }
 
@@ -148,28 +148,39 @@ public class CldyInputMessageActivity extends AbsBaseLoadActivity {
         }, path);
     }
 
-    private boolean check(){
+    private boolean check() {
         // 抵押日期
-        if (TextUtils.isEmpty(mBinding.myNlDateTime.check())){
+        if (TextUtils.isEmpty(mBinding.myNlDateTime.check())) {
             return false;
         }
 
         // 绿大本扫描件
-        if (TextUtils.isEmpty(mBinding.myIlLdb.getFlImgUrl())){
+        if (TextUtils.isEmpty(mBinding.myIlLdb.getFlImgUrl())) {
             LogUtil.E("绿大本扫描件");
+            return false;
+        }
+
+        if (TextUtils.isEmpty(mBinding.myElAgent.check())) {
+            LogUtil.E("代理人");
+            return false;
+        }
+        if (TextUtils.isEmpty(mBinding.myElMortgageAddress.check())) {
+            LogUtil.E("代理地点");
             return false;
         }
 
         return true;
     }
 
-    private void inputRequest(){
+    private void inputRequest() {
         Map<String, Object> map = new HashMap<>();
 
         map.put("code", code);
         map.put("operator", SPUtilHelper.getUserId());
         map.put("pledgeDatetime", mBinding.myNlDateTime.getText());
         map.put("greenBigSmj", mBinding.myIlLdb.getFlImgUrl());
+        map.put("pledgeUser", mBinding.myElAgent.getText());
+        map.put("pledgeAddress", mBinding.myElMortgageAddress.getText());
 
         Call call = RetrofitUtils.getBaseAPiService().codeRequest("632131", StringUtils.getJsonToString(map));
 

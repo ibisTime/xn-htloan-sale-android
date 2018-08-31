@@ -17,6 +17,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.cdkj.baselibrary.R;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -142,7 +144,6 @@ public class AppUtils {
                     public void accept(Disposable disposable) throws Exception {
                         btn.setEnabled(false);
                         btn.setText(count + "秒后重发");
-
                     }
                 })
 
@@ -164,11 +165,12 @@ public class AppUtils {
                         }, () -> {
 //                            RxView.enabled(btn).accept(true);
 //                            RxTextView.text(btn).accept("重发验证码");
-//                            btn.setBackgroundResource(R.drawable.selector_blue);
+                            btn.setEnabled(true);
+                            btn.setText("重发验证码");
+                            btn.setBackgroundResource(R.drawable.selector_blue);
                         }
                 );
     }
-
 
 
     public static void startWeb(Context context, String url) {

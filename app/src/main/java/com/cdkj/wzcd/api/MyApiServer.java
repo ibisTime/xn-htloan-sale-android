@@ -15,6 +15,7 @@ import com.cdkj.wzcd.model.NodeListModel;
 import com.cdkj.wzcd.model.NodeModel;
 import com.cdkj.wzcd.model.RepaymentModel;
 import com.cdkj.wzcd.model.TencentSignModel;
+import com.cdkj.wzcd.model.TodoModel;
 import com.cdkj.wzcd.model.ZrdModel;
 
 import retrofit2.Call;
@@ -29,6 +30,15 @@ import retrofit2.http.POST;
 public interface MyApiServer {
 
     /**
+     * 获取待办事项
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<TodoModel>> getTodo(@Field("code") String code, @Field("json") String json);
+ /**
      * 获取腾讯用户签名
      * @param code
      * @param json

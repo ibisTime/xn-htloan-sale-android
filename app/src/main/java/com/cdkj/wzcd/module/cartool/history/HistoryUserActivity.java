@@ -76,13 +76,14 @@ public class HistoryUserActivity extends AbsRefreshListActivity<HistoryBean> {
             curNodeCodeList.add("003_14");
             curNodeCodeList.add("003_15");
             curNodeCodeList.add("003_16");
-            curNodeCodeList.add("003_17");
+            curNodeCodeList.add("003_07");
             curNodeCodeList.add("007_04");
 
             map.put("curNodeCodeList", curNodeCodeList);
             map.put("limit", limit + "");
             map.put("start", pageIndex + "");
-            map.put("userId", SPUtilHelper.getUserId());
+            map.put("teamCode", SPUtilHelper.getTeamCode());
+//            map.put("userId", SPUtilHelper.getUserId());
 
             if (isShowDialog) {
                 showLoadingDialog();

@@ -59,14 +59,14 @@ public class DataTransferListFragment extends AbsRefreshListFragment<CllhListBea
     @Override
     public void onResume() {
         super.onResume();
-        if (getUserVisibleHint()){
+        if (getUserVisibleHint()) {
             mRefreshHelper.onDefaultMRefresh(true);
         }
     }
 
     @Override
     protected void lazyLoad() {
-        if (mRefreshBinding != null){
+        if (mRefreshBinding != null) {
             mRefreshHelper.onDefaultMRefresh(true);
         }
 
@@ -85,7 +85,7 @@ public class DataTransferListFragment extends AbsRefreshListFragment<CllhListBea
 
             initRefreshHelper(MyCdConfig.LIST_LIMIT);
 
-            if (isFirstRequest){
+            if (isFirstRequest) {
                 mRefreshHelper.onDefaultMRefresh(true);
             }
 
@@ -94,7 +94,12 @@ public class DataTransferListFragment extends AbsRefreshListFragment<CllhListBea
 
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
-        DataTransferAdapter mAdapter = new DataTransferAdapter(listData, mCompany);
+        DataTransferAdapter mAdapter;
+        if (DATA_GPS.equals(dataType)) {
+            mAdapter = new DataTransferAdapter(listData, mCompany, true);
+        } else {
+            mAdapter = new DataTransferAdapter(listData, mCompany);
+        }
 
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
         });
@@ -104,7 +109,7 @@ public class DataTransferListFragment extends AbsRefreshListFragment<CllhListBea
 
     @Override
     public void getListRequest(int pageIndex, int limit, boolean isShowDialog) {
-        DataDictionaryHelper.getDataDictionaryRequest(mActivity, DataDictionaryHelper.kd_company, "",data -> {
+        DataDictionaryHelper.getDataDictionaryRequest(mActivity, DataDictionaryHelper.kd_company, "", data -> {
 
             if (data == null || data.size() == 0)
                 return;
@@ -115,17 +120,21 @@ public class DataTransferListFragment extends AbsRefreshListFragment<CllhListBea
 
             List<String> statusList = new ArrayList<>();
 
-            if (TextUtils.equals(dataType, DATA_SEND)){
-                map.put("userId", SPUtilHelper.getUserId());
+            if (TextUtils.equals(dataType, DATA_SEND)) {
+//                map.put("userId", SPUtilHelper.getUserId());  //这个地方有问题  传userid   就看不到其他的数据了  不传就能看到所有的数据 了
                 statusList.add("0");
+                ArrayList<String> typeList = new ArrayList<>();
+                typeList.add("1");
+                typeList.add("3");
+                map.put("typeList", typeList);
 
-            }else if (TextUtils.equals(dataType, DATA_OTHER)){
+            } else if (TextUtils.equals(dataType, DATA_OTHER)) {
                 map.put("receiver", "0");
                 statusList.add("1");
                 statusList.add("2");
                 statusList.add("3");
 
-            }else {
+            } else {
                 map.put("receiver", SPUtilHelper.getUserId());
                 statusList.add("1");
                 statusList.add("2");
@@ -152,10 +161,7 @@ public class DataTransferListFragment extends AbsRefreshListFragment<CllhListBea
                     disMissLoading();
                 }
             });
-
         });
-
-
     }
 
 

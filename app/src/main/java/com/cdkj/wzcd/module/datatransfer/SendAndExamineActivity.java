@@ -123,8 +123,8 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
     private void setView(DataTransferModel data) {
         mBinding.myNlName.setText(data.getUserName());
         mBinding.myNlCode.setText(data.getBizCode());
-        mBinding.myNlNodeSend.setText(NodeHelper.getNameOnTheCode(data.getToNodeCode()));
-        mBinding.myNlNodeRe.setText(NodeHelper.getNameOnTheCode(data.getFromNodeCode()));
+        mBinding.myNlNodeSend.setText(NodeHelper.getNameOnTheCode(data.getFromNodeCode()));
+        mBinding.myNlNodeRe.setText(NodeHelper.getNameOnTheCode(data.getToNodeCode()));
 
         if (!TextUtils.isEmpty(data.getRefFileList())){
             mBinding.llRefFile.setVisibility(View.VISIBLE);

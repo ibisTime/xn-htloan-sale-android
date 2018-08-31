@@ -25,6 +25,7 @@ public class DataTransferAdapter extends BaseQuickAdapter<DataTransferModel, Bas
 
     private ItemDataTransferBinding mBinding;
     private List<DataDictionary> mCompany;
+    boolean isGps;//是不是  gps收件
 
     public DataTransferAdapter(@Nullable List<DataTransferModel> data, List<DataDictionary> company) {
         super(R.layout.item_data_transfer, data);
@@ -32,17 +33,27 @@ public class DataTransferAdapter extends BaseQuickAdapter<DataTransferModel, Bas
         mCompany = company;
     }
 
+    public DataTransferAdapter(@Nullable List<DataTransferModel> data, List<DataDictionary> company, boolean isGps) {
+        super(R.layout.item_data_transfer, data);
+        this.isGps = isGps;
+        mCompany = company;
+    }
+
     @Override
     protected void convert(BaseViewHolder helper, DataTransferModel item) {
 
-        mBinding  = DataBindingUtil.bind(helper.itemView);
+        mBinding = DataBindingUtil.bind(helper.itemView);
 
         mBinding.myTlIdStatus.setText(item.getBizCode(), "");
 
         mBinding.myIlFrom.setText(NodeHelper.getNameOnTheCode(item.getFromNodeCode()));
         mBinding.myIlTo.setText(NodeHelper.getNameOnTheCode(item.getToNodeCode()));
+        if (isGps) {
+            mBinding.myIlName.setText(item.getUserName());
 
-        mBinding.myIlName.setText(item.getUserName());
+        } else {
+            mBinding.myIlName.setText(item.getCustomerName());
+        }
         mBinding.myIlCompany.setText(DataDictionaryHelper.getValueOnTheKey(item.getLogisticsCompany(), mCompany));
         mBinding.myIlExpress.setText(item.getLogisticsCode());
 
@@ -53,10 +64,10 @@ public class DataTransferAdapter extends BaseQuickAdapter<DataTransferModel, Bas
 
     }
 
-    private String getStatus(DataTransferModel item){
+    private String getStatus(DataTransferModel item) {
         // 状态(0 待发件 1已发件待收件 2已收件审核 3已收件待补件)
 
-        switch (item.getStatus()){
+        switch (item.getStatus()) {
 
             case "0":
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -114,6 +115,7 @@
 
                             <TextView
                                 android:id="@+id/tv_nick"
+                                tools:text="昵称"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
@@ -121,6 +123,7 @@
 
                             <TextView
                                 android:id="@+id/tv_role"
+                                tools:text="业务员"
                                 android:layout_marginLeft="2dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -130,6 +133,7 @@
                         </LinearLayout>
 
                         <TextView
+                            tools:text="公司"
                             android:id="@+id/tv_company"
                             android:layout_marginTop="10dp"
                             android:layout_width="wrap_content"

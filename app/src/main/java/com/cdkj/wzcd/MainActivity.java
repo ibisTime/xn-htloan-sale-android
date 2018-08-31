@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.cdkj.baselibrary.activitys.ExpectActivity;
 import com.cdkj.baselibrary.activitys.ImageSelectActivity;
+import com.cdkj.baselibrary.api.BaseResponseModel;
 import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.dialog.UITipDialog;
@@ -28,6 +29,7 @@ import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.databinding.ActivityMainBinding;
 import com.cdkj.wzcd.model.DataTransferModel;
 import com.cdkj.wzcd.model.NodeModel;
+import com.cdkj.wzcd.model.TodoModel;
 import com.cdkj.wzcd.module.business.audit.AuditListActivity;
 import com.cdkj.wzcd.module.business.bank_loan.BankLoanListActivity;
 import com.cdkj.wzcd.module.business.cldy.BssCldyListActivity;
@@ -94,9 +96,11 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
     @Override
     public void afterCreate(Bundle savedInstanceState) {
 
+
         mLogoutHelper = new TencentLogoutHelper(this);
 
         initListener();
+
 
         NodeHelper.getNodeBaseDataRequest(this, "", "", new NodeHelper.NodeInterface() {
             @Override
@@ -132,11 +136,39 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
 
     }
 
+    //获取代办事项的数量
+    private void getTodoData() {
+        showLoadingDialog();
+//        Map map = RetrofitUtils.getNodeListMap();
+        HashMap<String, String> map = new HashMap<>();
+        map.put("teamCode", SPUtilHelper.getTeamCode());
+        map.put("roleCode", SPUtilHelper.getRoleCode());
+        Call<BaseResponseModel<TodoModel>> todo = RetrofitUtils.createApi(MyApiServer.class).getTodo("632912", StringUtils.getJsonToString(map));
+        todo.enqueue(new BaseResponseModelCallBack<TodoModel>(this) {
+            @Override
+            protected void onSuccess(TodoModel data, String SucMessage) {
+                mBinding.mySrCredit.setPointCount(data.getCreditTodo());//资信调查
+                mBinding.mySrMq.setPointCount(data.getInterviewTodo());//面签
+                mBinding.mySrGpsaz.setPointCount(data.getGpsInstallTodo());//gps安装;
+                mBinding.mySrCllh.setPointCount(data.getCarSettleTodo());//车辆落户;
+                mBinding.mySrCldy.setPointCount(data.getEntryMortgageTodo());//车辆抵押
+                mBinding.mySrZlcd.setPointCount(data.getLogisticsTodo());//资料传递
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+
+            }
+        });
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
 
         getUserInfoRequest(false);
+
     }
 
     /**
@@ -167,7 +199,10 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
                 saveUserInfo(data);
                 setView(data);
 
-                getDataCount();
+//                getDataCount();
+
+                //获取代办事项的数量
+                getTodoData();
             }
 
             @Override
@@ -200,10 +235,11 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
     private void setView(UserModel data) {
 
         ImgUtils.loadQiNiuBorderLogo(this, data.getPhoto(), mBinding.imAvatar, R.color.white);
-        mBinding.tvNick.setText(data.getLoginName() + "——" + data.getRealName());
+//        mBinding.tvNick.setText(data.getLoginName() + "——" + data.getRealName());
+        mBinding.tvNick.setText(data.getRealName());
         mBinding.tvCompany.setText(data.getCompanyName());
 
-        if (TextUtils.equals(data.getRoleCode(), ZHRY)){ // 驻行人员
+        if (TextUtils.equals(data.getRoleCode(), ZHRY)) { // 驻行人员
             mBinding.tvRole.setText("[驻行人员]");
 
             mBinding.mySrZrsq.setVisibility(View.GONE);
@@ -219,13 +255,13 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
 
             mBinding.mySrAudit.setVisibility(View.VISIBLE);
             mBinding.lineAudit.setVisibility(View.VISIBLE);
-        }else if (TextUtils.equals(data.getRoleCode(), YWY)){// 业务员
+        } else if (TextUtils.equals(data.getRoleCode(), YWY)) {// 业务员
             mBinding.tvRole.setText("[业务员]");
 
-        }else if (TextUtils.equals(data.getRoleCode(), NQZY)){// 内勤专员
+        } else if (TextUtils.equals(data.getRoleCode(), NQZY)) {// 内勤专员
             mBinding.tvRole.setText("[内勤专员]");
 
-        }else {
+        } else {
             mBinding.tvRole.setText("[其他]");
         }
 
@@ -245,6 +281,7 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
             mLogoutHelper.logout();
         });
 
+        //资信调查
         mBinding.mySrCredit.setOnClickListener(view -> {
             BssCreditListActivity.open(this);
         });
@@ -304,7 +341,6 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
         mBinding.mySrLoan.setOnClickListener(view -> {
             BankLoanListActivity.open(this);
 //            BankLoanInputActivity.open(this,"12");
-
         });
 
     }
@@ -316,10 +352,10 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
     private void logOut() {
         showDoubleWarnListen("你确定要退出当前账号吗?", view -> {
             SPUtilHelper.logOutClear();
-            UITipDialog.showSuccess(this, "退出成功",dialogInterface -> {
+            UITipDialog.showSuccess(this, "退出成功", dialogInterface -> {
                 finish();
 
-                SignInActivity.open(this,false);
+                SignInActivity.open(this, false);
             });
         });
     }
@@ -345,7 +381,7 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
     /**
      * 资料传递待处理数量
      */
-    private void getDataCount(){
+    private void getDataCount() {
         Map<String, Object> map = new HashMap<>();
 
         if (!SPUtilHelper.isLoginNoStart()) {  //没有登录不用请求
@@ -357,7 +393,7 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
         statusList.add("1");
         statusList.add("3");
 
-        if (UserHelper.isYWY()){
+        if (UserHelper.isYWY()) {
             map.put("userId", SPUtilHelper.getUserId());
             map.put("statusList", statusList);
         }

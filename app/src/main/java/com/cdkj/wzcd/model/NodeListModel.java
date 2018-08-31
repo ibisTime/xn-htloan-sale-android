@@ -6,7 +6,7 @@ import java.util.List;
  * Created by cdkj on 2018/6/4.
  */
 
-public class NodeListModel {
+public class NodeListModel  {
 
 
     /**
@@ -240,7 +240,27 @@ public class NodeListModel {
     private CreditBean credit;
     private String companyName;
     private String loanBankName;
+    private String policyDatetime;
+    private String policyDueDate;
     private List<BudgetOrderGpsListBean> budgetOrderGpsList;
+
+    public String getPolicyDueDate() {
+        return policyDueDate;
+    }
+
+    public void setPolicyDueDate(String policyDueDate) {
+        this.policyDueDate = policyDueDate;
+    }
+
+
+    public String getPolicyDatetime() {
+        return policyDatetime;
+    }
+
+    public void setPolicyDatetime(String policyDatetime) {
+        this.policyDatetime = policyDatetime;
+    }
+
 
     public String getCode() {
         return code;

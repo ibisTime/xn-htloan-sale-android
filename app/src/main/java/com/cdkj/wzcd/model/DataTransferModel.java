@@ -37,6 +37,17 @@ public class DataTransferModel  {
     private String sendDatetime;
     private String logisticsCode;
     private String logisticsCompany;
+    /**
+     * customerName : 熊二
+     * receiptDatetime : Aug 30, 2018 4:08:26 PM
+     * receiver : 0
+     * remark : 哦婆婆
+     */
+
+    private String customerName;
+    private String receiptDatetime;
+    private String receiver;
+    private String remark;
 
     public String getSendDatetime() {
         return sendDatetime;
@@ -156,5 +167,37 @@ public class DataTransferModel  {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getReceiptDatetime() {
+        return receiptDatetime;
+    }
+
+    public void setReceiptDatetime(String receiptDatetime) {
+        this.receiptDatetime = receiptDatetime;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

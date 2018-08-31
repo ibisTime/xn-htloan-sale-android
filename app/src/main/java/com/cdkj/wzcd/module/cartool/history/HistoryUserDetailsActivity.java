@@ -15,7 +15,7 @@ import com.cdkj.wzcd.adapter.RepayPlanAdapter;
 import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.databinding.ActivityHistoryUserDetailsBinding;
 import com.cdkj.wzcd.model.RepaymentModel;
-import com.cdkj.wzcd.util.DataDictionaryHelper;
+import com.cdkj.wzcd.util.NodeHelper;
 import com.cdkj.wzcd.util.RequestUtil;
 
 import java.util.HashMap;
@@ -91,23 +91,25 @@ public class HistoryUserDetailsActivity extends AbsBaseLoadActivity {
 
     private void setView(RepaymentModel data) {
 
-        DataDictionaryHelper.getValueOnTheKeyRequest(this, DataDictionaryHelper.status, data.getStatus(), data1 -> {
+        mBinding.myNlStatus.setText(NodeHelper.getNameOnTheCode(data.getCurNodeCode()));
 
-            mBinding.myNlStatus.setText(data1.getDvalue());
-
-        });
+//        DataDictionaryHelper.getValueOnTheKeyRequest(this, DataDictionaryHelper.status, data.getStatus(), data1 -> {
+//
+//            mBinding.myNlStatus.setText(data1.getDvalue());
+//
+//        });
 
         mBinding.myNlName.setText(data.getBudgetOrder().getApplyUserName());
         mBinding.myNlCompanyName.setText(data.getBudgetOrder().getCompanyName());
         mBinding.myNlCode.setText(data.getCode());
-        mBinding.myNlPeriods.setText(data.getPeriods()+"");
+        mBinding.myNlPeriods.setText(data.getPeriods() + "");
         mBinding.myNlAmount.setText(RequestUtil.formatAmountDivSign(data.getLoanAmount()));
         mBinding.myNlRest.setText(RequestUtil.formatAmountDivSign(data.getRestAmount()));
         mBinding.myNlBank.setText(data.getLoanBankName());
 
     }
 
-    private void initPlanAdapter(RepaymentModel data){
+    private void initPlanAdapter(RepaymentModel data) {
         mAdapter = new RepayPlanAdapter(data.getRepayPlanList());
         mBinding.rvPlan.setLayoutManager(getLinearLayoutManager(false));
         mBinding.rvPlan.setAdapter(mAdapter);

@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
+import com.cdkj.baselibrary.dialog.CommonDialog;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.model.CodeModel;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
@@ -83,7 +84,7 @@ public class GPSInstallInfoActivity extends AbsBaseLoadActivity {
         });
 
         mBinding.myCbConfirm.setOnConfirmListener(view -> {
-            if (check()){
+            if (check()) {
                 request();
             }
         });
@@ -95,14 +96,30 @@ public class GPSInstallInfoActivity extends AbsBaseLoadActivity {
 
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
 //            CreditUserModel model = );
-            GPSInfoAddActivity.open(this,mAdapter.getItem(position), position);
+            GPSInfoAddActivity.open(this, mAdapter.getItem(position), position);
+        });
+
+        mAdapter.setOnItemLongClickListener((adapter, view, position) -> {
+            new CommonDialog(this)
+                    .builder()
+                    .setTitle("确定删除")
+                    .setNegativeBtn("取消", null)
+                    .setPositiveBtn("确定", new CommonDialog.OnPositiveListener() {
+                        @Override
+                        public void onPositive(View view) {
+                            mList.remove(position);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }).show();
+
+            return false;
         });
 
         mBinding.rvGps.setLayoutManager(getLinearLayoutManager(false));
         mBinding.rvGps.setAdapter(mAdapter);
     }
 
-    public void getGPS(){
+    public void getGPS() {
         Map<String, String> map = RetrofitUtils.getRequestMap();
 
         map.put("code", code);
@@ -153,23 +170,23 @@ public class GPSInstallInfoActivity extends AbsBaseLoadActivity {
 
 
     @Subscribe
-    public void doAddCreditPerson(GpsInstallModel model){
+    public void doAddCreditPerson(GpsInstallModel model) {
         mList.add(model);
         mAdapter.notifyDataSetChanged();
     }
 
     @Subscribe
-    public void doReplaceCreditPerson(GpsInstallReplaceModel model){
+    public void doReplaceCreditPerson(GpsInstallReplaceModel model) {
 
         mList.set(model.getLocation(), model.getGpsInstallModel());
         mAdapter.notifyDataSetChanged();
 
     }
 
-    private boolean check(){
+    private boolean check() {
 
         // Gps
-        if (mList.size() == 0){
+        if (mList.size() == 0) {
             ToastUtil.show(this, "请添加GPS");
             return false;
         }
@@ -177,7 +194,7 @@ public class GPSInstallInfoActivity extends AbsBaseLoadActivity {
         return true;
     }
 
-    private void request(){
+    private void request() {
         Map<String, Object> map = new HashMap<>();
 
         map.put("code", code);

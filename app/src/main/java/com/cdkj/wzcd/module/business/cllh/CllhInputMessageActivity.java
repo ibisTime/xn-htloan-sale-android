@@ -50,6 +50,7 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
     @Override
     public View addMainView() {
         mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_cllh_input_message, null, false);
+        mBinding.myMlQualified.setVisibility(View.GONE);
         return mBinding.getRoot();
     }
 
@@ -67,7 +68,7 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
         initCustomView();
     }
 
-    public void getNode(){
+    public void getNode() {
         Map<String, String> map = RetrofitUtils.getRequestMap();
 
         map.put("code", code);
@@ -101,7 +102,8 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
         if (!TextUtils.equals(data.getCurNodeCode(), "002_11")) { // 业务团队车辆落户
 
             mBinding.myNlDateTime.setText(DateUtil.formatStringData(data.getCarSettleDatetime(), DateUtil.DEFAULT_DATE_FMT));
-
+            mBinding.myNlPolicyExpireTime.setText(DateUtil.formatStringData(data.getPolicyDueDate(), DateUtil.DEFAULT_DATE_FMT));
+            mBinding.myNlPolicyTime.setText(DateUtil.formatStringData(data.getPolicyDatetime(), DateUtil.DEFAULT_DATE_FMT));
             mBinding.myMlReceipt.setListDataByRequest(data.getCarInvoice());
             mBinding.myMlQualified.setListDataByRequest(data.getCarHgz());
             mBinding.myMlJqx.setListDataByRequest(data.getCarJqx());
@@ -114,11 +116,11 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
     }
 
     private void initCustomView() {
-        mBinding.myMlReceipt.build(this,1);
-        mBinding.myMlQualified.build(this,2);
-        mBinding.myMlJqx.build(this,3);
-        mBinding.myMlSyx.build(this,4);
-        mBinding.myMlOther.build(this,5);
+        mBinding.myMlReceipt.build(this, 1);
+        mBinding.myMlQualified.build(this, 2);
+        mBinding.myMlJqx.build(this, 3);
+        mBinding.myMlSyx.build(this, 4);
+        mBinding.myMlOther.build(this, 5);
     }
 
     @Override
@@ -133,23 +135,23 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
             @Override
             public void onSuccess(String key) {
 
-                if (requestCode == mBinding.myMlReceipt.getRequestCode()){
+                if (requestCode == mBinding.myMlReceipt.getRequestCode()) {
                     mBinding.myMlReceipt.addList(key);
                 }
 
-                if (requestCode == mBinding.myMlQualified.getRequestCode()){
+                if (requestCode == mBinding.myMlQualified.getRequestCode()) {
                     mBinding.myMlQualified.addList(key);
                 }
 
-                if (requestCode == mBinding.myMlJqx.getRequestCode()){
+                if (requestCode == mBinding.myMlJqx.getRequestCode()) {
                     mBinding.myMlJqx.addList(key);
                 }
 
-                if (requestCode == mBinding.myMlSyx.getRequestCode()){
+                if (requestCode == mBinding.myMlSyx.getRequestCode()) {
                     mBinding.myMlSyx.addList(key);
                 }
 
-                if (requestCode == mBinding.myMlOther.getRequestCode()){
+                if (requestCode == mBinding.myMlOther.getRequestCode()) {
                     mBinding.myMlOther.addList(key);
                 }
 
@@ -165,52 +167,69 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
 
     private void initListener() {
         mBinding.myNlDateTime.setOnClickListener(view -> {
-            new DatePickerHelper().build(this).getDate(mBinding.myNlDateTime, true, true,  true, false, false, false);
+            new DatePickerHelper().build(this).getDate(mBinding.myNlDateTime, true, true, true, false, false, false);
+        });
+        mBinding.myNlPolicyTime.setOnClickListener(view -> {
+            new DatePickerHelper().build(this).getDate(mBinding.myNlPolicyTime, true, true, true, false, false, false);
+        });
+        mBinding.myNlPolicyExpireTime.setOnClickListener(view -> {
+            new DatePickerHelper().build(this).getDate(mBinding.myNlPolicyExpireTime, true, true, true, false, false, false);
         });
 
         mBinding.myCbConfirm.setOnConfirmListener(view -> {
-            if (check()){
+            if (check()) {
                 settle();
             }
         });
     }
 
-    public boolean check(){
+    public boolean check() {
         // 落户日期
-        if (TextUtils.isEmpty(mBinding.myNlDateTime.check())){
+        if (TextUtils.isEmpty(mBinding.myNlDateTime.check())) {
+            return false;
+        }
+        //保单到期日
+        if (TextUtils.isEmpty(mBinding.myNlPolicyExpireTime.check())) {
+            return false;
+        }
+        //保单日期
+        if (TextUtils.isEmpty(mBinding.myNlPolicyTime.check())) {
             return false;
         }
         // 发票
-        if (mBinding.myMlReceipt.check()){
+        if (mBinding.myMlReceipt.check()) {
             return false;
         }
-        // 合格证
-        if (mBinding.myMlQualified.check()){
-            return false;
-        }
+//        // 合格证
+//        if (mBinding.myMlQualified.check()){
+//            return false;
+//        }
         // 交强险
-        if (mBinding.myMlJqx.check()){
+        if (mBinding.myMlJqx.check()) {
             return false;
         }
         // 商业险
-        if (mBinding.myMlSyx.check()){
+        if (mBinding.myMlSyx.check()) {
             return false;
         }
 
         return true;
     }
 
-    public void settle(){
+    public void settle() {
         Map<String, Object> map = new HashMap<>();
 
         map.put("code", code);
-        map.put("carSettleDatetime", mBinding.myNlDateTime.getText());
+        map.put("carSettleDatetime", mBinding.myNlDateTime.getTag());
         map.put("carInvoice", mBinding.myMlReceipt.getListData());
         map.put("carHgz", mBinding.myMlQualified.getListData());
         map.put("carJqx", mBinding.myMlJqx.getListData());
         map.put("carSyx", mBinding.myMlSyx.getListData());
         map.put("carSettleOtherPdf", mBinding.myMlOther.getListData());
         map.put("operator", SPUtilHelper.getUserId());
+
+        map.put("policyDueDate", mBinding.myNlPolicyExpireTime.getTag());
+        map.put("policyDatetime", mBinding.myNlPolicyTime.getTag());
 
         Call call = RetrofitUtils.getBaseAPiService().codeRequest("632128", StringUtils.getJsonToString(map));
 

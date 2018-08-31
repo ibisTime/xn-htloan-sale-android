@@ -277,11 +277,12 @@ public class SendActivity extends AbsBaseLoadActivity {
         map.put("sendNote", mBinding.myElNote.getText());
         map.put("sendType", mBinding.mySlWay.getDataKey());
         map.put("operator", SPUtilHelper.getUserId());
-        map.put("sendDatetime", mBinding.myNlDateTime.getText());
+        map.put("sendDatetime", mBinding.myNlDateTime.getTag());
         if (mBinding.llSendFile.getVisibility() == View.VISIBLE){
             map.put("sendFileList", getConfirmSendFile().substring(0, getConfirmSendFile().length()-1));
         }else {
 //            map.put("sendFileList", "合同,材料"); // 要去掉!!!要去掉!!!要去掉!!!
+            map.put("sendFileList", "");
         }
 
         if (mBinding.llLogistics.getVisibility() == View.VISIBLE){

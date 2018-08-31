@@ -19,20 +19,27 @@ android {
 
         ndk {
             // 选择要添加的对应cpu类型的.so库。
-            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a','x86'
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86'
             // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
         }
 
         manifestPlaceholders = [
-                JPUSH_PKGNAME : rootProject.ext.applicationId,
+                JPUSH_PKGNAME: rootProject.ext.applicationId,
                 JPUSH_APPKEY : "71e0d4688bcb8b4da3718630", //JPush上注册的包名对应的appkey.
-                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
 
-
+        vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
-    }
 
+
+    }
+    dexOptions {
+        dexInProcess true
+        preDexLibraries true
+        javaMaxHeapSize "6g"//越大越好
+        incremental true
+    }
 
     signingConfigs {
         config {
@@ -88,10 +95,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-    compile'com.android.support:multidex:1.0.2'
+    compile 'com.android.support:multidex:1.0.2'
 
     api project(':cdcommon')
-
 
     // 腾讯云 实时音视频
     compile 'com.tencent.ilivesdk:ilivesdk:1.8.5'

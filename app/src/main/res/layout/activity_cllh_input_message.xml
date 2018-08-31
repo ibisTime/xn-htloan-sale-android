@@ -50,12 +50,32 @@
             </com.cdkj.wzcd.view.MyNormalLayout>
 
             <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_policy_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:img_normal_right="@drawable/more_right"
+                app:txt_normal_hint="请选择保单日期"
+                app:txt_normal_title="保单日期">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_policy_expire_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:img_normal_right="@drawable/more_right"
+                app:txt_normal_hint="请选择保单到期日"
+                app:txt_normal_title="保单到期日">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
                 android:id="@+id/myNl_date_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:txt_normal_title="落户日期"
+                app:img_normal_right="@drawable/more_right"
                 app:txt_normal_hint="请选择落户日期"
-                app:img_normal_right="@drawable/more_right">
+                app:txt_normal_title="落户日期">
 
             </com.cdkj.wzcd.view.MyNormalLayout>
 
@@ -73,39 +93,39 @@
 
             <com.cdkj.wzcd.view.MyMultipleLayout
                 android:id="@+id/myMl_receipt"
-                app:title="发票"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:title="发票" />
 
             <com.cdkj.wzcd.view.MyMultipleLayout
                 android:id="@+id/myMl_qualified"
-                app:title="合格证"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:title="合格证" />
 
             <com.cdkj.wzcd.view.MyMultipleLayout
                 android:id="@+id/myMl_jqx"
-                app:title="交强险"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:title="交强险" />
 
             <com.cdkj.wzcd.view.MyMultipleLayout
                 android:id="@+id/myMl_syx"
-                app:title="商业险"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:title="商业险" />
 
             <com.cdkj.wzcd.view.MyMultipleLayout
                 android:id="@+id/myMl_other"
-                app:title="其他资料"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:title="其他资料" />
 
             <com.cdkj.wzcd.view.MyConfirmBtn
                 android:id="@+id/myCb_confirm"
-                app:txt_confirm_content="保存"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                app:txt_confirm_content="保存" />
 
         </LinearLayout>
 

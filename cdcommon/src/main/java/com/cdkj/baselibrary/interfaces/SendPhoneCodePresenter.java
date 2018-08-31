@@ -51,6 +51,7 @@ public class SendPhoneCodePresenter {
         hashMap.put("companyCode", MyCdConfig.COMPANY_CODE);
         hashMap.put("mobile", phone);
         hashMap.put("bizType", bizType);
+        hashMap.put("kind", kind);
 
         call = RetrofitUtils.getBaseAPiService().successRequest("630090", StringUtils.getJsonToString(hashMap));
 

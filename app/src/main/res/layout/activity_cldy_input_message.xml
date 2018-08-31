@@ -2,6 +2,10 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <ScrollView
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,14 +48,32 @@
 
         <com.cdkj.wzcd.view.MyNormalLayout
             android:id="@+id/myNl_date_time"
-            app:txt_normal_title="抵押日期"
-            app:txt_normal_hint="请选择抵押日期"
-            app:img_normal_right="@drawable/more_right"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:img_normal_right="@drawable/more_right"
+            app:txt_normal_hint="请选择抵押日期"
+            app:txt_normal_title="抵押日期">
 
 
         </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyEditLayout
+            android:id="@+id/myEl_agent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_input_hint="请输入代理人"
+            app:txt_input_title="代理人">
+
+        </com.cdkj.wzcd.view.MyEditLayout>
+
+        <com.cdkj.wzcd.view.MyEditLayout
+            android:id="@+id/myEl_mortgage_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_input_hint="请输入抵押地点"
+            app:txt_input_title="抵押地点">
+
+        </com.cdkj.wzcd.view.MyEditLayout>
 
 
         <com.cdkj.wzcd.view.MyImageLayout
@@ -71,27 +93,27 @@
 
         <com.cdkj.wzcd.view.MyConfirmBtn
             android:id="@+id/myCb_confirm"
-            app:txt_confirm_content="保存"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:txt_confirm_content="保存">
 
 
         </com.cdkj.wzcd.view.MyConfirmBtn>
 
 
-
         <!--<Button-->
-            <!--android:id="@+id/btn_save"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:layout_marginBottom="10dp"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginRight="15dp"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:background="@drawable/btn_check_bg"-->
-            <!--android:text="保存"-->
-            <!--android:textColor="@color/white" />-->
+        <!--android:id="@+id/btn_save"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:layout_marginLeft="15dp"-->
+        <!--android:layout_marginRight="15dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:background="@drawable/btn_check_bg"-->
+        <!--android:text="保存"-->
+        <!--android:textColor="@color/white" />-->
 
 
     </LinearLayout>
+    </ScrollView>
 </layout>

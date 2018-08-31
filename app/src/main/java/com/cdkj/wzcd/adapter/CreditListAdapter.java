@@ -48,40 +48,40 @@ public class CreditListAdapter extends BaseQuickAdapter<CreditModel, BaseViewHol
         mBinding.myTlIdStatus.setText(item.getCode(), NodeHelper.getNameOnTheCode(item.getCurNodeCode()));
 
         mBinding.myIlType.setText(DataDictionaryHelper.getValueOnTheKey(item.getBizType(), mType));
-        mBinding.myIlName.setText(item.getCreditUser().getUserName());
+        mBinding.myIlName.setText(item.getCreditUser() == null ? "" : item.getCreditUser().getUserName());
         mBinding.myIlAmount.setText(MoneyUtils.MONEYSING + RequestUtil.formatAmountDiv(item.getLoanAmount()));
         mBinding.myIlOperatorName.setText(item.getOperatorName());
         mBinding.myIlDateTime.setText(DateUtil.formatStringData(item.getApplyDatetime(), DateUtil.DEFAULT_DATE_FMT));
 
         new BankHelper(mContext).getValueOnTheKey(item.getLoanBankCode(), mBinding.myIlBank, null);
 
-        mBinding.myItemCblConfirm.setContent("","");
+        mBinding.myItemCblConfirm.setContent("", "");
 
-        if (UserHelper.isZHRY()){
+        if (UserHelper.isZHRY()) {
 
             if (TextUtils.equals(item.getCurNodeCode(), "001_02")  // 录入征信结果
-                    || TextUtils.equals(item.getCurNodeCode(), "001_06")){ // 风控专员审核不通过
+                    || TextUtils.equals(item.getCurNodeCode(), "001_06")) { // 风控专员审核不通过
                 mBinding.myItemCblConfirm.setRightTextAndListener("录入银行征信结果", view -> {
                     AuditCreditActivity.open(mContext, item.getCode());
                 });
-            }else {
-                mBinding.myItemCblConfirm.setContent("","");
+            } else {
+                mBinding.myItemCblConfirm.setContent("", "");
             }
 
-        }else {
+        } else {
 
-            mBinding.myItemCblConfirm.setContent("","");
+            mBinding.myItemCblConfirm.setContent("", "");
 
             if (TextUtils.equals(item.getCurNodeCode(), "001_01") // 填写征信单
                     || TextUtils.equals(item.getCurNodeCode(), "001_05") // 征信退回，重新发起征信
-                    || TextUtils.equals(item.getCurNodeCode(), "001_07")){ // 征信撤回，重新发起征信
+                    || TextUtils.equals(item.getCurNodeCode(), "001_07")) { // 征信撤回，重新发起征信
                 mBinding.myItemCblConfirm.setRightTextAndListener("修改征信信息", view -> {
                     CreditInitiateActivity.open(mContext, item.getCode());
                 });
             }
 
             // 发起征信环节增加撤回功能，发起后直接撤回,如驻行已录入征信结果则不能撤回
-            if (TextUtils.equals(item.getCurNodeCode(), "001_02")){ // 录入征信结果
+            if (TextUtils.equals(item.getCurNodeCode(), "001_02")) { // 录入征信结果
                 mBinding.myItemCblConfirm.setRightTextAndListener("撤回", view -> {
                     mCancelInterface.click(view, item.getCode());
                 });
@@ -91,7 +91,7 @@ public class CreditListAdapter extends BaseQuickAdapter<CreditModel, BaseViewHol
 
     }
 
-    public interface CreditCancelInterface{
+    public interface CreditCancelInterface {
         void click(View view, String code);
     }
 

@@ -4,9 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/cdcommon/cdcommon.iml" filepath="$PROJECT_DIR$/cdcommon/cdcommon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/htwt_ywy.iml" filepath="$PROJECT_DIR$/htwt_ywy.iml" />
       <module fileurl="file://$PROJECT_DIR$/picture_library/picture_library.iml" filepath="$PROJECT_DIR$/picture_library/picture_library.iml" />
       <module fileurl="file://$PROJECT_DIR$/ucrop/ucrop.iml" filepath="$PROJECT_DIR$/ucrop/ucrop.iml" />
-      <module fileurl="file://$PROJECT_DIR$/xn-htloan-sale-android.iml" filepath="$PROJECT_DIR$/xn-htloan-sale-android.iml" />
+      <module fileurl="file://E:\work_code\chengdai_work\htwt_ywy\xn-htloan-sale-android.iml" filepath="E:\work_code\chengdai_work\htwt_ywy\xn-htloan-sale-android.iml" />
     </modules>
   </component>
 </project>

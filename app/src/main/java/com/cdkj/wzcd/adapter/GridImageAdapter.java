@@ -33,8 +33,7 @@ import java.util.List;
  * email：893855882@qq.com
  * data：16/7/27
  */
-public class GridImageAdapter extends
-        RecyclerView.Adapter<GridImageAdapter.ViewHolder> {
+public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.ViewHolder> {
     public static final int TYPE_CAMERA = 1;
     public static final int TYPE_PICTURE = 2;
     private LayoutInflater mInflater;

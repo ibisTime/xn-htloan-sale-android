@@ -173,13 +173,15 @@ public class CreditDetailActivity extends AbsBaseLoadActivity {
         mBinding.myElAmount.setTextByRequest(RequestUtil.formatAmountDiv(mData.getLoanAmount()));
 
         if (TextUtils.equals(mData.getBizType(), "1")){ //二手车
+
+            //二手车也隐藏  oss端没有了  不知道是去掉 了 还是 咋滴  只显示
             // 新车则隐藏证件
-            mBinding.myIlDocuments.setVisibility(View.VISIBLE);
+//            mBinding.myIlDocuments.setVisibility(View.VISIBLE);
             mBinding.myIlReport.setVisibility( View.VISIBLE);
 
-            mBinding.myIlDocuments.setFlImgByRequest(mData.getXszFront());
-            mBinding.myIlDocuments.setFlImgRightByRequest(mData.getXszReverse());
-
+//            mBinding.myIlDocuments.setFlImgByRequest(mData.getXszFront());
+//            mBinding.myIlDocuments.setFlImgRightByRequest(mData.getXszReverse());
+//
             mBinding.myIlReport.setFlImgByRequest(mData.getSecondCarReport());
         }
 

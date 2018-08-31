@@ -1,5 +1,7 @@
 package com.cdkj.wzcd.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * @author cdkj
  * @updateDts 2018/5/30
@@ -27,6 +29,16 @@ public class GpsApplyModel {
     private int applyCount;
     private String status;
     private String applyUserName;
+    /**
+     * applyCount : 1.0
+     * companyCode : DP201800000000000000001
+     * companyName : 乌鲁木齐华途威通汽车销售有限公司
+     */
+
+    @SerializedName("applyCount")
+    private double applyCountX;
+    private String companyCode;
+    private String companyName;
 
     public String getCode() {
         return code;
@@ -90,5 +102,29 @@ public class GpsApplyModel {
 
     public void setApplyUserName(String applyUserName) {
         this.applyUserName = applyUserName;
+    }
+
+    public double getApplyCountX() {
+        return applyCountX;
+    }
+
+    public void setApplyCountX(double applyCountX) {
+        this.applyCountX = applyCountX;
+    }
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 }
