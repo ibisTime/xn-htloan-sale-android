@@ -87,6 +87,7 @@
                 <com.cdkj.wzcd.view.MyConfirmBtn
                     android:id="@+id/myCb_load"
                     app:txt_confirm_content="上传"
+                    app:txt_confirm_content_right="保存"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 

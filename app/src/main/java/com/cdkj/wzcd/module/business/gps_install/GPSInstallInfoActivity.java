@@ -13,6 +13,8 @@ import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.model.CodeModel;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
+import com.cdkj.baselibrary.utils.CameraHelper;
+import com.cdkj.baselibrary.utils.QiNiuHelper;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.baselibrary.utils.ToastUtil;
 import com.cdkj.wzcd.R;
@@ -73,9 +75,17 @@ public class GPSInstallInfoActivity extends AbsBaseLoadActivity {
         code = getIntent().getStringExtra(DATA_SIGN);
         getGPS();
 
+        init();
+
         initListener();
         initListAdapter();
     }
+
+    private void init() {
+        mBinding.myMlAddImg.build(this,1);
+        mBinding.myMlImg.build(this,2);
+    }
+
 
     private void initListener() {
 
@@ -227,5 +237,37 @@ public class GPSInstallInfoActivity extends AbsBaseLoadActivity {
                 disMissLoading();
             }
         });
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK || data == null) {
+            return;
+        }
+        String path = data.getStringExtra(CameraHelper.staticPath);
+        showLoadingDialog();
+        new QiNiuHelper(this).uploadSinglePic(new QiNiuHelper.QiNiuCallBack() {
+            @Override
+            public void onSuccess(String key) {
+
+
+                if (requestCode == mBinding.myMlAddImg.getRequestCode()){
+                    mBinding.myMlAddImg.addList(key);
+                }
+                if (requestCode == mBinding.myMlImg.getRequestCode()){
+                    mBinding.myMlImg.addList(key);
+                }
+
+                disMissLoading();
+
+            }
+
+            @Override
+            public void onFal(String info) {
+                disMissLoading();
+            }
+        }, path);
     }
 }

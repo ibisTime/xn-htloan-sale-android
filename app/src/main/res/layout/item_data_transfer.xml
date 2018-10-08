@@ -6,16 +6,14 @@
     <data>
 
 
-
     </data>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <View
-            style="@style/style_split_line_horizontal_broad"/>
+        <View style="@style/style_split_line_horizontal_broad" />
 
         <com.cdkj.wzcd.view.list.MyListItemTitleLayout
             android:id="@+id/myTl_idStatus"
@@ -26,49 +24,113 @@
 
         <com.cdkj.wzcd.view.list.MyListItemLayout
             android:id="@+id/myIl_from"
-            app:txt_list_item_title="发件节点"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:txt_list_item_title="发件节点">
 
         </com.cdkj.wzcd.view.list.MyListItemLayout>
 
         <com.cdkj.wzcd.view.list.MyListItemLayout
             android:id="@+id/myIl_to"
-            app:txt_list_item_title="收件节点"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:txt_list_item_title="收件节点">
 
         </com.cdkj.wzcd.view.list.MyListItemLayout>
 
         <com.cdkj.wzcd.view.list.MyListItemLayout
             android:id="@+id/myIl_name"
-            app:txt_list_item_title="客户姓名"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:txt_list_item_title="客户姓名">
 
         </com.cdkj.wzcd.view.list.MyListItemLayout>
 
         <com.cdkj.wzcd.view.list.MyListItemLayout
             android:id="@+id/myIl_company"
-            app:txt_list_item_title="快递公司"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:txt_list_item_title="快递公司">
 
         </com.cdkj.wzcd.view.list.MyListItemLayout>
 
         <com.cdkj.wzcd.view.list.MyListItemLayout
             android:id="@+id/myIl_express"
-            app:txt_list_item_title="快递单号"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:txt_list_item_title="快递单号">
 
         </com.cdkj.wzcd.view.list.MyListItemLayout>
 
         <com.cdkj.wzcd.view.list.MyListItemLayout
-            android:id="@+id/myIl_status"
-            app:txt_list_item_title="快递状态"
+            android:id="@+id/myIl_senderName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:txt_list_item_title="发件人">
+
+        </com.cdkj.wzcd.view.list.MyListItemLayout>
+
+        <com.cdkj.wzcd.view.list.MyListItemLayout
+            android:id="@+id/myIl_receiverName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_list_item_title="收件人">
+
+        </com.cdkj.wzcd.view.list.MyListItemLayout>
+
+        <com.cdkj.wzcd.view.list.MyListItemLayout
+            android:id="@+id/myIl_teamName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_list_item_title="业务团队">
+
+        </com.cdkj.wzcd.view.list.MyListItemLayout>
+
+        <com.cdkj.wzcd.view.list.MyListItemLayout
+            android:id="@+id/myIl_xinDai"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_list_item_title="信贷专员">
+
+        </com.cdkj.wzcd.view.list.MyListItemLayout>
+
+        <com.cdkj.wzcd.view.list.MyListItemLayout
+            android:id="@+id/myIl_neiQin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_list_item_title="内勤专员">
+
+        </com.cdkj.wzcd.view.list.MyListItemLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_gps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.cdkj.wzcd.view.list.MyListItemLayout
+                android:id="@+id/myIl_applyWirelessCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_list_item_title="gps无线个数">
+
+            </com.cdkj.wzcd.view.list.MyListItemLayout>
+
+            <com.cdkj.wzcd.view.list.MyListItemLayout
+                android:id="@+id/myIl_applyWiredCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_list_item_title="gps有线个数">
+
+            </com.cdkj.wzcd.view.list.MyListItemLayout>
+        </LinearLayout>
+
+
+        <com.cdkj.wzcd.view.list.MyListItemLayout
+            android:id="@+id/myIl_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_list_item_title="快递状态">
 
         </com.cdkj.wzcd.view.list.MyListItemLayout>
 

@@ -6,7 +6,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        tools:context="com.cdkj.wzcd.module.datatransfer.SendAndExamineActivity">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,6 +29,48 @@
 
             </com.cdkj.wzcd.view.MyNormalLayout>
 
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_team"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="业务团队">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+            <!--发件人、收件人、业务团队、信贷专员、内勤专员-->
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_sendUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="发件人">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_receiveUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="收件人">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_xindaiUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="信贷专员">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_neiqinUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="内勤专员">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
             <LinearLayout
                 android:id="@+id/ll_gps"
                 android:layout_width="match_parent"
@@ -36,39 +78,23 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
-
                 <com.cdkj.wzcd.view.MyNormalLayout
-                    android:id="@+id/myNl_teamName"
+                    android:id="@+id/myNl_applyWirelessCount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:txt_normal_title="业务团队">
+                    app:txt_normal_title="gps无线个数">
 
                 </com.cdkj.wzcd.view.MyNormalLayout>
 
                 <com.cdkj.wzcd.view.MyNormalLayout
-                    android:id="@+id/myNl_userName"
+                    android:id="@+id/myNl_applyWiredCount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:txt_normal_title="申请人姓名">
-
-                </com.cdkj.wzcd.view.MyNormalLayout>
-
-                <com.cdkj.wzcd.view.MyNormalLayout
-                    android:id="@+id/myNl_userRole"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:txt_normal_title="申请人角色">
-
-                </com.cdkj.wzcd.view.MyNormalLayout>
-
-                <com.cdkj.wzcd.view.MyNormalLayout
-                    android:id="@+id/myNl_carFrameNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:txt_normal_title="车架号">
+                    app:txt_normal_title="gps有线个数">
 
                 </com.cdkj.wzcd.view.MyNormalLayout>
             </LinearLayout>
+
 
             <com.cdkj.wzcd.view.MyNormalLayout
                 android:id="@+id/myNl_bank"
@@ -79,12 +105,29 @@
 
             </com.cdkj.wzcd.view.MyNormalLayout>
 
+
             <com.cdkj.wzcd.view.MyNormalLayout
                 android:id="@+id/myNl_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 app:txt_normal_title="贷款金额">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_node_send"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="发件节点">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_node_re"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="收件节点">
 
             </com.cdkj.wzcd.view.MyNormalLayout>
 
@@ -96,6 +139,7 @@
                 android:visibility="gone">
 
                 <com.cdkj.wzcd.view.MyNormalLayout
+                    android:id="@+id/myNl_re_file_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:txt_normal_title="参考材料清单">
@@ -109,7 +153,10 @@
                     android:background="@color/white"
                     android:paddingBottom="10dp">
 
+
                 </android.support.v7.widget.RecyclerView>
+
+                <View style="@style/style_split_line_horizontal" />
 
             </LinearLayout>
 
@@ -121,6 +168,7 @@
                 android:visibility="gone">
 
                 <com.cdkj.wzcd.view.MyNormalLayout
+                    android:id="@+id/myNl_send_file_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:txt_normal_title="寄送材料清单">
@@ -137,84 +185,57 @@
 
                 </android.support.v7.widget.RecyclerView>
 
+                <View style="@style/style_split_line_horizontal" />
+
             </LinearLayout>
 
-            <View style="@style/style_split_line_horizontal_broad" />
 
-            <com.cdkj.wzcd.view.MySelectLayout
-                android:id="@+id/mySl_way"
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_send_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:txt_select_title="寄送方式">
+                app:txt_normal_title="寄送方式">
 
-            </com.cdkj.wzcd.view.MySelectLayout>
+            </com.cdkj.wzcd.view.MyNormalLayout>
 
             <LinearLayout
                 android:id="@+id/ll_logistics"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:orientation="vertical">
 
-                <com.cdkj.wzcd.view.MySelectLayout
-                    android:id="@+id/mySl_company"
+                <com.cdkj.wzcd.view.MyNormalLayout
+                    android:id="@+id/myNl_logistics_company"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:txt_select_title="快递公司">
+                    app:txt_normal_title="快递公司">
 
-                </com.cdkj.wzcd.view.MySelectLayout>
+                </com.cdkj.wzcd.view.MyNormalLayout>
 
-                <com.cdkj.wzcd.view.MyEditLayout
-                    android:id="@+id/myEl_number"
+                <com.cdkj.wzcd.view.MyNormalLayout
+                    android:id="@+id/myNl_logistics_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:txt_input_hint="请填快递单号"
-                    app:txt_input_title="快递单号">
+                    app:txt_normal_title="快递单号">
 
-                </com.cdkj.wzcd.view.MyEditLayout>
+                </com.cdkj.wzcd.view.MyNormalLayout>
 
             </LinearLayout>
 
             <com.cdkj.wzcd.view.MyNormalLayout
-                android:id="@+id/myNl_date_time"
+                android:id="@+id/myNl_send_datetime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:img_normal_right="@drawable/more_right"
-                app:txt_normal_hint="请选择发货时间"
                 app:txt_normal_title="发货时间">
 
             </com.cdkj.wzcd.view.MyNormalLayout>
-
-
-            <TextView
-                android:id="@+id/tv_clqd"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:gravity="center_vertical"
-                android:hint="请选择材料清单"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp" />
-
-            <View style="@style/style_split_line_horizontal" />
-
-            <com.cdkj.wzcd.view.MyEditLayout
-                android:id="@+id/myEl_note"
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_other"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:txt_input_hint="选填"
-                app:txt_input_title="备注">
+                app:txt_normal_title="备注">
 
-            </com.cdkj.wzcd.view.MyEditLayout>
-
-            <com.cdkj.wzcd.view.MyConfirmBtn
-                android:id="@+id/myCb_confirm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:txt_confirm_content="发件">
-
-            </com.cdkj.wzcd.view.MyConfirmBtn>
+            </com.cdkj.wzcd.view.MyNormalLayout>
 
         </LinearLayout>
     </ScrollView>

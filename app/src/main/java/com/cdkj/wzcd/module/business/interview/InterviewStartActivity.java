@@ -15,10 +15,10 @@ import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.model.CodeModel;
-import com.cdkj.baselibrary.model.IsSuccessModes;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.CameraHelper;
+import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.baselibrary.utils.QiNiuHelper;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.baselibrary.utils.ToastUtil;
@@ -112,16 +112,16 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
     public void topTitleViewLeftClick() {
         super.topTitleViewLeftClick();
 
-        cancel(true,"您确定要取消上传并退出吗?");
+        cancel(true, "您确定要取消上传并退出吗?");
 
     }
 
     private void initCustomView() {
-        mBinding.myIlAdvanceFundAmountPdf.setActivity(this,1,-1);
-        mBinding.myIlBankPhoto.setActivity(this,2,-1);
-        mBinding.myIlCompanyContract.setActivity(this,3,-1);
-        mBinding.myIlBankContract.setActivity(this,4,-1);
-        mBinding.myIlInterviewOtherPdf.setActivity(this,5,-1);
+        mBinding.myIlAdvanceFundAmountPdf.setActivity(this, 1, -1);
+        mBinding.myIlBankPhoto.setActivity(this, 2, -1);
+        mBinding.myIlCompanyContract.setActivity(this, 3, -1);
+        mBinding.myIlBankContract.setActivity(this, 4, -1);
+        mBinding.myIlInterviewOtherPdf.setActivity(this, 5, -1);
 
         mBinding.myVlBankVideo.build(this, 10, vlYhCode);
         mBinding.myVlCompanyVideo.build(this, 10, vlGsCode);
@@ -132,36 +132,36 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
 
         mBinding.myCbLoad.setOnConfirmListener(view -> {
 
-            if (check()){
-
+            if (check()) {
                 upLoad(mBinding.myVlBankVideo.getList(), vlYhCode);
-
             }
+        });
+        mBinding.myCbLoad.setOnConfirmRightListener(view -> {
+           // upLoad(mBinding.myVlBankVideo.getList(), vlYhCode);
 
         });
-
         mBinding.llPercent.setOnClickListener(view -> {
             // do nothing
         });
     }
 
-    private void upLoad(List<LocalMedia> list, int which){
+    private void upLoad(List<LocalMedia> list, int which) {
         List<String> urlList = new ArrayList<>();
 
-        for (LocalMedia localMedia : list){
+        for (LocalMedia localMedia : list) {
             urlList.add(localMedia.getPath());
         }
 
         String title;
-        if (which == vlYhCode){
-            title="银行视频";
-        } else if(which == vlGsCode) {
-            title="公司视频";
-        }else {
-            title="其它视频";
+        if (which == vlYhCode) {
+            title = "银行视频";
+        } else if (which == vlGsCode) {
+            title = "公司视频";
+        } else {
+            title = "其它视频";
         }
 
-        mQiNiuHelper.upLoadListVideo(urlList, new QiNiuHelper.UpLoadListFileListener(){
+        mQiNiuHelper.upLoadListVideo(urlList, new QiNiuHelper.UpLoadListFileListener() {
 
             @Override
             public void start() {
@@ -173,20 +173,19 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
             @Override
             public void onChange(int index, String url) {
 
-                mBaseBinding.titleView.setMidTitle(title + (index+2) + "/"+urlList.size());
+                mBaseBinding.titleView.setMidTitle(title + (index + 2) + "/" + urlList.size());
             }
 
             @Override
             public void progress(String key, double percent) {
-                if (!isCancelled){
-                    Double p = percent*100;
+                if (!isCancelled) {
+                    Double p = percent * 100;
 
                     mBinding.llPercent.setVisibility(View.VISIBLE);
                     mBinding.cpPercent.setProgress(p.intValue());
 
                     mBaseBinding.titleView.setRightTitle("");
                 }
-
             }
 
             @Override
@@ -196,21 +195,20 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
 
                 mBaseBinding.titleView.setMidTitle(getString(R.string.face_view));
 
-                if (which == vlYhCode){
+                if (which == vlYhCode) {
 
                     bankVideo = StringUtils.listToString(result, "||");
                     upLoad(mBinding.myVlCompanyVideo.getList(), vlGsCode);
 
-                } else if(which == vlGsCode) {
+                } else if (which == vlGsCode) {
 
                     companyVideo = StringUtils.listToString(result, "||");
                     upLoad(mBinding.myVlCompanyVideo.getList(), vlOtherCode);
 
-                }else {
+                } else {
 
                     otherVideo = StringUtils.listToString(result, "||");
                     interview();
-
                 }
 
             }
@@ -230,33 +228,36 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
 
     public void getSendRoomIdSms() {
 
-        Map<String, String> map = RetrofitUtils.getNodeListMap();
+        mHelper = new TencentLoginHelper(InterviewStartActivity.this, InterviewStartActivity.this);
+        mHelper.login();
 
-        map.put("code", code);
-
-        showLoadingDialog();
-
-        Call call = RetrofitUtils.getBaseAPiService().successRequest("632136", StringUtils.getJsonToString(map));
-        addCall(call);
-
-        call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(this) {
-            @Override
-            protected void onSuccess(IsSuccessModes data, String SucMessage) {
-                if (data == null)
-                    return;
-
-                if (data.isSuccess()){
-                    mHelper = new TencentLoginHelper(InterviewStartActivity.this, InterviewStartActivity.this);
-                    mHelper.login();
-                }
-
-            }
-
-            @Override
-            protected void onFinish() {
-                disMissLoading();
-            }
-        });
+//        Map<String, String> map = RetrofitUtils.getNodeListMap();
+//
+//        map.put("code", code);
+//
+//        showLoadingDialog();
+//
+//        Call call = RetrofitUtils.getBaseAPiService().successRequest("632136", StringUtils.getJsonToString(map));
+//        addCall(call);
+//
+//        call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(this) {
+//            @Override
+//            protected void onSuccess(IsSuccessModes data, String SucMessage) {
+//                if (data == null)
+//                    return;
+//
+//                if (data.isSuccess()){
+//                    mHelper = new TencentLoginHelper(InterviewStartActivity.this, InterviewStartActivity.this);
+//                    mHelper.login();
+//                }
+//
+//            }
+//
+//            @Override
+//            protected void onFinish() {
+//                disMissLoading();
+//            }
+//        });
 
     }
 
@@ -267,12 +268,12 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
 
     @Override
     public void onLoginSDKSuccess() {
-        if (checkPermission()){
-            String roomId = code.substring(code.length()-7, code.length());
+        if (checkPermission()) {
+            String roomId = code.substring(code.length() - 7, code.length());
 
             try {
                 RoomActivity.open(this, Integer.parseInt(roomId));
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -280,6 +281,7 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
 
     @Override
     public void onLoginSDKFailed(String module, int errCode, String errMsg) {
+        LogUtil.E("登录失败__" + module + ":" + errCode + ":" + errMsg);
         ToastUtil.show(this, "登录失败" + ":::" + errCode + "=" + errMsg);
     }
 
@@ -318,7 +320,7 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
         if (resultCode == RESULT_OK) {
 
             // 最小的视频回调请求码
-            if (requestCode < vlOtherCode){
+            if (requestCode < vlOtherCode) {
 
                 String path = data.getStringExtra(CameraHelper.staticPath);
                 showLoadingDialog();
@@ -326,27 +328,27 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
                     @Override
                     public void onSuccess(String key) {
 
-                        if (requestCode == mBinding.myIlAdvanceFundAmountPdf.getRequestCode()){
+                        if (requestCode == mBinding.myIlAdvanceFundAmountPdf.getRequestCode()) {
                             mBinding.myIlAdvanceFundAmountPdf.setFlImg(key);
                             disMissLoading();
                         }
 
-                        if (requestCode == mBinding.myIlBankPhoto.getRequestCode()){
+                        if (requestCode == mBinding.myIlBankPhoto.getRequestCode()) {
                             mBinding.myIlBankPhoto.setFlImg(key);
                             disMissLoading();
                         }
 
-                        if (requestCode == mBinding.myIlCompanyContract.getRequestCode()){
+                        if (requestCode == mBinding.myIlCompanyContract.getRequestCode()) {
                             mBinding.myIlCompanyContract.setFlImg(key);
                             disMissLoading();
                         }
 
-                        if (requestCode == mBinding.myIlBankContract.getRequestCode()){
+                        if (requestCode == mBinding.myIlBankContract.getRequestCode()) {
                             mBinding.myIlBankContract.setFlImg(key);
                             disMissLoading();
                         }
 
-                        if (requestCode == mBinding.myIlInterviewOtherPdf.getRequestCode()){
+                        if (requestCode == mBinding.myIlInterviewOtherPdf.getRequestCode()) {
                             mBinding.myIlInterviewOtherPdf.setFlImg(key);
                             disMissLoading();
                         }
@@ -359,41 +361,39 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
                     }
                 }, path);
 
-            }else {
+            } else {
 
-                if (requestCode == mBinding.myVlBankVideo.getRequestCode()){
+                if (requestCode == mBinding.myVlBankVideo.getRequestCode()) {
                     // 图片、视频、音频选择结果回调
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
 
                     mBinding.myVlBankVideo.setList(selectList);
                 }
 
-                if (requestCode == mBinding.myVlCompanyVideo.getRequestCode()){
+                if (requestCode == mBinding.myVlCompanyVideo.getRequestCode()) {
                     // 图片、视频、音频选择结果回调
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
 
                     mBinding.myVlCompanyVideo.setList(selectList);
                 }
 
-                if (requestCode == mBinding.myVlOtherVideo.getRequestCode()){
+                if (requestCode == mBinding.myVlOtherVideo.getRequestCode()) {
                     // 图片、视频、音频选择结果回调
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
 
                     mBinding.myVlOtherVideo.setList(selectList);
                 }
-
             }
-
         }
     }
 
     @Override
     public void onBackPressed() {
-        cancel(false,"您确定要取消上传吗?");
+        cancel(false, "您确定要取消上传吗?");
     }
 
-    private void cancel(boolean isFinish, String str){
-        if (mBinding.llPercent.getVisibility() == View.GONE){
+    private void cancel(boolean isFinish, String str) {
+        if (mBinding.llPercent.getVisibility() == View.GONE) {
             finish();
         }
 
@@ -409,22 +409,22 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
 
     }
 
-    private boolean check(){
-        if (mBinding.myVlBankVideo.check()){
+    private boolean check() {
+        if (mBinding.myVlBankVideo.check()) {
             return false;
         }
 
-        if (mBinding.myVlCompanyVideo.check()){
+        if (mBinding.myVlCompanyVideo.check()) {
             return false;
         }
 
         // 资金划账授权书
-        if (TextUtils.isEmpty(mBinding.myIlAdvanceFundAmountPdf.check())){
+        if (TextUtils.isEmpty(mBinding.myIlAdvanceFundAmountPdf.check())) {
             return false;
         }
 
         // 面签照片
-        if (TextUtils.isEmpty(mBinding.myIlBankPhoto.check())){
+        if (TextUtils.isEmpty(mBinding.myIlBankPhoto.check())) {
             return false;
         }
 
@@ -432,10 +432,10 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
     }
 
 
-    private void interview(){
+    private void interview() {
         Map<String, Object> map = new HashMap<>();
 
-        if(TextUtils.isEmpty(code)){
+        if (TextUtils.isEmpty(code)) {
             return;
         }
 
@@ -461,7 +461,7 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
 
             @Override
             protected void onSuccess(CodeModel data, String SucMessage) {
-                UITipDialog.showSuccess(InterviewStartActivity.this,"上传成功", dialogInterface -> {
+                UITipDialog.showSuccess(InterviewStartActivity.this, "上传成功", dialogInterface -> {
                     finish();
                 });
             }

@@ -2,6 +2,7 @@ package com.cdkj.wzcd.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.cdkj.baselibrary.model.DataDictionary;
 import com.cdkj.wzcd.R;
@@ -50,18 +51,24 @@ public class DataTransferAdapter extends BaseQuickAdapter<DataTransferModel, Bas
         mBinding.myIlTo.setText(NodeHelper.getNameOnTheCode(item.getToNodeCode()));
         if (isGps) {
             mBinding.myIlName.setText(item.getUserName());
+            mBinding.llGps.setVisibility(View.VISIBLE);
+            mBinding.myIlApplyWiredCount.setText(item.getApplyWiredCount());//gps有限个数
+            mBinding.myIlApplyWirelessCount.setText(item.getApplyWirelessCount());//gps无线个数
 
         } else {
             mBinding.myIlName.setText(item.getCustomerName());
+            mBinding.llGps.setVisibility(View.GONE);
         }
         mBinding.myIlCompany.setText(DataDictionaryHelper.getValueOnTheKey(item.getLogisticsCompany(), mCompany));
         mBinding.myIlExpress.setText(item.getLogisticsCode());
-
-
         mBinding.myItemCblConfirm.setContent("", "");
         mBinding.myIlStatus.setText(getStatus(item));
 
-
+        mBinding.myIlSenderName.setText(item.getSenderName());
+        mBinding.myIlReceiverName.setText(item.getReceiverName());
+        mBinding.myIlTeamName.setText(item.getTeamName());
+        mBinding.myIlXinDai.setText(item.getSaleUserName());
+        mBinding.myIlNeiQin.setText(item.getInsideJobName());
     }
 
     private String getStatus(DataTransferModel item) {
@@ -71,10 +78,13 @@ public class DataTransferAdapter extends BaseQuickAdapter<DataTransferModel, Bas
 
             case "0":
 
-
                 mBinding.myItemCblConfirm.setRightTextAndListener("发件", view -> {
                     //发件
-                    SendActivity.open(mContext, item.getCode());
+                    if (isGps) {
+                        SendActivity.open(mContext, item.getCode(), true);
+                    } else {
+                        SendActivity.open(mContext, item.getCode());
+                    }
                 });
                 return "待发件";
 
@@ -82,7 +92,8 @@ public class DataTransferAdapter extends BaseQuickAdapter<DataTransferModel, Bas
 
                 mBinding.myItemCblConfirm.setRightTextAndListener("收件并审核", view -> {
                     //收件并审核
-                    SendAndExamineActivity.open(mContext, item.getCode());
+                    SendAndExamineActivity.open(mContext, item.getCode(), isGps);
+
                 });
                 return "已发件待收件";
 

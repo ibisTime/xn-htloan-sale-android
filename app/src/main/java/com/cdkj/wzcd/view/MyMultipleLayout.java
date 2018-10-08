@@ -48,6 +48,7 @@ public class MyMultipleLayout extends LinearLayout {
 
     private MyMultipleAdapter adapter;
     private List<MultipleModel> mList = new ArrayList<>();
+    private int position = -1;
 
     public MyMultipleLayout(Context context) {
         this(context, null);
@@ -83,7 +84,7 @@ public class MyMultipleLayout extends LinearLayout {
 
     }
 
-    public void build(Activity activity, int requestCode){
+    public void build(Activity activity, int requestCode) {
         mActivity = activity;
         mRequestCode = requestCode;
 
@@ -101,57 +102,67 @@ public class MyMultipleLayout extends LinearLayout {
             if (mList.size() > 0) {
 
                 List<LocalMedia> list = new ArrayList<>();
-                for (MultipleModel multipleModel : mList){
-                    if(!TextUtils.equals(multipleModel.getUrl(), ADD)){
+                for (MultipleModel multipleModel : mList) {
+                    if (!TextUtils.equals(multipleModel.getUrl(), ADD)) {
                         LocalMedia localMedia = new LocalMedia();
                         localMedia.setPath(MyCdConfig.QINIU_URL + multipleModel.getUrl());
                         list.add(localMedia);
                     }
-
                 }
 
                 // 预览图片 可自定长按保存路径
-                PictureSelector.create(mActivity).themeStyle(R.style.picture_default_style).openExternalPreview(position, list);
+                PictureSelector.create(mActivity).themeStyle(R.style.picture_default_style).openExternalPreview(position - 1, list);
             }
+        });
+
+        adapter.setOnItemChildClickListener((adapter, view, position) -> {
+            this.position = position;
+            ImageSelectActivity.launch(mActivity, mRequestCode, false);
+
         });
 
     }
 
-    public void addList(String url){
-        mList.add(new MultipleModel().setUrl(url));
+    public void addList(String url) {
+        if (position > 0) {
+            mList.set(position, new MultipleModel().setUrl(url));
+        } else {
+
+            mList.add(new MultipleModel().setUrl(url));
+        }
         adapter.notifyDataSetChanged();
     }
 
-    public void setListData(String url){
+    public void setListData(String url) {
 
         mList.clear();
         mList.add(new MultipleModel().setUrl(ADD));
 
-        for (String str : splitAsPicList(url)){
+        for (String str : splitAsPicList(url)) {
             mList.add(new MultipleModel().setUrl(str));
         }
 
         adapter.notifyDataSetChanged();
     }
 
-    public void setListDataByRequest(String url){
+    public void setListDataByRequest(String url) {
 
         mList.clear();
 
-        for (String str : splitAsPicList(url)){
+        for (String str : splitAsPicList(url)) {
             mList.add(new MultipleModel().setUrl(str).setCanEdit(false));
         }
 
         adapter.notifyDataSetChanged();
     }
 
-    public String getListData(){
+    public String getListData() {
         List<String> urlList = new ArrayList<>();
 
-        if (mList.size() > 0){
-            for (MultipleModel model : mList){
+        if (mList.size() > 0) {
+            for (MultipleModel model : mList) {
 
-                if (!TextUtils.equals(model.getUrl(), ADD)){
+                if (!TextUtils.equals(model.getUrl(), ADD)) {
 
                     urlList.add(model.getUrl());
 
@@ -166,16 +177,16 @@ public class MyMultipleLayout extends LinearLayout {
         return StringUtils.listToString(urlList, "||");
     }
 
-    public boolean check(){
+    public boolean check() {
         List<String> urlList = new ArrayList<>();
 
-        if (mList.size() == 0){
+        if (mList.size() == 0) {
             return true;
-        }else {
+        } else {
 
-            for (MultipleModel model : mList){
+            for (MultipleModel model : mList) {
 
-                if (!TextUtils.equals(model.getUrl(), ADD)){
+                if (!TextUtils.equals(model.getUrl(), ADD)) {
 
                     urlList.add(model.getUrl());
 
@@ -183,8 +194,8 @@ public class MyMultipleLayout extends LinearLayout {
 
             }
 
-            if (urlList.size() == 0){
-                ToastUtil.show(context, "请上传"+mBinding.tvTitle.getText().toString());
+            if (urlList.size() == 0) {
+                ToastUtil.show(context, "请上传" + mBinding.tvTitle.getText().toString());
                 return true;
             }
 
@@ -193,7 +204,7 @@ public class MyMultipleLayout extends LinearLayout {
         return false;
     }
 
-    public int getRequestCode(){
+    public int getRequestCode() {
         return mRequestCode;
     }
 

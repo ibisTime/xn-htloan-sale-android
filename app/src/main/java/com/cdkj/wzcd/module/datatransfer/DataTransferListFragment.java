@@ -101,7 +101,14 @@ public class DataTransferListFragment extends AbsRefreshListFragment<CllhListBea
             mAdapter = new DataTransferAdapter(listData, mCompany);
         }
 
-        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            DataTransferModel item = (DataTransferModel) adapter.getItem(position);
+            if (DATA_GPS.equals(dataType)) {
+                DataDetialsActivity.open(mActivity, item.getCode(), mCompany, true);
+            } else {
+                DataDetialsActivity.open(mActivity, item.getCode(), mCompany, false);
+            }
+
         });
         return mAdapter;
     }
@@ -122,14 +129,14 @@ public class DataTransferListFragment extends AbsRefreshListFragment<CllhListBea
 
             if (TextUtils.equals(dataType, DATA_SEND)) {
 //                map.put("userId", SPUtilHelper.getUserId());  //这个地方有问题  传userid   就看不到其他的数据了  不传就能看到所有的数据 了
-                statusList.add("0");
+//                statusList.add("0");//资料发件显示所有状态
                 ArrayList<String> typeList = new ArrayList<>();
                 typeList.add("1");
                 typeList.add("3");
                 map.put("typeList", typeList);
 
             } else if (TextUtils.equals(dataType, DATA_OTHER)) {
-                map.put("receiver", "0");
+//                map.put("receiver", "0");
                 statusList.add("1");
                 statusList.add("2");
                 statusList.add("3");
@@ -141,7 +148,10 @@ public class DataTransferListFragment extends AbsRefreshListFragment<CllhListBea
                 statusList.add("3");
             }
 
-            map.put("statusList", statusList);
+            if (!TextUtils.equals(dataType, DATA_SEND)) {
+                map.put("statusList", statusList);
+
+            }
             map.put("start", pageIndex + "");
             map.put("limit", limit + "");
 

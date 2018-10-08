@@ -48,17 +48,17 @@ public class MyMultipleAdapter extends BaseQuickAdapter<MultipleModel, BaseViewH
         mBinding = DataBindingUtil.bind(helper.itemView);
 
 
-        if (TextUtils.equals(item.getUrl(), MyMultipleLayout.ADD)){
+        if (TextUtils.equals(item.getUrl(), MyMultipleLayout.ADD)) {
 
             mBinding.llDel.setVisibility(View.GONE);
             mBinding.flImg.setOnClickListener(view -> {
                 mOnAddPicClickListener.onAddPicClick();
             });
 
-        }else {
+        } else {
             ImgUtils.loadQiniuImg(mContext, item.getUrl(), mBinding.ivImg);
 
-            if (item.isCanEdit()){
+            if (item.isCanEdit()) {
                 mBinding.ivHint.setImageResource(R.mipmap.modifi);
                 mBinding.tvHint.setText("点击修改");
                 mBinding.tvHint.setTextColor(ContextCompat.getColor(mContext, R.color.white));
@@ -73,13 +73,14 @@ public class MyMultipleAdapter extends BaseQuickAdapter<MultipleModel, BaseViewH
                         notifyItemRangeChanged(index, getData().size());
                     }
                 });
-            }else {
+
+                helper.addOnClickListener(mBinding.llHint.getId());
+
+            } else {
                 mBinding.llDel.setVisibility(View.GONE);
                 mBinding.llHint.setVisibility(View.GONE);
             }
 
         }
-
-
     }
 }

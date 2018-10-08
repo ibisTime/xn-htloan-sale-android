@@ -43,11 +43,13 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
 
     private List<DataFileModel> sendFileList = new ArrayList<>();
     private DataFileAdapter sendFileAdapter;
+    private boolean isGps;
 
-    public static void open(Context context, String code) {
+    public static void open(Context context, String code, boolean isGps) {
         if (context != null) {
             Intent intent = new Intent(context, SendAndExamineActivity.class);
             intent.putExtra(DATA_SIGN, code);
+            intent.putExtra("isGps", isGps);
             context.startActivity(intent);
         }
 
@@ -64,18 +66,22 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
     public void afterCreate(Bundle savedInstanceState) {
         mBaseBinding.titleView.setMidTitle("收件");
 
-        if (getIntent()==null)
+        if (getIntent() == null)
             return;
 
         code = getIntent().getStringExtra(DATA_SIGN);
+        isGps = getIntent().getBooleanExtra("isGps", false);
 
+        if (isGps) {
+            mBinding.llGps.setVisibility(View.VISIBLE);
+        }
         initAdapter();
         initListener();
 
         getData();
     }
 
-    private void initAdapter(){
+    private void initAdapter() {
         refFileAdapter = new DataFileAdapter(refFileList);
         mBinding.rvRefFile.setLayoutManager(getLinearLayoutManager(false));
         mBinding.rvRefFile.setAdapter(refFileAdapter);
@@ -95,7 +101,7 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
         });
     }
 
-    public void getData(){
+    public void getData() {
         Map<String, String> map = new HashMap<>();
 
         map.put("code", code);
@@ -121,33 +127,42 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
     }
 
     private void setView(DataTransferModel data) {
+
+        DataTransferModel.GpsApply gpsApply = data.getGpsApply();
+        if (isGps) {
+            mBinding.myNlTeam.setText(data.getTeamName());
+            mBinding.myNlApplyName.setText(gpsApply == null ? "" : gpsApply.getApplyUserName());//申请人姓名
+            mBinding.myNlApplyRole.setText(gpsApply == null ? "" : gpsApply.getUserRole());//申请人角色
+            mBinding.myNlCarNumber.setText(gpsApply == null ? "" : data.getGpsApply().getCarFrameNo());//车架号
+        }
+
         mBinding.myNlName.setText(data.getUserName());
         mBinding.myNlCode.setText(data.getBizCode());
         mBinding.myNlNodeSend.setText(NodeHelper.getNameOnTheCode(data.getFromNodeCode()));
         mBinding.myNlNodeRe.setText(NodeHelper.getNameOnTheCode(data.getToNodeCode()));
 
-        if (!TextUtils.isEmpty(data.getRefFileList())){
+        if (!TextUtils.isEmpty(data.getRefFileList())) {
             mBinding.llRefFile.setVisibility(View.VISIBLE);
             setReFileListData(data.getRefFileList());
-        }else {
+        } else {
             mBinding.llRefFile.setVisibility(View.GONE);
         }
 
-        if (!TextUtils.isEmpty(data.getSendFileList())){
+        if (!TextUtils.isEmpty(data.getSendFileList())) {
             mBinding.llSendFile.setVisibility(View.VISIBLE);
 
             setSendFileListData(data.getSendFileList());
-        }else {
+        } else {
             mBinding.llSendFile.setVisibility(View.GONE);
         }
 
-        DataDictionaryHelper.getValueOnTheKeyRequest(this,DataDictionaryHelper.send_type, data.getSendType(),data1 -> {
+        DataDictionaryHelper.getValueOnTheKeyRequest(this, DataDictionaryHelper.send_type, data.getSendType(), data1 -> {
             mBinding.myNlSendType.setText(data1.getDvalue());
 
-            if (TextUtils.equals(data1.getDvalue(), "快递")){
+            if (TextUtils.equals(data1.getDvalue(), "快递")) {
                 mBinding.llLogistics.setVisibility(View.VISIBLE);
 
-                DataDictionaryHelper.getValueOnTheKeyRequest(this,DataDictionaryHelper.kd_company, data.getLogisticsCompany(),data2 -> {
+                DataDictionaryHelper.getValueOnTheKeyRequest(this, DataDictionaryHelper.kd_company, data.getLogisticsCompany(), data2 -> {
                     mBinding.myNlLogisticsCompany.setText(data2.getDvalue());
                 });
 
@@ -159,13 +174,13 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
         mBinding.myNlSendDatetime.setText(DateUtil.formatStringData(data.getSendDatetime(), DateUtil.DEFAULT_DATE_FMT));
     }
 
-    private void setReFileListData(String reFile){
+    private void setReFileListData(String reFile) {
 
         String[] reFileStr = reFile.split(",");
 
         List<DataFileModel> list = new ArrayList<>();
 
-        for (String file : reFileStr){
+        for (String file : reFileStr) {
             DataFileModel model = new DataFileModel();
             model.setFile(file);
             model.setChoice(false);
@@ -176,13 +191,13 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
         refFileAdapter.notifyDataSetChanged();
     }
 
-    private void setSendFileListData(String sendFile){
+    private void setSendFileListData(String sendFile) {
 
         String[] sendFileStr = sendFile.split(",");
 
         List<DataFileModel> list = new ArrayList<>();
 
-        for (String file : sendFileStr){
+        for (String file : sendFileStr) {
             DataFileModel model = new DataFileModel();
             model.setFile(file);
             model.setChoice(false);
@@ -205,8 +220,8 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
         map.put("code", code);
         map.put("operator", SPUtilHelper.getUserId());
         map.put("remark", mBinding.myElSendNote.getText());
-
-        Call call= RetrofitUtils.getBaseAPiService().successRequest("632151", StringUtils.getJsonToString(map));
+        map.put("receiver", SPUtilHelper.getUserId());
+        Call call = RetrofitUtils.getBaseAPiService().successRequest("632151", StringUtils.getJsonToString(map));
 
         addCall(call);
 
@@ -243,7 +258,7 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
         map.put("operator", SPUtilHelper.getUserId());
         map.put("remark", mBinding.myElSendNote.getText());
 
-        Call call= RetrofitUtils.getBaseAPiService().successRequest("632152", StringUtils.getJsonToString(map));
+        Call call = RetrofitUtils.getBaseAPiService().successRequest("632152", StringUtils.getJsonToString(map));
 
         addCall(call);
 

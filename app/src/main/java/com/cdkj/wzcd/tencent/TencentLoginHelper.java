@@ -59,7 +59,9 @@ public class TencentLoginHelper implements ILiveLoginManager.TILVBStatusListener
             @Override
             protected void onSuccess(TencentSignModel data, String SucMessage) {
 
-                loginTencent(data.getSign());
+//                loginTencent(data.getSign());
+                //这里放开
+                loginTencent(MyCdConfig.User_Sig);
             }
 
 

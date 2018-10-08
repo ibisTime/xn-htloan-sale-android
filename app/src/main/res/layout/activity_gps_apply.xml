@@ -4,36 +4,95 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
-        android:background="@color/gray_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/gray_bg"
         android:orientation="vertical">
 
-        <com.cdkj.wzcd.view.MyEditLayout
-            android:id="@+id/myEl_number"
-            app:txt_input_title="申领个数"
-            app:inputType="phone"
-            app:txt_input_hint="请输入申领个数"
+        <!--<com.cdkj.wzcd.view.MySelectLayout-->
+        <!--android:id="@+id/mySl_gpsType"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:txt_select_title="*GPS类型">-->
+
+        <!--</com.cdkj.wzcd.view.MySelectLayout>-->
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_mateUser"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:img_normal_right="@drawable/more_right"
+            app:txt_normal_title="匹配客户">
+
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_root"
+            style="@style/style_my_item_root"
+            android:visibility="gone">
+
+            <com.cdkj.wzcd.view.item.MyItemNormalLayout
+                android:id="@+id/myItemNl_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_item_normal_title="姓\u3000名:">
+
+            </com.cdkj.wzcd.view.item.MyItemNormalLayout>
+
+            <com.cdkj.wzcd.view.item.MyItemNormalLayout
+                android:id="@+id/myItemNl_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_item_normal_title="手机号:">
+
+            </com.cdkj.wzcd.view.item.MyItemNormalLayout>
+
+            <com.cdkj.wzcd.view.item.MyItemNormalLayout
+                android:id="@+id/myItemNl_carNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_item_normal_title="车架号:">
+
+            </com.cdkj.wzcd.view.item.MyItemNormalLayout>
+
+
+        </LinearLayout>
+
+        <com.cdkj.wzcd.view.MyEditLayout
+            android:id="@+id/myEl_you_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:inputType="id"
+            app:txt_input_hint="请输入申领有线个数"
+            app:txt_input_title="*申领有线个数">
+
+        </com.cdkj.wzcd.view.MyEditLayout>
+
+        <com.cdkj.wzcd.view.MyEditLayout
+            android:id="@+id/myEl_wu_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:inputType="id"
+            app:txt_input_hint="请输入申领无线个数"
+            app:txt_input_title="*申领无线个数">
 
         </com.cdkj.wzcd.view.MyEditLayout>
 
         <com.cdkj.wzcd.view.MyEditLayout
             android:id="@+id/myEl_explain"
-            app:txt_input_title="申领说明"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:inputType="text"
             app:txt_input_hint="请输入申领说明"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            app:txt_input_title="*申领说明">
 
         </com.cdkj.wzcd.view.MyEditLayout>
 
         <com.cdkj.wzcd.view.MyConfirmBtn
             android:id="@+id/myCb_confirm"
-            app:txt_confirm_content="提交"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:txt_confirm_content="提交">
 
         </com.cdkj.wzcd.view.MyConfirmBtn>
     </LinearLayout>

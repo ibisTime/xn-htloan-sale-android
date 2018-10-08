@@ -83,21 +83,21 @@ public class MyImageLayout extends LinearLayout {
 
     private void init(Context context) {
         this.context = context;
-        mBinding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.layout_my_image, this, true);
+        mBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.layout_my_image, this, true);
 
         initListener();
     }
 
-    public void setActivity(Activity activity, int requestCode, int rightRequestCode){
+    public void setActivity(Activity activity, int requestCode, int rightRequestCode) {
         mActivity = activity;
         mRequestCode = requestCode;
         mRightRequestCode = rightRequestCode;
     }
 
     private void initListener() {
-        mBinding.flImg.setOnClickListener(view -> {
+        mBinding.ivImg.setOnClickListener(view -> {
 
-            if (TextUtils.isEmpty(FlImgUrl)){
+            if (TextUtils.isEmpty(FlImgUrl)) {
 
                 if (mActivity == null)
                     return;
@@ -105,7 +105,7 @@ public class MyImageLayout extends LinearLayout {
 
                 ImageSelectActivity.launch(mActivity, mRequestCode, false);
 
-            }else {
+            } else {
 
                 List<LocalMedia> list = new ArrayList<>();
                 LocalMedia localMedia = new LocalMedia();
@@ -118,9 +118,16 @@ public class MyImageLayout extends LinearLayout {
 
         });
 
-        mBinding.flImgRight.setOnClickListener(view -> {
+        mBinding.llHint.setOnClickListener(view -> {
+            if (mActivity == null)
+                return;
 
-            if (TextUtils.isEmpty(FlImgRightUrl)){
+            ImageSelectActivity.launch(mActivity, mRequestCode, false);
+        });
+
+        mBinding.ivImgRight.setOnClickListener(view -> {
+
+            if (TextUtils.isEmpty(FlImgRightUrl)) {
 
                 if (mActivity == null)
                     return;
@@ -128,57 +135,65 @@ public class MyImageLayout extends LinearLayout {
 
                 ImageSelectActivity.launch(mActivity, mRightRequestCode, false);
 
-            }else {
+            } else {
 
                 List<LocalMedia> list = new ArrayList<>();
                 LocalMedia localMedia = new LocalMedia();
                 localMedia.setPath(MyCdConfig.QINIU_URL + FlImgUrl);
                 list.add(localMedia);
                 // 预览图片 可自定长按保存路径
-                PictureSelector.create(mActivity).themeStyle(R.style.picture_default_style).openExternalPreview(0, list);
+                PictureSelector.create(mActivity)
+                        .themeStyle(R.style.picture_default_style)
+                        .openExternalPreview(0, list);
 
             }
+        });
 
+        mBinding.llHintRight.setOnClickListener(view -> {
+            if (mActivity == null)
+                return;
+
+            ImageSelectActivity.launch(mActivity, mRightRequestCode, false);
         });
     }
 
-    public int getRequestCode(){
+    public int getRequestCode() {
         return mRequestCode;
     }
 
-    public int getRightRequestCode(){
+    public int getRightRequestCode() {
         return mRightRequestCode;
     }
 
-    public String check(){
-        if (TextUtils.isEmpty(FlImgUrl)){
-            ToastUtil.show(context, "请上传"+mBinding.tvHint.getHint().toString());
+    public String check() {
+        if (TextUtils.isEmpty(FlImgUrl)) {
+            ToastUtil.show(context, "请上传" + mBinding.tvHint.getHint().toString());
             return null;
         }
 
         return FlImgUrl;
     }
 
-    public String getFlImgUrl(){
+    public String getFlImgUrl() {
 
         return FlImgUrl;
     }
 
-    public String checkRight(){
-        if (TextUtils.isEmpty(FlImgRightUrl)){
-            ToastUtil.show(context, "请上传"+mBinding.tvHintRight.getHint().toString());
+    public String checkRight() {
+        if (TextUtils.isEmpty(FlImgRightUrl)) {
+            ToastUtil.show(context, "请上传" + mBinding.tvHintRight.getHint().toString());
             return null;
         }
 
         return FlImgRightUrl;
     }
 
-    public String getFlImgRightUrl(){
+    public String getFlImgRightUrl() {
 
         return FlImgRightUrl;
     }
 
-    public void setFlImg(String url){
+    public void setFlImg(String url) {
         if (TextUtils.isEmpty(url))
             return;
 
@@ -190,12 +205,12 @@ public class MyImageLayout extends LinearLayout {
         mBinding.tvHint.setTextColor(ContextCompat.getColor(mActivity, R.color.white));
     }
 
-    public ImageView getFlImgImageView(){
+    public ImageView getFlImgImageView() {
         return mBinding.ivImg;
     }
 
 
-    public void setFlImgRight(String url){
+    public void setFlImgRight(String url) {
         if (TextUtils.isEmpty(url))
             return;
 
@@ -207,16 +222,17 @@ public class MyImageLayout extends LinearLayout {
         mBinding.tvHintRight.setTextColor(ContextCompat.getColor(mActivity, R.color.white));
     }
 
-    public ImageView getFlImgRightImageView(){
+    public ImageView getFlImgRightImageView() {
         return mBinding.ivImgRight;
     }
 
 
     /**
      * 加载图片并取消点击事件和隐藏View
+     *
      * @param url
      */
-    public void setFlImgByRequest(String url){
+    public void setFlImgByRequest(String url) {
 
         mBinding.llHint.setVisibility(GONE);
 
@@ -227,9 +243,10 @@ public class MyImageLayout extends LinearLayout {
 
     /**
      * 加载图片并取消点击事件和隐藏View
+     *
      * @param url
      */
-    public void setFlImgRightByRequest(String url){
+    public void setFlImgRightByRequest(String url) {
 
         mBinding.llHintRight.setVisibility(GONE);
 

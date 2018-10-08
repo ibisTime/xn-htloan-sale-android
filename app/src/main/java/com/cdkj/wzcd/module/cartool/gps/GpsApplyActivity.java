@@ -16,6 +16,11 @@ import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.databinding.ActivityGpsApplyBinding;
+import com.cdkj.wzcd.model.ZrdModel;
+import com.cdkj.wzcd.module.cartool.uservoid.ZrdListActivity;
+import com.lljjcoder.citylist.Toast.ToastUtils;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +30,7 @@ import retrofit2.Call;
 
 public class GpsApplyActivity extends AbsBaseLoadActivity {
     private ActivityGpsApplyBinding mBinding;
+    private ZrdModel zrdModel;
 
     public static void open(Context context) {
         if (context != null) {
@@ -47,30 +53,46 @@ public class GpsApplyActivity extends AbsBaseLoadActivity {
         initListener();
     }
 
+
     private void initListener() {
         mBinding.myCbConfirm.setOnConfirmListener(view -> {
-            if (check()){
+            if (check()) {
                 applyRequest();
             }
         });
+        mBinding.myNlMateUser.setOnClickListener(view -> {
+            ZrdListActivity.open(this);
+        });
+
     }
 
+
     private boolean check() {
-        // 银行
-        if (TextUtils.isEmpty(mBinding.myElNumber.getText())) {
+        // 申领个数
+        if (TextUtils.isEmpty(mBinding.myElYouNumber.getText())) {
+            ToastUtils.showShortToast(this, "请填写申领个数");
             return false;
         }
-
+        if (TextUtils.isEmpty(mBinding.myElWuNumber.getText())) {
+            ToastUtils.showShortToast(this, "请填写申领个数");
+            return false;
+        }
         return true;
     }
 
-    private void applyRequest(){
+    private void applyRequest() {
         Map<String, Object> map = new HashMap<>();
 
-        map.put("applyCount", mBinding.myElNumber.getText());
+        map.put("applyWiredCount", mBinding.myElYouNumber.getText());//有线个数
+        map.put("applyWirelessCount", mBinding.myElWuNumber.getText());//无线个数
         map.put("applyReason", mBinding.myElExplain.getText());
         map.put("applyUser", SPUtilHelper.getUserId());
-        map.put("type", "2");
+        map.put("type", "2");//(1 公司 2 个人
+        if (zrdModel != null) {
+            map.put("applyUsername", zrdModel.getApplyUserName());
+            map.put("mobile", zrdModel.getMobile());
+            map.put("carFrameNo", zrdModel.getCarFrameNo());
+        }
 
         Call call = RetrofitUtils.getBaseAPiService().codeRequest("632710", StringUtils.getJsonToString(map));
 
@@ -98,5 +120,18 @@ public class GpsApplyActivity extends AbsBaseLoadActivity {
                 disMissLoading();
             }
         });
+    }
+
+    @Subscribe
+    public void getZrdModel(ZrdModel zrdModel) {
+
+        if (zrdModel == null)
+            return;
+        this.zrdModel = zrdModel;
+        mBinding.llRoot.setVisibility(View.VISIBLE);
+        mBinding.myNlMateUser.setText(zrdModel.getCode());
+        mBinding.myItemNlName.setContent(zrdModel.getApplyUserName());
+        mBinding.myItemNlPhone.setContent(zrdModel.getMobile());
+        mBinding.myItemNlCarNumber.setContent(zrdModel.getCarFrameNo());
     }
 }

@@ -48,12 +48,12 @@ public class GpsListActivity extends AbsRefreshListActivity<GpsApplyModel> {
         mBaseBinding.titleView.setRightFraClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //申请作废
+                //申请
                 GpsApplyActivity.open(GpsListActivity.this);
             }
         });
 
-        initRefreshHelper(10);
+        initRefreshHelper(100);
     }
 
     @Override

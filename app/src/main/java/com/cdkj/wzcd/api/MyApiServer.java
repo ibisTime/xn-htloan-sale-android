@@ -5,6 +5,7 @@ import com.cdkj.baselibrary.api.BaseResponseModel;
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.model.DataDictionary;
 import com.cdkj.baselibrary.model.UserModel;
+import com.cdkj.wzcd.model.CLQDBean;
 import com.cdkj.wzcd.model.CreditModel;
 import com.cdkj.wzcd.model.DataTransferModel;
 import com.cdkj.wzcd.model.ExchangeBankModel;
@@ -272,6 +273,16 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseModel<ResponseInListModel<ZrdModel>>> getZrdList(@Field("code") String code, @Field("json") String json);
+  /**
+     * 获取材料清单
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseListModel<CLQDBean>> getCLQD(@Field("code") String code, @Field("json") String json);
 
 
 }
