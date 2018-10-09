@@ -14,6 +14,24 @@ public class GpsInstallModel implements Serializable {
     private String azDatetime;
     private String azUser;
     private String remark;
+    private String devPhotos;
+    private String azPhotos;
+
+    public String getDevPhotos() {
+        return devPhotos;
+    }
+
+    public void setDevPhotos(String devPhotos) {
+        this.devPhotos = devPhotos;
+    }
+
+    public String getAzPhotos() {
+        return azPhotos;
+    }
+
+    public void setAzPhotos(String azPhotos) {
+        this.azPhotos = azPhotos;
+    }
 
     public String getCode() {
         return code;

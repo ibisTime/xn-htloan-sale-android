@@ -85,7 +85,6 @@ public class GPSInstallListActivity extends AbsRefreshListActivity {
                 mRefreshHelper.onDefaultMRefresh(true);
             }).build();
 
-
             optionsPickerView.setPicker(typeDatas);
             optionsPickerView.setSelectOptions(selectFrist);
             optionsPickerView.show();

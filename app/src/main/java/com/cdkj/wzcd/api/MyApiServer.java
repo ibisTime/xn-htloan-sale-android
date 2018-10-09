@@ -9,6 +9,7 @@ import com.cdkj.wzcd.model.CLQDBean;
 import com.cdkj.wzcd.model.CreditModel;
 import com.cdkj.wzcd.model.DataTransferModel;
 import com.cdkj.wzcd.model.ExchangeBankModel;
+import com.cdkj.wzcd.model.FaceSignBean;
 import com.cdkj.wzcd.model.GpsApplyModel;
 import com.cdkj.wzcd.model.GpsModel;
 import com.cdkj.wzcd.model.LoanProductModel;
@@ -32,6 +33,7 @@ public interface MyApiServer {
 
     /**
      * 获取待办事项
+     *
      * @param code
      * @param json
      * @return
@@ -39,8 +41,10 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseModel<TodoModel>> getTodo(@Field("code") String code, @Field("json") String json);
- /**
+
+    /**
      * 获取腾讯用户签名
+     *
      * @param code
      * @param json
      * @return
@@ -126,7 +130,6 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseModel<NodeListModel>> getNode(@Field("code") String code, @Field("json") String json);
-
 
 
     //--------------------------------------------征信API--------------------------------------------
@@ -273,7 +276,8 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseModel<ResponseInListModel<ZrdModel>>> getZrdList(@Field("code") String code, @Field("json") String json);
-  /**
+
+    /**
      * 获取材料清单
      *
      * @param code
@@ -284,5 +288,14 @@ public interface MyApiServer {
     @POST("api")
     Call<BaseResponseListModel<CLQDBean>> getCLQD(@Field("code") String code, @Field("json") String json);
 
-
+    /**
+     * 获取面签详情
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<FaceSignBean>> getFaceSign(@Field("code") String code, @Field("json") String json);
 }

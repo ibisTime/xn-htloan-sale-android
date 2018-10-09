@@ -100,6 +100,11 @@ public final class PictureSelector {
             if (result == null) {
                 result = new ArrayList<>();
             }
+            for (int i = 0; i < result.size(); i++) {
+                if (!result.get(i).getPath().contains("/")) {
+                    result.get(i).setVideoUrl(true);
+                }
+            }
             return result;
         }
         return result;

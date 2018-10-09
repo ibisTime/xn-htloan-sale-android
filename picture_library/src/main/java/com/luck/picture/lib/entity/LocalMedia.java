@@ -27,6 +27,15 @@ public class LocalMedia implements Parcelable {
     private String pictureType;
     private int width;
     private int height;
+    private boolean isVideoUrl;
+
+    public boolean isVideoUrl() {
+        return isVideoUrl;
+    }
+
+    public void setVideoUrl(boolean videoUrl) {
+        isVideoUrl = videoUrl;
+    }
 
     public LocalMedia() {
 
@@ -202,6 +211,25 @@ public class LocalMedia implements Parcelable {
         this.compressed = in.readByte() != 0;
         this.width = in.readInt();
         this.height = in.readInt();
+    }
+
+    @Override
+    public String toString() {
+        return "LocalMedia{" +
+                "path='" + path + '\'' +
+                ", compressPath='" + compressPath + '\'' +
+                ", cutPath='" + cutPath + '\'' +
+                ", duration=" + duration +
+                ", isChecked=" + isChecked +
+                ", isCut=" + isCut +
+                ", compressed=" + compressed +
+                ", position=" + position +
+                ", num=" + num +
+                ", mimeType=" + mimeType +
+                ", pictureType='" + pictureType + '\'' +
+                ", width=" + width +
+                ", height=" + height +
+                '}';
     }
 
     public static final Parcelable.Creator<LocalMedia> CREATOR = new Parcelable.Creator<LocalMedia>() {

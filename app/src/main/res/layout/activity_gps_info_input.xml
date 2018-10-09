@@ -45,21 +45,7 @@
 
                 <View style="@style/style_split_line_horizontal_broad" />
 
-                <com.cdkj.wzcd.view.MyMultipleLayout
-                    android:id="@+id/myMl_img"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:title="设备图片">
 
-                </com.cdkj.wzcd.view.MyMultipleLayout>
-
-                <com.cdkj.wzcd.view.MyMultipleLayout
-                    android:id="@+id/myMl_add_img"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:title="安装图片">
-
-                </com.cdkj.wzcd.view.MyMultipleLayout>
 
                 <com.cdkj.wzcd.view.MyNormalLayout
                     android:layout_width="match_parent"

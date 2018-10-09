@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.cdkj.baselibrary.api.BaseResponseModel;
 import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.dialog.UITipDialog;
@@ -23,10 +24,13 @@ import com.cdkj.baselibrary.utils.QiNiuHelper;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.baselibrary.utils.ToastUtil;
 import com.cdkj.wzcd.R;
+import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.databinding.ActivityStartFaceViewBinding;
+import com.cdkj.wzcd.model.FaceSignBean;
 import com.cdkj.wzcd.tencent.TencentLoginHelper;
 import com.cdkj.wzcd.tencent.logininterface.TencentLoginInterface;
 import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import java.util.ArrayList;
@@ -59,6 +63,8 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
     private String bankVideo = "";
     private String otherVideo = "";
     private String companyVideo = "";
+
+    String isSend;//是保存还是发送   1发送  0保存
 
     private int vlYhCode = 1000;
     private int vlGsCode = 999;
@@ -101,6 +107,80 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
             return;
 
         code = getIntent().getStringExtra(DATA_SIGN);
+
+        getDetails();
+    }
+
+    /**
+     * 获取详情,获取之前有没没有保存过数据,有就展示出来
+     */
+    private void getDetails() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", code);
+        Call<BaseResponseModel<FaceSignBean>> faceSign = RetrofitUtils.createApi(MyApiServer.class).getFaceSign("632146", StringUtils.getJsonToString(map));
+        addCall(faceSign);
+
+        showLoadingDialog();
+        faceSign.enqueue(new BaseResponseModelCallBack<FaceSignBean>(this) {
+            @Override
+            protected void onSuccess(FaceSignBean data, String SucMessage) {
+                setView(data);
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+    }
+
+    private void setView(FaceSignBean data) {
+//        List<String> strings = StringUtils.splitAsPicList(data.getAdvanceFundAmountPdf());
+        mBinding.myIlAdvanceFundAmountPdf.setFlImg(data.getAdvanceFundAmountPdf());
+        mBinding.myIlBankPhoto.setFlImg(data.getBankPhoto());
+        mBinding.myIlCompanyContract.setFlImg(data.getCompanyContract());
+        mBinding.myIlBankContract.setFlImg(data.getBankContract());
+        mBinding.myIlInterviewOtherPdf.setFlImg(data.getInterviewOtherPdf());
+
+        List<String> bankVideoList = StringUtils.splitAsPicList(data.getBankVideo());
+        mBinding.myVlBankVideo.setList(listSwitchVideoList(bankVideoList));
+        List<String> companyVideoList = StringUtils.splitAsPicList(data.getCompanyVideo());
+        mBinding.myVlCompanyVideo.setList(listSwitchVideoList(companyVideoList));
+        List<String> otherVideoList = StringUtils.splitAsPicList(data.getOtherVideo());
+        mBinding.myVlOtherVideo.setList(listSwitchVideoList(otherVideoList));
+
+    }
+
+
+    private List<LocalMedia> listSwitchVideoList(List<String> list) {
+        if (list == null || list.size() == 0) {
+
+            return new ArrayList();
+        }
+
+        List<LocalMedia> lLocalMediaList = new ArrayList<>(list.size());
+        for (int i = 0; i < list.size(); i++) {
+            LocalMedia localMedia = new LocalMedia();
+            localMedia.setMimeType(PictureMimeType.ofVideo());
+
+            //image/jpeg
+            //video/mp4
+            String url = list.get(i);
+            if (url.endsWith(".mp4")) {
+                localMedia.setPictureType("video/mp4");
+                localMedia.setMimeType(PictureMimeType.ofVideo());
+                localMedia.setVideoUrl(true);
+            } else if (url.endsWith(".jpg")) {
+                localMedia.setPictureType("image/jpeg");
+                localMedia.setMimeType(PictureMimeType.ofImage());
+                localMedia.setVideoUrl(false);
+            }
+            localMedia.setVideoUrl(true);
+//            localMedia.setPath(MyCdConfig.QINIU_URL + url + "?vframe/png/offset/0");
+            localMedia.setPath(url);
+            lLocalMediaList.add(localMedia);
+        }
+        return lLocalMediaList;
     }
 
     @Override
@@ -131,14 +211,14 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
     private void initListener() {
 
         mBinding.myCbLoad.setOnConfirmListener(view -> {
-
+            isSend = "1";
             if (check()) {
                 upLoad(mBinding.myVlBankVideo.getList(), vlYhCode);
             }
         });
         mBinding.myCbLoad.setOnConfirmRightListener(view -> {
-           // upLoad(mBinding.myVlBankVideo.getList(), vlYhCode);
-
+            isSend = "0";
+            upLoad(mBinding.myVlBankVideo.getList(), vlYhCode);
         });
         mBinding.llPercent.setOnClickListener(view -> {
             // do nothing
@@ -146,20 +226,53 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
     }
 
     private void upLoad(List<LocalMedia> list, int which) {
-        List<String> urlList = new ArrayList<>();
+        //点击保存时的逻辑
+        if (list == null || list.size() == 0) {
+            if (which == vlYhCode) {
+                upLoad(mBinding.myVlCompanyVideo.getList(), vlGsCode);
+            } else if (which == vlGsCode) {
+                upLoad(mBinding.myVlOtherVideo.getList(), vlOtherCode);
+            } else if (which == vlOtherCode) {
+                interview();
+            }
+            return;
+        }
 
+        //点击上传时的逻辑
+        List<String> urlList = new ArrayList<>();
+        List<String> loadVideoUrl = new ArrayList<>();
         for (LocalMedia localMedia : list) {
-            urlList.add(localMedia.getPath());
+            if (localMedia.isVideoUrl()) {
+                loadVideoUrl.add(localMedia.getPath());
+            } else {
+                urlList.add(localMedia.getPath());
+            }
         }
 
         String title;
         if (which == vlYhCode) {
             title = "银行视频";
+            bankVideo = StringUtils.listToString(loadVideoUrl, "||");
         } else if (which == vlGsCode) {
             title = "公司视频";
+            companyVideo = StringUtils.listToString(loadVideoUrl, "||");
         } else {
             title = "其它视频";
+            otherVideo = StringUtils.listToString(loadVideoUrl, "||");
         }
+
+        //判断有没有可上传的视频
+        if (urlList == null || urlList.size() == 0) {
+            if (which == vlYhCode) {
+                upLoad(mBinding.myVlCompanyVideo.getList(), vlGsCode);
+            } else if (which == vlGsCode) {
+                upLoad(mBinding.myVlOtherVideo.getList(), vlOtherCode);
+            } else if (which == vlOtherCode) {
+                interview();
+            }
+            return;
+        }
+
 
         mQiNiuHelper.upLoadListVideo(urlList, new QiNiuHelper.UpLoadListFileListener() {
 
@@ -197,17 +310,28 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
 
                 if (which == vlYhCode) {
 
-                    bankVideo = StringUtils.listToString(result, "||");
+                    if (TextUtils.isEmpty(bankVideo)) {
+                        bankVideo = StringUtils.listToString(result, "||");
+                    } else {
+                        bankVideo += ("||" + StringUtils.listToString(result, "||"));
+                    }
+
                     upLoad(mBinding.myVlCompanyVideo.getList(), vlGsCode);
 
                 } else if (which == vlGsCode) {
-
-                    companyVideo = StringUtils.listToString(result, "||");
-                    upLoad(mBinding.myVlCompanyVideo.getList(), vlOtherCode);
+                    if (TextUtils.isEmpty(companyVideo)) {
+                        companyVideo = StringUtils.listToString(result, "||");
+                    } else {
+                        companyVideo += ("||" + StringUtils.listToString(result, "||"));
+                    }
+                    upLoad(mBinding.myVlOtherVideo.getList(), vlOtherCode);
 
                 } else {
-
-                    otherVideo = StringUtils.listToString(result, "||");
+                    if (TextUtils.isEmpty(otherVideo)) {
+                        otherVideo = StringUtils.listToString(result, "||");
+                    } else {
+                        otherVideo += ("||" + StringUtils.listToString(result, "||"));
+                    }
                     interview();
                 }
 
@@ -366,8 +490,11 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
                 if (requestCode == mBinding.myVlBankVideo.getRequestCode()) {
                     // 图片、视频、音频选择结果回调
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-
+//                    for (LocalMedia irem : selectList) {
+//                        LogUtil.E(irem.toString());
+//                    }
                     mBinding.myVlBankVideo.setList(selectList);
+                    // TODO: 2018/10/9
                 }
 
                 if (requestCode == mBinding.myVlCompanyVideo.getRequestCode()) {
@@ -440,6 +567,8 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
         }
 
         map.put("code", code);
+
+        map.put("isSend", isSend);
         map.put("operator", SPUtilHelper.getUserId());
         map.put("bankVideo", bankVideo);
         map.put("otherVideo", otherVideo);

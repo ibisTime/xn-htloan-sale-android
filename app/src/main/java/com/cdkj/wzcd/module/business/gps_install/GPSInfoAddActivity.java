@@ -12,7 +12,9 @@ import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.model.DataDictionary;
 import com.cdkj.baselibrary.nets.BaseResponseListCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
+import com.cdkj.baselibrary.utils.CameraHelper;
 import com.cdkj.baselibrary.utils.LogUtil;
+import com.cdkj.baselibrary.utils.QiNiuHelper;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.api.MyApiServer;
@@ -78,12 +80,15 @@ public class GPSInfoAddActivity extends AbsBaseLoadActivity {
             position = getIntent().getIntExtra("position", 0);
 
         }
-
+        init();
         initListener();
         getGpsRequest();
 
     }
-
+    private void init() {
+        mBinding.myMlDevPhotos.build(this, 1);
+        mBinding.myMlAzPhotos.build(this, 2);
+    }
 
     private void initListener() {
         mBinding.myNlDateTime.setOnClickListener(view -> {
@@ -101,6 +106,8 @@ public class GPSInfoAddActivity extends AbsBaseLoadActivity {
                     model.setAzUser(mBinding.myElUser.getText());
                     model.setGpsDevNo(mBinding.mySlCode.getDataValue());
                     model.setRemark(mBinding.myElRemark.getText());
+                    model.setDevPhotos(mBinding.myMlDevPhotos.getListData());
+                    model.setAzPhotos(mBinding.myMlAzPhotos.getListData());
 
 
                     // 发送数据
@@ -195,6 +202,37 @@ public class GPSInfoAddActivity extends AbsBaseLoadActivity {
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK || data == null) {
+            return;
+        }
+        String path = data.getStringExtra(CameraHelper.staticPath);
+        showLoadingDialog();
+        new QiNiuHelper(this).uploadSinglePic(new QiNiuHelper.QiNiuCallBack() {
+            @Override
+            public void onSuccess(String key) {
+
+
+                if (requestCode == mBinding.myMlDevPhotos.getRequestCode()) {
+                    mBinding.myMlDevPhotos.addList(key);
+                }
+                if (requestCode == mBinding.myMlAzPhotos.getRequestCode()) {
+                    mBinding.myMlAzPhotos.addList(key);
+                }
+
+                disMissLoading();
+
+            }
+
+            @Override
+            public void onFal(String info) {
+                disMissLoading();
+            }
+        }, path);
+    }
+
     private void setView(List<DataDictionary> dictionaryList) {
 
         for (DataDictionary dataDictionary : dictionaryList){
@@ -208,7 +246,8 @@ public class GPSInfoAddActivity extends AbsBaseLoadActivity {
         mBinding.myElUser.setText(model.getAzUser());
         mBinding.myElRemark.setText(model.getRemark());
 
-
+//        map.put("devPhotos", mBinding.myMlDevPhotos.getListData());//谁设备照片
+//        map.put("azPhotos", mBinding.myMlAzPhotos.getListData());//安装图片
     }
 
 

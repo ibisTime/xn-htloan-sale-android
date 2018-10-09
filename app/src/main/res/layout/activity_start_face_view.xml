@@ -17,7 +17,7 @@
 
                 <com.cdkj.wzcd.view.MyVideoLayout
                     android:id="@+id/myVl_bankVideo"
-                    app:title="银行视频"
+                    app:title="*银行视频"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -25,7 +25,7 @@
 
                 <com.cdkj.wzcd.view.MyVideoLayout
                     android:id="@+id/myVl_companyVideo"
-                    app:title="公司视频"
+                    app:title="*公司视频"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -41,7 +41,7 @@
 
                 <com.cdkj.wzcd.view.MyImageLayout
                     android:id="@+id/myIl_advanceFundAmountPdf"
-                    app:txt_image_title="资金划账授权书"
+                    app:txt_image_title="*资金划账授权书"
                     app:txt_image_hint="请上传资金划账授权书"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -50,7 +50,7 @@
 
                 <com.cdkj.wzcd.view.MyImageLayout
                     android:id="@+id/myIl_bankPhoto"
-                    app:txt_image_title="银行面签照片"
+                    app:txt_image_title="*银行面签照片"
                     app:txt_image_hint="请上传面签合同"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">

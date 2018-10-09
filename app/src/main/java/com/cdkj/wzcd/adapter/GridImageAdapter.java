@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.wzcd.R;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -141,6 +142,7 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.View
                     }
                 }
             });
+
             LocalMedia media = list.get(position);
             int mimeType = media.getMimeType();
             String path = "";
@@ -189,6 +191,16 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.View
                         .apply(options)
                         .into(viewHolder.mImg);
             }
+            /**
+             *说明是网络视频(就是他之前点击保存的视频)
+             */
+            if (media.isVideoUrl()) {
+                ImgUtils.loadQiniuImg(viewHolder.itemView.getContext(), path + "?vframe/png/offset/0", viewHolder.mImg);
+//                Glide.with(viewHolder.itemView.getContext())
+//                        .load(MyCdConfig.QINIU_URL + path + "?vframe/png/offset/0")
+//                        .into(viewHolder.mImg);
+            }
+
             //itemView 的点击事件
             if (mItemClickListener != null) {
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

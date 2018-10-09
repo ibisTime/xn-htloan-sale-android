@@ -66,6 +66,21 @@
                     app:txt_input_title="备注">
 
                 </com.cdkj.wzcd.view.MyEditLayout>
+                <com.cdkj.wzcd.view.MyMultipleLayout
+                    android:id="@+id/myMl_devPhotos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="设备图片">
+
+                </com.cdkj.wzcd.view.MyMultipleLayout>
+
+                <com.cdkj.wzcd.view.MyMultipleLayout
+                    android:id="@+id/myMl_azPhotos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="安装图片">
+
+                </com.cdkj.wzcd.view.MyMultipleLayout>
 
                 <com.cdkj.wzcd.view.MyConfirmBtn
                     android:id="@+id/myCb_confirm"

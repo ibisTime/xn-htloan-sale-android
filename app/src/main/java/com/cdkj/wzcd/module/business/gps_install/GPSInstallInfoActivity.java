@@ -75,16 +75,11 @@ public class GPSInstallInfoActivity extends AbsBaseLoadActivity {
         code = getIntent().getStringExtra(DATA_SIGN);
         getGPS();
 
-        init();
-
         initListener();
         initListAdapter();
     }
 
-    private void init() {
-        mBinding.myMlAddImg.build(this,1);
-        mBinding.myMlImg.build(this,2);
-    }
+
 
 
     private void initListener() {
@@ -211,6 +206,8 @@ public class GPSInstallInfoActivity extends AbsBaseLoadActivity {
         map.put("operator", SPUtilHelper.getUserId());
         map.put("gpsAzList", mList);
 
+
+
         Call call = RetrofitUtils.getBaseAPiService().codeRequest("632126", StringUtils.getJsonToString(map));
 
         addCall(call);
@@ -240,34 +237,5 @@ public class GPSInstallInfoActivity extends AbsBaseLoadActivity {
     }
 
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK || data == null) {
-            return;
-        }
-        String path = data.getStringExtra(CameraHelper.staticPath);
-        showLoadingDialog();
-        new QiNiuHelper(this).uploadSinglePic(new QiNiuHelper.QiNiuCallBack() {
-            @Override
-            public void onSuccess(String key) {
 
-
-                if (requestCode == mBinding.myMlAddImg.getRequestCode()){
-                    mBinding.myMlAddImg.addList(key);
-                }
-                if (requestCode == mBinding.myMlImg.getRequestCode()){
-                    mBinding.myMlImg.addList(key);
-                }
-
-                disMissLoading();
-
-            }
-
-            @Override
-            public void onFal(String info) {
-                disMissLoading();
-            }
-        }, path);
-    }
 }

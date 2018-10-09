@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
+import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.utils.ToastUtil;
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.adapter.GridImageAdapter;
@@ -62,7 +63,7 @@ public class MyVideoLayout extends LinearLayout {
 
     private void init(Context context) {
         this.context = context;
-        mBinding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.layout_my_video, this, true);
+        mBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.layout_my_video, this, true);
 
         initListener();
     }
@@ -81,7 +82,7 @@ public class MyVideoLayout extends LinearLayout {
 
     }
 
-    public void build(Activity activity, int maxSelectNum, int requestCode){
+    public void build(Activity activity, int maxSelectNum, int requestCode) {
         mActivity = activity;
         mRequestCode = requestCode;
 
@@ -107,7 +108,11 @@ public class MyVideoLayout extends LinearLayout {
                         break;
                     case 2:
                         // 预览视频
-                        PictureSelector.create(mActivity).externalPictureVideo(media.getPath());
+                        if (media.isVideoUrl()) {
+                            PictureSelector.create(mActivity).externalPictureVideo(MyCdConfig.QINIU_URL + media.getPath());
+                        } else {
+                            PictureSelector.create(mActivity).externalPictureVideo(media.getPath());
+                        }
                         break;
                     case 3:
                         // 预览音频
@@ -118,26 +123,26 @@ public class MyVideoLayout extends LinearLayout {
         });
     }
 
-    public void setList(List<LocalMedia> list){
+    public void setList(List<LocalMedia> list) {
         selectList = list;
         adapter.setList(selectList);
         adapter.notifyDataSetChanged();
     }
 
-    public List<LocalMedia> getList(){
-       return selectList;
+    public List<LocalMedia> getList() {
+        return selectList;
     }
 
-    public boolean check(){
-        if(selectList == null || selectList.size() == 0){
-            ToastUtil.show(context, "请选择"+mBinding.tvTitle.getText().toString());
+    public boolean check() {
+        if (selectList == null || selectList.size() == 0) {
+            ToastUtil.show(context, "请选择" + mBinding.tvTitle.getText().toString());
             return true;
         }
 
         return false;
     }
 
-    public int getRequestCode(){
+    public int getRequestCode() {
         return mRequestCode;
     }
 

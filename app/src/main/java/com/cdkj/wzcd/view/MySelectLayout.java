@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
 import com.cdkj.baselibrary.dialog.LoadingDialog;
+import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.model.DataDictionary;
 import com.cdkj.baselibrary.nets.BaseResponseListCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
@@ -116,9 +117,10 @@ public class MySelectLayout extends LinearLayout {
 
     /**
      * 设置布局内容，内容来自于详情或其他请求，此时布局不应相应点击时间
+     *
      * @param text
      */
-    public void setTextByRequest(String text){
+    public void setTextByRequest(String text) {
         // 隐藏更多
         mBinding.ivMore.setVisibility(GONE);
         // 设置不可弹出下拉
@@ -129,16 +131,16 @@ public class MySelectLayout extends LinearLayout {
         selectIndex = -2;
     }
 
-    public void setOnClickEnable(boolean onClickEnable){
+    public void setOnClickEnable(boolean onClickEnable) {
         isOnClickEnable = onClickEnable;
     }
 
-    public void setContentByKey(String key){
+    public void setContentByKey(String key) {
 
         int i = 0;
 
-        for(String str : mKeyList){
-            if (TextUtils.equals(str, key)){
+        for (String str : mKeyList) {
+            if (TextUtils.equals(str, key)) {
                 selectIndex = i;
             }
             i++;
@@ -149,12 +151,13 @@ public class MySelectLayout extends LinearLayout {
 
     /**
      * 设置通过请求获取数据
-     * @param activity 上下文
-     * @param requestType 请求类型（数据字典，系统参数）
-     * @param parentKey 请求数据key
+     *
+     * @param activity        上下文
+     * @param requestType     请求类型（数据字典，系统参数）
+     * @param parentKey       请求数据key
      * @param selectInterface 下拉框选择回调
      */
-    public void setData(Activity activity, int requestType, String parentKey, MySelectInterface selectInterface){
+    public void setData(Activity activity, int requestType, String parentKey, MySelectInterface selectInterface) {
         mActivity = activity;
         mParentKey = parentKey;
         mRequestType = requestType;
@@ -164,7 +167,7 @@ public class MySelectLayout extends LinearLayout {
         mIsRequest = true;
     }
 
-    public void setData(List<DataDictionary> data, MySelectInterface selectInterface){
+    public void setData(List<DataDictionary> data, MySelectInterface selectInterface) {
         mData = data;
         mySelectInterface = selectInterface;
 
@@ -189,9 +192,12 @@ public class MySelectLayout extends LinearLayout {
                     return;
 
                 getRequest();
-            }else {
-                if (mData == null)
-                return;
+            } else {
+                if (mData == null||mData.size()==0){
+                    UITipDialog.showFail(context, "暂无可选列表");
+                    return;
+                }
+
 
                 showSelect();
             }
@@ -218,7 +224,7 @@ public class MySelectLayout extends LinearLayout {
 
             @Override
             protected void onSuccess(List<DataDictionary> data, String SucMessage) {
-                if (data== null)
+                if (data == null)
                     return;
 
                 mData = data;
@@ -244,8 +250,9 @@ public class MySelectLayout extends LinearLayout {
             index++;
         }
 
-        if (index == 0)
+        if (index == 0) {
             return;
+        }
 
         new AlertDialog.Builder(context).setTitle("请选择").setSingleChoiceItems(
                 mValueList, selectIndex, (dialog, which) -> {
@@ -258,39 +265,39 @@ public class MySelectLayout extends LinearLayout {
                     mBinding.tvContent.setText(mValue);
 
                     if (mySelectInterface != null)
-                        mySelectInterface.onClick(dialog,which);
+                        mySelectInterface.onClick(dialog, which);
 
                     dialog.dismiss();
                 }).setNegativeButton("取消", null).show();
     }
 
-    public boolean check(){
-        if (selectIndex == -1){
-            ToastUtil.show(context, "请选择"+mBinding.tvTitle.getText());
+    public boolean check() {
+        if (selectIndex == -1) {
+            ToastUtil.show(context, "请选择" + mBinding.tvTitle.getText());
             return true;
         }
 
         return false;
     }
 
-    public String getDataKey(){
+    public String getDataKey() {
         return mKey;
     }
 
-    public String getDataValue(){
+    public String getDataValue() {
 
-        if (selectIndex == -1){
-            ToastUtil.show(context, "请选择"+mBinding.tvTitle.getText());
+        if (selectIndex == -1) {
+            ToastUtil.show(context, "请选择" + mBinding.tvTitle.getText());
             return null;
         }
 
         return mValue;
     }
 
-    public String getDataId(){
+    public String getDataId() {
 
-        if (selectIndex == -1){
-            ToastUtil.show(context, "请选择"+mBinding.tvTitle.getText());
+        if (selectIndex == -1) {
+            ToastUtil.show(context, "请选择" + mBinding.tvTitle.getText());
             return null;
         }
 
@@ -324,7 +331,7 @@ public class MySelectLayout extends LinearLayout {
         }
     }
 
-    private void clearCall(){
+    private void clearCall() {
         if (call != null)
             call.cancel();
     }
