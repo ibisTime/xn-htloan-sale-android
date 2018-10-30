@@ -73,6 +73,7 @@ public class MyApplyListFragment extends AbsRefreshListFragment {
 
         map.put("start", pageIndex + "");
         map.put("limit", limit + "");
+        map.put("userId", SPUtilHelper.getUserId());
         if (!UserHelper.isZHRY()) {
             map.put("saleUserId", SPUtilHelper.getUserId());
             map.put("teamCode", SPUtilHelper.getTeamCode());

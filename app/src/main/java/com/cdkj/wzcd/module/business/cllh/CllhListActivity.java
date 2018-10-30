@@ -81,7 +81,7 @@ public class CllhListActivity extends AbsRefreshListActivity<CllhListBean> {
             map.put("saleUserId", SPUtilHelper.getUserId());
             map.put("teamCode", SPUtilHelper.getTeamCode());
         }
-
+        map.put("userId", SPUtilHelper.getUserId());
         if (isShowDialog) showLoadingDialog();
 
         Call call = RetrofitUtils.createApi(MyApiServer.class).getNodeList("632148", StringUtils.getJsonToString(map));

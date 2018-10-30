@@ -138,6 +138,7 @@ public class CreditListFragment extends AbsRefreshListFragment {
             map.put("curNodeCodeList", curNodeCodeList);
             map.put("roleCode", SPUtilHelper.getRoleCode());
             map.put("teamCode", SPUtilHelper.getTeamCode());
+            map.put("userid", SPUtilHelper.getUserId());
             map.put("isPass", isPass);
             map.put("start", pageIndex + "");
             map.put("limit", limit + "");

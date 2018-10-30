@@ -29,6 +29,7 @@ public class DataTransferModel {
     private String fromNodeCode;
     private String toNodeCode;
     private String refFileList;
+    private String filelist;
     private String sendFileList;
     private String sendType;
     private String sendNote;
@@ -50,6 +51,14 @@ public class DataTransferModel {
     private String applyWirelessCount;//   无线
     private String saleUserName;//   信贷专员
     private String insideJobName;//   内勤专员
+
+    public String getFilelist() {
+        return filelist;
+    }
+
+    public void setFilelist(String filelist) {
+        this.filelist = filelist;
+    }
 
     public String getSaleUserName() {
         return saleUserName;
@@ -106,9 +115,6 @@ public class DataTransferModel {
     public void setUserRole(String userRole) {
         this.userRole = userRole;
     }
-
-
-
 
 
     public String getReceiverName() {
@@ -300,8 +306,8 @@ public class DataTransferModel {
         private String applyDatetime;
         private String applyReason;
         private String applyUser;
-        private double applyWiredCount;
-        private double applyWirelessCount;
+        private int applyWiredCount;
+        private int applyWirelessCount;
         private String code;
         private String companyCode;
         private String receiveDatetime;
@@ -312,6 +318,15 @@ public class DataTransferModel {
         private String carFrameNo;//车架号
         private String applyUserName;//申请人姓名
         private String userRole;//申请人角色
+        private String mobile;//手机号
+
+        public String getMobile() {
+            return mobile;
+        }
+
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
+        }
 
         public String getApplyUserName() {
             return applyUserName;
@@ -377,19 +392,19 @@ public class DataTransferModel {
             this.applyUser = applyUser;
         }
 
-        public double getApplyWiredCount() {
+        public int getApplyWiredCount() {
             return applyWiredCount;
         }
 
-        public void setApplyWiredCount(double applyWiredCount) {
+        public void setApplyWiredCount(int applyWiredCount) {
             this.applyWiredCount = applyWiredCount;
         }
 
-        public double getApplyWirelessCount() {
+        public int getApplyWirelessCount() {
             return applyWirelessCount;
         }
 
-        public void setApplyWirelessCount(double applyWirelessCount) {
+        public void setApplyWirelessCount(int applyWirelessCount) {
             this.applyWirelessCount = applyWirelessCount;
         }
 

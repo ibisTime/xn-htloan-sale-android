@@ -52,6 +52,8 @@ public class SendActivity extends AbsBaseLoadActivity {
     private String[] clqds;
     ArrayList<String> clqdList = new ArrayList<>();
     private Boolean isGps;
+    public List<CLQDBean> fileDatalist;//材料清单数据
+    String fileList = "";//材料清单入参
 
     public static void open(Context context, String code) {
         if (context != null) {
@@ -92,7 +94,7 @@ public class SendActivity extends AbsBaseLoadActivity {
         isGps = getIntent().getBooleanExtra("isGps", false);
 
         getData();
-        initAdapter();
+//        initAdapter();
 
         getCLQD();
 
@@ -108,17 +110,14 @@ public class SendActivity extends AbsBaseLoadActivity {
         addCall(clqd);
         showLoadingDialog();
         clqd.enqueue(new BaseResponseListCallBack<CLQDBean>(this) {
+
+
             @Override
             protected void onSuccess(List<CLQDBean> data, String SucMessage) {
                 if (data == null || data.size() == 0) {
                     return;
                 }
-//                clqds = new String[5];
-//                clqds[0]="条目1";
-//                clqds[1]="条目2";
-//                clqds[2]="条目3";
-//                clqds[3]="条目4";
-//                clqds[4]="条目5";
+                fileDatalist = data;
                 clqds = new String[data.size()];
                 for (int i = 0; i < data.size(); i++) {
                     clqds[i] = data.get(i).getName();
@@ -165,11 +164,15 @@ public class SendActivity extends AbsBaseLoadActivity {
         });
         alertBuilder.setPositiveButton("确定", (dialogInterface, i) -> {
             dialogInterface.dismiss();
+            fileList = "";
             String clqd = "";
             for (int j = 0; j < clqdList.size(); j++) {
+                CLQDBean clqdBean = fileDatalist.get(j);
                 clqd += clqdList.get(j);
+                fileList += clqdBean.getId();
                 if (j != clqdList.size() - 1) {
                     clqd += ",";
+                    fileList += ",";
                 }
             }
             mBinding.tvClqd.setText(clqd);
@@ -179,23 +182,23 @@ public class SendActivity extends AbsBaseLoadActivity {
     }
 
 
-    private void initAdapter() {
-        refFileAdapter = new DataFileAdapter(refFileList);
-        mBinding.rvRefFile.setLayoutManager(getLinearLayoutManager(false));
-        mBinding.rvRefFile.setAdapter(refFileAdapter);
-
-        sendFileAdapter = new DataFileChoiceAdapter(sendFileList);
-        sendFileAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-
-            DataFileModel model = sendFileAdapter.getItem(position);
-
-            model.setChoice(!model.isChoice());
-            sendFileAdapter.notifyItemChanged(position);
-
-        });
-        mBinding.rvSendFile.setLayoutManager(getLinearLayoutManager(false));
-        mBinding.rvSendFile.setAdapter(sendFileAdapter);
-    }
+//    private void initAdapter() {
+//        refFileAdapter = new DataFileAdapter(refFileList);
+//        mBinding.rvRefFile.setLayoutManager(getLinearLayoutManager(false));
+//        mBinding.rvRefFile.setAdapter(refFileAdapter);
+//
+//        sendFileAdapter = new DataFileChoiceAdapter(sendFileList);
+//        sendFileAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+//
+//            DataFileModel model = sendFileAdapter.getItem(position);
+//
+//            model.setChoice(!model.isChoice());
+//            sendFileAdapter.notifyItemChanged(position);
+//
+//        });
+//        mBinding.rvSendFile.setLayoutManager(getLinearLayoutManager(false));
+//        mBinding.rvSendFile.setAdapter(sendFileAdapter);
+//    }
 
     public void getData() {
         Map<String, String> map = new HashMap<>();
@@ -210,9 +213,7 @@ public class SendActivity extends AbsBaseLoadActivity {
         call.enqueue(new BaseResponseModelCallBack<DataTransferModel>(this) {
             @Override
             protected void onSuccess(DataTransferModel data, String SucMessage) {
-
                 setView(data);
-
             }
 
             @Override
@@ -232,7 +233,7 @@ public class SendActivity extends AbsBaseLoadActivity {
         }
 
 
-        mBinding.myNlName.setText(data.getUserName());
+        mBinding.myNlName.setText(data.getCustomerName());
         mBinding.myNlCode.setText(data.getBizCode());
 
         if (!TextUtils.isEmpty(data.getRefFileList())) {
@@ -379,7 +380,7 @@ public class SendActivity extends AbsBaseLoadActivity {
         map.put("sendType", mBinding.mySlWay.getDataKey());
         map.put("operator", SPUtilHelper.getUserId());
         map.put("sendDatetime", mBinding.myNlDateTime.getTag());
-        map.put("filelist", mBinding.tvClqd.getText());
+        map.put("filelist", fileList);
         map.put("senderName", SPUtilHelper.getUserId());//发件人
         if (mBinding.llSendFile.getVisibility() == View.VISIBLE) {
             map.put("sendFileList", getConfirmSendFile().substring(0, getConfirmSendFile().length() - 1));

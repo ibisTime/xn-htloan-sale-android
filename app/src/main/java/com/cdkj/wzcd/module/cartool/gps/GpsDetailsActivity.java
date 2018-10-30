@@ -89,6 +89,10 @@ public class GpsDetailsActivity extends AbsBaseLoadActivity {
         });
 
         mBinding.myNlNumber.setText(model.getApplyCount()+"个");
+        mBinding.myNlCustomerName.setText(model.getCustomerName());
+        mBinding.myNlMobile.setText(model.getMobile());
+        mBinding.myNlApplyWiredCount.setText(model.getApplyWiredCount()+"");
+        mBinding.myNlApplyWirelessCount.setText(model.getApplyWirelessCount()+"");
         mBinding.myNlReason.setText(model.getApplyReason());
 
     }

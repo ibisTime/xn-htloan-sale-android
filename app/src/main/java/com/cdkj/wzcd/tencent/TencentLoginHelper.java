@@ -37,7 +37,7 @@ public class TencentLoginHelper implements ILiveLoginManager.TILVBStatusListener
     /**
      * 获取腾讯签名
      */
-    public void login() {
+    public void login(String roomid) {
         if (context == null) {  //没有登录
             return;
         }
@@ -59,25 +59,43 @@ public class TencentLoginHelper implements ILiveLoginManager.TILVBStatusListener
             @Override
             protected void onSuccess(TencentSignModel data, String SucMessage) {
 
-//                loginTencent(data.getSign());
+
+//                getRoomId(data.getSign());
+                loginTencent(data.getSign(),roomid);
                 //这里放开
-                loginTencent(MyCdConfig.User_Sig);
+//                loginTencent(MyCdConfig.User_Sig);
             }
 
 
             @Override
             protected void onFinish() {
-
                 call.cancel();
             }
         });
     }
 
-    private void loginTencent(String userSig){
+    public void getRoomId(String sign) {
+//        RoomActivity.open(this, Integer.parseInt(roomId));
+        Call<BaseResponseModel<String>> roomId = RetrofitUtils.createApi(MyApiServer.class).getRoomId("632950","{}");
+
+        roomId.enqueue(new BaseResponseModelCallBack<String>(context) {
+            @Override
+            protected void onSuccess(String data, String SucMessage) {
+                loginTencent(sign,data);
+            }
+
+            @Override
+            protected void onFinish() {
+
+            }
+        });
+    }
+
+    private void loginTencent(String userSig,String roomId){
         ILiveLoginManager.getInstance().iLiveLogin(SPUtilHelper.getUserId(), userSig, new ILiveCallBack() {
             @Override
             public void onSuccess(Object data) {
-                loginInterface.onLoginSDKSuccess();
+                loginInterface.onLoginSDKSuccess(roomId);
             }
 
             @Override

@@ -5,6 +5,7 @@ import com.cdkj.baselibrary.api.BaseResponseModel;
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.model.DataDictionary;
 import com.cdkj.baselibrary.model.UserModel;
+import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.wzcd.model.CLQDBean;
 import com.cdkj.wzcd.model.CreditModel;
 import com.cdkj.wzcd.model.DataTransferModel;
@@ -20,10 +21,14 @@ import com.cdkj.wzcd.model.TencentSignModel;
 import com.cdkj.wzcd.model.TodoModel;
 import com.cdkj.wzcd.model.ZrdModel;
 
+import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.QueryMap;
 
 /**
  * Created by cdkj on 2018/5/29.
@@ -298,4 +303,33 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseModel<FaceSignBean>> getFaceSign(@Field("code") String code, @Field("json") String json);
+
+    /**
+     * 获取腾讯云录制视频
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @GET("common_access")
+    Call<BaseResponseModelCallBack<FaceSignBean>> getILiveVideoList(@QueryMap Map<String, String> map);
+
+    /**
+     * 获取房间id
+     *
+     * @param code
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<String>> getRoomId(@Field("code") String code, @Field("json") String json);
+
+    /**
+     * 获取房间id
+     *
+     * @param code
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<String>> getILiveVoide(@Field("code") String code, @Field("json") String json);
 }

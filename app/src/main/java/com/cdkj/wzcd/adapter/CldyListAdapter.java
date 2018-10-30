@@ -61,15 +61,14 @@ public class CldyListAdapter extends BaseQuickAdapter<NodeListModel, BaseViewHol
                 });
             }
 
-        }else if (UserHelper.isYWY()){
+        }else
+//            if (UserHelper.isYWY()){
             if (TextUtils.equals(item.getCurNodeCode(),"002_18")){ // 业务团队车辆抵押
                 mBinding.myItemCblConfirm.setRightTextAndListener("录入抵押信息", view -> {
                     CldyInputMessageActivity.open(mContext, item.getCode());
                 });
             }
-        }
-
-
+//        }
 
     }
 }

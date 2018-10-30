@@ -10,7 +10,7 @@ public interface TencentLoginInterface {
     void updateLoginState(boolean state);
 
     // 登录成功
-    void onLoginSDKSuccess();
+    void onLoginSDKSuccess(String roomId);
 
     // 登录失败
     void onLoginSDKFailed(String module, int errCode, String errMsg);

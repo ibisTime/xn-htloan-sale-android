@@ -195,7 +195,17 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.View
              *说明是网络视频(就是他之前点击保存的视频)
              */
             if (media.isVideoUrl()) {
-                ImgUtils.loadQiniuImg(viewHolder.itemView.getContext(), path + "?vframe/png/offset/0", viewHolder.mImg);
+                if (path.contains("http")) {
+                    //腾讯云视频
+                    Glide.with(viewHolder.itemView.getContext())
+                            .load(path)
+                            .into(viewHolder.mImg);
+                } else {
+                    //七牛视频
+                    ImgUtils.loadQiniuImg(viewHolder.itemView.getContext(), path + "?vframe/png/offset/0", viewHolder.mImg);
+
+                }
+
 //                Glide.with(viewHolder.itemView.getContext())
 //                        .load(MyCdConfig.QINIU_URL + path + "?vframe/png/offset/0")
 //                        .into(viewHolder.mImg);

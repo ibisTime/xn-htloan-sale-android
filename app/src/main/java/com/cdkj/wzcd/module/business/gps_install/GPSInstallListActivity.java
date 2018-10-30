@@ -21,7 +21,6 @@ import com.cdkj.wzcd.databinding.HeadGpsCheckBinding;
 import com.cdkj.wzcd.model.NodeListModel;
 import com.cdkj.wzcd.model.PickerViewDataBean;
 import com.cdkj.wzcd.util.DataDictionaryHelper;
-import com.cdkj.wzcd.util.UserHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,10 +119,13 @@ public class GPSInstallListActivity extends AbsRefreshListActivity {
             map.put("curNodeCodeList", curNodeCodeList);
             map.put("start", pageIndex + "");
             map.put("limit", limit + "");
-            if (!UserHelper.isZHRY()) {
-                map.put("saleUserId", SPUtilHelper.getUserId());
-                map.put("teamCode", SPUtilHelper.getTeamCode());
-            }
+            map.put("roleCode", SPUtilHelper.getRoleCode());
+            map.put("teamCode", SPUtilHelper.getTeamCode());
+            map.put("userId", SPUtilHelper.getUserId());
+//            if (!UserHelper.isZHRY()) {
+//                map.put("saleUserId", SPUtilHelper.getUserId());
+//                map.put("teamCode", SPUtilHelper.getTeamCode());
+//            }
             if (selectFrist == 0) {
                 //未安装
                 map.put("isGpsAz", "0");

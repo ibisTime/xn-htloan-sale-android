@@ -17,7 +17,7 @@ public class CLQDBean {
      * updaterName : admin
      */
 
-    private double id;
+    private int id;
     private String name;
     private String no;
     private String number;
@@ -25,11 +25,11 @@ public class CLQDBean {
     private String updater;
     private String updaterName;
 
-    public double getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(double id) {
+    public void setId(int id) {
         this.id = id;
     }
 

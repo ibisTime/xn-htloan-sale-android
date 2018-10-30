@@ -135,6 +135,7 @@ public class InterviewListFragment extends AbsRefreshListFragment {
             map.put("curNodeCodeList", curNodeCodeList);
             map.put("limit", limit + "");
             map.put("start", pageIndex + "");
+            map.put("userId", SPUtilHelper.getUserId());
 
             if (!UserHelper.isZHRY()) {
 //                map.put("saleUserId", SPUtilHelper.getUserId());

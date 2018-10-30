@@ -16,6 +16,7 @@ import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.model.CodeModel;
+import com.cdkj.baselibrary.model.IsSuccessModes;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.CameraHelper;
@@ -27,11 +28,14 @@ import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.databinding.ActivityStartFaceViewBinding;
 import com.cdkj.wzcd.model.FaceSignBean;
+import com.cdkj.wzcd.model.ILiveVideoBean;
 import com.cdkj.wzcd.tencent.TencentLoginHelper;
 import com.cdkj.wzcd.tencent.logininterface.TencentLoginInterface;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -95,7 +99,8 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
             if (mBinding.llPercent.getVisibility() == View.VISIBLE)
                 return;
 
-            getSendRoomIdSms();
+//            getSendRoomIdSms();
+            getRoomId();
         });
 
         mQiNiuHelper = new QiNiuHelper(this);
@@ -136,11 +141,11 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
 
     private void setView(FaceSignBean data) {
 //        List<String> strings = StringUtils.splitAsPicList(data.getAdvanceFundAmountPdf());
-        mBinding.myIlAdvanceFundAmountPdf.setFlImg(data.getAdvanceFundAmountPdf());
-        mBinding.myIlBankPhoto.setFlImg(data.getBankPhoto());
-        mBinding.myIlCompanyContract.setFlImg(data.getCompanyContract());
-        mBinding.myIlBankContract.setFlImg(data.getBankContract());
-        mBinding.myIlInterviewOtherPdf.setFlImg(data.getInterviewOtherPdf());
+        mBinding.myMlAdvanceFundAmountPdf.setListData(data.getAdvanceFundAmountPdf());
+        mBinding.myMlBankPhoto.setListData(data.getBankPhoto());
+        mBinding.myMlCompanyContract.setListData(data.getCompanyContract());
+        mBinding.myMlBankContract.setListData(data.getBankContract());
+        mBinding.myMlInterviewOtherPdf.setListData(data.getInterviewOtherPdf());
 
         List<String> bankVideoList = StringUtils.splitAsPicList(data.getBankVideo());
         mBinding.myVlBankVideo.setList(listSwitchVideoList(bankVideoList));
@@ -174,6 +179,10 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
                 localMedia.setPictureType("image/jpeg");
                 localMedia.setMimeType(PictureMimeType.ofImage());
                 localMedia.setVideoUrl(false);
+            } else {
+                localMedia.setPictureType("video/mp4");
+                localMedia.setMimeType(PictureMimeType.ofVideo());
+                localMedia.setVideoUrl(true);
             }
             localMedia.setVideoUrl(true);
 //            localMedia.setPath(MyCdConfig.QINIU_URL + url + "?vframe/png/offset/0");
@@ -197,11 +206,11 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
     }
 
     private void initCustomView() {
-        mBinding.myIlAdvanceFundAmountPdf.setActivity(this, 1, -1);
-        mBinding.myIlBankPhoto.setActivity(this, 2, -1);
-        mBinding.myIlCompanyContract.setActivity(this, 3, -1);
-        mBinding.myIlBankContract.setActivity(this, 4, -1);
-        mBinding.myIlInterviewOtherPdf.setActivity(this, 5, -1);
+        mBinding.myMlAdvanceFundAmountPdf.build(this, 1);
+        mBinding.myMlBankPhoto.build(this, 2);
+        mBinding.myMlCompanyContract.build(this, 3);
+        mBinding.myMlBankContract.build(this, 4);
+        mBinding.myMlInterviewOtherPdf.build(this, 5);
 
         mBinding.myVlBankVideo.build(this, 10, vlYhCode);
         mBinding.myVlCompanyVideo.build(this, 10, vlGsCode);
@@ -248,7 +257,6 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
                 urlList.add(localMedia.getPath());
             }
         }
-
         String title;
         if (which == vlYhCode) {
             title = "银行视频";
@@ -350,38 +358,58 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
         });
     }
 
-    public void getSendRoomIdSms() {
+    public void getRoomId() {
+        Call<BaseResponseModel<String>> roomId = RetrofitUtils.createApi(MyApiServer.class).getRoomId("632950", "{}");
+        showLoadingDialog();
+        roomId.enqueue(new BaseResponseModelCallBack<String>(this) {
+            @Override
+            protected void onSuccess(String data, String SucMessage) {
+                getSendRoomIdSms(data);
+            }
 
-        mHelper = new TencentLoginHelper(InterviewStartActivity.this, InterviewStartActivity.this);
-        mHelper.login();
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+    }
 
-//        Map<String, String> map = RetrofitUtils.getNodeListMap();
-//
-//        map.put("code", code);
-//
-//        showLoadingDialog();
-//
-//        Call call = RetrofitUtils.getBaseAPiService().successRequest("632136", StringUtils.getJsonToString(map));
-//        addCall(call);
-//
-//        call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(this) {
-//            @Override
-//            protected void onSuccess(IsSuccessModes data, String SucMessage) {
-//                if (data == null)
-//                    return;
-//
-//                if (data.isSuccess()){
-//                    mHelper = new TencentLoginHelper(InterviewStartActivity.this, InterviewStartActivity.this);
-//                    mHelper.login();
-//                }
-//
-//            }
-//
-//            @Override
-//            protected void onFinish() {
-//                disMissLoading();
-//            }
-//        });
+    /**
+     * 给会员端发送 房间号
+     */
+    public void getSendRoomIdSms(String roomid) {
+
+//        mHelper = new TencentLoginHelper(InterviewStartActivity.this, InterviewStartActivity.this);
+//        mHelper.login();
+
+        Map<String, String> map = RetrofitUtils.getNodeListMap();
+
+        map.put("code", code);
+        map.put("roomId", roomid);
+
+        showLoadingDialog();
+
+        Call call = RetrofitUtils.getBaseAPiService().successRequest("632136", StringUtils.getJsonToString(map));
+        addCall(call);
+
+        call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(this) {
+            @Override
+            protected void onSuccess(IsSuccessModes data, String SucMessage) {
+                if (data == null)
+                    return;
+
+                if (data.isSuccess()) {
+                    mHelper = new TencentLoginHelper(InterviewStartActivity.this, InterviewStartActivity.this);
+                    mHelper.login(roomid);
+                }
+
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
 
     }
 
@@ -391,15 +419,17 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
     }
 
     @Override
-    public void onLoginSDKSuccess() {
+    public void onLoginSDKSuccess(String roomId) {
         if (checkPermission()) {
-            String roomId = code.substring(code.length() - 7, code.length());
-
-            try {
-                RoomActivity.open(this, Integer.parseInt(roomId));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//            Integer.parseInt(roomId)
+            RoomActivity.open(this, Integer.parseInt(roomId));
+//            getRoomId();
+//            String roomId = code.substring(code.length() - 7, code.length());
+//            try {
+//                RoomActivity.open(this, Integer.parseInt(roomId));
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
         }
     }
 
@@ -445,35 +475,34 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
 
             // 最小的视频回调请求码
             if (requestCode < vlOtherCode) {
-
                 String path = data.getStringExtra(CameraHelper.staticPath);
                 showLoadingDialog();
                 new QiNiuHelper(this).uploadSinglePic(new QiNiuHelper.QiNiuCallBack() {
                     @Override
                     public void onSuccess(String key) {
 
-                        if (requestCode == mBinding.myIlAdvanceFundAmountPdf.getRequestCode()) {
-                            mBinding.myIlAdvanceFundAmountPdf.setFlImg(key);
+                        if (requestCode == mBinding.myMlAdvanceFundAmountPdf.getRequestCode()) {
+                            mBinding.myMlAdvanceFundAmountPdf.addList(key);
                             disMissLoading();
                         }
 
-                        if (requestCode == mBinding.myIlBankPhoto.getRequestCode()) {
-                            mBinding.myIlBankPhoto.setFlImg(key);
+                        if (requestCode == mBinding.myMlBankPhoto.getRequestCode()) {
+                            mBinding.myMlBankPhoto.addList(key);
                             disMissLoading();
                         }
 
-                        if (requestCode == mBinding.myIlCompanyContract.getRequestCode()) {
-                            mBinding.myIlCompanyContract.setFlImg(key);
+                        if (requestCode == mBinding.myMlCompanyContract.getRequestCode()) {
+                            mBinding.myMlCompanyContract.addList(key);
                             disMissLoading();
                         }
 
-                        if (requestCode == mBinding.myIlBankContract.getRequestCode()) {
-                            mBinding.myIlBankContract.setFlImg(key);
+                        if (requestCode == mBinding.myMlBankContract.getRequestCode()) {
+                            mBinding.myMlBankContract.addList(key);
                             disMissLoading();
                         }
 
-                        if (requestCode == mBinding.myIlInterviewOtherPdf.getRequestCode()) {
-                            mBinding.myIlInterviewOtherPdf.setFlImg(key);
+                        if (requestCode == mBinding.myMlInterviewOtherPdf.getRequestCode()) {
+                            mBinding.myMlInterviewOtherPdf.addList(key);
                             disMissLoading();
                         }
 
@@ -490,11 +519,7 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
                 if (requestCode == mBinding.myVlBankVideo.getRequestCode()) {
                     // 图片、视频、音频选择结果回调
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-//                    for (LocalMedia irem : selectList) {
-//                        LogUtil.E(irem.toString());
-//                    }
                     mBinding.myVlBankVideo.setList(selectList);
-                    // TODO: 2018/10/9
                 }
 
                 if (requestCode == mBinding.myVlCompanyVideo.getRequestCode()) {
@@ -546,12 +571,12 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
         }
 
         // 资金划账授权书
-        if (TextUtils.isEmpty(mBinding.myIlAdvanceFundAmountPdf.check())) {
+        if (mBinding.myMlAdvanceFundAmountPdf.check()) {
             return false;
         }
 
         // 面签照片
-        if (TextUtils.isEmpty(mBinding.myIlBankPhoto.check())) {
+        if (mBinding.myMlBankPhoto.check()) {
             return false;
         }
 
@@ -574,11 +599,11 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
         map.put("otherVideo", otherVideo);
         map.put("companyVideo", companyVideo);
 
-        map.put("advanceFundAmountPdf", mBinding.myIlAdvanceFundAmountPdf.getFlImgUrl());
-        map.put("bankPhoto", mBinding.myIlBankPhoto.getFlImgUrl());
-        map.put("companyContract", mBinding.myIlCompanyContract.getFlImgUrl());
-        map.put("bankContract", mBinding.myIlBankContract.getFlImgUrl());
-        map.put("interviewOtherPdf", mBinding.myIlInterviewOtherPdf.getFlImgUrl());
+        map.put("advanceFundAmountPdf", mBinding.myMlAdvanceFundAmountPdf.getListData());
+        map.put("bankPhoto", mBinding.myMlBankPhoto.getListData());
+        map.put("companyContract", mBinding.myMlCompanyContract.getListData());
+        map.put("bankContract", mBinding.myMlBankContract.getListData());
+        map.put("interviewOtherPdf", mBinding.myMlInterviewOtherPdf.getListData());
 
         Call call = RetrofitUtils.getBaseAPiService().codeRequest("632123", StringUtils.getJsonToString(map));
 
@@ -606,5 +631,41 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
                 disMissLoading();
             }
         });
+    }
+
+    @Subscribe
+    public void iLiveVideo(ILiveVideoBean bean) {
+        if (bean == null || TextUtils.isEmpty(bean.getVideoUrl())) {
+            return;
+        }
+//        CommonDialog commonDialog = new CommonDialog(this).builder();
+//        commonDialog.setTitle("发现视频是否添加到银行面签");
+//        commonDialog.setPositiveBtn("确定", view -> {
+//
+//
+//            ArrayList<String> listEvent = new ArrayList<>();
+//            listEvent.add(bean.getVideoUrl());
+//            List<LocalMedia> localMedia = listSwitchVideoList(listEvent);
+//
+//            List<LocalMedia> list = mBinding.myVlBankVideo.getList();
+//            list.addAll(localMedia);
+//            mBinding.myVlBankVideo.setList(list);
+//        }).setNegativeBtn("取消", null).show();
+//
+//        HashMap<String, String> map = new HashMap<>();
+//        map.put("roomId", bean.getRoomId());
+//        Call<BaseResponseModel<String>> iLiveVoide = RetrofitUtils.createApi(MyApiServer.class).getILiveVoide("632951", StringUtils.getJsonToString(map));
+//        showLoadingDialog();
+//        iLiveVoide.enqueue(new BaseResponseModelCallBack<String>(this) {
+//            @Override
+//            protected void onSuccess(String data, String SucMessage) {
+//
+//            }
+//
+//            @Override
+//            protected void onFinish() {
+//                disMissLoading();
+//            }
+//        });
     }
 }

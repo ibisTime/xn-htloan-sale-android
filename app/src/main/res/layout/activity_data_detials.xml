@@ -79,6 +79,22 @@
                 android:visibility="gone">
 
                 <com.cdkj.wzcd.view.MyNormalLayout
+                    android:id="@+id/myNl_carNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:txt_normal_title="车架号">
+
+                </com.cdkj.wzcd.view.MyNormalLayout>
+
+                <com.cdkj.wzcd.view.MyNormalLayout
+                    android:id="@+id/myNl_mobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:txt_normal_title="手机号">
+
+                </com.cdkj.wzcd.view.MyNormalLayout>
+
+                <com.cdkj.wzcd.view.MyNormalLayout
                     android:id="@+id/myNl_applyWirelessCount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -229,6 +245,7 @@
                 app:txt_normal_title="发货时间">
 
             </com.cdkj.wzcd.view.MyNormalLayout>
+
             <com.cdkj.wzcd.view.MyNormalLayout
                 android:id="@+id/myNl_other"
                 android:layout_width="match_parent"

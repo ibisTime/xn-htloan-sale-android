@@ -16,6 +16,7 @@ import retrofit2.Retrofit;
 public class RetrofitUtils {
 
     private static Retrofit retrofitInstance = null;
+    private static Retrofit retrofitInstanceIlive = null;
 
     public static final int RELEASE = 0; //正式环境
     public static final int DEBUG = 1;//研发环境
@@ -42,6 +43,25 @@ public class RetrofitUtils {
         }
 
         return retrofitInstance;
+    }
+
+    /**
+     * 获取腾讯云Retrofit实例
+     *
+     * @return Retrofit
+     */
+    public static Retrofit getILiveInstance() {
+
+        if (retrofitInstanceIlive == null) {
+            retrofitInstanceIlive = new Retrofit.Builder()
+                    .baseUrl("http://fcgi.video.qcloud.com/")
+                    .client(OkHttpUtils.getInstance())
+                    .addConverterFactory(FastJsonConverter.create())
+//                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .build();
+        }
+
+        return retrofitInstanceIlive;
     }
 
     /**

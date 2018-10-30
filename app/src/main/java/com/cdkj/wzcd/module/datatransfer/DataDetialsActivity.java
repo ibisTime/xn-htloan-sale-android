@@ -7,20 +7,25 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.cdkj.baselibrary.api.BaseResponseListModel;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.model.DataDictionary;
+import com.cdkj.baselibrary.nets.BaseResponseListCallBack;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.wzcd.R;
+import com.cdkj.wzcd.adapter.DataFileAdapter;
 import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.databinding.ActivityDataDetialsBinding;
+import com.cdkj.wzcd.model.CLQDBean;
 import com.cdkj.wzcd.model.DataTransferModel;
 import com.cdkj.wzcd.util.DataDictionaryHelper;
 import com.cdkj.wzcd.util.NodeHelper;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +43,10 @@ public class DataDetialsActivity extends AbsBaseLoadActivity {
     private String code;
     private boolean isGps;
     private List<DataDictionary> mCompany;
+
+    private List<CLQDBean> refFileList = new ArrayList<>();
+    private List<CLQDBean> fileList;
+    private DataFileAdapter refFileAdapter;
 
     public static void open(Context context, String code, List<DataDictionary> company, boolean isGps) {
         if (context != null) {
@@ -71,17 +80,47 @@ public class DataDetialsActivity extends AbsBaseLoadActivity {
         }
         if (isGps) {
             mBinding.llGps.setVisibility(View.VISIBLE);
+        } else {
+            getCLQD();
+            initAdapter();
         }
     }
 
+    private void initAdapter() {
+        refFileAdapter = new DataFileAdapter(refFileList);
+        mBinding.rvRefFile.setLayoutManager(getLinearLayoutManager(false));
+        mBinding.rvRefFile.setAdapter(refFileAdapter);
+    }
+
+    /**
+     * 获取材料清单
+     */
+    private void getCLQD() {
+
+        Call<BaseResponseListModel<CLQDBean>> clqd = RetrofitUtils.createApi(MyApiServer.class).getCLQD("632217", "{}");
+        addCall(clqd);
+        showLoadingDialog();
+        clqd.enqueue(new BaseResponseListCallBack<CLQDBean>(this) {
+            @Override
+            protected void onSuccess(List<CLQDBean> data, String SucMessage) {
+                if (data == null || data.size() == 0) {
+                    return;
+                }
+                fileList = data;
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+    }
 
     public void getData() {
         Map<String, String> map = new HashMap<>();
 
         map.put("code", code);
-
         showLoadingDialog();
-
         Call call = RetrofitUtils.createApi(MyApiServer.class).getData("632156", StringUtils.getJsonToString(map));
         addCall(call);
 
@@ -107,13 +146,37 @@ public class DataDetialsActivity extends AbsBaseLoadActivity {
         mBinding.myNlSendUserName.setText(data.getSenderName());//发件人
         mBinding.myNlReceiveUserName.setText(data.getReceiverName());//收件人
 
-        if(isGps){
+        if (isGps) {
             mBinding.llGps.setVisibility(View.VISIBLE);
-            mBinding.myNlApplyWiredCount.setText(data.getApplyWiredCount());
-            mBinding.myNlApplyWirelessCount.setText(data.getApplyWirelessCount());
+            DataTransferModel.GpsApply gpsApply = data.getGpsApply();
+            mBinding.myNlApplyWiredCount.setText(gpsApply == null ? "" : gpsApply.getApplyWiredCount() + "");
+            mBinding.myNlApplyWirelessCount.setText(gpsApply == null ? "" : gpsApply.getApplyWirelessCount() + "");
+            mBinding.myNlCarNo.setText(gpsApply == null ? "" : gpsApply.getCarFrameNo());
+            mBinding.myNlMobile.setText(gpsApply == null ? "" : data.getGpsApply().getMobile());//手机号
+            mBinding.myNlName.setText(gpsApply.getCustomerName());
+            mBinding.myNlNodeSend.setVisibility(View.GONE);
+            mBinding.myNlNodeRe.setVisibility(View.GONE);
+        } else {
+            mBinding.myNlName.setText(data.getCustomerName());
+            mBinding.llRefFile.setVisibility(View.VISIBLE);
+            if (!TextUtils.isEmpty(data.getFilelist())) {
+                String[] split = data.getFilelist().split(",");
+                if (split != null && split.length > 0) {
+                    for (int i = 0; i < split.length; i++) {
+                        for (int j = 0; j < fileList.size(); j++) {
+                            if (TextUtils.equals(fileList.get(j).getId() + "", split[i])) {
+                                refFileList.add(fileList.get(j));
+                                break;
+                            }
+                        }
+                    }
+                    refFileAdapter.notifyDataSetChanged();
+                }
+            }
+
         }
 
-        mBinding.myNlName.setText(data.getUserName());
+
         mBinding.myNlCode.setText(data.getBizCode());
         if (TextUtils.equals("2", data.getSendType())) {
             mBinding.myNlSendType.setText("快递");

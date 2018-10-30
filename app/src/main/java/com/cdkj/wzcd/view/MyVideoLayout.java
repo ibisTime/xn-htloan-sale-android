@@ -109,7 +109,14 @@ public class MyVideoLayout extends LinearLayout {
                     case 2:
                         // 预览视频
                         if (media.isVideoUrl()) {
-                            PictureSelector.create(mActivity).externalPictureVideo(MyCdConfig.QINIU_URL + media.getPath());
+                            //网路视频  分为七牛视频和腾讯云视频
+                            if (media.getPath().contains("http")) {
+                                //腾讯云视频
+                                PictureSelector.create(mActivity).externalPictureVideo(media.getPath());
+                            } else {
+                                //七牛视频
+                                PictureSelector.create(mActivity).externalPictureVideo(MyCdConfig.QINIU_URL + media.getPath());
+                            }
                         } else {
                             PictureSelector.create(mActivity).externalPictureVideo(media.getPath());
                         }

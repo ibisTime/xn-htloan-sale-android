@@ -122,11 +122,8 @@ public class DataTransferListFragment extends AbsRefreshListFragment<CllhListBea
                 return;
 
             mCompany.addAll(data);
-
             Map<String, Object> map = new HashMap<>();
-
             List<String> statusList = new ArrayList<>();
-
             if (TextUtils.equals(dataType, DATA_SEND)) {
 //                map.put("userId", SPUtilHelper.getUserId());  //这个地方有问题  传userid   就看不到其他的数据了  不传就能看到所有的数据 了
 //                statusList.add("0");//资料发件显示所有状态
@@ -150,7 +147,6 @@ public class DataTransferListFragment extends AbsRefreshListFragment<CllhListBea
 
             if (!TextUtils.equals(dataType, DATA_SEND)) {
                 map.put("statusList", statusList);
-
             }
             map.put("start", pageIndex + "");
             map.put("limit", limit + "");
@@ -173,6 +169,4 @@ public class DataTransferListFragment extends AbsRefreshListFragment<CllhListBea
             });
         });
     }
-
-
 }

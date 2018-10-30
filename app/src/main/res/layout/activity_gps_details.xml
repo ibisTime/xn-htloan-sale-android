@@ -18,11 +18,38 @@
         </com.cdkj.wzcd.view.MyNormalLayout>
 
         <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_customerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_normal_title="客户姓名">
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_mobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_normal_title="手机号">
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyNormalLayout
             android:id="@+id/myNl_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:txt_normal_title="申请个数">
+        </com.cdkj.wzcd.view.MyNormalLayout>
 
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_applyWiredCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_normal_title="有线个数">
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_applyWirelessCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_normal_title="无线个数">
         </com.cdkj.wzcd.view.MyNormalLayout>
 
         <com.cdkj.wzcd.view.MyNormalLayout
@@ -37,6 +64,7 @@
             style="@style/style_split_line_horizontal_broad"/>
 
         <com.cdkj.wzcd.view.MyNormalLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:txt_normal_title="GPS列表">
@@ -44,6 +72,7 @@
         </com.cdkj.wzcd.view.MyNormalLayout>
 
         <android.support.v7.widget.RecyclerView
+            android:visibility="gone"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_width="match_parent"

@@ -92,6 +92,8 @@ public class GpsApplyActivity extends AbsBaseLoadActivity {
             map.put("applyUsername", zrdModel.getApplyUserName());
             map.put("mobile", zrdModel.getMobile());
             map.put("carFrameNo", zrdModel.getCarFrameNo());
+            map.put("budgetOrderCode", zrdModel.getCode());
+            map.put("customerName", zrdModel.getApplyUserName());
         }
 
         Call call = RetrofitUtils.getBaseAPiService().codeRequest("632710", StringUtils.getJsonToString(map));

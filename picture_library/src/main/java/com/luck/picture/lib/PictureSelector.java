@@ -101,6 +101,7 @@ public final class PictureSelector {
                 result = new ArrayList<>();
             }
             for (int i = 0; i < result.size(); i++) {
+                //这里增加了判断,如果返回结果没有路径  就说明是网络视频,将这个标记置为true  视频的我在这里别找了
                 if (!result.get(i).getPath().contains("/")) {
                     result.get(i).setVideoUrl(true);
                 }

@@ -50,10 +50,13 @@ public class DataTransferAdapter extends BaseQuickAdapter<DataTransferModel, Bas
         mBinding.myIlFrom.setText(NodeHelper.getNameOnTheCode(item.getFromNodeCode()));
         mBinding.myIlTo.setText(NodeHelper.getNameOnTheCode(item.getToNodeCode()));
         if (isGps) {
-            mBinding.myIlName.setText(item.getUserName());
+            mBinding.myIlFrom.setVisibility(View.GONE);
+            mBinding.myIlTo.setVisibility(View.GONE);
             mBinding.llGps.setVisibility(View.VISIBLE);
-            mBinding.myIlApplyWiredCount.setText(item.getApplyWiredCount());//gps有限个数
-            mBinding.myIlApplyWirelessCount.setText(item.getApplyWirelessCount());//gps无线个数
+            DataTransferModel.GpsApply gpsApply = item.getGpsApply();
+            mBinding.myIlName.setText(gpsApply == null ? "" : gpsApply.getCustomerName());
+            mBinding.myIlApplyWiredCount.setText(gpsApply == null ? "" : gpsApply.getApplyWiredCount() + "");//gps有限个数
+            mBinding.myIlApplyWirelessCount.setText(gpsApply == null ? "" : gpsApply.getApplyWirelessCount() + "");//gps无线个数
 
         } else {
             mBinding.myIlName.setText(item.getCustomerName());
@@ -73,19 +76,22 @@ public class DataTransferAdapter extends BaseQuickAdapter<DataTransferModel, Bas
 
     private String getStatus(DataTransferModel item) {
         // 状态(0 待发件 1已发件待收件 2已收件审核 3已收件待补件)
-
         switch (item.getStatus()) {
-
             case "0":
-
-                mBinding.myItemCblConfirm.setRightTextAndListener("发件", view -> {
-                    //发件
-                    if (isGps) {
-                        SendActivity.open(mContext, item.getCode(), true);
-                    } else {
+                //发件
+                if (!isGps) {
+//                    SendActivity.open(mContext, item.getCode(), true);
+                    mBinding.myItemCblConfirm.setRightTextAndListener("发件", view -> {
+                        //发件
                         SendActivity.open(mContext, item.getCode());
-                    }
-                });
+//                        if (isGps) {
+//                            SendActivity.open(mContext, item.getCode(), true);
+//                        } else {
+//                            SendActivity.open(mContext, item.getCode());
+//                        }
+                    });
+                }
+
                 return "待发件";
 
             case "1":
@@ -101,6 +107,16 @@ public class DataTransferAdapter extends BaseQuickAdapter<DataTransferModel, Bas
                 return "已收件审核";
 
             case "3":
+                if (!isGps) {
+                    mBinding.myItemCblConfirm.setRightTextAndListener("发件", view -> {
+                        //发件
+                        if (isGps) {
+                            SendActivity.open(mContext, item.getCode(), true);
+                        } else {
+                            SendActivity.open(mContext, item.getCode());
+                        }
+                    });
+                }
                 return "已收件待补件";
 
             default:

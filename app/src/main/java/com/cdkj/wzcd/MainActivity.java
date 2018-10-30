@@ -96,7 +96,6 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
     @Override
     public void afterCreate(Bundle savedInstanceState) {
 
-
         mLogoutHelper = new TencentLogoutHelper(this);
 
         initListener();
@@ -153,12 +152,20 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
                 mBinding.mySrCllh.setPointCount(data.getCarSettleTodo());//车辆落户;
                 mBinding.mySrCldy.setPointCount(data.getEntryMortgageTodo());//车辆抵押
                 mBinding.mySrZlcd.setPointCount(data.getLogisticsTodo());//资料传递
+
+                int sub = data.getCreditTodo() + data.getInterviewTodo() + data.getGpsInstallTodo() + data.getCarSettleTodo() + data.getEntryMortgageTodo() + data.getLogisticsTodo();
+                mBinding.tvRedPoint.setVisibility((sub > 0) ? View.VISIBLE : View.GONE);
+                if (sub > 99) {
+                    mBinding.tvRedPoint.setText("99+");
+                } else {
+                    mBinding.tvRedPoint.setText(sub + "");
+                }
+
             }
 
             @Override
             protected void onFinish() {
                 disMissLoading();
-
             }
         });
     }
@@ -261,8 +268,10 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
         } else if (TextUtils.equals(data.getRoleCode(), NQZY)) {// 内勤专员
             mBinding.tvRole.setText("[内勤专员]");
 
+
         } else {
-            mBinding.tvRole.setText("[其他]");
+            //与ios保持一致
+            mBinding.tvRole.setText(TextUtils.isEmpty(data.getPostName()) ? "[其他]" : "[" + data.getPostName() + "]");
         }
 
     }

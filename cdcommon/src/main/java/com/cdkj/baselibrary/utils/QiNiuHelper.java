@@ -20,6 +20,7 @@ import com.qiniu.android.storage.UploadOptions;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -469,7 +470,11 @@ public class QiNiuHelper {
 
         final UploadManager uploadManager = new UploadManager(config);
 
-        final String key = ANDROID + timestamp() + "_video" + ".mp4";
+        String key = ANDROID + timestamp() + "_video" + ".mp4";
+        //这个就是上传七牛的文件的名称
+        File file = new File(url);
+        key = file.getName();
+        key = key.replace(" ", "_");//如果包含空格就沒办法正常播放了
 
         uploadManager.put(url, key, token, (key12, info, response) -> {
 
@@ -488,10 +493,12 @@ public class QiNiuHelper {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(s -> callBack.onFal(s));
                 }
+
+
             }
 
 
-        },new UploadOptions(null, null, false, (key13, percent) -> {
+        }, new UploadOptions(null, null, false, (key13, percent) -> {
             Log.e("qiniu key13 = ", key13 + ": " + percent);
             if (callBack != null) {
                 callBack.progress(key13, percent);
@@ -563,6 +570,9 @@ public class QiNiuHelper {
             return;
         }
 
+        /**
+         * 用rxjava    just从0开始发送成功以后+1继续循环
+         */
         mSubscription.add(Observable.just(dataList.get(upLoadListIndex))
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())

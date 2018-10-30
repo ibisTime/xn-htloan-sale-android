@@ -361,6 +361,12 @@ public class DateUtil {
         }
         return DateUtil.format(new Date(s), format);
     }
+    public static String formatStringData(long s, String format) {
+        if (s<=0) {
+            return "";
+        }
+        return DateUtil.format(new Date(s), format);
+    }
 
     public static Date parseStringData(String s, String format) {
         if (TextUtils.isEmpty(s) || TextUtils.isEmpty(format)) {

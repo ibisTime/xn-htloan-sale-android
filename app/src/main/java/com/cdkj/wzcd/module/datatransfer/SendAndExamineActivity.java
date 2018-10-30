@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.cdkj.baselibrary.api.BaseResponseListModel;
 import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.model.IsSuccessModes;
+import com.cdkj.baselibrary.nets.BaseResponseListCallBack;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.DateUtil;
@@ -19,6 +21,7 @@ import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.adapter.DataFileAdapter;
 import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.databinding.ActivitySendAndExamineBinding;
+import com.cdkj.wzcd.model.CLQDBean;
 import com.cdkj.wzcd.model.DataFileModel;
 import com.cdkj.wzcd.model.DataTransferModel;
 import com.cdkj.wzcd.util.DataDictionaryHelper;
@@ -38,12 +41,13 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
     private String code;
     private ActivitySendAndExamineBinding mBinding;
 
-    private List<DataFileModel> refFileList = new ArrayList<>();
+    private List<CLQDBean> refFileList = new ArrayList<>();
     private DataFileAdapter refFileAdapter;
 
     private List<DataFileModel> sendFileList = new ArrayList<>();
     private DataFileAdapter sendFileAdapter;
     private boolean isGps;
+    private List<CLQDBean> fileList;
 
     public static void open(Context context, String code, boolean isGps) {
         if (context != null) {
@@ -52,7 +56,6 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
             intent.putExtra("isGps", isGps);
             context.startActivity(intent);
         }
-
     }
 
 
@@ -74,6 +77,8 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
 
         if (isGps) {
             mBinding.llGps.setVisibility(View.VISIBLE);
+        } else {
+            getCLQD();
         }
         initAdapter();
         initListener();
@@ -86,9 +91,9 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
         mBinding.rvRefFile.setLayoutManager(getLinearLayoutManager(false));
         mBinding.rvRefFile.setAdapter(refFileAdapter);
 
-        sendFileAdapter = new DataFileAdapter(sendFileList);
-        mBinding.rvSendFile.setLayoutManager(getLinearLayoutManager(false));
-        mBinding.rvSendFile.setAdapter(sendFileAdapter);
+//        sendFileAdapter = new DataFileAdapter(sendFileList);
+//        mBinding.rvSendFile.setLayoutManager(getLinearLayoutManager(false));
+//        mBinding.rvSendFile.setAdapter(sendFileAdapter);
     }
 
     private void initListener() {
@@ -98,6 +103,32 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
 
         mBinding.myCbConfirm.setOnConfirmRightListener(view -> {
             pickUpAndReissueRequest();
+        });
+    }
+
+    /**
+     * 获取材料清单
+     */
+    private void getCLQD() {
+
+        Call<BaseResponseListModel<CLQDBean>> clqd = RetrofitUtils.createApi(MyApiServer.class).getCLQD("632217", "{}");
+        addCall(clqd);
+        showLoadingDialog();
+        clqd.enqueue(new BaseResponseListCallBack<CLQDBean>(this) {
+
+
+            @Override
+            protected void onSuccess(List<CLQDBean> data, String SucMessage) {
+                if (data == null || data.size() == 0) {
+                    return;
+                }
+                fileList = data;
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
         });
     }
 
@@ -116,7 +147,6 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
             protected void onSuccess(DataTransferModel data, String SucMessage) {
 
                 setView(data);
-
             }
 
             @Override
@@ -130,31 +160,59 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
 
         DataTransferModel.GpsApply gpsApply = data.getGpsApply();
         if (isGps) {
+            mBinding.llGps.setVisibility(View.VISIBLE);
             mBinding.myNlTeam.setText(data.getTeamName());
-            mBinding.myNlApplyName.setText(gpsApply == null ? "" : gpsApply.getApplyUserName());//申请人姓名
-            mBinding.myNlApplyRole.setText(gpsApply == null ? "" : gpsApply.getUserRole());//申请人角色
+            mBinding.myNlApplyName.setText(data.getUserName());//申请人姓名
+            mBinding.myNlApplyRole.setText(data.getUserRole());//申请人角色
             mBinding.myNlCarNumber.setText(gpsApply == null ? "" : data.getGpsApply().getCarFrameNo());//车架号
-        }
+            mBinding.myNlMobile.setText(gpsApply == null ? "" : data.getGpsApply().getMobile());//手机号
+            mBinding.myNlApplyWirelessCount.setText(gpsApply == null ? "" : data.getGpsApply().getApplyWiredCount() + "");//车架号
+            mBinding.myNlApplyWiredCount.setText(gpsApply == null ? "" : data.getGpsApply().getApplyWirelessCount() + "");//车架号
+            mBinding.myNlName.setText(gpsApply.getCustomerName());//客户姓名
+            //gps  没有发件收件节点
+            mBinding.myNlNodeSend.setVisibility(View.GONE);
+            mBinding.myNlNodeRe.setVisibility(View.GONE);
+        } else {
+            mBinding.myNlName.setText(data.getCustomerName());//客户姓名
+            //材料清单
+            mBinding.llRefFile.setVisibility(View.VISIBLE);
+            if (!TextUtils.isEmpty(data.getFilelist())) {
+                String[] split = data.getFilelist().split(",");
+                if (split != null && split.length > 0) {
 
-        mBinding.myNlName.setText(data.getUserName());
+                    for (int i = 0; i < split.length; i++) {
+                        for (int j = 0; j < fileList.size(); j++) {
+                            if (TextUtils.equals(fileList.get(j).getId() + "", split[i])) {
+                                refFileList.add(fileList.get(j));
+                                break;
+                            }
+                        }
+                    }
+                    refFileAdapter.notifyDataSetChanged();
+                }
+
+            }
+        }
         mBinding.myNlCode.setText(data.getBizCode());
         mBinding.myNlNodeSend.setText(NodeHelper.getNameOnTheCode(data.getFromNodeCode()));
         mBinding.myNlNodeRe.setText(NodeHelper.getNameOnTheCode(data.getToNodeCode()));
+        mBinding.myElSendNote.setText(data.getSendNote());
 
-        if (!TextUtils.isEmpty(data.getRefFileList())) {
-            mBinding.llRefFile.setVisibility(View.VISIBLE);
-            setReFileListData(data.getRefFileList());
-        } else {
-            mBinding.llRefFile.setVisibility(View.GONE);
-        }
 
-        if (!TextUtils.isEmpty(data.getSendFileList())) {
-            mBinding.llSendFile.setVisibility(View.VISIBLE);
-
-            setSendFileListData(data.getSendFileList());
-        } else {
-            mBinding.llSendFile.setVisibility(View.GONE);
-        }
+//        if (!TextUtils.isEmpty(data.getRefFileList())) {
+//            mBinding.llRefFile.setVisibility(View.VISIBLE);
+//            setReFileListData(data.getRefFileList());
+//        } else {
+//            mBinding.llRefFile.setVisibility(View.GONE);
+//        }
+        //寄送材料清单
+//        if (!TextUtils.isEmpty(data.getSendFileList())) {
+//            mBinding.llSendFile.setVisibility(View.VISIBLE);
+//
+//            setSendFileListData(data.getSendFileList());
+//        } else {
+//            mBinding.llSendFile.setVisibility(View.GONE);
+//        }
 
         DataDictionaryHelper.getValueOnTheKeyRequest(this, DataDictionaryHelper.send_type, data.getSendType(), data1 -> {
             mBinding.myNlSendType.setText(data1.getDvalue());
@@ -187,7 +245,7 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
             list.add(model);
         }
         refFileList.clear();
-        refFileList.addAll(list);
+//        refFileList.addAll(list);
         refFileAdapter.notifyDataSetChanged();
     }
 
@@ -220,7 +278,7 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
         map.put("code", code);
         map.put("operator", SPUtilHelper.getUserId());
         map.put("remark", mBinding.myElSendNote.getText());
-        map.put("receiver", SPUtilHelper.getUserId());
+        map.put("receiver", SPUtilHelper.getUserId());//收件人
         Call call = RetrofitUtils.getBaseAPiService().successRequest("632151", StringUtils.getJsonToString(map));
 
         addCall(call);

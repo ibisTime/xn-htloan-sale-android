@@ -50,13 +50,18 @@ public class MyNormalLayout extends LinearLayout {
         setData();
     }
 
+    public void setTvTitle(String txtTitle) {
+        this.txtTitle = txtTitle;
+        mBinding.tvTitle.setText(txtTitle);
+    }
+
     private void setData() {
         mBinding.tvTitle.setText(txtTitle);
         mBinding.tvContent.setHint(txtHint);
         mBinding.tvContent.setText(txtContent);
         mBinding.ivRight.setImageResource(resourceId);
 
-        if (resourceId != 0){
+        if (resourceId != 0) {
             mBinding.ivRight.setVisibility(VISIBLE);
         }
     }
@@ -64,18 +69,18 @@ public class MyNormalLayout extends LinearLayout {
 
     private void init(Context context) {
         this.context = context;
-        mBinding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.layout_my_normal, this, true);
+        mBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.layout_my_normal, this, true);
 
     }
 
-    public void setText(String content){
+    public void setText(String content) {
         if (!TextUtils.isEmpty(content))
             mBinding.tvContent.setText(content);
     }
 
-    public String check(){
+    public String check() {
 
-        if (TextUtils.isEmpty(mBinding.tvContent.getText().toString().trim())){
+        if (TextUtils.isEmpty(mBinding.tvContent.getText().toString().trim())) {
             ToastUtil.show(context, mBinding.tvContent.getHint().toString());
             return "";
         }
@@ -83,12 +88,12 @@ public class MyNormalLayout extends LinearLayout {
         return mBinding.tvContent.getText().toString();
     }
 
-    public String getText(){
-        return  mBinding.tvContent.getText().toString();
+    public String getText() {
+        return mBinding.tvContent.getText().toString();
     }
 
-    public String getTags(){
-        return  mBinding.tvContent.getTag().toString();
+    public String getTags() {
+        return mBinding.tvContent.getTag().toString();
     }
 
 }

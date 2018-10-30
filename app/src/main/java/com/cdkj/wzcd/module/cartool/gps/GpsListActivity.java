@@ -68,7 +68,6 @@ public class GpsListActivity extends AbsRefreshListActivity<GpsApplyModel> {
         GpsAdapter mAdapter = new GpsAdapter(listData, mList);
 
         mAdapter.setOnItemClickListener((adapter, view, position) -> GpsDetailsActivity.open(GpsListActivity.this, mAdapter.getItem(position).getCode()));
-
         return mAdapter;
     }
 
