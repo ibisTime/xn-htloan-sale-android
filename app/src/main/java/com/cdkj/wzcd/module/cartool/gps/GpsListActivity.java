@@ -53,7 +53,7 @@ public class GpsListActivity extends AbsRefreshListActivity<GpsApplyModel> {
             }
         });
 
-        initRefreshHelper(100);
+        initRefreshHelper(10);
     }
 
     @Override
@@ -75,7 +75,6 @@ public class GpsListActivity extends AbsRefreshListActivity<GpsApplyModel> {
     public void getListRequest(int pageIndex, int limit, boolean isShowDialog) {
 
         DataDictionaryHelper.getDataDictionaryRequest(GpsListActivity.this, DataDictionaryHelper.gps_apply_status, "", (List<DataDictionary> list) -> {
-
             if (list == null || list.size()==0)
                 return;
 

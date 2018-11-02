@@ -45,6 +45,13 @@
 
         </com.cdkj.wzcd.view.list.MyListItemLayout>
 
+        <com.cdkj.wzcd.view.list.MyListItemBtnLayout
+            android:id="@+id/myItemCbl_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.cdkj.wzcd.view.list.MyListItemBtnLayout>
+
     </LinearLayout>
 
 </layout>

@@ -11,9 +11,12 @@ import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.cdkj.baselibrary.api.BaseResponseModel;
 import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
+import com.cdkj.baselibrary.dialog.CommonDialog;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.model.CodeModel;
 import com.cdkj.baselibrary.model.IsSuccessModes;
@@ -29,6 +32,7 @@ import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.databinding.ActivityStartFaceViewBinding;
 import com.cdkj.wzcd.model.FaceSignBean;
 import com.cdkj.wzcd.model.ILiveVideoBean;
+import com.cdkj.wzcd.model.RecVideoBean;
 import com.cdkj.wzcd.tencent.TencentLoginHelper;
 import com.cdkj.wzcd.tencent.logininterface.TencentLoginInterface;
 import com.luck.picture.lib.PictureSelector;
@@ -364,7 +368,8 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
         roomId.enqueue(new BaseResponseModelCallBack<String>(this) {
             @Override
             protected void onSuccess(String data, String SucMessage) {
-                getSendRoomIdSms(data);
+                checkRoomId(data);
+//                getSendRoomIdSms(data);
             }
 
             @Override
@@ -373,6 +378,35 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
             }
         });
     }
+
+    /**
+     * 检查房间人数,超过三人  就不让再进入房间了
+     *
+     * @param roomid
+     */
+    public void checkRoomId(String roomid) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("roomId", roomid);
+        Call<BaseResponseModel<Integer>> roomId = RetrofitUtils.createApi(MyApiServer.class).checkRoomId("632953", StringUtils.getJsonToString(map));
+        showLoadingDialog();
+        roomId.enqueue(new BaseResponseModelCallBack<Integer>(this) {
+            @Override
+            protected void onSuccess(Integer data, String SucMessage) {
+                //房间人数大于三人就不让进入了
+                if (data >= 3) {
+                    UITipDialog.showInfo(InterviewStartActivity.this, "房间人数已满");
+                } else {
+                    getSendRoomIdSms(roomid);
+                }
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+    }
+//     632953
 
     /**
      * 给会员端发送 房间号
@@ -633,39 +667,73 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
         });
     }
 
+    /**
+     * 获取上个是界面发送的数据,判断去不去请求视频
+     *
+     * @param bean
+     */
     @Subscribe
     public void iLiveVideo(ILiveVideoBean bean) {
-        if (bean == null || TextUtils.isEmpty(bean.getVideoUrl())) {
+        if (bean == null || TextUtils.isEmpty(bean.getStreamId())) {
+
             return;
         }
-//        CommonDialog commonDialog = new CommonDialog(this).builder();
-//        commonDialog.setTitle("发现视频是否添加到银行面签");
-//        commonDialog.setPositiveBtn("确定", view -> {
-//
-//
-//            ArrayList<String> listEvent = new ArrayList<>();
-//            listEvent.add(bean.getVideoUrl());
-//            List<LocalMedia> localMedia = listSwitchVideoList(listEvent);
-//
-//            List<LocalMedia> list = mBinding.myVlBankVideo.getList();
-//            list.addAll(localMedia);
-//            mBinding.myVlBankVideo.setList(list);
-//        }).setNegativeBtn("取消", null).show();
-//
-//        HashMap<String, String> map = new HashMap<>();
-//        map.put("roomId", bean.getRoomId());
-//        Call<BaseResponseModel<String>> iLiveVoide = RetrofitUtils.createApi(MyApiServer.class).getILiveVoide("632951", StringUtils.getJsonToString(map));
-//        showLoadingDialog();
-//        iLiveVoide.enqueue(new BaseResponseModelCallBack<String>(this) {
-//            @Override
-//            protected void onSuccess(String data, String SucMessage) {
-//
-//            }
-//
-//            @Override
-//            protected void onFinish() {
-//                disMissLoading();
-//            }
-//        });
+        showViodeDialog(bean);
     }
+
+    private void showViodeDialog(ILiveVideoBean bean) {
+        CommonDialog commonDialog = new CommonDialog(this).builder();
+        commonDialog.setTitle("发现视频是否添加到银行面签");
+        commonDialog.setPositiveBtn("确定", view -> {
+            getLoveViode(bean);
+        }).setNegativeBtn("取消", null).show();
+    }
+
+    private void getLoveViode(ILiveVideoBean bean) {
+        //
+        HashMap<String, String> map = new HashMap<>();
+        map.put("streamId", bean.getStreamId());
+        Call<BaseResponseModel<String>> iLiveVoide = RetrofitUtils.createApi(MyApiServer.class).getILiveVoide("632952", StringUtils.getJsonToString(map));
+        showLoadingDialog();
+        iLiveVoide.enqueue(new BaseResponseModelCallBack<String>(this) {
+            @Override
+            protected void onSuccess(String data, String SucMessage) {
+                if (TextUtils.isEmpty(data)) {
+                    UITipDialog.showInfo(InterviewStartActivity.this, "获取失败");
+                    return;
+                }
+                RecVideoBean recVideoBean = JSON.parseObject(data, new TypeReference<RecVideoBean>() {
+                });
+                RecVideoBean.OutputBean output = recVideoBean.getOutput();
+                if (output == null) {
+                    UITipDialog.showInfo(InterviewStartActivity.this, "获取失败");
+                    return;
+                }
+                List<RecVideoBean.OutputBean.FileListBean> file_list = output.getFile_list();
+                if (file_list == null || file_list.size() == 0) {
+                    UITipDialog.showInfo(InterviewStartActivity.this, "获取失败");
+                    return;
+                }
+                RecVideoBean.OutputBean.FileListBean fileListBean = file_list.get(0);
+
+                String viodeUrl = fileListBean.getRecord_file_url();
+
+                ArrayList<String> listEvent = new ArrayList<>();
+                listEvent.add(viodeUrl);
+                List<LocalMedia> localMedia = listSwitchVideoList(listEvent);
+
+                List<LocalMedia> list = mBinding.myVlBankVideo.getList();
+                list.addAll(localMedia);
+                mBinding.myVlBankVideo.setList(list);
+
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+    }
+
+
 }

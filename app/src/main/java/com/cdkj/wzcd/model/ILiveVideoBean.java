@@ -7,6 +7,15 @@ package com.cdkj.wzcd.model;
 public class ILiveVideoBean {
     String videoUrl;
     String roomId;
+    String streamId;
+
+    public String getStreamId() {
+        return streamId;
+    }
+
+    public void setStreamId(String streamId) {
+        this.streamId = streamId;
+    }
 
     public String getRoomId() {
         return roomId;

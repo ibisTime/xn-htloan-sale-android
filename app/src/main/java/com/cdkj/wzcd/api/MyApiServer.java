@@ -16,6 +16,7 @@ import com.cdkj.wzcd.model.GpsModel;
 import com.cdkj.wzcd.model.LoanProductModel;
 import com.cdkj.wzcd.model.NodeListModel;
 import com.cdkj.wzcd.model.NodeModel;
+import com.cdkj.wzcd.model.RecModel;
 import com.cdkj.wzcd.model.RepaymentModel;
 import com.cdkj.wzcd.model.TencentSignModel;
 import com.cdkj.wzcd.model.TodoModel;
@@ -332,4 +333,24 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseModel<String>> getILiveVoide(@Field("code") String code, @Field("json") String json);
+
+    /**
+     * 获取房间id
+     *
+     * @param code
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<RecModel>> getPutStrime(@Field("code") String code, @Field("json") String json);
+
+    /**
+     * 检查房间id
+     *
+     * @param code
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<Integer>> checkRoomId(@Field("code") String code, @Field("json") String json);
 }
