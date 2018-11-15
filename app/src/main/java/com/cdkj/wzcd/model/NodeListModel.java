@@ -9,6 +9,10 @@ import java.util.List;
 public class NodeListModel  {
 
 
+
+    //====================   老的bean=====================================
+
+
     /**
      * code : BO201806021733126654660
      * repayBizCode : RB201806021742154411542
@@ -220,8 +224,8 @@ public class NodeListModel  {
     private String carBigSmj;
     private String bankCommitDatetime;
     private String repayBankcardNumber;
-    private int repayBillDate;
-    private int repayBankDate;
+    private String repayBillDate;
+    private String repayBankDate;
     private int repayFirstMonthAmount;
     private String repayFirstMonthDatetime;
     private int repayMonthAmount;
@@ -232,6 +236,7 @@ public class NodeListModel  {
     private String pledgeDatetime;
     private String greenBigSmj;
     private String pledgeBankCommitDatetime;
+    private String pledgeUserIdCardCopy;
     private String saleUserId;
     private String companyCode;
     private String applyDatetime;
@@ -241,8 +246,52 @@ public class NodeListModel  {
     private String companyName;
     private String loanBankName;
     private String policyDatetime;
+    private String saleUserName;//信贷
+    private String insideJobName;//内勤
     private String policyDueDate;
+    private String teamName;
+    private int age;
     private List<BudgetOrderGpsListBean> budgetOrderGpsList;
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public String getPledgeUserIdCardCopy() {
+        return pledgeUserIdCardCopy;
+    }
+
+    public void setPledgeUserIdCardCopy(String pledgeUserIdCardCopy) {
+        this.pledgeUserIdCardCopy = pledgeUserIdCardCopy;
+    }
+
+    public String getSaleUserName() {
+        return saleUserName;
+    }
+
+    public void setSaleUserName(String saleUserName) {
+        this.saleUserName = saleUserName;
+    }
+
+    public String getInsideJobName() {
+        return insideJobName;
+    }
+
+    public void setInsideJobName(String insideJobName) {
+        this.insideJobName = insideJobName;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
 
     public String getPolicyDueDate() {
         return policyDueDate;
@@ -1014,19 +1063,19 @@ public class NodeListModel  {
         this.repayBankcardNumber = repayBankcardNumber;
     }
 
-    public int getRepayBillDate() {
+    public String getRepayBillDate() {
         return repayBillDate;
     }
 
-    public void setRepayBillDate(int repayBillDate) {
+    public void setRepayBillDate(String repayBillDate) {
         this.repayBillDate = repayBillDate;
     }
 
-    public int getRepayBankDate() {
+    public String getRepayBankDate() {
         return repayBankDate;
     }
 
-    public void setRepayBankDate(int repayBankDate) {
+    public void setRepayBankDate(String repayBankDate) {
         this.repayBankDate = repayBankDate;
     }
 

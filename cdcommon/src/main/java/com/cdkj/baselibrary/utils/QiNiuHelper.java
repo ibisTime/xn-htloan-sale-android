@@ -471,7 +471,7 @@ public class QiNiuHelper {
         final UploadManager uploadManager = new UploadManager(config);
 
         String key = ANDROID + timestamp() + "_video" + ".mp4";
-        //这个就是上传七牛的文件的名称
+        //这个就是上传七牛的文件的名称  名字
         File file = new File(url);
         key = file.getName();
         key = key.replace(" ", "_");//如果包含空格就沒办法正常播放了

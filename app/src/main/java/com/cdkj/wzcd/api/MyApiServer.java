@@ -15,9 +15,11 @@ import com.cdkj.wzcd.model.GpsApplyModel;
 import com.cdkj.wzcd.model.GpsModel;
 import com.cdkj.wzcd.model.LoanProductModel;
 import com.cdkj.wzcd.model.NodeListModel;
+import com.cdkj.wzcd.model.NodeListModelFace;
 import com.cdkj.wzcd.model.NodeModel;
 import com.cdkj.wzcd.model.RecModel;
 import com.cdkj.wzcd.model.RepaymentModel;
+import com.cdkj.wzcd.model.SuccessBean;
 import com.cdkj.wzcd.model.TencentSignModel;
 import com.cdkj.wzcd.model.TodoModel;
 import com.cdkj.wzcd.model.ZrdModel;
@@ -36,6 +38,17 @@ import retrofit2.http.QueryMap;
  */
 
 public interface MyApiServer {
+
+    /**
+     * 提交接口
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<SuccessBean>> success(@Field("code") String code, @Field("json") String json);
 
     /**
      * 获取待办事项
@@ -116,6 +129,17 @@ public interface MyApiServer {
     Call<BaseResponseModel<ResponseInListModel<NodeListModel>>> getNodeList(@Field("code") String code, @Field("json") String json);
 
     /**
+     * 获取面签列表数据
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<NodeListModelFace>> getNodeListFacet(@Field("code") String code, @Field("json") String json);
+
+    /**
      * 获取节列表
      *
      * @param code
@@ -136,6 +160,7 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseModel<NodeListModel>> getNode(@Field("code") String code, @Field("json") String json);
+
 
 
     //--------------------------------------------征信API--------------------------------------------

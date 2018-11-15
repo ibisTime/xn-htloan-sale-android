@@ -14,32 +14,6 @@
             android:orientation="vertical">
 
             <com.cdkj.wzcd.view.MyNormalLayout
-                android:id="@+id/myNl_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:txt_normal_title="客户姓名">
-
-            </com.cdkj.wzcd.view.MyNormalLayout>
-
-            <com.cdkj.wzcd.view.MyNormalLayout
-                android:id="@+id/myNl_code"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:txt_normal_title="业务编号">
-
-            </com.cdkj.wzcd.view.MyNormalLayout>
-
-
-            <com.cdkj.wzcd.view.MyNormalLayout
-                android:id="@+id/myNl_team"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:txt_normal_title="业务团队">
-
-            </com.cdkj.wzcd.view.MyNormalLayout>
-
-            <!--发件人、收件人、业务团队、信贷专员、内勤专员-->
-            <com.cdkj.wzcd.view.MyNormalLayout
                 android:id="@+id/myNl_sendUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,6 +26,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:txt_normal_title="收件人">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_team"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="业务团队">
 
             </com.cdkj.wzcd.view.MyNormalLayout>
 
@@ -71,12 +53,37 @@
 
             </com.cdkj.wzcd.view.MyNormalLayout>
 
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="客户姓名">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
             <LinearLayout
                 android:id="@+id/ll_gps"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:visibility="gone">
+
+
+                <com.cdkj.wzcd.view.MyNormalLayout
+                    android:id="@+id/myNl_applyWirelessCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:txt_normal_title="gps无线个数">
+
+                </com.cdkj.wzcd.view.MyNormalLayout>
+
+                <com.cdkj.wzcd.view.MyNormalLayout
+                    android:id="@+id/myNl_applyWiredCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:txt_normal_title="gps有线个数">
+
+                </com.cdkj.wzcd.view.MyNormalLayout>
 
                 <com.cdkj.wzcd.view.MyNormalLayout
                     android:id="@+id/myNl_carNo"
@@ -94,22 +101,27 @@
 
                 </com.cdkj.wzcd.view.MyNormalLayout>
 
-                <com.cdkj.wzcd.view.MyNormalLayout
-                    android:id="@+id/myNl_applyWirelessCount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:txt_normal_title="gps无线个数">
-
-                </com.cdkj.wzcd.view.MyNormalLayout>
-
-                <com.cdkj.wzcd.view.MyNormalLayout
-                    android:id="@+id/myNl_applyWiredCount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:txt_normal_title="gps有线个数">
-
-                </com.cdkj.wzcd.view.MyNormalLayout>
             </LinearLayout>
+
+
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="业务编号">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+
+
+
+            <!--发件人、收件人、业务团队、信贷专员、内勤专员-->
+
+
+
+
+
 
 
             <com.cdkj.wzcd.view.MyNormalLayout
@@ -168,8 +180,6 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:paddingBottom="10dp">
-
-
                 </android.support.v7.widget.RecyclerView>
 
                 <View style="@style/style_split_line_horizontal" />

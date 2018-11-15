@@ -222,13 +222,14 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
     }
 
     private void initListener() {
-
+        //提交
         mBinding.myCbLoad.setOnConfirmListener(view -> {
             isSend = "1";
             if (check()) {
                 upLoad(mBinding.myVlBankVideo.getList(), vlYhCode);
             }
         });
+        //保存
         mBinding.myCbLoad.setOnConfirmRightListener(view -> {
             isSend = "0";
             upLoad(mBinding.myVlBankVideo.getList(), vlYhCode);

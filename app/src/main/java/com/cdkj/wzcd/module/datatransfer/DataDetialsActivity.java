@@ -45,7 +45,7 @@ public class DataDetialsActivity extends AbsBaseLoadActivity {
     private List<DataDictionary> mCompany;
 
     private List<CLQDBean> refFileList = new ArrayList<>();
-    private List<CLQDBean> fileList;
+    private List<CLQDBean> fileList = new ArrayList<>();
     private DataFileAdapter refFileAdapter;
 
     public static void open(Context context, String code, List<DataDictionary> company, boolean isGps) {
@@ -69,7 +69,7 @@ public class DataDetialsActivity extends AbsBaseLoadActivity {
         mBaseBinding.titleView.setMidTitle("详情");
 
         init();
-        getData();
+
     }
 
     private void init() {
@@ -80,6 +80,7 @@ public class DataDetialsActivity extends AbsBaseLoadActivity {
         }
         if (isGps) {
             mBinding.llGps.setVisibility(View.VISIBLE);
+            getData();
         } else {
             getCLQD();
             initAdapter();
@@ -107,6 +108,7 @@ public class DataDetialsActivity extends AbsBaseLoadActivity {
                     return;
                 }
                 fileList = data;
+                getData();
             }
 
             @Override
@@ -148,14 +150,25 @@ public class DataDetialsActivity extends AbsBaseLoadActivity {
 
         if (isGps) {
             mBinding.llGps.setVisibility(View.VISIBLE);
-            DataTransferModel.GpsApply gpsApply = data.getGpsApply();
-            mBinding.myNlApplyWiredCount.setText(gpsApply == null ? "" : gpsApply.getApplyWiredCount() + "");
-            mBinding.myNlApplyWirelessCount.setText(gpsApply == null ? "" : gpsApply.getApplyWirelessCount() + "");
-            mBinding.myNlCarNo.setText(gpsApply == null ? "" : gpsApply.getCarFrameNo());
-            mBinding.myNlMobile.setText(gpsApply == null ? "" : data.getGpsApply().getMobile());//手机号
-            mBinding.myNlName.setText(gpsApply.getCustomerName());
             mBinding.myNlNodeSend.setVisibility(View.GONE);
             mBinding.myNlNodeRe.setVisibility(View.GONE);
+            DataTransferModel.GpsApply gpsApply = data.getGpsApply();
+            if (gpsApply != null) {
+                mBinding.myNlApplyWiredCount.setText(gpsApply.getApplyWiredCount() + "");
+                mBinding.myNlApplyWirelessCount.setText(gpsApply.getApplyWirelessCount() + "");
+                mBinding.myNlName.setText(gpsApply.getCustomerName());
+                if (TextUtils.isEmpty(gpsApply.getCarFrameNo())) {
+                    mBinding.myNlCarNo.setVisibility(View.GONE);
+                } else {
+                    mBinding.myNlCarNo.setText(gpsApply.getCarFrameNo());
+                }
+                if (TextUtils.isEmpty(gpsApply.getMobile())) {
+                    mBinding.myNlMobile.setVisibility(View.GONE);
+                } else {
+                    mBinding.myNlMobile.setText(gpsApply.getMobile());
+                }
+            }
+
         } else {
             mBinding.myNlName.setText(data.getCustomerName());
             mBinding.llRefFile.setVisibility(View.VISIBLE);

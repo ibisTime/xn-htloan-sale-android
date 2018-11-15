@@ -9,12 +9,14 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.bigkoo.pickerview.OptionsPickerView;
+import com.cdkj.baselibrary.api.BaseResponseModel;
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsRefreshListFragment;
 import com.cdkj.baselibrary.model.DataDictionary;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
+import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.adapter.InterviewListAdapter;
@@ -63,14 +65,13 @@ public class InterviewListFragment extends AbsRefreshListFragment {
     @Override
     protected void afterCreate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         initRefreshHelper(10);
-//        initTitelAndHead();
-
+        initTitelAndHead();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (getUserVisibleHint()){
+        if (getUserVisibleHint()) {
 
             mRefreshHelper.onDefaultMRefresh(true);
         }
@@ -82,10 +83,10 @@ public class InterviewListFragment extends AbsRefreshListFragment {
         typeDatas = new ArrayList<>();
         PickerViewDataBean bean1 = new PickerViewDataBean();
         bean1.setKey("未面签");
-        bean1.setValue("0");
+        bean1.setValue("1");
         PickerViewDataBean bean2 = new PickerViewDataBean();
         bean2.setKey("已面签");
-        bean2.setValue("1");
+        bean2.setValue("0");
         typeDatas.add(bean1);
         typeDatas.add(bean2);
         headView.tvType.setText(typeDatas.get(0).getKey());//初始化
@@ -119,7 +120,7 @@ public class InterviewListFragment extends AbsRefreshListFragment {
 
         DataDictionaryHelper.getDataDictionaryRequest(mActivity, DataDictionaryHelper.budget_orde_biz_typer, "", data -> {
 
-            if (data == null || data.size() == 0){
+            if (data == null || data.size() == 0) {
                 return;
             }
 
@@ -136,6 +137,7 @@ public class InterviewListFragment extends AbsRefreshListFragment {
             map.put("limit", limit + "");
             map.put("start", pageIndex + "");
             map.put("userId", SPUtilHelper.getUserId());
+            map.put("isInterview", typeDatas.get(selectFrist).getValue());
 
             if (!UserHelper.isZHRY()) {
 //                map.put("saleUserId", SPUtilHelper.getUserId());
@@ -144,12 +146,13 @@ public class InterviewListFragment extends AbsRefreshListFragment {
 
             if (isShowDialog) showLoadingDialog();
 
-            Call call = RetrofitUtils.createApi(MyApiServer.class).getNodeList("632148", StringUtils.getJsonToString(map));
-            addCall(call);
+            Call<BaseResponseModel<ResponseInListModel<NodeListModel>>> nodeList = RetrofitUtils.createApi(MyApiServer.class).getNodeList("632148", StringUtils.getJsonToString(map));
+            addCall(nodeList);
 
-            call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<NodeListModel>>(mActivity) {
+            nodeList.enqueue(new BaseResponseModelCallBack<ResponseInListModel<NodeListModel>>(mActivity) {
                 @Override
                 protected void onSuccess(ResponseInListModel<NodeListModel> data, String SucMessage) {
+                    LogUtil.E("pppppp数据长度" + data.getList().size());
                     mRefreshHelper.setData(data.getList(), "暂无面签记录", 0);
                 }
 
@@ -159,6 +162,5 @@ public class InterviewListFragment extends AbsRefreshListFragment {
                 }
             });
         });
-
     }
 }

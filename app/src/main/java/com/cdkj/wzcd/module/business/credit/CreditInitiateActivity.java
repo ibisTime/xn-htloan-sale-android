@@ -138,10 +138,10 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
         if (mBinding.mySlWay.check()){
             return false;
         }
-        // 贷款金额
-        if (TextUtils.isEmpty(mBinding.myElAmount.check())){
-            return false;
-        }
+//        // 贷款金额
+//        if (TextUtils.isEmpty(mBinding.myElAmount.check())){
+//            return false;
+//        }
         if (mBinding.myIlReport.getVisibility() == View.VISIBLE){
             // 二手车评估报告
 //            if (TextUtils.isEmpty(mBinding.myIlReport.check())){
@@ -197,7 +197,7 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
                     return;
 
                 for (ExchangeBankModel model : data){
-                    mBank.add(new DataDictionary().setDkey(model.getCode()).setDvalue(model.getBankName()));
+                    mBank.add(new DataDictionary().setDkey(model.getCode()).setDvalue(model.getBankName()+model.getSubbranch()));
                 }
 
                 mBinding.mySlBank.setData(mBank, null);

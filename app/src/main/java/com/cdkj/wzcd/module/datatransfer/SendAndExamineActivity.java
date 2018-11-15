@@ -161,17 +161,28 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
         DataTransferModel.GpsApply gpsApply = data.getGpsApply();
         if (isGps) {
             mBinding.llGps.setVisibility(View.VISIBLE);
-            mBinding.myNlTeam.setText(data.getTeamName());
-            mBinding.myNlApplyName.setText(data.getUserName());//申请人姓名
-            mBinding.myNlApplyRole.setText(data.getUserRole());//申请人角色
-            mBinding.myNlCarNumber.setText(gpsApply == null ? "" : data.getGpsApply().getCarFrameNo());//车架号
-            mBinding.myNlMobile.setText(gpsApply == null ? "" : data.getGpsApply().getMobile());//手机号
-            mBinding.myNlApplyWirelessCount.setText(gpsApply == null ? "" : data.getGpsApply().getApplyWiredCount() + "");//车架号
-            mBinding.myNlApplyWiredCount.setText(gpsApply == null ? "" : data.getGpsApply().getApplyWirelessCount() + "");//车架号
-            mBinding.myNlName.setText(gpsApply.getCustomerName());//客户姓名
             //gps  没有发件收件节点
             mBinding.myNlNodeSend.setVisibility(View.GONE);
             mBinding.myNlNodeRe.setVisibility(View.GONE);
+            mBinding.myNlTeam.setText(data.getTeamName());
+            mBinding.myNlApplyName.setText(data.getUserName());//申请人姓名
+            mBinding.myNlApplyRole.setText(data.getUserRole());//申请人角色
+            mBinding.myNlName.setText(gpsApply.getCustomerName());//客户姓名
+
+            mBinding.myNlApplyWirelessCount.setText(gpsApply == null ? "" : data.getGpsApply().getApplyWirelessCount() + "");//车架号
+            mBinding.myNlApplyWiredCount.setText(gpsApply == null ? "" : data.getGpsApply().getApplyWiredCount() + "");//车架号
+
+            if (TextUtils.isEmpty(gpsApply.getCarFrameNo())) {
+                mBinding.myNlCarNumber.setVisibility(View.GONE);
+            } else {
+                mBinding.myNlCarNumber.setText(gpsApply.getCarFrameNo());//车架号
+            }
+            if (TextUtils.isEmpty(gpsApply.getMobile())) {
+                mBinding.myNlMobile.setVisibility(View.GONE);
+            } else {
+                mBinding.myNlMobile.setText(gpsApply.getMobile());//手机号
+            }
+
         } else {
             mBinding.myNlName.setText(data.getCustomerName());//客户姓名
             //材料清单

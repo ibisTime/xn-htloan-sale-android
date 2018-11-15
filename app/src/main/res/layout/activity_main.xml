@@ -122,8 +122,7 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
-                                android:textSize="9sp"
-                                android:visibility="gone" />
+                                android:textSize="9sp" />
 
                             <TextView
                                 android:id="@+id/tv_nick"
@@ -140,7 +139,7 @@
                                 android:layout_marginLeft="2dp"
                                 android:textColor="@color/white"
                                 android:textSize="12sp"
-                                tools:text="业务员" />
+                                tools:text="信贷专员" />
 
                         </LinearLayout>
 
@@ -226,7 +225,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 app:img_content="@mipmap/main_fbh"
-                                app:txt_content="面签">
+                                app:txt_content="面签系统">
 
 
                             </com.cdkj.wzcd.view.MySquareRowLayout>

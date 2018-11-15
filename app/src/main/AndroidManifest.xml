@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".module.user.SignInActivity" />
         <activity android:name=".module.business.credit.BssCreditListActivity" />
         <activity android:name=".module.business.credit.audit.AuditCreditActivity" />
@@ -78,7 +78,10 @@
         <!-- <meta-data -->
         <!-- android:nacom.yalantis.ucrop.util.MyAppGlideModuledule" -->
         <!-- andrsearchValuealue="GlideModule"/> -->
-        <activity android:name=".module.datatransfer.DataDetialsActivity"></activity>
+        <activity android:name=".module.datatransfer.DataDetialsActivity" />
+        <activity android:name=".module.business.cldy.NqlrActivity" />
+        <activity android:name=".module.business.cldy.DysqActivity" />
+        <activity android:name=".module.business.cldy.LrdyActivity"></activity>
     </application>
 
 </manifest>

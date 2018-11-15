@@ -154,7 +154,7 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
                 mBinding.mySrZlcd.setPointCount(data.getLogisticsTodo());//资料传递
 
                 int sub = data.getCreditTodo() + data.getInterviewTodo() + data.getGpsInstallTodo() + data.getCarSettleTodo() + data.getEntryMortgageTodo() + data.getLogisticsTodo();
-                mBinding.tvRedPoint.setVisibility((sub > 0) ? View.VISIBLE : View.GONE);
+//                mBinding.tvRedPoint.setVisibility((sub > 0) ? View.VISIBLE : View.GONE);
                 if (sub > 99) {
                     mBinding.tvRedPoint.setText("99+");
                 } else {
@@ -263,7 +263,7 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
             mBinding.mySrAudit.setVisibility(View.VISIBLE);
             mBinding.lineAudit.setVisibility(View.VISIBLE);
         } else if (TextUtils.equals(data.getRoleCode(), YWY)) {// 业务员
-            mBinding.tvRole.setText("[业务员]");
+            mBinding.tvRole.setText("[信贷专员]");
 
         } else if (TextUtils.equals(data.getRoleCode(), NQZY)) {// 内勤专员
             mBinding.tvRole.setText("[内勤专员]");
@@ -349,9 +349,7 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
         // 银行放款
         mBinding.mySrLoan.setOnClickListener(view -> {
             BankLoanListActivity.open(this);
-//            BankLoanInputActivity.open(this,"12");
         });
-
     }
 
 

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_normal_title="客户姓名">
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_normal_title="业务编号">
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_teamName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_normal_title="业务团队">
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_qyjl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_normal_title="区域经理">
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_saleUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_normal_title="信贷专员">
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_dkje"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_normal_title="贷款金额">
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_clxh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_normal_title="车辆型号">
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_cjh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_normal_title="车架号">
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_cphm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_normal_title="车牌号码">
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyMultipleLayout
+            android:id="@+id/myMl_carRegcerti"
+            app:title="机动车登记证"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.cdkj.wzcd.view.MyMultipleLayout>
+
+        <com.cdkj.wzcd.view.MyMultipleLayout
+            android:id="@+id/myMl_carBigSmj"
+            app:title="抵押页扫描件"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.cdkj.wzcd.view.MyMultipleLayout>
+
+        <com.cdkj.wzcd.view.MyMultipleLayout
+            android:id="@+id/myMl_carXszSmj"
+            app:title="车辆行驶证扫描件"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.cdkj.wzcd.view.MyMultipleLayout>
+
+        <com.cdkj.wzcd.view.MyMultipleLayout
+            android:id="@+id/myMl_dutyPaidProveSmj"
+            app:title="完税证明扫描件"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.cdkj.wzcd.view.MyMultipleLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp"/>
+
+        <com.cdkj.wzcd.view.MyConfirmBtn
+            android:id="@+id/myCb_confirm"
+            app:txt_confirm_content="确认"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.cdkj.wzcd.view.MyConfirmBtn>
+
+    </LinearLayout>
+</layout>

@@ -131,18 +131,21 @@ public class DataTransferListFragment extends AbsRefreshListFragment<CllhListBea
                 typeList.add("1");
                 typeList.add("3");
                 map.put("typeList", typeList);
+                map.put("type", "1");
 
             } else if (TextUtils.equals(dataType, DATA_OTHER)) {
 //                map.put("receiver", "0");
                 statusList.add("1");
                 statusList.add("2");
                 statusList.add("3");
+                map.put("type", "1");
 
             } else {
                 map.put("receiver", SPUtilHelper.getUserId());
                 statusList.add("1");
                 statusList.add("2");
                 statusList.add("3");
+                map.put("type", "2");
             }
 
             if (!TextUtils.equals(dataType, DATA_SEND)) {
