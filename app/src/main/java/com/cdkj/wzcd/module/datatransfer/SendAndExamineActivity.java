@@ -69,26 +69,28 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
     public void afterCreate(Bundle savedInstanceState) {
         mBaseBinding.titleView.setMidTitle("收件");
 
-        if (getIntent() == null)
+        if (getIntent() == null) {
             return;
-
+        }
         code = getIntent().getStringExtra(DATA_SIGN);
         isGps = getIntent().getBooleanExtra("isGps", false);
 
         if (isGps) {
             mBinding.llGps.setVisibility(View.VISIBLE);
+            getData();
         } else {
             getCLQD();
         }
+
         initAdapter();
         initListener();
 
-        getData();
+
     }
 
     private void initAdapter() {
         refFileAdapter = new DataFileAdapter(refFileList);
-        mBinding.rvRefFile.setLayoutManager(getLinearLayoutManager(false));
+        mBinding.rvRefFile.setLayoutManager(getLinearLayoutManager(true));
         mBinding.rvRefFile.setAdapter(refFileAdapter);
 
 //        sendFileAdapter = new DataFileAdapter(sendFileList);
@@ -123,6 +125,7 @@ public class SendAndExamineActivity extends AbsBaseLoadActivity {
                     return;
                 }
                 fileList = data;
+                getData();
             }
 
             @Override

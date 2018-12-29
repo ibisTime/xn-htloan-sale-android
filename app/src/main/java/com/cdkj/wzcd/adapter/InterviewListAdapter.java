@@ -39,7 +39,7 @@ public class InterviewListAdapter extends BaseQuickAdapter<NodeListModel, BaseVi
     protected void convert(BaseViewHolder helper, NodeListModel item) {
         mBinding = DataBindingUtil.bind(helper.itemView);
 
-        mBinding.myTlIdStatus.setText(item.getCode(), NodeHelper.getNameOnTheCode(item.getCurNodeCode()));
+        mBinding.myTlIdStatus.setText(item.getCode(), NodeHelper.getNameOnTheCode(item.getIntevCurNodeCode()));
 
         mBinding.myIlType.setText(DataDictionaryHelper.getValueOnTheKey(item.getBizType(), mType));
         mBinding.myIlName.setText(item.getApplyUserName());
@@ -47,7 +47,7 @@ public class InterviewListAdapter extends BaseQuickAdapter<NodeListModel, BaseVi
         mBinding.myIlAmount.setText(MoneyUtils.MONEYSING + RequestUtil.formatAmountDiv(item.getLoanAmount()));
         mBinding.myIlDateTime.setText(DateUtil.formatStringData(item.getApplyDatetime(), DateUtil.DEFAULT_DATE_FMT));
 
-        if (TextUtils.equals(item.getCurNodeCode(),"002_05") || TextUtils.equals(item.getCurNodeCode(),"002_08")){ // 面签 / 重新面签
+        if (TextUtils.equals(item.getIntevCurNodeCode(),"002_05") || TextUtils.equals(item.getIntevCurNodeCode(),"002_08")){ // 面签 / 重新面签
 
             mBinding.myItemCblConfirm.setRightTextAndListener("面签", view -> {
                 InterviewStartActivity.open(mContext, item.getCode());

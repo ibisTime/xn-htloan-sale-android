@@ -19,6 +19,7 @@ import com.cdkj.wzcd.view.interfaces.MyConfirmInterface;
 
 public class MyConfirmBtn extends LinearLayout {
 
+
     private Context context;
     private LayoutMyConfirmBtnBinding mBinding;
 
@@ -38,7 +39,6 @@ public class MyConfirmBtn extends LinearLayout {
 
     public MyConfirmBtn(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
         final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.MyConfirmBtn, 0, 0);
         txtContent = typedArray.getString(R.styleable.MyConfirmBtn_txt_confirm_content);
         txtContentRight = typedArray.getString(R.styleable.MyConfirmBtn_txt_confirm_content_right);

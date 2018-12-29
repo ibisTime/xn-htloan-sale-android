@@ -55,7 +55,7 @@ public class CreditDetailActivity extends AbsBaseLoadActivity {
     /**
      * @param context
      */
-    public static void open(Context context,String code) {
+    public static void open(Context context, String code) {
         if (context == null) {
             return;
         }
@@ -75,7 +75,7 @@ public class CreditDetailActivity extends AbsBaseLoadActivity {
 
         mBaseBinding.titleView.setMidTitle("征信详情");
 
-        if (getIntent() != null){
+        if (getIntent() != null) {
             creditCode = getIntent().getStringExtra(DATA_SIGN);
 
             initAdapter();
@@ -86,17 +86,17 @@ public class CreditDetailActivity extends AbsBaseLoadActivity {
 
     public void initAdapter() {
 
-        DataDictionaryHelper.getDataDictionaryRequest(this, DataDictionaryHelper.credit_user_loan_role, "",data -> {
+        DataDictionaryHelper.getDataDictionaryRequest(this, DataDictionaryHelper.credit_user_loan_role, "", data -> {
 
-            if (data == null || data.size() == 0){
+            if (data == null || data.size() == 0) {
                 return;
             }
 
             mRole.addAll(data);
 
-            DataDictionaryHelper.getDataDictionaryRequest(this, DataDictionaryHelper.credit_user_relation, "",data1 -> {
+            DataDictionaryHelper.getDataDictionaryRequest(this, DataDictionaryHelper.credit_user_relation, "", data1 -> {
 
-                if (data1 == null || data1.size() == 0){
+                if (data1 == null || data1.size() == 0) {
                     return;
                 }
 
@@ -163,7 +163,7 @@ public class CreditDetailActivity extends AbsBaseLoadActivity {
 
     private void setView() {
         new BankHelper(this).getValueOnTheKey(mData.getLoanBankCode(), null, data -> {
-            mBinding.mySlBank.setTextByRequest(data.getBankName());
+            mBinding.mySlBank.setTextByRequest(data.getBankName() + data.getSubbranch());
         });
 
         DataDictionaryHelper.getValueOnTheKeyRequest(this, DataDictionaryHelper.budget_orde_biz_typer, mData.getBizType(), data -> {
@@ -172,17 +172,16 @@ public class CreditDetailActivity extends AbsBaseLoadActivity {
 
         mBinding.myElAmount.setTextByRequest(RequestUtil.formatAmountDiv(mData.getLoanAmount()));
 
-        if (TextUtils.equals(mData.getBizType(), "1")){ //二手车
-
+        if (TextUtils.equals(mData.getBizType(), "1")) { //二手车
+            mBinding.myFlReport.build(this, 1);
             //二手车也隐藏  oss端没有了  不知道是去掉 了 还是 咋滴  只显示
             // 新车则隐藏证件
 //            mBinding.myIlDocuments.setVisibility(View.VISIBLE);
-            mBinding.myIlReport.setVisibility( View.VISIBLE);
+            mBinding.myFlReport.setVisibility(View.VISIBLE);
 
 //            mBinding.myIlDocuments.setFlImgByRequest(mData.getXszFront());
 //            mBinding.myIlDocuments.setFlImgRightByRequest(mData.getXszReverse());
-//
-            mBinding.myIlReport.setFlImgByRequest(mData.getSecondCarReport());
+            mBinding.myFlReport.setListDataByRequest(mData.getSecondCarReport());
         }
 
         mList.addAll(mData.getCreditUserList());

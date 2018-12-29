@@ -18,11 +18,21 @@
         <!--</com.cdkj.wzcd.view.MySelectLayout>-->
 
         <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:img_normal_right="@drawable/more_right"
+            app:txt_normal_title="*申领类型">
+
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:visibility="gone"
             android:id="@+id/myNl_mateUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:img_normal_right="@drawable/more_right"
-            app:txt_normal_title="匹配客户">
+            app:txt_normal_title="*匹配客户">
 
         </com.cdkj.wzcd.view.MyNormalLayout>
 
@@ -58,6 +68,16 @@
 
         </LinearLayout>
 
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:visibility="gone"
+            android:id="@+id/myNl_team_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:img_normal_right="@drawable/more_right"
+            app:txt_normal_title="*匹配团队">
+
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
         <com.cdkj.wzcd.view.MyEditLayout
             android:id="@+id/myEl_you_number"
             android:layout_width="match_parent"
@@ -67,6 +87,7 @@
             app:txt_input_title="*申领有线个数">
 
         </com.cdkj.wzcd.view.MyEditLayout>
+
 
         <com.cdkj.wzcd.view.MyEditLayout
             android:id="@+id/myEl_wu_number"

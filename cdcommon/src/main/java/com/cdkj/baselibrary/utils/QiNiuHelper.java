@@ -386,6 +386,8 @@ public class QiNiuHelper {
         void onFal(String info);
 
         void progress(String key, double percent);
+
+        void complete();
     }
 
     /**
@@ -509,6 +511,94 @@ public class QiNiuHelper {
 
     }
 
+
+    /**
+     * 上传单个文件  任何类型的文件
+     *
+     * @param callBack
+     */
+    public void uploadSingleFile(final QiNiuFileCallBack callBack, final String filePath) {
+
+        getQiniuToeknRequest().enqueue(new BaseResponseModelCallBack<QiniuGetTokenModel>(context) {
+            @Override
+            protected void onSuccess(QiniuGetTokenModel mo, String SucMessage) {
+                if (mo == null || TextUtils.isEmpty(mo.getUploadToken()) || TextUtils.isEmpty(filePath)) {
+                    if (callBack != null) {
+                        callBack.onFal(CdApplication.getContext().getString(R.string.upload_file_fail));
+                    }
+                    return;
+                }
+                String token = mo.getUploadToken();
+
+                isCancelled = false;
+
+                uploadFile(callBack, filePath, token);
+            }
+
+            @Override
+            protected void onReqFailure(String errorCode, String errorMessage) {
+                if (callBack != null) {
+                    callBack.onFal(CdApplication.getContext().getString(R.string.upload_file_fail));
+                }
+            }
+
+            @Override
+            protected void onFinish() {
+
+            }
+        });
+
+    }
+
+    /**
+     * 上传文件  任何类型的文件
+     *
+     * @param callBack
+     * @param url
+     */
+    public void uploadFile(final QiNiuFileCallBack callBack, final String url, final String token) {
+
+        Configuration config = new Configuration.Builder().build();
+
+        final UploadManager uploadManager = new UploadManager(config);
+
+        String key = ANDROID + timestamp() + "_video" + ".mp4";
+        //这个就是上传七牛的文件的名称  名字
+        File file = new File(url);
+        key = file.getName();
+        key = key.replace(" ", "_");//如果包含空格就沒办法正常播放了
+
+        uploadManager.put(url, key, token, (key12, info, response) -> {
+
+            //res包含hash、key等信息，具体字段取决于上传策略的设置
+            if (info != null && info.isOK()) {
+                if (callBack != null) {
+
+                    Observable.just("")
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(s -> callBack.onSuccess(key12));
+                }
+
+            } else {
+                if (callBack != null) {
+                    Observable.just(CdApplication.getContext().getString(R.string.upload_video_fail))
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(s -> callBack.onFal(s));
+                }
+
+
+            }
+
+
+        }, new UploadOptions(null, null, false, (key13, percent) -> {
+            if (callBack != null) {
+                callBack.progress(key13, percent);
+            }
+
+        }, () -> isCancelled));
+
+    }
+
     // 点击取消按钮，让UpCancellationSignal##isCancelled()方法返回true，以停止上传
     public void cancelLoadVideo() {
         isCancelled = true;
@@ -580,7 +670,7 @@ public class QiNiuHelper {
                 .subscribe(str -> QiNiuHelper.this.uploadVideo(new QiNiuFileCallBack() {
                     @Override
                     public void onSuccess(String key) {
-
+                        complete();
                         // 添加结果集合
                         fileResultList.add(key);
 
@@ -597,6 +687,7 @@ public class QiNiuHelper {
                             }
 
                         }
+
                     }
 
                     @Override
@@ -604,11 +695,17 @@ public class QiNiuHelper {
                         if (listListener != null) {
                             listListener.onFal(info);
                         }
+                        complete();
                     }
 
                     @Override
                     public void progress(String key, double percent) {
                         listListener.progress(key, percent);
+                    }
+
+                    @Override
+                    public void complete() {
+
                     }
                 }, str, token), (Consumer<Throwable>) throwable -> {
                     if (listListener != null) {

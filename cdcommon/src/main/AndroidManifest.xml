@@ -46,6 +46,13 @@
             android:theme="@style/ActivityDialogStyleBottom"
             android:windowSoftInputMode="adjustPan" />
 
+        <!--文件选择-->
+        <activity
+            android:name=".activitys.FileSelectActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityDialogStyleBottom"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name="com.cdkj.baselibrary.activitys.WebViewActivity"
             android:screenOrientation="portrait"

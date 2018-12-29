@@ -55,7 +55,6 @@
         <attr name="txt_image_title" format="string"></attr>
         <attr name="txt_image_hint" format="string"></attr>
         <attr name="isSingle" format="boolean"></attr>
-
         <attr name="txt_image_hint_right" format="string"></attr>
     </declare-styleable>
     
@@ -71,6 +70,11 @@
 
     <declare-styleable name="MyItemRootLayout">
         <attr name="background" format="reference"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="MyFileMultipleLayout">
+        <attr name="title" format="string"></attr>
+        <attr name="txt_file_hint" format="string"></attr>
     </declare-styleable>
 
     <declare-styleable name="MyItemNormalLayout">

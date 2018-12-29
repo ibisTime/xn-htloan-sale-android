@@ -102,7 +102,6 @@ dependencies {
     // 腾讯云 实时音视频
     compile 'com.tencent.ilivesdk:ilivesdk:1.8.5'
 
-
     annotationProcessor rootProject.ext.arouterCompiler
     implementation rootProject.ext.arouterApi
 }

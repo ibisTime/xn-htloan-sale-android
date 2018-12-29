@@ -7,9 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.wzcd.R;
-import com.cdkj.wzcd.databinding.ItemMyMultipleBinding;
+import com.cdkj.wzcd.databinding.ItemMyFileMultipleBinding;
 import com.cdkj.wzcd.model.MultipleModel;
 import com.cdkj.wzcd.view.MyMultipleLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -21,9 +20,9 @@ import java.util.List;
  * Created by cdkj on 2018/6/26.
  */
 
-public class MyMultipleAdapter extends BaseQuickAdapter<MultipleModel, BaseViewHolder> {
+public class MyFileMultipleAdapter extends BaseQuickAdapter<MultipleModel, BaseViewHolder> {
 
-    private ItemMyMultipleBinding mBinding;
+    private ItemMyFileMultipleBinding mBinding;
 
     /**
      * 点击添加图片跳转
@@ -35,8 +34,8 @@ public class MyMultipleAdapter extends BaseQuickAdapter<MultipleModel, BaseViewH
     }
 
 
-    public MyMultipleAdapter(@Nullable List<MultipleModel> data, OnAddPicClickListener mOnAddPicClickListener) {
-        super(R.layout.item_my_multiple, data);
+    public MyFileMultipleAdapter(@Nullable List<MultipleModel> data, OnAddPicClickListener mOnAddPicClickListener) {
+        super(R.layout.item_my_file_multiple, data);
         this.mOnAddPicClickListener = mOnAddPicClickListener;
     }
 
@@ -51,19 +50,12 @@ public class MyMultipleAdapter extends BaseQuickAdapter<MultipleModel, BaseViewH
         if (TextUtils.equals(item.getUrl(), MyMultipleLayout.ADD)) {
 
             mBinding.llDel.setVisibility(View.GONE);
-            //之前写的
-//            mBinding.flImg.setOnClickListener(view -> {
-//                mOnAddPicClickListener.onAddPicClick();
-//            });
-            mBinding.llHint.setOnClickListener(view -> {
+            mBinding.flImg.setOnClickListener(view -> {
                 mOnAddPicClickListener.onAddPicClick();
             });
 
         } else {
-            mBinding.llHint.setOnClickListener(view -> {
-            });
-
-            ImgUtils.loadQiniuImg(mContext, item.getUrl(), mBinding.ivImg);
+            mBinding.tvName.setText(item.getUrl());
 
             if (item.isCanEdit()) {
                 mBinding.ivHint.setImageResource(R.mipmap.modifi);

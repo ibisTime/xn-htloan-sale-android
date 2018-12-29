@@ -103,10 +103,7 @@ public class HistoryUserActivity extends AbsRefreshListActivity<HistoryBean> {
 
                 }
             });
-
         });
-
-
     }
 
 }

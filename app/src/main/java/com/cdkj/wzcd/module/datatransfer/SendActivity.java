@@ -50,10 +50,12 @@ public class SendActivity extends AbsBaseLoadActivity {
     private List<DataFileModel> sendFileList = new ArrayList<>();
     private DataFileChoiceAdapter sendFileAdapter;
     private String[] clqds;
-    ArrayList<String> clqdList = new ArrayList<>();
+    //    ArrayList<String> clqdList = new ArrayList<>();
     private Boolean isGps;
-    public List<CLQDBean> fileDatalist;//材料清单数据
+    private List<CLQDBean> fileDatalist;//材料清单数据
     String fileList = "";//材料清单入参
+    private List<CLQDBean> fileListData = new ArrayList<>();//材料清单入参
+
 
     public static void open(Context context, String code) {
         if (context != null) {
@@ -99,6 +101,13 @@ public class SendActivity extends AbsBaseLoadActivity {
         getCLQD();
 
         initListener();
+        initAdapter();
+    }
+
+    private void initAdapter() {
+        refFileAdapter = new DataFileAdapter(fileListData);
+        mBinding.rvClqd.setLayoutManager(getLinearLayoutManager(true));
+        mBinding.rvClqd.setAdapter(refFileAdapter);
     }
 
     /**
@@ -120,7 +129,7 @@ public class SendActivity extends AbsBaseLoadActivity {
                 fileDatalist = data;
                 clqds = new String[data.size()];
                 for (int i = 0; i < data.size(); i++) {
-                    clqds[i] = data.get(i).getName();
+                    clqds[i] = data.get(i).getName() + data.get(i).getNumber() + "份";
                 }
             }
 
@@ -149,33 +158,36 @@ public class SendActivity extends AbsBaseLoadActivity {
     }
 
     public void showMutilAlertDialog() {
-        clqdList.clear();
+//        clqdList.clear();
+
+        List<CLQDBean> currentIteList = new ArrayList<CLQDBean>();
 //        final String[] items = {"多选1", "多选2", "多选3", "多选4"};
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         alertBuilder.setTitle("材料清单");        /**         *第一个参数:弹出框的消息集合，一般为字符串集合         * 第二个参数：默认被选中的，布尔类数组         * 第三个参数：勾选事件监听         */
         alertBuilder.setMultiChoiceItems(clqds, null, (dialogInterface, i, isChecked) -> {
             if (isChecked) {
-                clqdList.add(clqds[i]);
-                // Toast.makeText(SendActivity.this, "选择" + clqds[i], Toast.LENGTH_SHORT).show();
+//                fileListData.add(fileDatalist.get(i));
+                currentIteList.add(fileDatalist.get(i));
             } else {
-                clqdList.remove(clqds[i]);
-//                    Toast.makeText(SendActivity.this, "取消选择" + clqds[i], Toast.LENGTH_SHORT).show();
+//                fileListData.remove(fileDatalist.get(i));
+                currentIteList.remove(fileDatalist.get(i));
             }
         });
         alertBuilder.setPositiveButton("确定", (dialogInterface, i) -> {
             dialogInterface.dismiss();
             fileList = "";
-            String clqd = "";
-            for (int j = 0; j < clqdList.size(); j++) {
+            fileListData.clear();
+            fileListData.addAll(currentIteList);
+            for (int j = 0; j < fileListData.size(); j++) {
                 CLQDBean clqdBean = fileDatalist.get(j);
-                clqd += clqdList.get(j);
                 fileList += clqdBean.getId();
-                if (j != clqdList.size() - 1) {
-                    clqd += ",";
+                if (j != fileListData.size() - 1) {
                     fileList += ",";
                 }
             }
-            mBinding.tvClqd.setText(clqd);
+            //刷新RecyclerView         mBinding.rvClqd
+            refFileAdapter.notifyDataSetChanged();
+
         });
         alertBuilder.setNegativeButton("取消", (dialogInterface, i) -> dialogInterface.dismiss());
         alertBuilder.show();
@@ -204,9 +216,7 @@ public class SendActivity extends AbsBaseLoadActivity {
         Map<String, String> map = new HashMap<>();
 
         map.put("code", code);
-
         showLoadingDialog();
-
         Call call = RetrofitUtils.createApi(MyApiServer.class).getData("632156", StringUtils.getJsonToString(map));
         addCall(call);
 
@@ -302,9 +312,7 @@ public class SendActivity extends AbsBaseLoadActivity {
             if (model.isChoice()) {
                 list.add(model);
             }
-
         }
-
         return list;
     }
 
@@ -317,9 +325,7 @@ public class SendActivity extends AbsBaseLoadActivity {
             if (model.isChoice()) {
                 sendFile = sendFile + model.getFile() + ",";
             }
-
         }
-
         return sendFile;
     }
 
@@ -328,11 +334,9 @@ public class SendActivity extends AbsBaseLoadActivity {
             int i = 0;
 
             for (DataFileModel model : sendFileList) {
-
                 if (model.isChoice()) {
                     i++;
                 }
-
             }
 
             if (i == 0) {
@@ -341,23 +345,20 @@ public class SendActivity extends AbsBaseLoadActivity {
             }
         }
 
-        if (TextUtils.isEmpty(mBinding.tvClqd.getText())) {
+        if (TextUtils.isEmpty(fileList)) {
             ToastUtil.show(this, "请选择材料清单");
             return false;
         }
-
         // 寄送方式
         if (mBinding.mySlWay.check()) {
             return false;
         }
 
         if (mBinding.llLogistics.getVisibility() == View.VISIBLE) {
-
             // 快递公司
             if (mBinding.mySlCompany.check()) {
                 return false;
             }
-
             // 快递单号
             if (TextUtils.isEmpty(mBinding.myElNumber.check())) {
                 return false;
@@ -368,8 +369,6 @@ public class SendActivity extends AbsBaseLoadActivity {
         if (TextUtils.isEmpty(mBinding.myNlDateTime.check())) {
             return false;
         }
-
-
         return true;
     }
 
@@ -388,7 +387,6 @@ public class SendActivity extends AbsBaseLoadActivity {
 //            map.put("sendFileList", "合同,材料"); // 要去掉!!!要去掉!!!要去掉!!!
             map.put("sendFileList", "");
         }
-
         if (mBinding.llLogistics.getVisibility() == View.VISIBLE) {
             map.put("logisticsCode", mBinding.myElNumber.getText());
             map.put("logisticsCompany", mBinding.mySlCompany.getDataKey());

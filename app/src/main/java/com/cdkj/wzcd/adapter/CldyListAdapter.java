@@ -11,12 +11,12 @@ import com.cdkj.wzcd.model.NodeListModel;
 import com.cdkj.wzcd.module.business.cldy.CldyApplyActivity;
 import com.cdkj.wzcd.module.business.cldy.CldyInputMessageActivity;
 import com.cdkj.wzcd.module.business.cldy.DysqActivity;
+import com.cdkj.wzcd.module.business.cldy.LrdyActivity;
 import com.cdkj.wzcd.module.business.cldy.MortgageFinishActivity;
 import com.cdkj.wzcd.module.business.cldy.NqlrActivity;
 import com.cdkj.wzcd.util.BizTypeHelper;
 import com.cdkj.wzcd.util.NodeHelper;
 import com.cdkj.wzcd.util.RequestUtil;
-import com.cdkj.wzcd.util.UserHelper;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -51,7 +51,7 @@ public class CldyListAdapter extends BaseQuickAdapter<NodeListModel, BaseViewHol
 
         mBinding.myItemCblConfirm.setContent("", "");
 
-        if (UserHelper.isZHRY()) {
+//        if (UserHelper.isZHRY()) {
 
             if (TextUtils.equals(item.getCurNodeCode(), "002_21")) { // 抵押完成
                 mBinding.myItemCblConfirm.setRightTextAndListener("抵押完成", view -> {
@@ -63,7 +63,7 @@ public class CldyListAdapter extends BaseQuickAdapter<NodeListModel, BaseViewHol
                 });
             }
 
-        } else {
+//        } else {
 //            if (UserHelper.isYWY()){
             if (TextUtils.equals(item.getCurNodeCode(), "002_18")) { // 业务团队车辆抵押
                 mBinding.myItemCblConfirm.setRightTextAndListener("录入抵押信息", view -> {
@@ -71,7 +71,7 @@ public class CldyListAdapter extends BaseQuickAdapter<NodeListModel, BaseViewHol
                 });
             }
 //        }
-        }
+//        }
 
         if (TextUtils.equals(item.getCurNodeCode(), "002_33")) { // 业务团队车辆抵押
             mBinding.myItemCblConfirm.setRightTextAndListener("抵押申请", view -> {
@@ -86,7 +86,7 @@ public class CldyListAdapter extends BaseQuickAdapter<NodeListModel, BaseViewHol
 
         if (TextUtils.equals(item.getCurNodeCode(), "002_21")) { // 抵押完成
             mBinding.myItemCblConfirm.setRightTextAndListener("录入抵押信息", view -> {
-
+                LrdyActivity.open(mContext, item.getCode());
             });
         }
     }

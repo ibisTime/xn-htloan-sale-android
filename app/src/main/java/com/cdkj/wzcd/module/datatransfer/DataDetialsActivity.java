@@ -89,7 +89,7 @@ public class DataDetialsActivity extends AbsBaseLoadActivity {
 
     private void initAdapter() {
         refFileAdapter = new DataFileAdapter(refFileList);
-        mBinding.rvRefFile.setLayoutManager(getLinearLayoutManager(false));
+        mBinding.rvRefFile.setLayoutManager(getLinearLayoutManager(true));
         mBinding.rvRefFile.setAdapter(refFileAdapter);
     }
 
@@ -108,6 +108,7 @@ public class DataDetialsActivity extends AbsBaseLoadActivity {
                     return;
                 }
                 fileList = data;
+
                 getData();
             }
 
@@ -130,6 +131,7 @@ public class DataDetialsActivity extends AbsBaseLoadActivity {
             @Override
             protected void onSuccess(DataTransferModel data, String SucMessage) {
                 setView(data);
+
             }
 
             @Override
@@ -183,6 +185,7 @@ public class DataDetialsActivity extends AbsBaseLoadActivity {
                             }
                         }
                     }
+//                    mBinding.rvRefFile.setAdapter(refFileAdapter);
                     refFileAdapter.notifyDataSetChanged();
                 }
             }

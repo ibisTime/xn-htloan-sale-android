@@ -16,6 +16,7 @@ import com.cdkj.baselibrary.nets.BaseResponseListCallBack;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.CameraHelper;
+import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.baselibrary.utils.QiNiuHelper;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.baselibrary.utils.ToastUtil;
@@ -70,7 +71,7 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
     /**
      * @param context
      */
-    public static void open(Context context,String code) {
+    public static void open(Context context, String code) {
         if (context == null) {
             return;
         }
@@ -91,20 +92,16 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
         mBaseBinding.titleView.setMidTitle("发起征信");
 
         init();
-
         initListener();
         initListAdapter();
-
-
     }
 
     private void init() {
         mBank = new ArrayList<>();
 
-        if (getIntent() != null){
+        if (getIntent() != null) {
             creditCode = getIntent().getStringExtra(DATA_SIGN);
         }
-
     }
 
     private void initListener() {
@@ -113,37 +110,33 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
         });
 
         mBinding.myCbConfirm.setOnConfirmListener(view -> {
-            if (check()){
-
+            if (check()) {
                 creditAddRequest("1");
-
             }
         });
 
         mBinding.myCbConfirm.setOnConfirmRightListener(view -> {
-            if (check()){
-
+            if (check()) {
                 creditAddRequest("0");
-
             }
         });
     }
 
-    private boolean check(){
+    private boolean check() {
         // 银行
-        if (mBinding.mySlBank.check()){
+        if (mBinding.mySlBank.check()) {
             return false;
         }
         // 业务种类
-        if (mBinding.mySlWay.check()){
+        if (mBinding.mySlWay.check()) {
             return false;
         }
 //        // 贷款金额
 //        if (TextUtils.isEmpty(mBinding.myElAmount.check())){
 //            return false;
 //        }
-        if (mBinding.myIlReport.getVisibility() == View.VISIBLE){
-            // 二手车评估报告
+//        if (mBinding.myIlReport.getVisibility() == View.VISIBLE){
+        // 二手车评估报告
 //            if (TextUtils.isEmpty(mBinding.myIlReport.check())){
 //                LogUtil.E("二手车评估报告");
 //                return false;
@@ -158,10 +151,10 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
 //                LogUtil.E("行驶证反面");
 //                return false;
 //            }
-        }
+//        }
 
         // 征信人
-        if (mList.size() == 0){
+        if (mList.size() == 0) {
             ToastUtil.show(this, "请添加征信人");
             return false;
         }
@@ -196,8 +189,8 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
                 if (data == null)
                     return;
 
-                for (ExchangeBankModel model : data){
-                    mBank.add(new DataDictionary().setDkey(model.getCode()).setDvalue(model.getBankName()+model.getSubbranch()));
+                for (ExchangeBankModel model : data) {
+                    mBank.add(new DataDictionary().setDkey(model.getCode()).setDvalue(model.getBankName() + model.getSubbranch()));
                 }
 
                 mBinding.mySlBank.setData(mBank, null);
@@ -219,25 +212,25 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
 
         mBinding.mySlWay.setData(this, MySelectLayout.DATA_DICTIONARY, DataDictionaryHelper.budget_orde_biz_typer, (dialog, which) -> {
             // 新车则隐藏证件
-            mBinding.myIlReport.setVisibility(which == 0 ? View.GONE : View.VISIBLE);
+            mBinding.myFlReport.setVisibility(which == 0 ? View.GONE : View.VISIBLE);
         });
 
-        mBinding.myIlReport.setActivity(this,3,0);
+        mBinding.myFlReport.build(this, 3);
     }
 
     public void initListAdapter() {
 
-        DataDictionaryHelper.getDataDictionaryRequest(this, DataDictionaryHelper.credit_user_loan_role, "",data -> {
+        DataDictionaryHelper.getDataDictionaryRequest(this, DataDictionaryHelper.credit_user_loan_role, "", data -> {
 
-            if (data == null || data.size() == 0){
+            if (data == null || data.size() == 0) {
                 return;
             }
 
             mRole.addAll(data);
 
-            DataDictionaryHelper.getDataDictionaryRequest(this, DataDictionaryHelper.credit_user_relation, "",data1 -> {
+            DataDictionaryHelper.getDataDictionaryRequest(this, DataDictionaryHelper.credit_user_relation, "", data1 -> {
 
-                if (data1 == null || data1.size() == 0){
+                if (data1 == null || data1.size() == 0) {
                     return;
                 }
 
@@ -270,26 +263,56 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
         }
         String path = data.getStringExtra(CameraHelper.staticPath);
         showLoadingDialog();
-        new QiNiuHelper(this).uploadSinglePic(new QiNiuHelper.QiNiuCallBack() {
-            @Override
-            public void onSuccess(String key) {
 
-                if (requestCode == mBinding.myIlReport.getRequestCode()){
-                    mBinding.myIlReport.setFlImg(key);
+        if (requestCode == mBinding.myFlReport.getRequestCode()) {
+
+            showLoadingDialog();
+            new QiNiuHelper(this).uploadSingleFile(new QiNiuHelper.QiNiuFileCallBack() {
+                @Override
+                public void onSuccess(String key) {
+                    mBinding.myFlReport.addList(key);
+                    disMissLoading();
                 }
 
-                disMissLoading();
-            }
+                @Override
+                public void onFal(String info) {
+                    UITipDialog.showFail(CreditInitiateActivity.this, info);
+                    disMissLoading();
+                }
 
-            @Override
-            public void onFal(String info) {
-                disMissLoading();
-            }
-        }, path);
+                @Override
+                public void progress(String key, double percent) {
+                    LogUtil.E("进度:" + percent);
+                }
+
+                @Override
+                public void complete() {
+                    disMissLoading();
+                }
+            }, path);
+
+        }
+
+//        new QiNiuHelper(this).uploadSinglePic(new QiNiuHelper.QiNiuCallBack() {
+//            @Override
+//            public void onSuccess(String key) {
+//
+//                if (requestCode == mBinding.myIlReport.getRequestCode()) {
+//                    mBinding.myIlReport.setFlImg(key);
+//                }
+//
+//                disMissLoading();
+//            }
+//
+//            @Override
+//            public void onFal(String info) {
+//                disMissLoading();
+//            }
+//        }, path);
     }
 
     @Subscribe
-    public void doAddCreditPerson(CreditUserModel model){
+    public void doAddCreditPerson(CreditUserModel model) {
 
         mList.add(model);
 
@@ -298,7 +321,7 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
     }
 
     @Subscribe
-    public void doReplaceCreditPerson(CreditUserReplaceModel model){
+    public void doReplaceCreditPerson(CreditUserReplaceModel model) {
 
         mList.set(model.getLocation(), model.getCreditUserModel());
 
@@ -309,20 +332,20 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
     /**
      * 发起征信
      */
-    private void creditAddRequest(String buttonCode){
+    private void creditAddRequest(String buttonCode) {
         Map<String, Object> map = new HashMap<>();
 
-        if(!TextUtils.isEmpty(creditCode)){
+        if (!TextUtils.isEmpty(creditCode)) {
             map.put("creditCode", creditCode);
         }
 
         map.put("bizType", mBinding.mySlWay.getDataKey());
         map.put("buttonCode", buttonCode);
         map.put("creditUserList", mList);
-        map.put("loanAmount", formatAmountMul(mBinding.myElAmount.getText()));
+        map.put("loanAmount", TextUtils.isEmpty(mBinding.myElAmount.getText()) ? "" : formatAmountMul(mBinding.myElAmount.getText()));
         map.put("loanBankCode", mBinding.mySlBank.getDataKey());
         map.put("operator", SPUtilHelper.getUserId());
-        map.put("secondCarReport", mBinding.myIlReport.getFlImgUrl());
+        map.put("secondCarReport", mBinding.myFlReport.getListData());
         map.put("note", mBinding.myElNote.getText());
 
         Call call = RetrofitUtils.getBaseAPiService().codeRequest(TextUtils.isEmpty(creditCode) ? "632110" : "632112", StringUtils.getJsonToString(map));
@@ -335,7 +358,7 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
 
             @Override
             protected void onSuccess(CodeModel data, String SucMessage) {
-                UITipDialog.showSuccess(CreditInitiateActivity.this,TextUtils.equals(buttonCode, "1") ? "发起成功" : "保存成功", dialogInterface -> {
+                UITipDialog.showSuccess(CreditInitiateActivity.this, TextUtils.equals(buttonCode, "1") ? "发起成功" : "保存成功", dialogInterface -> {
                     finish();
                 });
             }
@@ -404,12 +427,12 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
 
         mBinding.myElAmount.setText(RequestUtil.formatAmountDiv(mData.getLoanAmount()));
 
-        if (TextUtils.equals(mData.getBizType(), "1")){ //二手车
+        if (TextUtils.equals(mData.getBizType(), "1")) { //二手车
             // 新车则隐藏证件
-            mBinding.myIlReport.setVisibility( View.VISIBLE);
+            mBinding.myFlReport.setVisibility(View.VISIBLE);
 
 
-            mBinding.myIlReport.setFlImg(mData.getSecondCarReport());
+            mBinding.myFlReport.setListData(mData.getSecondCarReport());
         }
 
         mBaseBinding.titleView.setMidTitle("修改征信信息");

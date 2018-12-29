@@ -77,7 +77,6 @@ public class MyNormalLayout extends LinearLayout {
         if (!TextUtils.isEmpty(content))
             mBinding.tvContent.setText(content);
     }
-
     public String check() {
 
         if (TextUtils.isEmpty(mBinding.tvContent.getText().toString().trim())) {

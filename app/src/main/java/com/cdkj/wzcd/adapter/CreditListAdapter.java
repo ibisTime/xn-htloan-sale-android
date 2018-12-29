@@ -80,13 +80,12 @@ public class CreditListAdapter extends BaseQuickAdapter<CreditModel, BaseViewHol
                 });
             }
 
-            // 发起征信环节增加撤回功能，发起后直接撤回,如驻行已录入征信结果则不能撤回
+            // 发起征信环节增加撤回功能，发起后直接撤回,如果驻行已录入征信结果则不能撤回
             if (TextUtils.equals(item.getCurNodeCode(), "001_02")) { // 录入征信结果
                 mBinding.myItemCblConfirm.setRightTextAndListener("撤回", view -> {
                     mCancelInterface.click(view, item.getCode());
                 });
             }
-
         }
 
     }

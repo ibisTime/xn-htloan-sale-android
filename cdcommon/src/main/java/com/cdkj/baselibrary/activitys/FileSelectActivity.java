@@ -16,10 +16,9 @@ import com.cdkj.baselibrary.utils.ToastUtil;
 /**
  * 打开相机 相册 图片裁剪 功能
  */
-public class ImageSelectActivity extends Activity implements View.OnClickListener, CameraPhotoListener {
+public class FileSelectActivity extends Activity implements View.OnClickListener, CameraPhotoListener {
 
-    private TextView tv_take_capture;// 拍照
-    private TextView tv_alumb;// 相册选取
+    private TextView tv_file;// 文件选取
     private TextView tv_cancle;// 取消
     private View empty_view;// 取消
 
@@ -40,7 +39,7 @@ public class ImageSelectActivity extends Activity implements View.OnClickListene
         if (activity == null) {
             return;
         }
-        Intent intent = new Intent(activity, ImageSelectActivity.class);
+        Intent intent = new Intent(activity, FileSelectActivity.class);
         intent.putExtra("showType", showType);
         intent.putExtra("isSplit", isSplit);
         activity.startActivityForResult(intent, photoid);
@@ -50,7 +49,7 @@ public class ImageSelectActivity extends Activity implements View.OnClickListene
         if (activity == null) {
             return;
         }
-        Intent intent = new Intent(activity, ImageSelectActivity.class);
+        Intent intent = new Intent(activity, FileSelectActivity.class);
 
         activity.startActivityForResult(intent, requestCode);
     }
@@ -59,7 +58,7 @@ public class ImageSelectActivity extends Activity implements View.OnClickListene
         if (fragment == null || fragment.getActivity() == null) {
             return;
         }
-        Intent intent = new Intent(fragment.getActivity(), ImageSelectActivity.class);
+        Intent intent = new Intent(fragment.getActivity(), FileSelectActivity.class);
         fragment.startActivityForResult(intent, photoid);
     }
 
@@ -67,44 +66,22 @@ public class ImageSelectActivity extends Activity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_image);
+        setContentView(R.layout.activity_select_file);
         initLayout();
         initVar();
     }
 
     private void initVar() {
-        if (getIntent() != null) {
-            isSplit = getIntent().getBooleanExtra("isSplit", isSplit); //获取是否裁剪
-            switch (getIntent().getIntExtra("showType", 0)) {      //根据参数显示相册按钮还是显示拍照按钮 默认两个都显示
-                case SHOWPIC:
-                    tv_take_capture.setVisibility(View.VISIBLE);
-                    tv_alumb.setVisibility(View.GONE);
-                    break;
-                case SHOWALBUM:
-                    tv_take_capture.setVisibility(View.GONE);
-                    tv_alumb.setVisibility(View.VISIBLE);
-                    break;
-                default:
-                    tv_take_capture.setVisibility(View.VISIBLE);
-                    tv_alumb.setVisibility(View.VISIBLE);
-                    break;
-            }
-        } else {
-            tv_take_capture.setVisibility(View.VISIBLE);
-            tv_alumb.setVisibility(View.VISIBLE);
-        }
         cameraHelper = new CameraHelper(this, this);
-        cameraHelper.setSplit(isSplit);
     }
 
     protected void initLayout() {
-        tv_take_capture = (TextView) findViewById(R.id.tv_take_capture);
-        tv_alumb = (TextView) findViewById(R.id.tv_alumb);
+
+        tv_file = (TextView) findViewById(R.id.tv_file);
         tv_cancle = (TextView) findViewById(R.id.tv_cancle);
         empty_view = findViewById(R.id.empty_view);
 
-        tv_take_capture.setOnClickListener(this);
-        tv_alumb.setOnClickListener(this);
+        tv_file.setOnClickListener(this);
         tv_cancle.setOnClickListener(this);
         empty_view.setOnClickListener(this);
 
@@ -113,10 +90,8 @@ public class ImageSelectActivity extends Activity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.tv_take_capture) {
-            cameraHelper.startCamera();
-        } else if (i == R.id.tv_alumb) {
-            cameraHelper.startAlbum();
+        if (i == R.id.tv_file) {
+            cameraHelper.startFile();
         } else if (i == R.id.empty_view || i == R.id.tv_cancle) {
             finish();
         }
@@ -152,7 +127,7 @@ public class ImageSelectActivity extends Activity implements View.OnClickListene
 
     @Override
     public void onPhotoFailure(int code, String msg) {
-        if(!TextUtils.isEmpty(msg)){
+        if (!TextUtils.isEmpty(msg)) {
             ToastUtil.show(this, msg);
         }
         finish();
@@ -160,6 +135,6 @@ public class ImageSelectActivity extends Activity implements View.OnClickListene
 
     @Override
     public void noPermissions(int code) {
-        ToastUtil.show(this, getString(R.string.no_camera_permission));
+        ToastUtil.show(this, "没有获取相关权限功能无法使用");
     }
 }

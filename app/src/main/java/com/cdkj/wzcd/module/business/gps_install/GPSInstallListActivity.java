@@ -115,17 +115,14 @@ public class GPSInstallListActivity extends AbsRefreshListActivity {
             curNodeCodeList.add("002_09");
             curNodeCodeList.add("002_10");
             curNodeCodeList.add("002_12");
+            curNodeCodeList.add("002_32");
 
-            map.put("curNodeCodeList", curNodeCodeList);
+            map.put("advanfCurNodeCodeList", curNodeCodeList);
             map.put("start", pageIndex + "");
             map.put("limit", limit + "");
             map.put("roleCode", SPUtilHelper.getRoleCode());
             map.put("teamCode", SPUtilHelper.getTeamCode());
             map.put("userId", SPUtilHelper.getUserId());
-//            if (!UserHelper.isZHRY()) {
-//                map.put("saleUserId", SPUtilHelper.getUserId());
-//                map.put("teamCode", SPUtilHelper.getTeamCode());
-//            }
             if (selectFrist == 0) {
                 //未安装
                 map.put("isGpsAz", "0");

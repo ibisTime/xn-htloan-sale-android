@@ -54,6 +54,14 @@ public class MyEditLayout extends LinearLayout {
         setData();
     }
 
+
+
+    private void init(Context context) {
+        this.context = context;
+        mBinding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.layout_my_input_horizontal, this, true);
+
+    }
+
     private void setData() {
         mBinding.tvTitle.setText(txtTitle);
         mBinding.tvTitleRight.setText(txtTitleRight);
@@ -107,12 +115,6 @@ public class MyEditLayout extends LinearLayout {
         }
     }
 
-
-    private void init(Context context) {
-        this.context = context;
-        mBinding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.layout_my_input_horizontal, this, true);
-
-    }
 
     public String check(){
 

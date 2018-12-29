@@ -47,9 +47,7 @@ public class BssCreditListActivity extends AbsTabLayoutActivity {
         if (!UserHelper.isZHRY()){
             mBaseBinding.titleView.setRightTitle("发起征信");
             mBaseBinding.titleView.setRightFraClickListener(view -> {
-
 //                select();
-
                 CreditInitiateActivity.open(this, null);
 
             });

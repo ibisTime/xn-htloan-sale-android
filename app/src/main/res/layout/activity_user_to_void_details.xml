@@ -50,6 +50,6 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
             android:padding="5dp"
-            android:text="作废原因:有位非常漂亮的女同事，有天起晚了没有时间化妆便急忙冲到公司。结果那天她被记旷工了……吃惊]" />
+            tools:text="作废原因:有位非常漂亮的女同事，有天起晚了没有时间化妆便急忙冲到公司。结果那天她被记旷工了……吃惊]" />
     </LinearLayout>
 </layout>

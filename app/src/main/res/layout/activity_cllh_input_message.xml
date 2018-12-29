@@ -121,6 +121,22 @@
                 android:layout_height="wrap_content"
                 app:title="其他资料" />
 
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_dy_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:img_normal_right="@drawable/more_right"
+                app:txt_normal_hint="请选择抵押日期"
+                app:txt_normal_title="抵押日期">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myMl_green_boook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="绿大本扫描件" />
+
             <com.cdkj.wzcd.view.MyConfirmBtn
                 android:id="@+id/myCb_confirm"
                 android:layout_width="match_parent"

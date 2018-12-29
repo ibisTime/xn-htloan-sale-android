@@ -47,14 +47,16 @@ public class RoomActivity extends AbsBaseLoadActivity implements IRoomView {
     private int roomId;
     private long startTime;
     private Call<BaseResponseModel<RecModel>> iLiveVoide;
-    private String streamId="";
+    private String streamId = "";
+    private boolean isBoos;
 
-    public static void open(Context context, int roomId) {
+    public static void open(Context context, int roomId, boolean isBoos) {
         if (context == null) {
             return;
         }
         Intent intent = new Intent(context, RoomActivity.class);
         intent.putExtra(DATA_SIGN, roomId);
+        intent.putExtra("isBoos", isBoos);
         context.startActivity(intent);
     }
 
@@ -84,6 +86,14 @@ public class RoomActivity extends AbsBaseLoadActivity implements IRoomView {
             return;
 
         roomId = getIntent().getIntExtra(DATA_SIGN, -1);
+        isBoos = getIntent().getBooleanExtra("isBoos", true);
+        //不是创建房间的人 不能进行录制
+        if (!isBoos) {
+            mBinding.btnRecord.setVisibility(View.GONE);
+        } else {
+            mBinding.btnRecord.setVisibility(View.VISIBLE);
+        }
+
         LogUtil.E("pppppp房间号id为:" + roomId);
         if (roomId >= 1 && roomId <= 10000000) {
             helper.createRoom(roomId);
@@ -155,8 +165,10 @@ public class RoomActivity extends AbsBaseLoadActivity implements IRoomView {
 
     @Override
     public void onEnterRoomFailed(String module, int errCode, String errMsg) {
+//        UITipDialog.showFail(this, "创建房间失败,请重试");
         LogUtil.E("onEnterRoomFailed()  创建房间失败：" + errCode + "::::" + errMsg);
-        ToastUtil.show(this, "创建房间失败：" + errCode + "::::" + errMsg);
+//        ToastUtil.show(this, "创建房间失败：" + errCode + "::::" + errMsg);
+        ToastUtil.show(this, "创建房间失败,请重试" );
     }
 
     @Override
@@ -168,19 +180,27 @@ public class RoomActivity extends AbsBaseLoadActivity implements IRoomView {
 //        bean.setVideoUrl("http://1257046543.vod2.myqcloud.com/c78eb187vodcq1257046543/e435427d5285890782240300405/f0.mp4");
         bean.setRoomId(roomId + "");
         bean.setStreamId(streamId + "");
+        bean.setBoos(isBoos);
+
         EventBus.getDefault().post(bean);
     }
 
     @Override
     public void onQuitRoomFailed(String module, int errCode, String errMsg) {
+
+//        ToastUtil.show(this, "退出房间失败：" + errCode + "::::" + errMsg);
+        ToastUtil.show(this, "退出房间失败");
         LogUtil.E("onQuitRoomFailed()  退出房间失败：" + errCode + "::::" + errMsg);
-        ToastUtil.show(this, "退出房间失败：" + errCode + "::::" + errMsg);
+
+
     }
 
     @Override
     public void onRoomDisconnect(int errCode, String errMsg) {
+//        UITipDialog.showFail(this, "房间连接断开");
+//        ToastUtil.show(this, "连接断开：" + errCode + "::::" + errMsg);
+        ToastUtil.show(this, "房间连接断开");
         LogUtil.E("onRoomDisconnect()  连接断开：" + errCode + "::::" + errMsg);
-        ToastUtil.show(this, "连接断开：" + errCode + "::::" + errMsg);
     }
 
     // 处理Activity事件
@@ -200,4 +220,6 @@ public class RoomActivity extends AbsBaseLoadActivity implements IRoomView {
         super.onDestroy();
         helper.quitRoom();
     }
+
+
 }

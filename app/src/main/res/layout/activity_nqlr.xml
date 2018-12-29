@@ -6,88 +6,116 @@
 
     </data>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
-        <com.cdkj.wzcd.view.MyNormalLayout
-            android:id="@+id/myNl_name"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:txt_normal_title="客户姓名">
-
-        </com.cdkj.wzcd.view.MyNormalLayout>
-
-        <com.cdkj.wzcd.view.MyNormalLayout
-            android:id="@+id/myNl_code"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:txt_normal_title="业务编号">
-
-        </com.cdkj.wzcd.view.MyNormalLayout>
-
-        <com.cdkj.wzcd.view.MyNormalLayout
-            android:id="@+id/myNl_company_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:txt_normal_title="业务公司">
-
-        </com.cdkj.wzcd.view.MyNormalLayout>
-
-        <com.cdkj.wzcd.view.MyNormalLayout
-            android:id="@+id/myNl_amount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:txt_normal_title="贷款金额">
-
-        </com.cdkj.wzcd.view.MyNormalLayout>
-
-        <com.cdkj.wzcd.view.MyNormalLayout
-            android:id="@+id/myNl_bank"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:txt_normal_title="贷款银行">
-
-        </com.cdkj.wzcd.view.MyNormalLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
-        <com.cdkj.wzcd.view.MyEditLayout
-            android:id="@+id/myEl_insideJobName"
-            app:txt_input_title="已录入抵押代理人"
-            app:txt_input_hint="姓名"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="客户姓名">
 
-        </com.cdkj.wzcd.view.MyEditLayout>
+            </com.cdkj.wzcd.view.MyNormalLayout>
 
-        <com.cdkj.wzcd.view.MyMultipleLayout
-            android:id="@+id/myMl_pledgeUserIdCardCopy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:title="身份证复印件">
-        </com.cdkj.wzcd.view.MyMultipleLayout>
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="业务编号">
 
-        <com.cdkj.wzcd.view.MyEditLayout
-            android:id="@+id/my_elOther"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></com.cdkj.wzcd.view.MyEditLayout>
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_loanBankName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="贷款银行"></com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="贷款金额"></com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_teamName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="业务团队"></com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_saleUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="信贷专员">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_insideJobName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="内勤专员">
+
+            </com.cdkj.wzcd.view.MyNormalLayout>
 
 
+            <com.cdkj.wzcd.view.MyEditLayout
+                android:id="@+id/myEl_insideJobName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入姓名"
+                app:txt_input_title="已录入抵押代理人">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="0dp"/>
+            </com.cdkj.wzcd.view.MyEditLayout>
 
-        <com.cdkj.wzcd.view.MyConfirmBtn
-            android:id="@+id/myCb_confirm"
-            app:txt_confirm_content="确认"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myMl_pledgeUserIdCardCopy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="身份证复印件"></com.cdkj.wzcd.view.MyMultipleLayout>
 
-        </com.cdkj.wzcd.view.MyConfirmBtn>
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_pledgeAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="抵押地点"></com.cdkj.wzcd.view.MyNormalLayout>
 
-    </LinearLayout>
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNl_supplementNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_title="补充说明"></com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyEditLayout
+                android:id="@+id/my_elOther"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入审核说明"
+                app:txt_input_title="审核说明"></com.cdkj.wzcd.view.MyEditLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <com.cdkj.wzcd.view.MyConfirmBtn
+                android:id="@+id/myCb_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_confirm_content="确认">
+
+            </com.cdkj.wzcd.view.MyConfirmBtn>
+
+        </LinearLayout>
+    </ScrollView>
 </layout>

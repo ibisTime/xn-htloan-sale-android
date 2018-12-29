@@ -88,18 +88,18 @@ public class DataTransferListFragment extends AbsRefreshListFragment<CllhListBea
             if (isFirstRequest) {
                 mRefreshHelper.onDefaultMRefresh(true);
             }
-
         }
     }
 
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
         DataTransferAdapter mAdapter;
-        if (DATA_GPS.equals(dataType)) {
-            mAdapter = new DataTransferAdapter(listData, mCompany, true);
-        } else {
-            mAdapter = new DataTransferAdapter(listData, mCompany);
-        }
+            mAdapter = new DataTransferAdapter(listData, mCompany, dataType);
+//        if (DATA_GPS.equals(dataType)) {
+//        mAdapter = new DataTransferAdapter(listData, mCompany, dataType);
+//        } else {
+//            mAdapter = new DataTransferAdapter(listData, mCompany);
+//        }
 
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             DataTransferModel item = (DataTransferModel) adapter.getItem(position);

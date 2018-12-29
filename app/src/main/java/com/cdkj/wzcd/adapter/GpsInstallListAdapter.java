@@ -35,13 +35,13 @@ public class GpsInstallListAdapter extends BaseQuickAdapter<NodeListModel, BaseV
     protected void convert(BaseViewHolder helper, NodeListModel item) {
         mBinding = DataBindingUtil.bind(helper.itemView);
 
-        mBinding.myTlIdStatus.setText(item.getCode(), NodeHelper.getNameOnTheCode(item.getCurNodeCode()));
+        mBinding.myTlIdStatus.setText(item.getCode(), NodeHelper.getNameOnTheCode(item.getAdvanfCurNodeCode()));
 
         mBinding.myIlName.setText(item.getApplyUserName());
         mBinding.myIlCompany.setText(item.getCompanyName());
         mBinding.myIlCode.setText(item.getCarBrand());
 
-        if (TextUtils.equals(item.getCurNodeCode(),"002_09") || TextUtils.equals(item.getCurNodeCode(),"002_12")){ // 业务团队安装GPS / 业务团队重新安装GPS
+        if (TextUtils.equals(item.getAdvanfCurNodeCode(),"002_09") || TextUtils.equals(item.getAdvanfCurNodeCode(),"002_12")){ // 业务团队安装GPS / 业务团队重新安装GPS
 
             mBinding.myItemCblConfirm.setRightTextAndListener("录入", view -> {
                 GPSInstallInfoActivity.open(mContext, item.getCode());

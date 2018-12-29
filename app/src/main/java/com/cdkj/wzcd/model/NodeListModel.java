@@ -150,7 +150,7 @@ public class NodeListModel  {
     private int monthDeposit;
     private int firstAmount;
     private int firstRate;
-    private String loanAmount;
+//    private String loanAmount;
     private String settleAddress;
     private String applyUserId;
     private String applyUserName;
@@ -212,16 +212,16 @@ public class NodeListModel  {
     private String advanceFundDatetime;
     private String advanceFundAmount;
     private String carSettleDatetime;
-    private String carNumber;
+//    private String carNumber;
     private String carInvoice;
     private String carHgz;
     private String carJqx;
     private String carSyx;
     private String carSettleOtherPdf;
-    private String carRegcerti;
-    private String carPd;
-    private String carKey;
-    private String carBigSmj;
+//    private String carRegcerti;
+//    private String carPd;
+//    private String carKey;
+//    private String carBigSmj;
     private String bankCommitDatetime;
     private String repayBankcardNumber;
     private String repayBillDate;
@@ -250,8 +250,124 @@ public class NodeListModel  {
     private String insideJobName;//内勤
     private String policyDueDate;
     private String teamName;
+
+    private String areaName;
+    private String loanAmount;
+    private String carModel;
+    private String carFrameNo;
+    private String carBigSmj;
+    private String carKey;
+    private String carNumber;
+    private String carPd;
+    private String carRegcerti;
+    private String carXszSmj;
+    private String dutyPaidProveSmj;
+    private String advanfCurNodeCode;
+    private String intevCurNodeCode;
     private int age;
+    private String pledgeUser;
+    private String pledgeAddress;
+    private String supplementNote;
+    private String repaySubbranch;
+
+    public String getRepaySubbranch() {
+        return repaySubbranch;
+    }
+
+    public void setRepaySubbranch(String repaySubbranch) {
+        this.repaySubbranch = repaySubbranch;
+    }
+
+    public String getSupplementNote() {
+        return supplementNote;
+    }
+
+    public void setSupplementNote(String supplementNote) {
+        this.supplementNote = supplementNote;
+    }
+
+    public String getPledgeAddress() {
+        return pledgeAddress;
+    }
+
+    public void setPledgeAddress(String pledgeAddress) {
+        this.pledgeAddress = pledgeAddress;
+    }
+
+    public String getPledgeUser() {
+        return pledgeUser;
+    }
+
+    public void setPledgeUser(String pledgeUser) {
+        this.pledgeUser = pledgeUser;
+    }
+
+    public String getIntevCurNodeCode() {
+        return intevCurNodeCode;
+    }
+
+    public void setIntevCurNodeCode(String intevCurNodeCode) {
+        this.intevCurNodeCode = intevCurNodeCode;
+    }
+
+    //    carBigSmj	必填，大本扫描件	string
+//    carKey	必填，车钥匙	string
+//    carNumber	必填，车牌号	string
+//    carPd	必填，车辆批单	string
+//    carRegcerti	必填，登记证书	string
+//    carXszSmj	必填，车辆行驶证扫描件	string
+//    code	必填，预算单编号	string
+//    dutyPaidProveSmj	必填，完税证明扫描件	string
+
+    public String getAdvanfCurNodeCode() {
+        return advanfCurNodeCode;
+    }
+
+    public void setAdvanfCurNodeCode(String advanfCurNodeCode) {
+        this.advanfCurNodeCode = advanfCurNodeCode;
+    }
+
     private List<BudgetOrderGpsListBean> budgetOrderGpsList;
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
+    }
+
+    public String getCarModel() {
+        return carModel;
+    }
+
+    public void setCarModel(String carModel) {
+        this.carModel = carModel;
+    }
+
+    public String getCarFrameNo() {
+        return carFrameNo;
+    }
+
+    public void setCarFrameNo(String carFrameNo) {
+        this.carFrameNo = carFrameNo;
+    }
+
+    public String getCarXszSmj() {
+        return carXszSmj;
+    }
+
+    public void setCarXszSmj(String carXszSmj) {
+        this.carXszSmj = carXszSmj;
+    }
+
+    public String getDutyPaidProveSmj() {
+        return dutyPaidProveSmj;
+    }
+
+    public void setDutyPaidProveSmj(String dutyPaidProveSmj) {
+        this.dutyPaidProveSmj = dutyPaidProveSmj;
+    }
 
     public String getTeamName() {
         return teamName;

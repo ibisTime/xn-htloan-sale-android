@@ -64,21 +64,33 @@ public class CldyApplyActivity extends AbsBaseLoadActivity {
 
         initListener();
         initCustomView();
+        initView();
+    }
+
+    private void initView() {
+        mBinding.myMlPledgeUserIdCardCopy.build(this,1);
+
+        mBinding.myMlCarBigSmj.build(this, 2);
+        mBinding.myMlCarPd.build(this, 3);
+        mBinding.myMlCarKey.build(this, 4);
+        mBinding.myMlCarRegcerti.build(this, 5);
+        mBinding.myMlCarXszSmj.build(this, 6);
+        mBinding.myMlDutyPaidProveSmj.build(this, 7);
     }
 
     private void initListener() {
         mBinding.myNlDateTime.setOnClickListener(view -> {
-            new DatePickerHelper().build(this).getDate(mBinding.myNlDateTime, true, true,  true, false, false, false);
+            new DatePickerHelper().build(this).getDate(mBinding.myNlDateTime, true, true, true, false, false, false);
         });
 
         mBinding.myCbConfirm.setOnConfirmListener(view -> {
-            if (check()){
+            if (check()) {
                 inputRequest();
             }
         });
     }
 
-    public void getNode(){
+    public void getNode() {
         Map<String, String> map = RetrofitUtils.getRequestMap();
 
         map.put("code", code);
@@ -104,32 +116,48 @@ public class CldyApplyActivity extends AbsBaseLoadActivity {
     }
 
     private void setView(NodeListModel data) {
+//        mBinding.myNlName.setText(data.getApplyUserName());
+//        mBinding.myNlCode.setText(data.getCode());
         mBinding.myNlName.setText(data.getApplyUserName());
         mBinding.myNlCode.setText(data.getCode());
-        mBinding.myNlBank.setText(data.getLoanBankName());
-        mBinding.myNlLoanAmount.setText(RequestUtil.formatAmountDivSign(data.getLoanAmount()));
+        mBinding.myNlAmount.setText(RequestUtil.formatAmountDivSign(data.getLoanAmount()));
+        mBinding.myNlTeamName.setText(data.getTeamName());
+        mBinding.myNlLoanBankName.setText(data.getLoanBankName() + data.getRepaySubbranch());
+        mBinding.myNlSaleUserName.setText(data.getSaleUserName());//信贷专员
+        mBinding.myNlInsideJobName.setText(data.getInsideJobName());//内勤专员
+        mBinding.myMlPledgeUserIdCardCopy.setListDataByRequest(data.getPledgeUserIdCardCopy());
+
+        mBinding.myMlCarBigSmj.setListDataByRequest(data.getCarBigSmj());
+        mBinding.myMlCarPd.setListDataByRequest(data.getCarPd());
+        mBinding.myMlCarKey.setListDataByRequest(data.getCarKey());
+        mBinding.myMlCarRegcerti.setListDataByRequest(data.getCarRegcerti());
+        mBinding.myMlCarXszSmj.setListDataByRequest(data.getCarXszSmj());
+        mBinding.myMlDutyPaidProveSmj.setListDataByRequest(data.getDutyPaidProveSmj());
+        mBinding.myNlPledgeAddress.setText(data.getPledgeAddress());
+        mBinding.myNlSupplementNote.setText(data.getSupplementNote());
+        mBinding.myNlCarNumber.setText(data.getCarNumber());
+        mBinding.myNlAreaName.setText(data.getAreaName());
+
     }
 
     private void initCustomView() {
         mBinding.myNlDateTime.setOnClickListener(view -> {
-            new DatePickerHelper().build(this).getDate(mBinding.myNlDateTime, true, true,  true, false, false, false);
+            new DatePickerHelper().build(this).getDate(mBinding.myNlDateTime, true, true, true, false, false, false);
         });
 
 
     }
 
 
-    private boolean check(){
+    private boolean check() {
         // 抵押日期
-        if (TextUtils.isEmpty(mBinding.myNlDateTime.check())){
+        if (TextUtils.isEmpty(mBinding.myNlDateTime.check())) {
             return false;
         }
-
-
         return true;
     }
 
-    private void inputRequest(){
+    private void inputRequest() {
         Map<String, Object> map = new HashMap<>();
 
         map.put("code", code);

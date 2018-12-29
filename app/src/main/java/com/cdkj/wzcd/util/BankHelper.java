@@ -49,12 +49,20 @@ public class BankHelper {
             protected void onSuccess(List<ExchangeBankModel> data, String SucMessage) {
                 if (data == null || data.size() == 0)
                     return;
+                for (ExchangeBankModel item:data){
+                    if (item.getBankCode().equals(code)) {
+
+                        return;
+                    }
+                }
+
 
                 if (myListItemLayout != null)
                     myListItemLayout.setText(data.get(0).getBankName());
 
                 if (bankInterface != null)
                     bankInterface.onSuccess(data.get(0));
+
             }
 
             @Override

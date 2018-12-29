@@ -30,9 +30,11 @@ import com.cdkj.baselibrary.utils.ToastUtil;
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.databinding.ActivityStartFaceViewBinding;
+import com.cdkj.wzcd.model.ChekRoomIdBean;
 import com.cdkj.wzcd.model.FaceSignBean;
 import com.cdkj.wzcd.model.ILiveVideoBean;
 import com.cdkj.wzcd.model.RecVideoBean;
+import com.cdkj.wzcd.model.SuccessBean;
 import com.cdkj.wzcd.tencent.TencentLoginHelper;
 import com.cdkj.wzcd.tencent.logininterface.TencentLoginInterface;
 import com.luck.picture.lib.PictureSelector;
@@ -45,7 +47,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import retrofit2.Call;
 
 import static com.cdkj.baselibrary.appmanager.CdRouteHelper.DATA_SIGN;
@@ -65,6 +71,7 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
 
     // 初始化、执行上传 为true时停止上传
     private volatile boolean isCancelled = false;
+    private boolean isBoos = true;//是不是 房主,(是不是 创建的房间,是的话再下个界面可以录制视频,否则不可以录制视频)
 
     private List<String> mList = new ArrayList<>();
 
@@ -104,7 +111,8 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
                 return;
 
 //            getSendRoomIdSms();
-            getRoomId();
+            getCheckRoomLoading();
+
         });
 
         mQiNiuHelper = new QiNiuHelper(this);
@@ -363,13 +371,55 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
         });
     }
 
+    /**
+     * 检查这个面签是否在进行中  再进行中就加入房间,否则就开启房间
+     * <p>
+     * 返回对象为空的话说明没有在进行中,
+     */
+    public void getCheckRoomLoading() {
+        Map<String, String> map = new HashMap<>();
+        map.put("budgetCode", code);
+        map.put("homeOwnerId", SPUtilHelper.getUserId());
+
+        Call<BaseResponseModel<ChekRoomIdBean>> roomId = RetrofitUtils.createApi(MyApiServer.class).getChekRoomId("632954", StringUtils.getJsonToString(map));
+        showLoadingDialog();
+        roomId.enqueue(new BaseResponseModelCallBack<ChekRoomIdBean>(this) {
+            @Override
+            protected void onSuccess(ChekRoomIdBean data, String SucMessage) {
+                if (data == null) {
+                    //没有在进行中就去  获取房间号正常开房
+                    getRoomId();
+                } else {
+                    //有房间号并且房間是可用的就去检查房间号 人数不满就加入房间  否则就重新获取房间号
+                    if (TextUtils.equals("0", data.getStatus()) && !TextUtils.isEmpty(data.getCode())) {
+                        //房间可用
+                        checkRoomId(data.getCode(), true);
+                    } else {
+                        getRoomId();
+                    }
+                }
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+    }
+
+    /**
+     * 获取房间号
+     */
     public void getRoomId() {
-        Call<BaseResponseModel<String>> roomId = RetrofitUtils.createApi(MyApiServer.class).getRoomId("632950", "{}");
+        Map<String, String> map = new HashMap<>();
+        map.put("budgetCode", code);
+        map.put("homeOwnerId", SPUtilHelper.getUserId());
+        Call<BaseResponseModel<String>> roomId = RetrofitUtils.createApi(MyApiServer.class).getRoomId("632950", StringUtils.getJsonToString(map));
         showLoadingDialog();
         roomId.enqueue(new BaseResponseModelCallBack<String>(this) {
             @Override
             protected void onSuccess(String data, String SucMessage) {
-                checkRoomId(data);
+                checkRoomId(data, false);
 //                getSendRoomIdSms(data);
             }
 
@@ -384,10 +434,12 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
      * 检查房间人数,超过三人  就不让再进入房间了
      *
      * @param roomid
+     * @param isCheck 是否是  632054返回的房间id
      */
-    public void checkRoomId(String roomid) {
+    public void checkRoomId(String roomid, boolean isCheck) {
         HashMap<String, String> map = new HashMap<>();
         map.put("roomId", roomid);
+        map.put("userId", SPUtilHelper.getUserId());
         Call<BaseResponseModel<Integer>> roomId = RetrofitUtils.createApi(MyApiServer.class).checkRoomId("632953", StringUtils.getJsonToString(map));
         showLoadingDialog();
         roomId.enqueue(new BaseResponseModelCallBack<Integer>(this) {
@@ -396,8 +448,21 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
                 //房间人数大于三人就不让进入了
                 if (data >= 3) {
                     UITipDialog.showInfo(InterviewStartActivity.this, "房间人数已满");
+                    isBoos = true;
                 } else {
-                    getSendRoomIdSms(roomid);
+                    if (isCheck) {
+                        if ((data < 3 && data > 0)) {
+                            //加入房间  只有这一种情况  可以 也只有这一种情况不能进行录制
+                            getSendRoomIdSms(roomid);
+                            isBoos = false;
+                        } else {
+                            isBoos = true;
+                            getRoomId();
+                        }
+                    } else {
+                        isBoos = true;
+                        getSendRoomIdSms(roomid);
+                    }
                 }
             }
 
@@ -436,6 +501,7 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
                 if (data.isSuccess()) {
                     mHelper = new TencentLoginHelper(InterviewStartActivity.this, InterviewStartActivity.this);
                     mHelper.login(roomid);
+//                    mHelper.getRoomId();
                 }
 
             }
@@ -457,7 +523,7 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
     public void onLoginSDKSuccess(String roomId) {
         if (checkPermission()) {
 //            Integer.parseInt(roomId)
-            RoomActivity.open(this, Integer.parseInt(roomId));
+            RoomActivity.open(this, Integer.parseInt(roomId), isBoos);
 //            getRoomId();
 //            String roomId = code.substring(code.length() - 7, code.length());
 //            try {
@@ -471,7 +537,8 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
     @Override
     public void onLoginSDKFailed(String module, int errCode, String errMsg) {
         LogUtil.E("登录失败__" + module + ":" + errCode + ":" + errMsg);
-        ToastUtil.show(this, "登录失败" + ":::" + errCode + "=" + errMsg);
+//        ToastUtil.show(this, "登录失败" + ":::" + errCode + "=" + errMsg);
+        ToastUtil.show(this, "登录失败请重试");
     }
 
     protected boolean checkPermission() {
@@ -675,18 +742,36 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
      */
     @Subscribe
     public void iLiveVideo(ILiveVideoBean bean) {
-        if (bean == null || TextUtils.isEmpty(bean.getStreamId())) {
-
-            return;
+        //是房主
+        if (bean != null && bean.isBoos()) {
+            //并且getStreamId不为空 说明 已经点击了 录制  那么这个房间就已经作废了
+            if (!TextUtils.isEmpty(bean.getStreamId())) {
+                showViodeDialog(bean, "发现视频是否添加到银行面签");
+                return;
+            } else {
+                //否则就  销毁这个房间并且提示
+                getCleanRoom(bean.getRoomId());
+            }
         }
-        showViodeDialog(bean);
     }
 
-    private void showViodeDialog(ILiveVideoBean bean) {
+    private void showViodeDialog(ILiveVideoBean bean, String title) {
+//        "发现视频是否添加到银行面签"
         CommonDialog commonDialog = new CommonDialog(this).builder();
-        commonDialog.setTitle("发现视频是否添加到银行面签");
+        commonDialog.setTitle(title);
         commonDialog.setPositiveBtn("确定", view -> {
-            getLoveViode(bean);
+            //延时两秒去获取视频  防止后台混流不成功
+            showLoadingDialog();
+            Observable.timer(2000, TimeUnit.MILLISECONDS)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<Long>() {
+                        @Override
+                        public void accept(Long aLong) throws Exception {
+                            getLoveViode(bean);
+                        }
+                    });
+
+
         }).setNegativeBtn("取消", null).show();
     }
 
@@ -700,19 +785,25 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
             @Override
             protected void onSuccess(String data, String SucMessage) {
                 if (TextUtils.isEmpty(data)) {
-                    UITipDialog.showInfo(InterviewStartActivity.this, "获取失败");
+                    UITipDialog.showSuccess(InterviewStartActivity.this, "获取失败", v -> {
+                        showViodeDialog(bean, "是否重新获取");
+                    });
                     return;
                 }
                 RecVideoBean recVideoBean = JSON.parseObject(data, new TypeReference<RecVideoBean>() {
                 });
                 RecVideoBean.OutputBean output = recVideoBean.getOutput();
                 if (output == null) {
-                    UITipDialog.showInfo(InterviewStartActivity.this, "获取失败");
+                    UITipDialog.showSuccess(InterviewStartActivity.this, "获取失败", v -> {
+                        showViodeDialog(bean, "是否重新获取");
+                    });
                     return;
                 }
                 List<RecVideoBean.OutputBean.FileListBean> file_list = output.getFile_list();
                 if (file_list == null || file_list.size() == 0) {
-                    UITipDialog.showInfo(InterviewStartActivity.this, "获取失败");
+                    UITipDialog.showSuccess(InterviewStartActivity.this, "获取失败", v -> {
+                        showViodeDialog(bean, "是否重新获取");
+                    });
                     return;
                 }
                 RecVideoBean.OutputBean.FileListBean fileListBean = file_list.get(0);
@@ -726,6 +817,37 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
                 List<LocalMedia> list = mBinding.myVlBankVideo.getList();
                 list.addAll(localMedia);
                 mBinding.myVlBankVideo.setList(list);
+
+            }
+
+            @Override
+            protected void onReqFailure(String errorCode, String errorMessage) {
+                super.onReqFailure(errorCode, errorMessage);
+                UITipDialog.showSuccess(InterviewStartActivity.this, "获取失败", v -> {
+                    showViodeDialog(bean, "是否重新获取");
+                });
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+    }
+
+    private void getCleanRoom(String roomId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", roomId);
+        Call<BaseResponseModel<SuccessBean>> baseResponseModelCall = RetrofitUtils.createApi(MyApiServer.class).cleanRoom("632955", StringUtils.getJsonToString(map));
+        baseResponseModelCall.enqueue(new BaseResponseModelCallBack<SuccessBean>(this) {
+            @Override
+            protected void onSuccess(SuccessBean data, String SucMessage) {
+
+                if (data.isIsSuccess()) {
+                    UITipDialog.showSuccess(InterviewStartActivity.this, "房主退出,之前房间已作废");
+                } else {
+                    UITipDialog.showSuccess(InterviewStartActivity.this, "销毁房间失败");
+                }
 
             }
 

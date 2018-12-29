@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.cdkj.baselibrary.appmanager.SPUtilHelper;
@@ -11,6 +12,8 @@ import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
+import com.cdkj.baselibrary.utils.CameraHelper;
+import com.cdkj.baselibrary.utils.QiNiuHelper;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.api.MyApiServer;
@@ -69,7 +72,9 @@ public class NqlrActivity extends AbsBaseLoadActivity {
 
     private void initListener() {
         mBinding.myCbConfirm.setOnConfirmListener(view -> {
-            submit();
+            if (check()) {
+                submit();
+            }
         });
     }
 
@@ -103,14 +108,31 @@ public class NqlrActivity extends AbsBaseLoadActivity {
     private void setView(NodeListModel data) {
         mBinding.myNlName.setText(data.getApplyUserName());
         mBinding.myNlCode.setText(data.getCode());
-        mBinding.myNlCompanyName.setText(data.getCompanyName());
         mBinding.myNlAmount.setText(RequestUtil.formatAmountDivSign(data.getLoanAmount()));
-        mBinding.myNlBank.setText(data.getLoanBankName());//信贷
-
-        mBinding.myElInsideJobName.setText(data.getInsideJobName());//
+        mBinding.myNlTeamName.setText(data.getTeamName());
+        mBinding.myNlLoanBankName.setText(data.getLoanBankName()+data.getRepaySubbranch());
+        mBinding.myNlSaleUserName.setText(data.getSaleUserName());//信贷专员
+        mBinding.myNlInsideJobName.setText(data.getInsideJobName());//内勤专员
+        mBinding.myElInsideJobName.setText(data.getPledgeUser());//
         mBinding.myMlPledgeUserIdCardCopy.setListData(data.getPledgeUserIdCardCopy());
-//        mBinding.myMlIdNoPdf.setListDataByRequest();
+        mBinding.myNlSupplementNote.setText(data.getSupplementNote());
+        mBinding.myNlPledgeAddress.setText(data.getPledgeAddress());
 
+    }
+
+    private boolean check() {
+        String other = mBinding.myElOther.check();
+        if (TextUtils.isEmpty(other)) {
+            return false;
+        }
+        String name = mBinding.myElInsideJobName.check();
+        if (TextUtils.isEmpty(name)) {
+            return false;
+        }
+        if (mBinding.myMlPledgeUserIdCardCopy.check()) {
+            return false;
+        }
+        return true;
     }
 
     private void submit() {
@@ -145,5 +167,34 @@ public class NqlrActivity extends AbsBaseLoadActivity {
                 disMissLoading();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != RESULT_OK || data == null) {
+            return;
+        }
+        String path = data.getStringExtra(CameraHelper.staticPath);
+        showLoadingDialog();
+        new QiNiuHelper(this).uploadSinglePic(new QiNiuHelper.QiNiuCallBack() {
+            @Override
+            public void onSuccess(String key) {
+
+                if (requestCode == mBinding.myMlPledgeUserIdCardCopy.getRequestCode()) {
+                    mBinding.myMlPledgeUserIdCardCopy.addList(key);
+                }
+
+
+                disMissLoading();
+            }
+
+            @Override
+            public void onFal(String info) {
+                disMissLoading();
+            }
+        }, path);
+
     }
 }

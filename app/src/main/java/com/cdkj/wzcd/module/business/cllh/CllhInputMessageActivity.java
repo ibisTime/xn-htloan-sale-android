@@ -38,11 +38,13 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
 
     private String code;
     private ActivityCllhInputMessageBinding mBinding;
+    private boolean isDetails;
 
-    public static void open(Context context, String code) {
+    public static void open(Context context, String code, Boolean isDetails) {
         if (context != null) {
             Intent intent = new Intent(context, CllhInputMessageActivity.class);
             intent.putExtra(DATA_SIGN, code);
+            intent.putExtra("isDetails", isDetails);
             context.startActivity(intent);
         }
     }
@@ -56,12 +58,17 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
-        mBaseBinding.titleView.setMidTitle("录入");
 
         if (getIntent() == null)
             return;
 
         code = getIntent().getStringExtra(DATA_SIGN);
+        isDetails = getIntent().getBooleanExtra("isDetails", false);
+        if (isDetails) {
+            mBaseBinding.titleView.setMidTitle("详情");
+        } else {
+            mBaseBinding.titleView.setMidTitle("录入");
+        }
         getNode();
 
         initListener();
@@ -99,16 +106,36 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
         mBinding.myNlBank.setText(data.getLoanBankName());
         mBinding.myNlLoanAmount.setText(RequestUtil.formatAmountDivSign(data.getLoanAmount()));
 
-        if (!TextUtils.equals(data.getCurNodeCode(), "002_11")) { // 业务团队车辆落户
+//        if (!TextUtils.equals(data.getCurNodeCode(), "002_11")) { // 业务团队车辆落户
+//
+//            mBinding.myNlDateTime.setText(DateUtil.formatStringData(data.getCarSettleDatetime(), DateUtil.DEFAULT_DATE_FMT));
+//            mBinding.myNlPolicyExpireTime.setText(DateUtil.formatStringData(data.getPolicyDueDate(), DateUtil.DEFAULT_DATE_FMT));
+//            mBinding.myNlPolicyTime.setText(DateUtil.formatStringData(data.getPolicyDatetime(), DateUtil.DEFAULT_DATE_FMT));
+//            mBinding.myMlReceipt.setListDataByRequest(data.getCarInvoice());
+//            mBinding.myMlQualified.setListDataByRequest(data.getCarHgz());
+//            mBinding.myMlJqx.setListDataByRequest(data.getCarJqx());
+//            mBinding.myMlSyx.setListDataByRequest(data.getCarSyx());
+//            mBinding.myMlOther.setListDataByRequest(data.getCarSettleOtherPdf());
+//
+//            mBinding.myCbConfirm.setVisibility(View.GONE);
+//        }
 
+        if (isDetails) { // 业务团队车辆落户
             mBinding.myNlDateTime.setText(DateUtil.formatStringData(data.getCarSettleDatetime(), DateUtil.DEFAULT_DATE_FMT));
+            mBinding.myNlDateTime.setOnClickListener(null);
             mBinding.myNlPolicyExpireTime.setText(DateUtil.formatStringData(data.getPolicyDueDate(), DateUtil.DEFAULT_DATE_FMT));
+            mBinding.myNlPolicyExpireTime.setOnClickListener(null);
             mBinding.myNlPolicyTime.setText(DateUtil.formatStringData(data.getPolicyDatetime(), DateUtil.DEFAULT_DATE_FMT));
+            mBinding.myNlPolicyTime.setOnClickListener(null);
+            mBinding.myNlDyDate.setText(DateUtil.formatStringData(data.getPledgeDatetime(), DateUtil.DEFAULT_DATE_FMT));
+            mBinding.myNlDyDate.setOnClickListener(null);
+
             mBinding.myMlReceipt.setListDataByRequest(data.getCarInvoice());
             mBinding.myMlQualified.setListDataByRequest(data.getCarHgz());
             mBinding.myMlJqx.setListDataByRequest(data.getCarJqx());
             mBinding.myMlSyx.setListDataByRequest(data.getCarSyx());
             mBinding.myMlOther.setListDataByRequest(data.getCarSettleOtherPdf());
+            mBinding.myMlGreenBoook.setListDataByRequest(data.getGreenBigSmj());
 
             mBinding.myCbConfirm.setVisibility(View.GONE);
         }
@@ -121,6 +148,7 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
         mBinding.myMlJqx.build(this, 3);
         mBinding.myMlSyx.build(this, 4);
         mBinding.myMlOther.build(this, 5);
+        mBinding.myMlGreenBoook.build(this, 6);
     }
 
     @Override
@@ -154,6 +182,9 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
                 if (requestCode == mBinding.myMlOther.getRequestCode()) {
                     mBinding.myMlOther.addList(key);
                 }
+                if (requestCode == mBinding.myMlGreenBoook.getRequestCode()) {
+                    mBinding.myMlGreenBoook.addList(key);
+                }
 
                 disMissLoading();
             }
@@ -174,6 +205,9 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
         });
         mBinding.myNlPolicyExpireTime.setOnClickListener(view -> {
             new DatePickerHelper().build(this).getDate(mBinding.myNlPolicyExpireTime, true, true, true, false, false, false);
+        });
+        mBinding.myNlDyDate.setOnClickListener(view -> {
+            new DatePickerHelper().build(this).getDate(mBinding.myNlDyDate, true, true, true, false, false, false);
         });
 
         mBinding.myCbConfirm.setOnConfirmListener(view -> {
@@ -196,6 +230,10 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
         if (TextUtils.isEmpty(mBinding.myNlPolicyTime.check())) {
             return false;
         }
+        //抵押日期
+        if (TextUtils.isEmpty(mBinding.myNlDyDate.check())) {
+            return false;
+        }
         // 发票
         if (mBinding.myMlReceipt.check()) {
             return false;
@@ -212,6 +250,10 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
         if (mBinding.myMlSyx.check()) {
             return false;
         }
+        //绿大本
+        if (mBinding.myMlGreenBoook.check()) {
+            return false;
+        }
 
         return true;
     }
@@ -226,12 +268,15 @@ public class CllhInputMessageActivity extends AbsBaseLoadActivity {
         map.put("carJqx", mBinding.myMlJqx.getListData());
         map.put("carSyx", mBinding.myMlSyx.getListData());
         map.put("carSettleOtherPdf", mBinding.myMlOther.getListData());
+        map.put("greenBigSmj", mBinding.myMlGreenBoook.getListData());
         map.put("operator", SPUtilHelper.getUserId());
 
         map.put("policyDueDate", mBinding.myNlPolicyExpireTime.getTag());
         map.put("policyDatetime", mBinding.myNlPolicyTime.getTag());
+        map.put("pledgeDatetime", mBinding.myNlDyDate.getTag());
 
-        Call call = RetrofitUtils.getBaseAPiService().codeRequest("632128", StringUtils.getJsonToString(map));
+//        Call call = RetrofitUtils.getBaseAPiService().codeRequest("632128", StringUtils.getJsonToString(map));
+        Call call = RetrofitUtils.getBaseAPiService().codeRequest("632131", StringUtils.getJsonToString(map));
 
         addCall(call);
 

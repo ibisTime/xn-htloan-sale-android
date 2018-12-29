@@ -133,8 +133,6 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:paddingBottom="10dp">
-
-
                 </android.support.v7.widget.RecyclerView>
 
             </LinearLayout>
@@ -196,6 +194,15 @@
                 android:hint="请选择材料清单"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp" />
+
+            <View style="@style/style_split_line_horizontal" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_clqd"
+                android:overScrollMode="never"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </android.support.v7.widget.RecyclerView>
 
             <View style="@style/style_split_line_horizontal" />
 

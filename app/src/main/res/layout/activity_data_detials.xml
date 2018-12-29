@@ -173,14 +173,19 @@
                     app:txt_normal_title="参考材料清单">
 
                 </com.cdkj.wzcd.view.MyNormalLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_refFile"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:paddingBottom="10dp">
-                </android.support.v7.widget.RecyclerView>
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_refFile"
+                        android:nestedScrollingEnabled="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:paddingBottom="10dp"></android.support.v7.widget.RecyclerView>
+                </RelativeLayout>
+
 
                 <View style="@style/style_split_line_horizontal" />
 

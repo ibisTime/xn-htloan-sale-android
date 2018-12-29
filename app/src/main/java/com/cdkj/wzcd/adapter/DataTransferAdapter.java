@@ -2,6 +2,7 @@ package com.cdkj.wzcd.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.cdkj.baselibrary.model.DataDictionary;
@@ -17,6 +18,10 @@ import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
+import static com.cdkj.wzcd.module.datatransfer.DataTransferListFragment.DATA_GPS;
+import static com.cdkj.wzcd.module.datatransfer.DataTransferListFragment.DATA_OTHER;
+import static com.cdkj.wzcd.module.datatransfer.DataTransferListFragment.DATA_SEND;
+
 /**
  * @author cdkj
  * @updateDts 2018/5/30
@@ -26,7 +31,8 @@ public class DataTransferAdapter extends BaseQuickAdapter<DataTransferModel, Bas
 
     private ItemDataTransferBinding mBinding;
     private List<DataDictionary> mCompany;
-    boolean isGps;//是不是  gps收件
+    String type;
+    //再发件界面的时候只能点击  发件操作  收件的操作 只展示不能点击    再收件界面道理一样 只能点击收件的操作
 
     public DataTransferAdapter(@Nullable List<DataTransferModel> data, List<DataDictionary> company) {
         super(R.layout.item_data_transfer, data);
@@ -34,9 +40,9 @@ public class DataTransferAdapter extends BaseQuickAdapter<DataTransferModel, Bas
         mCompany = company;
     }
 
-    public DataTransferAdapter(@Nullable List<DataTransferModel> data, List<DataDictionary> company, boolean isGps) {
+    public DataTransferAdapter(@Nullable List<DataTransferModel> data, List<DataDictionary> company, String type) {
         super(R.layout.item_data_transfer, data);
-        this.isGps = isGps;
+        this.type = type;
         mCompany = company;
     }
 
@@ -49,7 +55,7 @@ public class DataTransferAdapter extends BaseQuickAdapter<DataTransferModel, Bas
 
         mBinding.myIlFrom.setText(NodeHelper.getNameOnTheCode(item.getFromNodeCode()));
         mBinding.myIlTo.setText(NodeHelper.getNameOnTheCode(item.getToNodeCode()));
-        if (isGps) {
+        if (DATA_GPS.equals(type)) {
             mBinding.myIlFrom.setVisibility(View.GONE);
             mBinding.myIlTo.setVisibility(View.GONE);
             mBinding.llGps.setVisibility(View.VISIBLE);
@@ -79,44 +85,37 @@ public class DataTransferAdapter extends BaseQuickAdapter<DataTransferModel, Bas
         switch (item.getStatus()) {
             case "0":
                 //发件
-                if (!isGps) {
-//                    SendActivity.open(mContext, item.getCode(), true);
+                if (TextUtils.equals(DATA_SEND, type)) {
                     mBinding.myItemCblConfirm.setRightTextAndListener("发件", view -> {
                         //发件
                         SendActivity.open(mContext, item.getCode());
-//                        if (isGps) {
-//                            SendActivity.open(mContext, item.getCode(), true);
-//                        } else {
-//                            SendActivity.open(mContext, item.getCode());
-//                        }
                     });
+                } else {
+                    mBinding.myItemCblConfirm.setRightTextAndListener("", null);
                 }
-
                 return "待发件";
 
             case "1":
-
-                mBinding.myItemCblConfirm.setRightTextAndListener("收件并审核", view -> {
-                    //收件并审核
-                    SendAndExamineActivity.open(mContext, item.getCode(), isGps);
-
-                });
-                return "已发件待收件";
-
-            case "2":
-                return "已收件审核";
-
-            case "3":
-                if (!isGps) {
-                    mBinding.myItemCblConfirm.setRightTextAndListener("发件", view -> {
-                        //发件
-                        if (isGps) {
-                            SendActivity.open(mContext, item.getCode(), true);
-                        } else {
-                            SendActivity.open(mContext, item.getCode());
-                        }
+                if (TextUtils.equals(DATA_SEND, type)) {
+                    mBinding.myItemCblConfirm.setRightTextAndListener("", null);
+                } else if (TextUtils.equals(DATA_OTHER, type) || TextUtils.equals(DATA_GPS, type)) {
+                    mBinding.myItemCblConfirm.setRightTextAndListener("收件并审核", view -> {
+                        SendAndExamineActivity.open(mContext, item.getCode(), TextUtils.equals(DATA_GPS, type));
                     });
                 }
+                return "已发件待收件";
+            case "2":
+                return "已收件审核";
+            case "3":
+
+                if (TextUtils.equals(DATA_SEND, type)) {
+                    mBinding.myItemCblConfirm.setRightTextAndListener("发件", view -> {
+                        SendActivity.open(mContext, item.getCode());
+                    });
+                } else {
+                    mBinding.myItemCblConfirm.setRightTextAndListener("", null);
+                }
+
                 return "已收件待补件";
 
             default:

@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <data>
-
-    </data>
-
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
         style="@style/style_my_item_root"
         android:orientation="horizontal">
@@ -32,12 +26,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp" />
-
-        <!--<com.cdkj.wzcd.view.item.MyItemNormalLayout-->
-            <!--android:id="@+id/myItemNl_file"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"></com.cdkj.wzcd.view.item.MyItemNormalLayout>-->
-        <!--</LinearLayout>-->
 
     </LinearLayout>
 </layout>

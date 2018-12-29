@@ -1,14 +1,19 @@
 package com.cdkj.baselibrary.utils;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -38,6 +43,7 @@ public class CameraHelper {
     public final static int CAPTURE_PHOTO_CODE = 3;//相机
     public final static int CAPTURE_WALBUM_CODE = 4;//相册
     public final static int CAPTURE_ZOOM_CODE = 5;//裁剪
+    public final static int CAPTURE_FILE_CODE = 6;//裁剪
 
     private int mRequestCode = -1;//用于记录是相机还是相册裁剪
 
@@ -118,6 +124,19 @@ public class CameraHelper {
         startImageFromCamera();
     }
 
+    /**
+     * 判断权限并启动文件
+     *
+     * @return
+     */
+    public void startFile() {
+        if (isNeedRequestPremission()) {
+            requestPermissions(CAPTURE_FILE_CODE);
+            return;
+        }
+        startFileSelect();
+    }
+
 
     /**
      * 请求权限
@@ -135,6 +154,9 @@ public class CameraHelper {
                         break;
                     case CAPTURE_WALBUM_CODE:
                         startImageFromAlbum();
+                        break;
+                    case CAPTURE_FILE_CODE:
+                        startFileSelect();
                         break;
                 }
             }
@@ -216,6 +238,9 @@ public class CameraHelper {
             case CAPTURE_ZOOM_CODE:  //图片裁剪
                 zoomNext(data, mRequestCode);
                 break;
+            case CAPTURE_FILE_CODE:  //文件选择
+                fileNext(data);
+                break;
             default:
                 break;
         }
@@ -290,45 +315,8 @@ public class CameraHelper {
                 }
 
             } catch (Exception e) {
-                mCameraPhotoListener.onPhotoFailure(CAPTURE_PHOTO_CODE, "图片获取失败");
+                mCameraPhotoListener.onPhotoFailure(CAPTURE_PHOTO_CODE, "文件获取失败");
             }
-
-            /* //自己储存bitmap
-            mSubscription.add(Observable.just("")
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .observeOn(Schedulers.io())
-                    .map(new Function<String, Bitmap>() {
-                        @Override
-                        public Bitmap apply(@NonNull String s) throws Exception {
-                            Bitmap bitmap;
-                            if (!CameraHelper.isNeedUriAdapte()) {
-                                bitmap = BitmapUtils.decodeBitmapFromFile(imageUrl.getPath(), BitmapUtils.picWidth, BitmapUtils.picHeight);
-                            } else {
-                                bitmap = BitmapUtils.decodeBitmapFromFile(photoPath, BitmapUtils.picWidth, BitmapUtils.picHeight);
-                            }
-                            return bitmap;
-                        }
-                    })
-                    .observeOn(Schedulers.io())
-                    .map(new Function<Bitmap, String>() {
-                        @Override
-                        public String apply(@NonNull Bitmap bitmap) throws Exception {
-                            String path = BitmapUtils.saveBitmapFile(bitmap, "camera");
-                            return path;
-                        }
-                    })
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<String>() {
-                        @Override
-                        public void accept(String s) throws Exception {
-                            mCameraPhotoListener.onPhotoSuccessful(CAPTURE_PHOTO_CODE, s);
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                            mCameraPhotoListener.onPhotoFailure(CAPTURE_PHOTO_CODE, "图片获取失败");
-                        }
-                    }));*/
         }
     }
 
@@ -388,6 +376,207 @@ public class CameraHelper {
 
 
     /**
+     * 相册
+     *
+     * @param data
+     */
+    private void fileNext(Intent data) {
+        if (data == null) return;
+        Uri imageUri = data.getData();
+
+        if ("Xiaomi".equals(Build.MANUFACTURER) || SystemUtils.isMIUI())   //小米相册兼容代码
+        {
+            String imgP = setPhotoForMiuiSystem(data);
+
+            if (imageUri == null) {
+                mCameraPhotoListener.onPhotoFailure(CAPTURE_FILE_CODE, CdApplication.getContext().getString(R.string.get_pic_fail));
+                return;
+            }
+            if (isSplit) {
+//                startPhotoZoom(new File(imgP));
+                startCrop(imgP);
+                return;
+            }
+
+            if (!TextUtils.isEmpty(imgP)) {
+                mCameraPhotoListener.onPhotoSuccessful(CAPTURE_FILE_CODE, imgP);
+            }
+            return;
+        }
+        if (imageUri == null) {
+            mCameraPhotoListener.onPhotoFailure(CAPTURE_FILE_CODE, CdApplication.getContext().getString(R.string.get_pic_fail));
+            return;
+        }
+
+        Uri uri = data.getData();
+        //==================
+        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContextActivity(mContext).getContentResolver().query(uri,
+                filePathColumn, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            final int column_index = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(column_index);
+            cursor.close();
+            mCameraPhotoListener.onPhotoSuccessful(CAPTURE_FILE_CODE, picturePath);
+            return;
+        }
+        //==============================
+
+        String path=null;
+        if ("file".equalsIgnoreCase(uri.getScheme())){//使用第三方应用打开
+            path = uri.getPath();
+//            tv.setText(path);
+//            Toast.make
+            mCameraPhotoListener.onPhotoSuccessful(CAPTURE_FILE_CODE, path);
+            return;
+        }
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {//4.4以后
+            path = getPath(getContextActivity(mContext), uri);
+//            tv.setText(path);
+//            Toast.makeText(this,path,Toast.LENGTH_SHORT).show();
+        } else {//4.4以下下系统调用方法
+            path = getRealPathFromURI(uri);
+//            tv.setText(path);
+//            Toast.makeText(MainActivity.this, path+"222222", Toast.LENGTH_SHORT).show();
+        }
+        mCameraPhotoListener.onPhotoSuccessful(CAPTURE_FILE_CODE, path);
+
+    }
+
+
+
+    public String getRealPathFromURI(Uri contentUri) {
+        String res = null;
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getContextActivity(mContext).getContentResolver().query(contentUri, proj, null, null, null);
+        if(null!=cursor&&cursor.moveToFirst()){;
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+            cursor.close();
+        }
+        return res;
+    }
+
+    /**
+     * 专为Android4.4设计的从Uri获取文件绝对路径，以前的方法已不好使
+     */
+    @SuppressLint("NewApi")
+    public String getPath(final Context context, final Uri uri) {
+
+
+        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+
+
+        // DocumentProvider
+        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+            // ExternalStorageProvider
+            if (isExternalStorageDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+
+                if ("primary".equalsIgnoreCase(type)) {
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                }
+            }
+            // DownloadsProvider
+            else if (isDownloadsDocument(uri)) {
+
+
+                final String id = DocumentsContract.getDocumentId(uri);
+                final Uri contentUri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+
+
+                return getDataColumn(context, contentUri, null, null);
+            }
+            // MediaProvider
+            else if (isMediaDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+
+                Uri contentUri = null;
+                if ("image".equals(type)) {
+                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video".equals(type)) {
+                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+
+
+                final String selection = "_id=?";
+                final String[] selectionArgs = new String[]{split[1]};
+
+
+                return getDataColumn(context, contentUri, selection, selectionArgs);
+            }
+        }
+        // MediaStore (and general)
+        else if ("content".equalsIgnoreCase(uri.getScheme())) {
+            return getDataColumn(context, uri, null, null);
+        }
+        // File
+        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+        return null;
+    }
+
+
+    public String getDataColumn(Context context, Uri uri, String selection,
+                                String[] selectionArgs) {
+
+
+        Cursor cursor = null;
+        final String column = "_data";
+        final String[] projection = {column};
+
+
+        try {
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
+                    null);
+            if (cursor != null && cursor.moveToFirst()) {
+                final int column_index = cursor.getColumnIndexOrThrow(column);
+                return cursor.getString(column_index);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return null;
+    }
+
+    public boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is DownloadsProvider.
+     */
+    public boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is MediaProvider.
+     */
+    public boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    /**
      * MIUI系统的相册选择
      *
      * @param data
@@ -430,7 +619,7 @@ public class CameraHelper {
 
         /*
          * yourself_sdk_path/docs/reference/android/content/Intent.html
-		 */
+         */
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(getImageContentUri(uri), "image/*");
         // 下面这个crop=true是设置在开启的Intent中设置显示的VIEW可裁剪
@@ -504,6 +693,21 @@ public class CameraHelper {
         startActivity(intent, CAPTURE_WALBUM_CODE);
     }
 
+    // 调文件,可以选择所有文件
+    private void startFileSelect() {
+        /**
+         * 下面这句话，与其它方式写是一样的效果，如果：
+         * intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+         * intent.setType(""image/*");设置数据类型
+         * 如果要限制上传到服务器的图片类型时可以直接写如："image/jpeg 、 image/png等的类型"
+         *
+         */
+        mRequestCode = CAPTURE_FILE_CODE;
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");//设置类型，我这里是任意类型，任意后缀的可以这样写。
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivity(intent, CAPTURE_FILE_CODE);
+    }
 
     /**
      * 获取权限回调

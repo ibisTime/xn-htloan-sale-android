@@ -16,7 +16,6 @@ import com.cdkj.baselibrary.base.AbsRefreshListFragment;
 import com.cdkj.baselibrary.model.DataDictionary;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
-import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.adapter.InterviewListAdapter;
@@ -25,7 +24,6 @@ import com.cdkj.wzcd.databinding.HeadGpsCheckBinding;
 import com.cdkj.wzcd.model.NodeListModel;
 import com.cdkj.wzcd.model.PickerViewDataBean;
 import com.cdkj.wzcd.util.DataDictionaryHelper;
-import com.cdkj.wzcd.util.UserHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +63,7 @@ public class InterviewListFragment extends AbsRefreshListFragment {
     @Override
     protected void afterCreate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         initRefreshHelper(10);
-        initTitelAndHead();
+//        initTitelAndHead();
     }
 
     @Override
@@ -82,11 +80,11 @@ public class InterviewListFragment extends AbsRefreshListFragment {
         mRefreshBinding.llHead.addView(headView.getRoot());
         typeDatas = new ArrayList<>();
         PickerViewDataBean bean1 = new PickerViewDataBean();
-        bean1.setKey("未面签");
-        bean1.setValue("1");
+        bean1.setKey("未录入");
+        bean1.setValue("0");
         PickerViewDataBean bean2 = new PickerViewDataBean();
-        bean2.setKey("已面签");
-        bean2.setValue("0");
+        bean2.setKey("已录入");
+        bean2.setValue("1");
         typeDatas.add(bean1);
         typeDatas.add(bean2);
         headView.tvType.setText(typeDatas.get(0).getKey());//初始化
@@ -133,16 +131,12 @@ public class InterviewListFragment extends AbsRefreshListFragment {
             curNodeCodeList.add("002_06");
             curNodeCodeList.add("002_08");
 
-            map.put("curNodeCodeList", curNodeCodeList);
+            map.put("intevCurNodeCodeList", curNodeCodeList);
             map.put("limit", limit + "");
             map.put("start", pageIndex + "");
             map.put("userId", SPUtilHelper.getUserId());
-            map.put("isInterview", typeDatas.get(selectFrist).getValue());
-
-            if (!UserHelper.isZHRY()) {
-//                map.put("saleUserId", SPUtilHelper.getUserId());
-                map.put("teamCode", SPUtilHelper.getTeamCode());
-            }
+//            map.put("isInterview", typeDatas.get(selectFrist).getValue());
+            map.put("teamCode", SPUtilHelper.getTeamCode());
 
             if (isShowDialog) showLoadingDialog();
 
@@ -152,7 +146,6 @@ public class InterviewListFragment extends AbsRefreshListFragment {
             nodeList.enqueue(new BaseResponseModelCallBack<ResponseInListModel<NodeListModel>>(mActivity) {
                 @Override
                 protected void onSuccess(ResponseInListModel<NodeListModel> data, String SucMessage) {
-                    LogUtil.E("pppppp数据长度" + data.getList().size());
                     mRefreshHelper.setData(data.getList(), "暂无面签记录", 0);
                 }
 

@@ -56,6 +56,15 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+
+                <com.cdkj.wzcd.view.MyFileMultipleLayout
+                    android:id="@+id/my_FML"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:title="选择"></com.cdkj.wzcd.view.MyFileMultipleLayout>
+
+
                 <LinearLayout
                     android:id="@+id/ll_user"
                     android:layout_width="match_parent"
@@ -272,7 +281,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 app:img_content="@mipmap/main_zk"
-                                app:txt_content="车辆落户">
+                                app:txt_content="发保合">
 
 
                             </com.cdkj.wzcd.view.MySquareRowLayout>

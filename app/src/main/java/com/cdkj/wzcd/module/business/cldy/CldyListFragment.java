@@ -21,7 +21,6 @@ import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.databinding.HeadGpsCheckBinding;
 import com.cdkj.wzcd.model.NodeListModel;
 import com.cdkj.wzcd.model.PickerViewDataBean;
-import com.cdkj.wzcd.util.UserHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +66,7 @@ public class CldyListFragment extends AbsRefreshListFragment {
     protected void afterCreate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         initRefreshHelper(10);
-        initTitelAndHead();
+//        initTitelAndHead();
     }
 
     /**
@@ -78,11 +77,11 @@ public class CldyListFragment extends AbsRefreshListFragment {
         mRefreshBinding.llHead.addView(headView.getRoot());
         typeDatas = new ArrayList<>();
         PickerViewDataBean bean1 = new PickerViewDataBean();
-        bean1.setKey("未完成");
-        bean1.setValue("1");
+        bean1.setKey("未抵押");
+        bean1.setValue("0");
         PickerViewDataBean bean2 = new PickerViewDataBean();
-        bean2.setKey("已完成");
-        bean2.setValue("0");
+        bean2.setKey("已抵押");
+        bean2.setValue("1");
         typeDatas.add(bean1);
         typeDatas.add(bean2);
         headView.tvType.setText(typeDatas.get(0).getKey());//初始化
@@ -125,8 +124,6 @@ public class CldyListFragment extends AbsRefreshListFragment {
         Map<String, Object> map = RetrofitUtils.getNodeListMap();
 
         List<String> curNodeCodeList = new ArrayList<>();
-        curNodeCodeList.add("002_18");
-        curNodeCodeList.add("002_19");
         curNodeCodeList.add("002_20");
         curNodeCodeList.add("002_21");
         curNodeCodeList.add("002_33");
@@ -135,17 +132,15 @@ public class CldyListFragment extends AbsRefreshListFragment {
         map.put("curNodeCodeList", curNodeCodeList);
         map.put("start", pageIndex + "");
         map.put("limit", limit + "");
-        map.put("isMortgage", typeDatas.get(selectFrist).getValue());
-
-        if (UserHelper.isYWY()) {
-            map.put("saleUserId", SPUtilHelper.getUserId());
-            map.put("teamCode", SPUtilHelper.getTeamCode());
-        }
+//        map.put("isMortgage", typeDatas.get(selectFrist).getValue());
+        map.put("roleCode", SPUtilHelper.getRoleCode());
+        map.put("teamCode", SPUtilHelper.getTeamCode());
+        map.put("userId", SPUtilHelper.getUserId());
 
 
         if (isShowDialog) showLoadingDialog();
 
-        Call call = RetrofitUtils.createApi(MyApiServer.class).getNodeList("632145", StringUtils.getJsonToString(map));
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getNodeList("632148", StringUtils.getJsonToString(map));
         addCall(call);
 
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<NodeListModel>>(mActivity) {
@@ -160,5 +155,4 @@ public class CldyListFragment extends AbsRefreshListFragment {
             }
         });
     }
-
 }

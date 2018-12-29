@@ -15,22 +15,24 @@ public class RequestUtil {
 
     /**
      * 人民币金额乘以1000
+     *
      * @return
      */
-    public static String formatAmountMul(String strAmount){
-        if(TextUtils.isEmpty(strAmount))
-            return "0.00";
+    public static String formatAmountMul(String strAmount) {
+        if (TextUtils.isEmpty(strAmount))
+            return "0";
 
-        return new BigDecimal(strAmount).multiply(new BigDecimal(1000)).toPlainString();
+        return new BigDecimal(strAmount).multiply(new BigDecimal(1000)).longValue()+"";
 
     }
 
     /**
      * 人民币金额乘以1000
+     *
      * @return
      */
-    public static String formatAmountMulSign(String strAmount){
-        if(TextUtils.isEmpty(strAmount))
+    public static String formatAmountMulSign(String strAmount) {
+        if (TextUtils.isEmpty(strAmount))
             return "0.00";
 
         return MoneyUtils.MONEYSING + new BigDecimal(strAmount).multiply(new BigDecimal(1000)).toPlainString();
@@ -39,15 +41,16 @@ public class RequestUtil {
 
     /**
      * 人民币金额除以1000
+     *
      * @return
      */
-    public static String formatAmountDiv(String strAmount){
-        if(TextUtils.isEmpty(strAmount))
+    public static String formatAmountDiv(String strAmount) {
+        if (TextUtils.isEmpty(strAmount))
             return "0.00";
 
         BigDecimal amount = new BigDecimal(strAmount);
 
-        if(amount.equals(new BigDecimal(0))){
+        if (amount.equals(new BigDecimal(0))) {
             return "0.00";
         }
 
@@ -56,36 +59,38 @@ public class RequestUtil {
 
     /**
      * 人民币金额除以1000
+     *
      * @return
      */
-    public static String formatAmountDivSign(String strAmount){
-        if(TextUtils.isEmpty(strAmount))
-            return  MoneyUtils.MONEYSING+"0.00";
+    public static String formatAmountDivSign(String strAmount) {
+        if (TextUtils.isEmpty(strAmount))
+            return MoneyUtils.MONEYSING + "0.00";
 
         BigDecimal amount = new BigDecimal(strAmount);
 
-        if(amount.equals(new BigDecimal(0))){
-            return  MoneyUtils.MONEYSING+"0.00";
+        if (amount.equals(new BigDecimal(0))) {
+            return MoneyUtils.MONEYSING + "0.00";
         }
 
-        return MoneyUtils.MONEYSING+scale(amount.divide(new BigDecimal(1000)).toPlainString(), 2);
+        return MoneyUtils.MONEYSING + scale(amount.divide(new BigDecimal(1000)).toPlainString(), 2);
     }
 
 
     /**
      * 格式化输出的金额格式
+     *
      * @param s
      * @return
      */
-    public static String scale(String s, int scale){
+    public static String scale(String s, int scale) {
         String amount[] = s.split("\\.");
-        if (amount.length > 1){
-            if (amount[1].length() > scale){
-                return amount[0]+"."+amount[1].substring(0,scale);
-            }else {
-                return amount[0]+"."+amount[1];
+        if (amount.length > 1) {
+            if (amount[1].length() > scale) {
+                return amount[0] + "." + amount[1].substring(0, scale);
+            } else {
+                return amount[0] + "." + amount[1];
             }
-        }else {
+        } else {
             return amount[0];
         }
     }

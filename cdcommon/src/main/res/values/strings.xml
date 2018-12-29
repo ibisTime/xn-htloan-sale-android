@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">cd common</string>
 
     <string name="confirm">确定</string>
@@ -73,6 +73,7 @@
     <string name="net_req_fail">网络请求失败</string>
     <string name="upload_pic_fail">图片上传失败</string>
     <string name="upload_video_fail">视频上传失败</string>
+    <string name="upload_file_fail">文件上传失败</string>
     <string name="qiniu_token_error">token失败</string>
     <string name="no_camera">没有可用相机</string>
     <string name="no_sd_card">SD卡不存在</string>

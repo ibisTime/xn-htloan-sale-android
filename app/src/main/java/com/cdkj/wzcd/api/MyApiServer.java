@@ -7,6 +7,7 @@ import com.cdkj.baselibrary.model.DataDictionary;
 import com.cdkj.baselibrary.model.UserModel;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.wzcd.model.CLQDBean;
+import com.cdkj.wzcd.model.ChekRoomIdBean;
 import com.cdkj.wzcd.model.CreditModel;
 import com.cdkj.wzcd.model.DataTransferModel;
 import com.cdkj.wzcd.model.ExchangeBankModel;
@@ -20,6 +21,7 @@ import com.cdkj.wzcd.model.NodeModel;
 import com.cdkj.wzcd.model.RecModel;
 import com.cdkj.wzcd.model.RepaymentModel;
 import com.cdkj.wzcd.model.SuccessBean;
+import com.cdkj.wzcd.model.TeamBean;
 import com.cdkj.wzcd.model.TencentSignModel;
 import com.cdkj.wzcd.model.TodoModel;
 import com.cdkj.wzcd.model.ZrdModel;
@@ -349,6 +351,16 @@ public interface MyApiServer {
     @POST("api")
     Call<BaseResponseModel<String>> getRoomId(@Field("code") String code, @Field("json") String json);
 
+  /**
+     * 获取房间id
+     *
+     * @param code
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<ChekRoomIdBean>> getChekRoomId(@Field("code") String code, @Field("json") String json);
+
     /**
      * 获取房间id
      *
@@ -378,4 +390,25 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseModel<Integer>> checkRoomId(@Field("code") String code, @Field("json") String json);
+
+    /**
+     * 检查房间id
+     *
+     * @param code
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<SuccessBean>> cleanRoom(@Field("code") String code, @Field("json") String json);
+
+    /**
+     * 检查房间id
+     *
+     * @param code
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseListModel<TeamBean>> getTeamData(@Field("code") String code, @Field("json") String json);
 }
+

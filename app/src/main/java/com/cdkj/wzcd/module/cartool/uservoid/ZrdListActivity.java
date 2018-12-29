@@ -75,10 +75,11 @@ public class ZrdListActivity extends AbsRefreshListActivity {
             map.put("start", pageIndex + "");
             map.put("limit", limit + "");
             map.put("teamCode", SPUtilHelper.getTeamCode());
+            map.put("roleCode", SPUtilHelper.getRoleCode());
 
             if (isShowDialog) showLoadingDialog();
 
-            Call call = RetrofitUtils.createApi(MyApiServer.class).getZrdList("632145", StringUtils.getJsonToString(map));
+            Call call = RetrofitUtils.createApi(MyApiServer.class).getZrdList("632148", StringUtils.getJsonToString(map));
             addCall(call);
 
             call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<ZrdModel>>(this) {

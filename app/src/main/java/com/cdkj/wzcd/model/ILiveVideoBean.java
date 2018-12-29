@@ -8,6 +8,15 @@ public class ILiveVideoBean {
     String videoUrl;
     String roomId;
     String streamId;
+    boolean isBoos;
+
+    public boolean isBoos() {
+        return isBoos;
+    }
+
+    public void setBoos(boolean boos) {
+        isBoos = boos;
+    }
 
     public String getStreamId() {
         return streamId;

@@ -17,6 +17,7 @@ import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.databinding.ActivityDysqBinding;
 import com.cdkj.wzcd.model.NodeListModel;
 import com.cdkj.wzcd.model.SuccessBean;
+import com.cdkj.wzcd.util.RequestUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,7 +55,7 @@ public class DysqActivity extends AbsBaseLoadActivity {
             return;
         code = getIntent().getStringExtra(DATA_SIGN);
         getNode();
-
+        mBinding.myIlPledgeUserIdCardCopy.setActivity(this,1,2);
         initListener();
     }
 
@@ -95,14 +96,15 @@ public class DysqActivity extends AbsBaseLoadActivity {
     private void setView(NodeListModel data) {
         mBinding.myNlName.setText(data.getApplyUserName());
         mBinding.myNlCode.setText(data.getCode());
-        mBinding.myNlAge.setText(data.getAge() + "");
-        mBinding.myNlNation.setText(data.getNation());
-        mBinding.myNlIdNo.setText(data.getIdNo());
-        mBinding.myNlMobile.setText(data.getMobile());
+
+        mBinding.myNlTeamName.setText(data.getTeamName());
+        mBinding.myNlLoanBankName.setText(data.getLoanBankName()+data.getRepaySubbranch());
+        mBinding.myNlLoanAmount.setText( RequestUtil.formatAmountDiv(data.getLoanAmount()));
+        mBinding.myNlPledgeUser.setText(data.getPledgeUser());
+        mBinding.myNlPledgeAddress.setText(data.getPledgeAddress());
+        mBinding.myIlPledgeUserIdCardCopy.setFlImgByRequest(data.getPledgeUserIdCardCopy());
         mBinding.myNlSaleUserName.setText(data.getSaleUserName());
         mBinding.myNlInsideJobName.setText(data.getInsideJobName());
-
-
     }
 
     private void submit() {

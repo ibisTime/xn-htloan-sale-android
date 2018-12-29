@@ -44,9 +44,9 @@ public abstract class BaseResponseModelCallBack<T> implements Callback<BaseRespo
 
         if (response.isSuccessful()) {
 
-            try {
                 BaseResponseModel t = response.body();
                 checkState(t);      //根据返回错误的状态码实现相应的操作
+            try {
             } catch (Exception e) {
                 if (LogUtil.isDeBug) {
                     onReqFailure(NETERRORCODE4, "未知错误" + e);

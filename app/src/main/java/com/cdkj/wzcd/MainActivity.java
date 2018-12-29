@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.cdkj.baselibrary.activitys.ExpectActivity;
@@ -90,6 +91,7 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
     @Override
     public View addMainView() {
         mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_main, null, false);
+        mBinding.myFML.build(this, 1);
         return mBinding.getRoot();
     }
 
@@ -97,10 +99,7 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
     public void afterCreate(Bundle savedInstanceState) {
 
         mLogoutHelper = new TencentLogoutHelper(this);
-
         initListener();
-
-
         NodeHelper.getNodeBaseDataRequest(this, "", "", new NodeHelper.NodeInterface() {
             @Override
             public void onSuccess(List<NodeModel> list) {
@@ -267,8 +266,6 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
 
         } else if (TextUtils.equals(data.getRoleCode(), NQZY)) {// 内勤专员
             mBinding.tvRole.setText("[内勤专员]");
-
-
         } else {
             //与ios保持一致
             mBinding.tvRole.setText(TextUtils.isEmpty(data.getPostName()) ? "[其他]" : "[" + data.getPostName() + "]");
@@ -311,7 +308,7 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
             GPSInstallListActivity.open(this);
         });
 
-        //车辆落户
+        //车辆落户 改为  发保合
         mBinding.mySrCllh.setOnClickListener(view -> {
             CllhListActivity.open(this);
         });
@@ -447,6 +444,33 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
                 }
             }, path);
 
+        } else if (requestCode == 1) {
+            String path = data.getStringExtra(CameraHelper.staticPath);
+            new QiNiuHelper(this).uploadSingleFile(new QiNiuHelper.QiNiuFileCallBack() {
+                @Override
+                public void onSuccess(String key) {
+                    LogUtil.E("上传成功" + key);
+                    mBinding.myFML.addList(key);
+                }
+
+                @Override
+                public void onFal(String info) {
+                    LogUtil.E("上传失败" + info);
+                }
+
+                @Override
+                public void progress(String key, double percent) {
+                    Log.e("pppppp", "progress: 进度" + percent);
+
+                }
+
+                //完成
+                @Override
+                public void complete() {
+
+                }
+            }, path);
+//            uploadSingleFile
         }
     }
 

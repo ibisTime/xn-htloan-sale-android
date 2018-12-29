@@ -84,19 +84,17 @@
 
             </com.cdkj.wzcd.view.MyNormalLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_plan"
-                android:paddingBottom="10dp"
-                android:background="@color/white"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-
-            </android.support.v7.widget.RecyclerView>
-
-
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_plan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingBottom="10dp"></android.support.v7.widget.RecyclerView>
+            </RelativeLayout>
         </LinearLayout>
-
     </ScrollView>
 
 </layout>

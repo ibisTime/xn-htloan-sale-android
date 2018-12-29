@@ -35,20 +35,24 @@ public class CllhListAdapter extends BaseQuickAdapter<NodeListModel, BaseViewHol
     protected void convert(BaseViewHolder helper, NodeListModel item) {
         mBinding = DataBindingUtil.bind(helper.itemView);
 
-        mBinding.myTlIdStatus.setText(item.getCode(), NodeHelper.getNameOnTheCode(item.getCurNodeCode()));
+        mBinding.myTlIdStatus.setText(item.getCode(), NodeHelper.getNameOnTheCode(item.getAdvanfCurNodeCode()));
 
         mBinding.myIlName.setText(item.getApplyUserName());
         mBinding.myIlType.setText(BizTypeHelper.getNameOnTheKey(item.getBizType()));
         mBinding.myIlAmount.setText(RequestUtil.formatAmountDivSign(item.getLoanAmount()));
         mBinding.myIlBank.setText(item.getLoanBankName());
-        mBinding.myIlAdvanceFund.setText(TextUtils.equals(item.getIsAdvanceFund(),"1") ? "已垫资" : "未垫资");
+        mBinding.myIlAdvanceFund.setText(TextUtils.equals(item.getIsAdvanceFund(), "1") ? "已垫资" : "未垫资");
         mBinding.myIlDateTime.setText(DateUtil.formatStringData(item.getApplyDatetime(), DateUtil.DEFAULT_DATE_FMT));
 
-        if (TextUtils.equals(item.getCurNodeCode(),"002_11")){ // 业务团队车辆落户
+//        if (TextUtils.equals(item.getCurNodeCode(),"002_11")){ // 业务团队车辆落户
+//            mBinding.myItemCblConfirm.setRightTextAndListener("录入", view -> {
+//                CllhInputMessageActivity.open(mContext, item.getCode());
+//            });
+        if (TextUtils.equals(item.getAdvanfCurNodeCode(), "002_18")) { // 业务团队车辆落户
             mBinding.myItemCblConfirm.setRightTextAndListener("录入", view -> {
-                CllhInputMessageActivity.open(mContext, item.getCode());
+                CllhInputMessageActivity.open(mContext, item.getCode(),false);
             });
-        }else {
+        } else {
             mBinding.myItemCblConfirm.setContent("", "");
         }
 
