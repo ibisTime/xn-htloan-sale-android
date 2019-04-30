@@ -31,12 +31,13 @@ import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.databinding.ActivityStartFaceViewBinding;
 import com.cdkj.wzcd.model.ChekRoomIdBean;
-import com.cdkj.wzcd.model.FaceSignBean;
 import com.cdkj.wzcd.model.ILiveVideoBean;
 import com.cdkj.wzcd.model.RecVideoBean;
 import com.cdkj.wzcd.model.SuccessBean;
+import com.cdkj.wzcd.model.ZXDetialsBean;
 import com.cdkj.wzcd.tencent.TencentLoginHelper;
 import com.cdkj.wzcd.tencent.logininterface.TencentLoginInterface;
+import com.cdkj.wzcd.util.BizTypeHelper;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -109,8 +110,9 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
         mBaseBinding.titleView.setRightFraClickListener(view -> {
             if (mBinding.llPercent.getVisibility() == View.VISIBLE)
                 return;
-
-//            getSendRoomIdSms();
+            //这里  这里
+//            mHelper = new TencentLoginHelper(InterviewStartActivity.this, InterviewStartActivity.this);
+//            mHelper.login(code);
             getCheckRoomLoading();
 
         });
@@ -134,13 +136,13 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
     private void getDetails() {
         Map<String, String> map = new HashMap<>();
         map.put("code", code);
-        Call<BaseResponseModel<FaceSignBean>> faceSign = RetrofitUtils.createApi(MyApiServer.class).getFaceSign("632146", StringUtils.getJsonToString(map));
+        Call<BaseResponseModel<ZXDetialsBean.ListBean>> faceSign = RetrofitUtils.createApi(MyApiServer.class).getFaceSign2("632146", StringUtils.getJsonToString(map));
         addCall(faceSign);
 
         showLoadingDialog();
-        faceSign.enqueue(new BaseResponseModelCallBack<FaceSignBean>(this) {
+        faceSign.enqueue(new BaseResponseModelCallBack<ZXDetialsBean.ListBean>(this) {
             @Override
-            protected void onSuccess(FaceSignBean data, String SucMessage) {
+            protected void onSuccess(ZXDetialsBean.ListBean data, String SucMessage) {
                 setView(data);
             }
 
@@ -151,19 +153,38 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
         });
     }
 
-    private void setView(FaceSignBean data) {
-//        List<String> strings = StringUtils.splitAsPicList(data.getAdvanceFundAmountPdf());
-        mBinding.myMlAdvanceFundAmountPdf.setListData(data.getAdvanceFundAmountPdf());
-        mBinding.myMlBankPhoto.setListData(data.getBankPhoto());
-        mBinding.myMlCompanyContract.setListData(data.getCompanyContract());
-        mBinding.myMlBankContract.setListData(data.getBankContract());
-        mBinding.myMlInterviewOtherPdf.setListData(data.getInterviewOtherPdf());
+    private void setView(ZXDetialsBean.ListBean data) {
+//        public static String bank_video = "bank_video";    //银行视频
+//        public static String bank_contract = "bank_contract";    //银行合同
+//        public static String bank_photo = "bank_photo";//银行面签照片
+//        public static String company_video = "company_video";//	公司视频
+//        public static String company_contract = "company_contract";//公司合同
+//        public static String other_video = "other_video";//其他视频
+//        public static String advance_fund_amount_pdf = "advance_fund_amount_pdf";//	资金划转授权书
+//        public static String interview_other_pdf = "interview_other_pdf";//	面签其他资料
 
-        List<String> bankVideoList = StringUtils.splitAsPicList(data.getBankVideo());
+        List<ZXDetialsBean.ListBean.AttachmentsBean> attachments = data.getAttachments();
+        String bank_video = BizTypeHelper.getKayToUrl(BizTypeHelper.bank_video, attachments);
+        String company_video = BizTypeHelper.getKayToUrl(BizTypeHelper.company_video, attachments);
+        String other_video = BizTypeHelper.getKayToUrl(BizTypeHelper.other_video, attachments);
+
+        String bank_contract = BizTypeHelper.getKayToUrl(BizTypeHelper.bank_contract, attachments);
+        String bank_photo = BizTypeHelper.getKayToUrl(BizTypeHelper.bank_photo, attachments);
+        String company_contract = BizTypeHelper.getKayToUrl(BizTypeHelper.company_contract, attachments);
+        String advance_fund_amount_pdf = BizTypeHelper.getKayToUrl(BizTypeHelper.advance_fund_amount_pdf, attachments);
+        String interview_other_pdf = BizTypeHelper.getKayToUrl(BizTypeHelper.interview_other_pdf, attachments);
+
+        mBinding.myMlAdvanceFundAmountPdf.setListData(advance_fund_amount_pdf);
+        mBinding.myMlBankPhoto.setListData(bank_photo);
+        mBinding.myMlCompanyContract.setListData(company_contract);
+        mBinding.myMlBankContract.setListData(bank_contract);
+        mBinding.myMlInterviewOtherPdf.setListData(interview_other_pdf);
+
+        List<String> bankVideoList = StringUtils.splitAsPicList(bank_video);
         mBinding.myVlBankVideo.setList(listSwitchVideoList(bankVideoList));
-        List<String> companyVideoList = StringUtils.splitAsPicList(data.getCompanyVideo());
+        List<String> companyVideoList = StringUtils.splitAsPicList(company_video);
         mBinding.myVlCompanyVideo.setList(listSwitchVideoList(companyVideoList));
-        List<String> otherVideoList = StringUtils.splitAsPicList(data.getOtherVideo());
+        List<String> otherVideoList = StringUtils.splitAsPicList(other_video);
         mBinding.myVlOtherVideo.setList(listSwitchVideoList(otherVideoList));
 
     }
@@ -394,6 +415,7 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
                     if (TextUtils.equals("0", data.getStatus()) && !TextUtils.isEmpty(data.getCode())) {
                         //房间可用
                         checkRoomId(data.getCode(), true);
+
                     } else {
                         getRoomId();
                     }
@@ -479,8 +501,8 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
      */
     public void getSendRoomIdSms(String roomid) {
 
-//        mHelper = new TencentLoginHelper(InterviewStartActivity.this, InterviewStartActivity.this);
-//        mHelper.login();
+        mHelper = new TencentLoginHelper(InterviewStartActivity.this, InterviewStartActivity.this);
+        mHelper.login(roomid);
 
         Map<String, String> map = RetrofitUtils.getNodeListMap();
 
@@ -524,13 +546,8 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
         if (checkPermission()) {
 //            Integer.parseInt(roomId)
             RoomActivity.open(this, Integer.parseInt(roomId), isBoos);
-//            getRoomId();
-//            String roomId = code.substring(code.length() - 7, code.length());
-//            try {
-//                RoomActivity.open(this, Integer.parseInt(roomId));
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+//            RoomActivity.open(this, 546547, isBoos);
+
         }
     }
 
@@ -848,7 +865,6 @@ public class InterviewStartActivity extends AbsBaseLoadActivity implements Tence
                 } else {
                     UITipDialog.showSuccess(InterviewStartActivity.this, "销毁房间失败");
                 }
-
             }
 
             @Override

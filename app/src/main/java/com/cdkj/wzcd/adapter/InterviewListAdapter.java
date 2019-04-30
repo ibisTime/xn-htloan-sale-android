@@ -11,12 +11,14 @@ import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.databinding.ItemInterviewBinding;
 import com.cdkj.wzcd.model.NodeListModel;
 import com.cdkj.wzcd.module.business.interview.InterviewStartActivity;
+import com.cdkj.wzcd.util.BizTypeHelper;
 import com.cdkj.wzcd.util.DataDictionaryHelper;
 import com.cdkj.wzcd.util.NodeHelper;
 import com.cdkj.wzcd.util.RequestUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,10 +31,10 @@ public class InterviewListAdapter extends BaseQuickAdapter<NodeListModel, BaseVi
     private ItemInterviewBinding mBinding;
     private List<DataDictionary> mType;
 
-    public InterviewListAdapter(@Nullable List<NodeListModel> data, List<DataDictionary> type) {
+    public InterviewListAdapter(@Nullable List<NodeListModel> data) {
         super(R.layout.item_interview, data);
-
-        mType = type;
+        ArrayList<DataDictionary> parentList = BizTypeHelper.getParentList(BizTypeHelper.budget_orde_biz_typer);
+        mType = parentList;
     }
 
     @Override
@@ -47,13 +49,16 @@ public class InterviewListAdapter extends BaseQuickAdapter<NodeListModel, BaseVi
         mBinding.myIlAmount.setText(MoneyUtils.MONEYSING + RequestUtil.formatAmountDiv(item.getLoanAmount()));
         mBinding.myIlDateTime.setText(DateUtil.formatStringData(item.getApplyDatetime(), DateUtil.DEFAULT_DATE_FMT));
 
-        if (TextUtils.equals(item.getIntevCurNodeCode(),"002_05") || TextUtils.equals(item.getIntevCurNodeCode(),"002_08")){ // 面签 / 重新面签
+        if (TextUtils.equals(item.getIntevCurNodeCode(), "002_05") || TextUtils.equals(item.getIntevCurNodeCode(), "002_08")) { // 面签 / 重新面签
 
             mBinding.myItemCblConfirm.setRightTextAndListener("面签", view -> {
                 InterviewStartActivity.open(mContext, item.getCode());
             });
-        }else {
-            mBinding.myItemCblConfirm.setContent("","");
+        } else {
+            mBinding.myItemCblConfirm.setContent("", "");
         }
+        mBinding.myItemCblConfirm.setRightTextAndListener("面签", view -> {
+            InterviewStartActivity.open(mContext, item.getCode());
+        });
     }
 }

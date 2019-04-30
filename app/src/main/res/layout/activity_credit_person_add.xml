@@ -2,9 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-    </data>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -91,23 +88,23 @@
 
             </com.cdkj.wzcd.view.MyMultipleLayout>
 
-            <com.cdkj.wzcd.view.MyEditLayout
-                android:id="@+id/myEl_creditCardOccupation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:inputType="money"
-                app:txt_input_title="信用卡使用占比"
-                app:txt_input_title_right="%" />
+            <!--<com.cdkj.wzcd.view.MyEditLayout-->
+                <!--android:id="@+id/myEl_creditCardOccupation"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:visibility="gone"-->
+                <!--app:inputType="money"-->
+                <!--app:txt_input_title="信用卡使用占比"-->
+                <!--app:txt_input_title_right="%" />-->
 
-            <com.cdkj.wzcd.view.MyMultipleLayout
-                android:id="@+id/myMl_bankCreditResultPdf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:title="征信报告">
+            <!--<com.cdkj.wzcd.view.MyMultipleLayout-->
+                <!--android:id="@+id/myMl_bankCreditResultPdf"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:visibility="gone"-->
+                <!--app:title="征信报告">-->
 
-            </com.cdkj.wzcd.view.MyMultipleLayout>
+            <!--</com.cdkj.wzcd.view.MyMultipleLayout>-->
 
             <com.cdkj.wzcd.view.MyEditLayout
                 android:id="@+id/myEl_bankCreditResultRemark"

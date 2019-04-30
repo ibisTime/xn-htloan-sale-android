@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fillViewport="true"
+        tools:context="com.cdkj.wzcd.module.main.customer.zrdxq.ZRLoanFragment1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.cdkj.wzcd.view.MySelectLayout2
+                android:id="@+id/mySL_sfzjdw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_select_content="请选择"
+                app:txt_select_title="*是否自己单位"></com.cdkj.wzcd.view.MySelectLayout2>
+
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_sshy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="所属行业"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MySelectLayout2
+                android:id="@+id/mySL_dwjjxz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_select_content="请选择"
+                app:txt_select_title="*单位经济性质"></com.cdkj.wzcd.view.MySelectLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_gzdwmc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*工作单位名称"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_gzdwdz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*工作单位地址"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_gzdwdh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*工作单位电话"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_hsjrgdw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="合时进入该单位"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_zw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="职务"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_ysr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*月收入"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_gzmsjhklyfx"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*工作描述及还款来源分析"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myML_srzm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="收入证明"></com.cdkj.wzcd.view.MyMultipleLayout>
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myML_dwqtzp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="单位前台照片"></com.cdkj.wzcd.view.MyMultipleLayout>
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myML_bgcdzp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="办公场地照片"></com.cdkj.wzcd.view.MyMultipleLayout>
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myML_khhy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="签约员与客户合影"></com.cdkj.wzcd.view.MyMultipleLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>

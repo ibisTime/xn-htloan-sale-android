@@ -1,0 +1,151 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        tools:context="com.cdkj.wzcd.module.main.customer.zxdxq.ZXDFragment1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="姓名"
+                app:txt_title="二狗子"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_relationship"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="与借款人关系"
+                app:txt_title="贷款人本人"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_role"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="贷款人角色"
+                app:txt_title="申请人"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="手机号"
+                app:txt_title="13333333333"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_id_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="身份证号"
+                app:txt_title="97462145575211556321"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyImageLayout
+                android:id="@+id/myIl_idCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isSingle="false"
+                app:txt_image_hint="身份证正面照"
+                app:txt_image_hint_right="身份证反面照"
+                app:txt_image_title="身份证照片"></com.cdkj.wzcd.view.MyImageLayout>
+
+
+            <com.cdkj.wzcd.view.MyImageLayout
+                android:id="@+id/my_Il_zxsqs_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isSingle="true"
+                app:txt_image_hint="征信授权书"
+                app:txt_image_title="征信授权书"></com.cdkj.wzcd.view.MyImageLayout>
+
+            <!--<com.cdkj.wzcd.view.MyMultipleLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"></com.cdkj.wzcd.view.MyMultipleLayout>-->
+
+            <com.cdkj.wzcd.view.MyImageLayout
+                android:id="@+id/my_Il_mq_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isSingle="true"
+                app:txt_image_hint="面签照片"
+                app:txt_image_hint_right="面签照片"
+                app:txt_image_title="面签照片"></com.cdkj.wzcd.view.MyImageLayout>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/mydt_xyk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="信用卡使用占比"
+                app:txt_title="0"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyImageLayout
+                android:id="@+id/my_Il_zxbg_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isSingle="true"
+                app:txt_image_hint="征信报告"
+                app:txt_image_title="征信报告"></com.cdkj.wzcd.view.MyImageLayout>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_zxjg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="征信结果说明"
+                app:txt_title="二狗子,已婚,2018年2月31日贷款500万,贷期1年,月供60000"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <View
+                style="@style/style_split_line_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp" />
+
+            <!--<com.cdkj.wzcd.view.MyDoubleTitle-->
+                <!--android:id="@+id/myDT_name2"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:txt_mintop_title="姓名"-->
+                <!--app:txt_title="胡丹丹"></com.cdkj.wzcd.view.MyDoubleTitle>-->
+
+            <!--<com.cdkj.wzcd.view.MyDoubleTitle-->
+                <!--android:id="@+id/myDT_relationship2"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:txt_mintop_title="与借款人关系"-->
+                <!--app:txt_title="配偶"></com.cdkj.wzcd.view.MyDoubleTitle>-->
+
+            <!--<com.cdkj.wzcd.view.MyDoubleTitle-->
+                <!--android:id="@+id/myDT_role2"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:txt_mintop_title="贷款人角色"-->
+                <!--app:txt_title="共同还款人"></com.cdkj.wzcd.view.MyDoubleTitle>-->
+
+            <!--<com.cdkj.wzcd.view.MyDoubleTitle-->
+                <!--android:id="@+id/myDT_phone2"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:txt_mintop_title="手机号"-->
+                <!--app:txt_title="13838381438"></com.cdkj.wzcd.view.MyDoubleTitle>-->
+
+            <!--<com.cdkj.wzcd.view.MyDoubleTitle-->
+                <!--android:id="@+id/myDT_id_no2"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:txt_mintop_title="手机号"-->
+                <!--app:txt_title="4621477896521445541233"></com.cdkj.wzcd.view.MyDoubleTitle>-->
+
+
+        </LinearLayout>
+    </ScrollView>
+</layout>

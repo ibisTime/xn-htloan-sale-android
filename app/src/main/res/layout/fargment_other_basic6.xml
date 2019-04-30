@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myml_hkb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="户口本"></com.cdkj.wzcd.view.MyMultipleLayout>
+
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myml_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="身份证"></com.cdkj.wzcd.view.MyMultipleLayout>
+
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myml_qtzl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="其他资料"></com.cdkj.wzcd.view.MyMultipleLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>

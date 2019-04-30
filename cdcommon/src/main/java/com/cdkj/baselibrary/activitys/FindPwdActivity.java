@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.cdkj.baselibrary.R;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
@@ -50,6 +51,16 @@ public class FindPwdActivity extends AbsBaseLoadActivity implements SendCodeInte
         context.startActivity(intent);
     }
 
+    public static void open(Context context, String title, String mPhoneNumber) {
+        if (context == null) {
+            return;
+        }
+        Intent intent = new Intent(context, FindPwdActivity.class);
+        intent.putExtra("phonenumber", mPhoneNumber);
+        intent.putExtra("title", title);
+        context.startActivity(intent);
+    }
+
     @Override
     public View addMainView() {
         mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_modify_password, null, false);
@@ -60,13 +71,14 @@ public class FindPwdActivity extends AbsBaseLoadActivity implements SendCodeInte
     @Override
     public void afterCreate(Bundle savedInstanceState) {
         mBaseBinding.titleView.setMidTitle(getString(R.string.activity_find_title));
-        mSendCOdePresenter=new SendPhoneCodePresenter(this);
+        mSendCOdePresenter = new SendPhoneCodePresenter(this);
         if (getIntent() != null) {
+            String title = getIntent().getStringExtra("title");
+            if (!TextUtils.isEmpty(title)) {
+                mBaseBinding.titleView.setMidTitle(title);
+            }
             mPhoneNumber = getIntent().getStringExtra("phonenumber");
         }
-
-//        mBinding.llGoogle.setVisibility(SPUtilHelper.getGoogleAuthFlag() ? View.VISIBLE : View.GONE);
-//        mBinding.lineGoogle.setVisibility(SPUtilHelper.getGoogleAuthFlag() ? View.VISIBLE : View.GONE);
 
         if (!TextUtils.isEmpty(mPhoneNumber)) {
             mBinding.edtPhone.setText(mPhoneNumber);
@@ -85,7 +97,7 @@ public class FindPwdActivity extends AbsBaseLoadActivity implements SendCodeInte
         mBinding.tvSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSendCOdePresenter.sendCodeRequest(mBinding.edtPhone.getText().toString(),"805063", MyCdConfig.USER_TYPE,FindPwdActivity.this);
+                mSendCOdePresenter.sendCodeRequest(mBinding.edtPhone.getText().toString(), "630053", MyCdConfig.USER_TYPE, mBinding.tvSend, FindPwdActivity.this);
             }
         });
 
@@ -104,12 +116,6 @@ public class FindPwdActivity extends AbsBaseLoadActivity implements SendCodeInte
                     return;
                 }
 
-//                if (SPUtilHelper.getGoogleAuthFlag()){
-//                    if (TextUtils.isEmpty(mBinding.edtGoogle.getText().toString())){
-//                        showToast(getString(R.string.activity_find_google_hint));
-//                        return;
-//                    }
-//                }
 
                 if (TextUtils.isEmpty(mBinding.edtPassword.getText().toString())) {
                     showToast(getString(R.string.activity_find_password_hint));
@@ -141,17 +147,17 @@ public class FindPwdActivity extends AbsBaseLoadActivity implements SendCodeInte
      */
     private void findPwdReqeust() {
 
-        HashMap<String, String> hashMap = new LinkedHashMap<String, String>();
+        HashMap<String, String> hashMap = new LinkedHashMap<>();
 
         hashMap.put("mobile", mBinding.edtPhone.getText().toString());
         hashMap.put("newLoginPwd", mBinding.edtPassword.getText().toString());
         hashMap.put("smsCaptcha", mBinding.edtCode.getText().toString());
-        hashMap.put("kind", MyCdConfig.USER_TYPE);
-        hashMap.put("googleCaptcha", mBinding.edtGoogle.getText().toString());
-        hashMap.put("systemCode", MyCdConfig.SYSTEM_CODE);
-        hashMap.put("companyCode", MyCdConfig.COMPANY_CODE);
+//        hashMap.put("kind", MyCdConfig.USER_TYPE);
+//        hashMap.put("googleCaptcha", mBinding.edtGoogle.getText().toString());
+//        hashMap.put("systemCode", MyCdConfig.SYSTEM_CODE);
+//        hashMap.put("companyCode", MyCdConfig.COMPANY_CODE);
 
-        Call call= RetrofitUtils.getBaseAPiService().successRequest("630053", StringUtils.getJsonToString(hashMap));
+        Call call = RetrofitUtils.getBaseAPiService().successRequest("630053", StringUtils.getJsonToString(hashMap));
 
         addCall(call);
         showLoadingDialog();
@@ -169,7 +175,7 @@ public class FindPwdActivity extends AbsBaseLoadActivity implements SendCodeInte
 
             @Override
             protected void onFinish() {
-             disMissLoading();
+                disMissLoading();
             }
         });
 
@@ -178,7 +184,7 @@ public class FindPwdActivity extends AbsBaseLoadActivity implements SendCodeInte
 
 
     @Override
-    public void CodeSuccess(String msg) {
+    public void CodeSuccess(String msg, TextView view) {
         mSubscription.add(AppUtils.startCodeDown(60, mBinding.tvSend));
     }
 
@@ -201,9 +207,9 @@ public class FindPwdActivity extends AbsBaseLoadActivity implements SendCodeInte
     protected void onDestroy() {
         super.onDestroy();
 
-        if(mSendCOdePresenter!=null){
+        if (mSendCOdePresenter != null) {
             mSendCOdePresenter.clear();
-            mSendCOdePresenter=null;
+            mSendCOdePresenter = null;
         }
     }
 }

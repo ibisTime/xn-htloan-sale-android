@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingTop="10dp"
+        android:paddingRight="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                tools:text="张三"
+                android:textColor="@color/text_666"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="1333333333"
+                android:textColor="@color/text_666"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="征信通过"
+                android:textColor="@color/color_red"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_idNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            tools:text="456421231566586452121"
+            android:textColor="@color/text_666"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_people"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            tools:text="贷款人本人/主贷人"
+            android:textColor="@color/text_666"
+            android:textSize="15sp" />
+
+        <View
+            style="@style/style_split_line_horizontal"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+</layout>

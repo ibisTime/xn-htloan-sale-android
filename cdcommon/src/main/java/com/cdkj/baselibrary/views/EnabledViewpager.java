@@ -38,4 +38,18 @@ public class EnabledViewpager extends ViewPager {
     public int getCurrentItem() {
         return PagerAdapter.POSITION_NONE;
     }
+
+    //预加载所有的界面  源码最小为1  小于1的会默认变成1
+//    @Override
+//    public void setOffscreenPageLimit(int limit) {
+//        super.setOffscreenPageLimit(100);
+//
+//    }
+
+//    @Override
+//    public void setCurrentItem(int item) {
+//        //去除页面切换时的滑动翻页效果
+//        super.setCurrentItem(item, false);
+//    }
+
 }

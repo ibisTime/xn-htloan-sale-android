@@ -17,12 +17,11 @@ import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.databinding.ActivityCreditPersonAddBinding;
 import com.cdkj.wzcd.model.CreditUserModel;
 import com.cdkj.wzcd.model.CreditUserReplaceModel;
+import com.cdkj.wzcd.util.BizTypeHelper;
 import com.cdkj.wzcd.util.DataDictionaryHelper;
-import com.cdkj.wzcd.view.MySelectLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.Serializable;
 import java.util.List;
 
 import static com.cdkj.baselibrary.appmanager.CdRouteHelper.DATA_SIGN;
@@ -61,7 +60,7 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
      * @param model   征信人Model
      *                //     * @param isCanEdit 当前页面是否可编辑,true:可编辑,false:不可编辑
      */
-    public static void open(Context context, CreditUserModel model, int position, boolean isCanEdit, List<DataDictionary> role, List<DataDictionary> relation) {
+    public static void open(Context context, CreditUserModel model, int position, boolean isCanEdit) {
         if (context == null) {
             return;
         }
@@ -69,8 +68,6 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
         intent.putExtra(DATA_SIGN, model);
         intent.putExtra("position", position);
         intent.putExtra("isCanEdit", isCanEdit);
-        intent.putExtra("role", (Serializable) role);
-        intent.putExtra("relation", (Serializable) relation);
         context.startActivity(intent);
     }
 
@@ -85,17 +82,14 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
 
         mBaseBinding.titleView.setMidTitle("征信人");
 
+        role = BizTypeHelper.getParentList("credit_user_loan_role");
+        relation = BizTypeHelper.getParentList("credit_user_relation");
         initCustomView();
         initListener();
-
         if (getIntent() != null && getIntent().getExtras() != null) {
             model = (CreditUserModel) getIntent().getSerializableExtra(DATA_SIGN);
             position = getIntent().getIntExtra("position", 0);
             isCanEdit = getIntent().getBooleanExtra("isCanEdit", false);
-
-            role = (List<DataDictionary>) getIntent().getSerializableExtra("role");
-            relation = (List<DataDictionary>) getIntent().getSerializableExtra("relation");
-
             setView();
         }
 
@@ -110,8 +104,8 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
             mBinding.mySlRelation.setTextAndKey(model.getRelation(), DataDictionaryHelper.getValueOnTheKey(model.getRelation(), relation));
 
             mBinding.myElId.setText(model.getIdNo());
-            mBinding.myIlIdCard.setFlImg(model.getIdNoFront());
-            mBinding.myIlIdCard.setFlImgRight(model.getIdNoReverse());
+            mBinding.myIlIdCard.setFlImg(model.getIdFront());
+            mBinding.myIlIdCard.setFlImgRight(model.getIdReverse());
             mBinding.myMlCredit.setListData(model.getAuthPdf());
             mBinding.myMlInterview.setListData(model.getInterviewPic());
 
@@ -123,17 +117,17 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
             mBinding.mySlRelation.setTextByRequest(DataDictionaryHelper.getValueOnTheKey(model.getRelation(), relation));
 
             mBinding.myElId.setTextByRequest(model.getIdNo());
-            mBinding.myIlIdCard.setFlImgByRequest(model.getIdNoFront());
-            mBinding.myIlIdCard.setFlImgRightByRequest(model.getIdNoReverse());
+            mBinding.myIlIdCard.setFlImgByRequest(model.getIdFront());
+            mBinding.myIlIdCard.setFlImgRightByRequest(model.getIdReverse());
             mBinding.myMlCredit.setListDataByRequest(model.getAuthPdf());
             mBinding.myMlInterview.setListDataByRequest(model.getInterviewPic());
 
-            mBinding.myElCreditCardOccupation.setVisibility(View.VISIBLE);
-            mBinding.myMlBankCreditResultPdf.setVisibility(View.VISIBLE);
+//            mBinding.myElCreditCardOccupation.setVisibility(View.VISIBLE);
+//            mBinding.myMlBankCreditResultPdf.setVisibility(View.VISIBLE);
             mBinding.myElBankCreditResultRemark.setVisibility(View.VISIBLE);
 
-            mBinding.myElCreditCardOccupation.setTextByRequest(model.getCreditCardOccupation() == null ? "暂无" : model.getCreditCardOccupation());
-            mBinding.myMlBankCreditResultPdf.setListDataByRequest(model.getBankCreditResultPdf());
+//            mBinding.myElCreditCardOccupation.setTextByRequest(model.getCreditCardOccupation() == null ? "暂无" : model.getCreditCardOccupation());
+//            mBinding.myMlBankCreditResultPdf.setListDataByRequest(model.getBankCreditResultPdf());
             mBinding.myElBankCreditResultRemark.setTextByRequest(model.getBankCreditResultRemark());
 
             mBinding.myCbConfirm.setVisibility(View.GONE);
@@ -143,14 +137,14 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
 
     private void initCustomView() {
 
-        mBinding.mySlRole.setData(this, MySelectLayout.DATA_DICTIONARY, DataDictionaryHelper.credit_user_loan_role, null);
-        mBinding.mySlRelation.setData(this, MySelectLayout.DATA_DICTIONARY, DataDictionaryHelper.credit_user_relation, null);
+        mBinding.mySlRole.setData(role, null);
+        mBinding.mySlRelation.setData(relation, null);
 
         mBinding.myIlIdCard.setActivity(this, 1, 2);
         mBinding.myMlCredit.build(this, 3);
         mBinding.myMlInterview.build(this, 4);
 
-        mBinding.myMlBankCreditResultPdf.build(this, 5);
+//        mBinding.myMlBankCreditResultPdf.build(this, 5);
     }
 
     private void initListener() {
@@ -163,8 +157,8 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
                 model.setLoanRole(mBinding.mySlRole.getDataKey());
                 model.setRelation(mBinding.mySlRelation.getDataKey());
                 model.setIdNo(mBinding.myElId.getText());
-                model.setIdNoFront(mBinding.myIlIdCard.getFlImgUrl());
-                model.setIdNoReverse(mBinding.myIlIdCard.getFlImgRightUrl());
+                model.setIdFront(mBinding.myIlIdCard.getFlImgUrl());
+                model.setIdReverse(mBinding.myIlIdCard.getFlImgRightUrl());
                 model.setAuthPdf(mBinding.myMlCredit.getListData());
                 model.setInterviewPic(mBinding.myMlInterview.getListData());
 
@@ -262,9 +256,9 @@ public class CreditUserActivity extends AbsBaseLoadActivity {
                     mBinding.myMlInterview.addList(key);
                 }
 
-                if (requestCode == mBinding.myMlBankCreditResultPdf.getRequestCode()) {
-                    mBinding.myMlBankCreditResultPdf.addList(key);
-                }
+//                if (requestCode == mBinding.myMlBankCreditResultPdf.getRequestCode()) {
+//                    mBinding.myMlBankCreditResultPdf.addList(key);
+//                }
 
                 disMissLoading();
 

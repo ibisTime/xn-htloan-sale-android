@@ -1,6 +1,7 @@
 package com.cdkj.wzcd.module.business.credit;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -29,9 +30,10 @@ import com.cdkj.wzcd.model.CreditUserModel;
 import com.cdkj.wzcd.model.CreditUserReplaceModel;
 import com.cdkj.wzcd.model.ExchangeBankModel;
 import com.cdkj.wzcd.util.BankHelper;
+import com.cdkj.wzcd.util.BizTypeHelper;
 import com.cdkj.wzcd.util.DataDictionaryHelper;
 import com.cdkj.wzcd.util.RequestUtil;
-import com.cdkj.wzcd.view.MySelectLayout;
+import com.cdkj.wzcd.view.interfaces.MySelectInterface;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -60,10 +62,6 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
     // 银行
     private List<DataDictionary> mBank;
 
-    // 角色
-    private List<DataDictionary> mRole = new ArrayList<>();
-    // 关系
-    private List<DataDictionary> mRelation = new ArrayList<>();
 
     private CreditUserAdapter mAdapter;
     private List<CreditUserModel> mList = new ArrayList<>();
@@ -210,47 +208,34 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
 
     private void initCustomView() {
 
-        mBinding.mySlWay.setData(this, MySelectLayout.DATA_DICTIONARY, DataDictionaryHelper.budget_orde_biz_typer, (dialog, which) -> {
-            // 新车则隐藏证件
-            mBinding.myFlReport.setVisibility(which == 0 ? View.GONE : View.VISIBLE);
+        mBinding.mySlWay.setData(BizTypeHelper.getParentList(BizTypeHelper.budget_orde_biz_typer), new MySelectInterface() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mBinding.myFlReport.setVisibility(which == 0 ? View.GONE : View.VISIBLE);
+            }
         });
+
+//        mBinding.mySlWay.setData(this, MySelectLayout.DATA_DICTIONARY, DataDictionaryHelper.budget_orde_biz_typer, (dialog, which) -> {
+//            // 新车则隐藏证件
+//            mBinding.myFlReport.setVisibility(which == 0 ? View.GONE : View.VISIBLE);
+//        });
 
         mBinding.myFlReport.build(this, 3);
     }
 
     public void initListAdapter() {
+        mAdapter = new CreditUserAdapter(mList);
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            CreditUserModel model = mAdapter.getItem(position);
 
-        DataDictionaryHelper.getDataDictionaryRequest(this, DataDictionaryHelper.credit_user_loan_role, "", data -> {
-
-            if (data == null || data.size() == 0) {
-                return;
-            }
-
-            mRole.addAll(data);
-
-            DataDictionaryHelper.getDataDictionaryRequest(this, DataDictionaryHelper.credit_user_relation, "", data1 -> {
-
-                if (data1 == null || data1.size() == 0) {
-                    return;
-                }
-
-                mRelation.addAll(data1);
-
-                mAdapter = new CreditUserAdapter(mList, mRole, mRelation);
-                mAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    CreditUserModel model = mAdapter.getItem(position);
-
-                    CreditUserActivity.open(this, model, position, true, mRole, mRelation);
-
-                });
-
-                mBinding.rvZxr.setLayoutManager(getLinearLayoutManager(false));
-                mBinding.rvZxr.setAdapter(mAdapter);
-
-                getBank();
-            });
+            CreditUserActivity.open(this, model, position, true);
 
         });
+
+        mBinding.rvZxr.setLayoutManager(getLinearLayoutManager(false));
+        mBinding.rvZxr.setAdapter(mAdapter);
+
+        getBank();
 
 
     }
@@ -336,7 +321,8 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
         Map<String, Object> map = new HashMap<>();
 
         if (!TextUtils.isEmpty(creditCode)) {
-            map.put("creditCode", creditCode);
+//            map.put("creditCode", creditCode);
+            map.put("bizCode", creditCode);
         }
 
         map.put("bizType", mBinding.mySlWay.getDataKey());
@@ -365,7 +351,7 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
 
             @Override
             protected void onReqFailure(String errorCode, String errorMessage) {
-                super.onReqFailure(errorCode, errorMessage);
+//                super.onReqFailure(errorCode, errorMessage);
                 UITipDialog.showFail(CreditInitiateActivity.this, errorMessage);
             }
 
@@ -430,13 +416,10 @@ public class CreditInitiateActivity extends AbsBaseLoadActivity {
         if (TextUtils.equals(mData.getBizType(), "1")) { //二手车
             // 新车则隐藏证件
             mBinding.myFlReport.setVisibility(View.VISIBLE);
-
-
             mBinding.myFlReport.setListData(mData.getSecondCarReport());
         }
 
         mBaseBinding.titleView.setMidTitle("修改征信信息");
-
         mList.addAll(mData.getCreditUserList());
         mAdapter.notifyDataSetChanged();
 

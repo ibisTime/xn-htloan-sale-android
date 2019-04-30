@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        tools:context="com.cdkj.wzcd.module.main.customer.LocalUpEnclosureActivity">
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNL_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:is_show_right_img="true"
+            app:txt_normal_hint="(行驶证正面/反面/二报告/主贷人...)"
+            app:txt_normal_title="附件名称"></com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNL_zylx"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:is_show_right_img="true"
+            app:txt_normal_hint="(图片视频)"
+            app:txt_normal_title="资源类型"></com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyVideoLayout
+            android:id="@+id/myVl_bankVideo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="图片可连续多张,视频只能一个">
+
+        </com.cdkj.wzcd.view.MyVideoLayout>
+
+        <com.cdkj.wzcd.view.MyConfirmBtn
+            android:id="@+id/myCb_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_confirm_content="确定"></com.cdkj.wzcd.view.MyConfirmBtn>
+    </LinearLayout>
+</layout>

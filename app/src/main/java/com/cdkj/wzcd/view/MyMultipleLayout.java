@@ -92,12 +92,13 @@ public class MyMultipleLayout extends LinearLayout {
 
         mList.add(new MultipleModel().setUrl(ADD));
 
-        FullyGridLayoutManager manager = new FullyGridLayoutManager(mActivity, 3, GridLayoutManager.VERTICAL, false);
-        mBinding.rvMultiple.setLayoutManager(manager);
         mBinding.rvMultiple.setNestedScrollingEnabled(false);
-
         adapter = new MyMultipleAdapter(mList, listener);
         mBinding.rvMultiple.setAdapter(adapter);
+        FullyGridLayoutManager manager = new FullyGridLayoutManager(mActivity, 3, GridLayoutManager.VERTICAL, false);
+        mBinding.rvMultiple.setLayoutManager(manager);
+        adapter.notifyDataSetChanged();
+
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (mList.size() > 0) {
 
@@ -127,6 +128,7 @@ public class MyMultipleLayout extends LinearLayout {
     public void addList(String url) {
         if (position > 0) {
             mList.set(position, new MultipleModel().setUrl(url));
+            position = -1;
         } else {
 
             mList.add(new MultipleModel().setUrl(url));

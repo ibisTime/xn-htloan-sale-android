@@ -5,7 +5,10 @@ import android.content.Context;
 import com.cdkj.baselibrary.CdApplication;
 import com.cdkj.baselibrary.R;
 import com.cdkj.baselibrary.api.BaseResponseModel;
+import com.cdkj.baselibrary.model.eventmodels.EventFinishAll;
 import com.cdkj.baselibrary.utils.LogUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.lang.ref.SoftReference;
 
@@ -44,8 +47,8 @@ public abstract class BaseResponseModelCallBack<T> implements Callback<BaseRespo
 
         if (response.isSuccessful()) {
 
-                BaseResponseModel t = response.body();
-                checkState(t);      //根据返回错误的状态码实现相应的操作
+            BaseResponseModel t = response.body();
+            checkState(t);      //根据返回错误的状态码实现相应的操作
             try {
             } catch (Exception e) {
                 if (LogUtil.isDeBug) {
@@ -129,6 +132,7 @@ public abstract class BaseResponseModelCallBack<T> implements Callback<BaseRespo
      * @param
      */
     protected void onLoginFailure(Context context, String errorMessage) {
+        EventBus.getDefault().post(new EventFinishAll());
         NetHelper.onLoginFailure(context, errorMessage);
     }
 

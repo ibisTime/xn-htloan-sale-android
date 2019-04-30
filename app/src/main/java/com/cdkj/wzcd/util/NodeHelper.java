@@ -24,9 +24,9 @@ public class NodeHelper {
 
     private static Call call;
 
-    public static String getNameOnTheCode(String code, List<NodeModel> data){
+    public static String getNameOnTheCode(String code, List<NodeModel> data) {
 
-        for (NodeModel nodeModel : data){
+        for (NodeModel nodeModel : data) {
             if (TextUtils.equals(code, nodeModel.getCode()))
                 return nodeModel.getName();
         }
@@ -34,14 +34,18 @@ public class NodeHelper {
         return "";
     }
 
-    public static String getNameOnTheCode(String code){
-        if (MainActivity.BASE_NODE_LIST == null || MainActivity.BASE_NODE_LIST.size() == 0)
+    public static String getNameOnTheCode(String code) {
+        if (MainActivity.BASE_NODE_LIST == null || MainActivity.BASE_NODE_LIST.size() == 0) {
+//            MainActivity.getNodeHelperData();
+            //防止第一次进入app 的mainActivity的时候获取失败
             return "";
+        }
+
 
         if (TextUtils.isEmpty(code))
             return "";
 
-        for (NodeModel nodeModel : MainActivity.BASE_NODE_LIST){
+        for (NodeModel nodeModel : MainActivity.BASE_NODE_LIST) {
             if (TextUtils.equals(code, nodeModel.getCode()))
                 return nodeModel.getName();
         }
@@ -49,7 +53,7 @@ public class NodeHelper {
         return "";
     }
 
-    public static void getNodeBaseDataRequest(Context context, String name, String key, NodeInterface listInterface){
+    public static void getNodeBaseDataRequest(Context context, String name, String key, NodeInterface listInterface) {
         Map<String, String> map = new HashMap<>();
         map.put("name", name);
         map.put("type", key);
@@ -82,14 +86,15 @@ public class NodeHelper {
         });
     }
 
-    public interface NodeInterface{
+    public interface NodeInterface {
 
         void onSuccess(List<NodeModel> list);
+
         void onReqFailure(String errorCode, String errorMessage);
 
     }
 
-    private static void clearCall(){
+    private static void clearCall() {
         if (call != null)
             call.cancel();
     }

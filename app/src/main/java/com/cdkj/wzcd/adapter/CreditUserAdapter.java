@@ -2,11 +2,13 @@ package com.cdkj.wzcd.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.cdkj.baselibrary.model.DataDictionary;
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.databinding.ItemCreditPersonBinding;
 import com.cdkj.wzcd.model.CreditUserModel;
+import com.cdkj.wzcd.util.BizTypeHelper;
 import com.cdkj.wzcd.util.DataDictionaryHelper;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -20,21 +22,36 @@ import java.util.List;
 
 public class CreditUserAdapter extends BaseQuickAdapter<CreditUserModel, BaseViewHolder> {
 
+    boolean isInput;
     private ItemCreditPersonBinding mBinding;
 
     List<DataDictionary> mRole = new ArrayList<>();
     List<DataDictionary> mRelation = new ArrayList<>();
 
-    public CreditUserAdapter(@Nullable List<CreditUserModel> data, List<DataDictionary> role, List<DataDictionary> relation) {
+    public CreditUserAdapter(@Nullable List<CreditUserModel> data) {
         super(R.layout.item_credit_person, data);
+        mRole = BizTypeHelper.getParentList("credit_user_loan_role");
+        mRelation = BizTypeHelper.getParentList("credit_user_relation");
+    }
 
-        mRole.addAll(role);
-        mRelation.addAll(relation);
+    public CreditUserAdapter(@Nullable List<CreditUserModel> data, boolean isInput) {
+        super(R.layout.item_credit_person, data);
+        this.isInput = isInput;
+        mRole = BizTypeHelper.getParentList("credit_user_loan_role");
+        mRelation = BizTypeHelper.getParentList("credit_user_relation");
     }
 
     @Override
     protected void convert(BaseViewHolder helper, CreditUserModel item) {
         mBinding = DataBindingUtil.bind(helper.itemView);
+
+        //是否显示录入按钮
+        if (isInput) {
+            mBinding.tvInput.setVisibility(View.VISIBLE);
+        } else {
+            mBinding.tvInput.setVisibility(View.GONE);
+        }
+        helper.addOnClickListener(R.id.tv_input);
 
         mBinding.myItemNlName.setContent(item.getUserName());
         mBinding.myItemNlPhone.setContent(item.getMobile());
@@ -42,15 +59,5 @@ public class CreditUserAdapter extends BaseQuickAdapter<CreditUserModel, BaseVie
 
         mBinding.myItemNlRole.setContent(DataDictionaryHelper.getValueOnTheKey(item.getLoanRole(), mRole));
         mBinding.myItemNlRelation.setContent(DataDictionaryHelper.getValueOnTheKey(item.getRelation(), mRelation));
-
-
-//
-//        DataDictionaryHelper.getValueOnTheKeyRequest(mContext, DataDictionaryHelper.credit_user_loan_role,
-//                 item.getLoanRole(), ,null);
-//
-//        DataDictionaryHelper.getValueOnTheKeyRequest(mContext, DataDictionaryHelper.credit_user_relation,
-//                item.getRelation() ,,null);
-
-
     }
 }

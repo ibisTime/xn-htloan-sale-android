@@ -45,6 +45,7 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.View
      * 点击添加图片跳转
      */
     private onAddPicClickListener mOnAddPicClickListener;
+    private boolean isRequest = false;//是否只显示操作 不是进行添加按钮的显示
 
     public interface onAddPicClickListener {
         void onAddPicClick();
@@ -58,6 +59,10 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.View
 
     public void setSelectMax(int selectMax) {
         this.selectMax = selectMax;
+    }
+
+    public void setRequest(boolean isRequest) {
+        this.isRequest = isRequest;
     }
 
     public void setList(List<LocalMedia> list) {
@@ -80,6 +85,9 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.View
 
     @Override
     public int getItemCount() {
+        if (isRequest) {
+            return list.size();
+        }
         if (list.size() < selectMax) {
             return list.size() + 1;
         } else {
@@ -117,18 +125,24 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.View
      */
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
-        //少于8张，显示继续添加的图标
+        //少于8张，并且不是值显示数据    显示继续添加的图标
         if (getItemViewType(position) == TYPE_CAMERA) {
-            viewHolder.mImg.setImageResource(R.mipmap.addimg_1x);
-            viewHolder.mImg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mOnAddPicClickListener.onAddPicClick();
-                }
-            });
-            viewHolder.ll_del.setVisibility(View.INVISIBLE);
+
+            if (!isRequest) {
+                viewHolder.mImg.setImageResource(R.mipmap.addimg_1x);
+                viewHolder.mImg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mOnAddPicClickListener.onAddPicClick();
+                    }
+                });
+                viewHolder.ll_del.setVisibility(View.INVISIBLE);
+            }
+
         } else {
-            viewHolder.ll_del.setVisibility(View.VISIBLE);
+            if (isRequest) {
+                viewHolder.ll_del.setVisibility(View.INVISIBLE);
+            }
             viewHolder.ll_del.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

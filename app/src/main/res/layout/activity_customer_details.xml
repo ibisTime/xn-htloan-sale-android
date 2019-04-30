@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.cdkj.wzcd.module.main.customer.CustomerDetailsActivity">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:text="业务编号"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="4651312"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/style_split_line_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:text="主贷人"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="张三"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/style_split_line_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:text="经办银行"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_bank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="中国银行"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/style_split_line_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:text="业务种类"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="新车/二手车"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/style_split_line_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:text="贷款金额"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="1000元"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/style_split_line_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:text="当前节点"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_jiedian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="资料传递"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/style_split_line_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:text="对应业务员"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_ywy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="李四(xx团队)"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/style_split_line_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:text="对应内勤"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_nq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="王五"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/style_split_line_horizontal"
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:id="@+id/ll_db"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:text="待办事项"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_db"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="(4个)"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_mory_gary" />
+            </LinearLayout>
+
+            <View
+                style="@style/style_split_line_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+
+            <LinearLayout
+                android:id="@+id/ll_rz"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:text="操作日志"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_rz"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="(10条)"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_mory_gary" />
+            </LinearLayout>
+
+            <View
+                style="@style/style_split_line_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+
+            <LinearLayout
+                android:id="@+id/ll_zxdxq"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:text="征信单详情"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_zxdxq"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_mory_gary" />
+            </LinearLayout>
+
+            <View
+                style="@style/style_split_line_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_zrdxq"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:text="准入单详情"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_zrdxq"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_mory_gary" />
+            </LinearLayout>
+
+            <View
+                style="@style/style_split_line_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_fjxq"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:text="附件详情"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_fjxq"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="(10个)"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_mory_gary" />
+            </LinearLayout>
+
+            <View
+                style="@style/style_split_line_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+
+            <LinearLayout
+                android:id="@+id/ll_hkjhb"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:text="还款计划表"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_hkjhb"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_mory_gary" />
+            </LinearLayout>
+
+            <View
+                style="@style/style_split_line_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+        </LinearLayout>
+    </ScrollView>
+</layout>

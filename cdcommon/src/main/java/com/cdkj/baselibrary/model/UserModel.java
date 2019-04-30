@@ -64,7 +64,16 @@ public class UserModel implements Parcelable {
     private String roleCode;
     private String teamCode;
     private String postName;
+    private String departmentName;
     private int maxNumber;
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
 
     public String getPostName() {
         return postName;

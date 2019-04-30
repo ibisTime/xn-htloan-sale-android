@@ -4,62 +4,29 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
+import android.support.v4.app.Fragment;
 import android.view.View;
 
-import com.cdkj.baselibrary.activitys.ExpectActivity;
-import com.cdkj.baselibrary.activitys.ImageSelectActivity;
-import com.cdkj.baselibrary.api.BaseResponseModel;
+import com.cdkj.baselibrary.adapters.ViewPagerAdapter;
 import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.model.DataDictionary;
-import com.cdkj.baselibrary.model.IsSuccessModes;
-import com.cdkj.baselibrary.model.UserModel;
-import com.cdkj.baselibrary.nets.BaseResponseListCallBack;
-import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
-import com.cdkj.baselibrary.nets.RetrofitUtils;
-import com.cdkj.baselibrary.utils.CameraHelper;
-import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.baselibrary.utils.LogUtil;
-import com.cdkj.baselibrary.utils.QiNiuHelper;
-import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.baselibrary.utils.ToastUtil;
-import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.databinding.ActivityMainBinding;
-import com.cdkj.wzcd.model.DataTransferModel;
 import com.cdkj.wzcd.model.NodeModel;
-import com.cdkj.wzcd.model.TodoModel;
-import com.cdkj.wzcd.module.business.audit.AuditListActivity;
-import com.cdkj.wzcd.module.business.bank_loan.BankLoanListActivity;
-import com.cdkj.wzcd.module.business.cldy.BssCldyListActivity;
-import com.cdkj.wzcd.module.business.cllh.CllhListActivity;
-import com.cdkj.wzcd.module.business.credit.BssCreditListActivity;
-import com.cdkj.wzcd.module.business.gps_install.GPSInstallListActivity;
-import com.cdkj.wzcd.module.business.interview.InterviewActivity;
-import com.cdkj.wzcd.module.cartool.gps.GpsListActivity;
-import com.cdkj.wzcd.module.cartool.history.HistoryUserActivity;
-import com.cdkj.wzcd.module.cartool.uservoid.UserToVoidActivity;
-import com.cdkj.wzcd.module.datatransfer.DataTransferActivity2;
+import com.cdkj.wzcd.module.main.CustomerFragment;
+import com.cdkj.wzcd.module.main.HomeFragment;
+import com.cdkj.wzcd.module.main.MessageFragment;
+import com.cdkj.wzcd.module.main.UserFragment;
 import com.cdkj.wzcd.module.user.SignInActivity;
-import com.cdkj.wzcd.tencent.TencentLogoutHelper;
 import com.cdkj.wzcd.tencent.logininterface.TencentLogoutInterface;
 import com.cdkj.wzcd.util.BizTypeHelper;
 import com.cdkj.wzcd.util.NodeHelper;
-import com.cdkj.wzcd.util.UserHelper;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import retrofit2.Call;
-
-import static com.cdkj.wzcd.util.DataDictionaryHelper.budget_orde_biz_typer;
-import static com.cdkj.wzcd.util.UserHelper.NQZY;
-import static com.cdkj.wzcd.util.UserHelper.YWY;
-import static com.cdkj.wzcd.util.UserHelper.ZHRY;
 
 public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutInterface {
 
@@ -68,12 +35,9 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
     // 业务种类
     public static List<DataDictionary> BASE_BIZ_TYPE = new ArrayList<>();
 
-    private TencentLogoutHelper mLogoutHelper;
-
-    private UserModel mUserModel;
     private ActivityMainBinding mBinding;
-
-    private int PHOTOFLAG = 111;
+    private int currentPostion;
+    private ArrayList<Fragment> fragments;
 
     public static void open(Context context) {
         if (context == null) {
@@ -91,277 +55,108 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
     @Override
     public View addMainView() {
         mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_main, null, false);
-        mBinding.myFML.build(this, 1);
+
         return mBinding.getRoot();
     }
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
 
-        mLogoutHelper = new TencentLogoutHelper(this);
+        getNodeHelperData();
+
         initListener();
-        NodeHelper.getNodeBaseDataRequest(this, "", "", new NodeHelper.NodeInterface() {
-            @Override
-            public void onSuccess(List<NodeModel> list) {
-                BASE_NODE_LIST.clear();
-                BASE_NODE_LIST.addAll(list);
-
-
-                BizTypeHelper.getBizTypeBaseDataRequest(MainActivity.this, budget_orde_biz_typer, new BizTypeHelper.BizTypeInterface() {
-                    @Override
-                    public void onSuccess(List<DataDictionary> list) {
-
-                        BASE_BIZ_TYPE.clear();
-                        BASE_BIZ_TYPE.addAll(list);
-
-                        getUserInfoRequest(true);
-
-                    }
-
-                    @Override
-                    public void onReqFailure(String errorCode, String errorMessage) {
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void onReqFailure(String errorCode, String errorMessage) {
-
-            }
-        });
-
     }
 
-    //获取代办事项的数量
-    private void getTodoData() {
-        showLoadingDialog();
-//        Map map = RetrofitUtils.getNodeListMap();
-        HashMap<String, String> map = new HashMap<>();
-        map.put("teamCode", SPUtilHelper.getTeamCode());
-        map.put("roleCode", SPUtilHelper.getRoleCode());
-        Call<BaseResponseModel<TodoModel>> todo = RetrofitUtils.createApi(MyApiServer.class).getTodo("632912", StringUtils.getJsonToString(map));
-        todo.enqueue(new BaseResponseModelCallBack<TodoModel>(this) {
-            @Override
-            protected void onSuccess(TodoModel data, String SucMessage) {
-                mBinding.mySrCredit.setPointCount(data.getCreditTodo());//资信调查
-                mBinding.mySrMq.setPointCount(data.getInterviewTodo());//面签
-                mBinding.mySrGpsaz.setPointCount(data.getGpsInstallTodo());//gps安装;
-                mBinding.mySrCllh.setPointCount(data.getCarSettleTodo());//车辆落户;
-                mBinding.mySrCldy.setPointCount(data.getEntryMortgageTodo());//车辆抵押
-                mBinding.mySrZlcd.setPointCount(data.getLogisticsTodo());//资料传递
+    /**
+     * 获取所有的节点
+     */
+    public void getNodeHelperData() {
+        getNodeAndDictionary();
+    }
 
-                int sub = data.getCreditTodo() + data.getInterviewTodo() + data.getGpsInstallTodo() + data.getCarSettleTodo() + data.getEntryMortgageTodo() + data.getLogisticsTodo();
-//                mBinding.tvRedPoint.setVisibility((sub > 0) ? View.VISIBLE : View.GONE);
-                if (sub > 99) {
-                    mBinding.tvRedPoint.setText("99+");
-                } else {
-                    mBinding.tvRedPoint.setText(sub + "");
+    /**
+     * 获取所有的节点和  数字字典  因为已经在  闪屏界面获取过了  所以这里判断一下  如果闪屏界面获取成功这里就不在重新获取了
+     * <p>
+     * 如果闪屏界面获取失败 这里再重新获取,优化一下  否在每次进入这个界面  由于要先获取节点  会导致出现白屏的问题
+     */
+    private void getNodeAndDictionary() {
+        this.BASE_NODE_LIST = SplashActivity.BASE_NODE_LIST;
+        this.BASE_BIZ_TYPE = SplashActivity.BASE_BIZ_TYPE;
+        if (BASE_NODE_LIST == null || BASE_NODE_LIST.size() == 0 || BASE_BIZ_TYPE == null || BASE_BIZ_TYPE.size() == 0) {
+
+            NodeHelper.getNodeBaseDataRequest(null, "", "", new NodeHelper.NodeInterface() {
+                @Override
+                public void onSuccess(List<NodeModel> list) {
+                    BASE_NODE_LIST.clear();
+                    BASE_NODE_LIST.addAll(list);
+
+                    BizTypeHelper.getBizTypeBaseDataRequest(null, "", new BizTypeHelper.BizTypeInterface() {
+                        @Override
+                        public void onSuccess(List<DataDictionary> list) {
+
+                            BASE_BIZ_TYPE.clear();
+                            BASE_BIZ_TYPE.addAll(list);
+                            initViewPager();
+                        }
+
+                        @Override
+                        public void onReqFailure(String errorCode, String errorMessage) {
+
+                        }
+                    });
+
                 }
 
-            }
+                @Override
+                public void onReqFailure(String errorCode, String errorMessage) {
 
-            @Override
-            protected void onFinish() {
-                disMissLoading();
-            }
-        });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        getUserInfoRequest(false);
-
-    }
-
-    /**
-     * 获取用户信息
-     */
-    public void getUserInfoRequest(boolean isShowDialog) {
-
-        if (!SPUtilHelper.isLoginNoStart()) {  //没有登录不用请求
-            return;
-        }
-
-        Map<String, String> map = new HashMap<>();
-
-        map.put("userId", SPUtilHelper.getUserId());
-        map.put("token", SPUtilHelper.getUserToken());
-
-        Call call = RetrofitUtils.createApi(MyApiServer.class).getUserInfoDetails("630067", StringUtils.getJsonToString(map));
-
-        addCall(call);
-
-        if (isShowDialog) showLoadingDialog();
-
-        call.enqueue(new BaseResponseModelCallBack<UserModel>(this) {
-            @Override
-            protected void onSuccess(UserModel data, String SucMessage) {
-                mUserModel = data;
-
-                saveUserInfo(data);
-                setView(data);
-
-//                getDataCount();
-
-                //获取代办事项的数量
-                getTodoData();
-            }
-
-            @Override
-            protected void onReqFailure(String errorCode, String errorMessage) {
-                UITipDialog.showFail(MainActivity.this, errorMessage);
-            }
-
-            @Override
-            protected void onFinish() {
-                if (isShowDialog) disMissLoading();
-            }
-        });
-    }
-
-    /**
-     * 保存用户相关信息
-     *
-     * @param data
-     */
-    private void saveUserInfo(UserModel data) {
-        SPUtilHelper.saveisTradepwdFlag(data.isTradepwdFlag());
-        SPUtilHelper.saveUserPhoneNum(data.getMobile());
-        SPUtilHelper.saveUserName(data.getRealName());
-        SPUtilHelper.saveUserNickName(data.getNickname());
-        SPUtilHelper.saveUserPhoto(data.getPhoto());
-        SPUtilHelper.saveRoleCode(data.getRoleCode());
-        SPUtilHelper.saveTeamCode(data.getTeamCode());
-    }
-
-    private void setView(UserModel data) {
-
-        ImgUtils.loadQiNiuBorderLogo(this, data.getPhoto(), mBinding.imAvatar, R.color.white);
-//        mBinding.tvNick.setText(data.getLoginName() + "——" + data.getRealName());
-        mBinding.tvNick.setText(data.getRealName());
-        mBinding.tvCompany.setText(data.getCompanyName());
-
-        if (TextUtils.equals(data.getRoleCode(), ZHRY)) { // 驻行人员
-            mBinding.tvRole.setText("[驻行人员]");
-
-            mBinding.mySrZrsq.setVisibility(View.GONE);
-            mBinding.lineZrsq.setVisibility(View.GONE);
-
-            mBinding.mySrGpsaz.setVisibility(View.GONE);
-            mBinding.lineGpsaz.setVisibility(View.GONE);
-
-            mBinding.mySrCllh.setVisibility(View.GONE);
-            mBinding.lineCllh.setVisibility(View.GONE);
-
-            mBinding.llUtil.setVisibility(View.GONE);
-
-            mBinding.mySrAudit.setVisibility(View.VISIBLE);
-            mBinding.lineAudit.setVisibility(View.VISIBLE);
-        } else if (TextUtils.equals(data.getRoleCode(), YWY)) {// 业务员
-            mBinding.tvRole.setText("[信贷专员]");
-
-        } else if (TextUtils.equals(data.getRoleCode(), NQZY)) {// 内勤专员
-            mBinding.tvRole.setText("[内勤专员]");
+                }
+            });
         } else {
-            //与ios保持一致
-            mBinding.tvRole.setText(TextUtils.isEmpty(data.getPostName()) ? "[其他]" : "[" + data.getPostName() + "]");
+            initViewPager();
         }
+    }
+
+    private void initViewPager() {
+
+        mBinding.viewpager.setOffscreenPageLimit(3);
+        fragments = new ArrayList<>();
+        fragments.add(HomeFragment.getInstance());
+        fragments.add(CustomerFragment.getInstance());
+        fragments.add(MessageFragment.getInstance());
+        fragments.add(UserFragment.getInstance());
+        mBinding.viewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
+        mBinding.viewpager.setCurrentItem(currentPostion);
 
     }
 
     private void initListener() {
-        mBinding.llUser.setOnClickListener(view -> {
-            if (mUserModel == null)
-                return;
 
-//            UserInfoActivity.open(this, mUserModel);
-            ImageSelectActivity.launch(this, PHOTOFLAG, false);
-        });
-
-        mBinding.flRight.setOnClickListener(view -> {
-
-            mLogoutHelper.logout();
-        });
-
-        //资信调查
-        mBinding.mySrCredit.setOnClickListener(view -> {
-            BssCreditListActivity.open(this);
-        });
-
-        //准入申请
-        mBinding.mySrZrsq.setOnClickListener(v -> {
-//            JoinApplyListActivity.open(this);
-            ExpectActivity.open(this);
-        });
-
-        //面签
-        mBinding.mySrMq.setOnClickListener(v -> {
-            InterviewActivity.open(this);
-        });
-
-        //gps 安装
-        mBinding.mySrGpsaz.setOnClickListener(v -> {
-            GPSInstallListActivity.open(this);
-        });
-
-        //车辆落户 改为  发保合
-        mBinding.mySrCllh.setOnClickListener(view -> {
-            CllhListActivity.open(this);
-        });
-
-        //车辆抵押
-        mBinding.mySrCldy.setOnClickListener(view -> {
-            BssCldyListActivity.open(this);
-        });
-
-        //结清审核
-        mBinding.mySrAudit.setOnClickListener(view -> {
-            AuditListActivity.open(this);
-        });
-
-        //资料传递
-        mBinding.mySrZlcd.setOnClickListener(view -> {
-            DataTransferActivity2.open(this);
-        });
-
-        //客户作废
-        mBinding.mySrKhzf.setOnClickListener(view -> {
-            UserToVoidActivity.open(this);
-        });
-
-        //GPS申领
-        mBinding.mySrGpssl.setOnClickListener(view -> {
-            GpsListActivity.open(this);
-        });
-
-        //历史客户
-        mBinding.mySrLskh.setOnClickListener(view -> {
-            HistoryUserActivity.open(this);
-        });
-
-        // 银行放款
-        mBinding.mySrLoan.setOnClickListener(view -> {
-            BankLoanListActivity.open(this);
+        mBinding.layoutTab.radiogroup.setOnCheckedChangeListener((radioGroup, i) -> {
+            switch (i) {
+                case R.id.radio_main_tab_1:
+                    currentPostion = 0;
+                    break;
+                case R.id.radio_main_tab_2:
+                    currentPostion = 1;
+                    break;
+                case R.id.radio_main_tab_3:
+                    currentPostion = 2;
+                    break;
+                case R.id.radio_main_tab_4:
+                    currentPostion = 3;
+                    break;
+            }
+            mBinding.viewpager.setCurrentItem(currentPostion);
         });
     }
 
 
-    /**
-     * 退出登录
-     */
-    private void logOut() {
-        showDoubleWarnListen("你确定要退出当前账号吗?", view -> {
-            SPUtilHelper.logOutClear();
-            UITipDialog.showSuccess(this, "退出成功", dialogInterface -> {
-                finish();
-
-                SignInActivity.open(this, false);
-            });
-        });
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Fragment fragment = fragments.get(0);
+        fragment.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -374,6 +169,7 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
     public void onLogoutSDKSuccess() {
         // 退出腾讯云成功
         logOut();
+
     }
 
     @Override
@@ -382,126 +178,17 @@ public class MainActivity extends AbsBaseLoadActivity implements TencentLogoutIn
         ToastUtil.show(this, errMsg);
     }
 
-    /**
-     * 资料传递待处理数量
-     */
-    private void getDataCount() {
-        Map<String, Object> map = new HashMap<>();
+    //    /**
+//     * 退出登录
+//     */
+    private void logOut() {
+        showDoubleWarnListen("你确定要退出当前账号吗?", view -> {
+            SPUtilHelper.logOutClear();
+            UITipDialog.showSuccess(this, "退出成功", dialogInterface -> {
+                finish();
 
-        if (!SPUtilHelper.isLoginNoStart()) {  //没有登录不用请求
-            return;
-        }
-
-        List<String> statusList = new ArrayList<>();
-        statusList.add("0");
-        statusList.add("1");
-        statusList.add("3");
-
-        if (UserHelper.isYWY()) {
-            map.put("userId", SPUtilHelper.getUserId());
-            map.put("statusList", statusList);
-        }
-
-        Call call = RetrofitUtils.createApi(MyApiServer.class).getDataTransferList("632157", StringUtils.getJsonToString(map));
-        addCall(call);
-
-        call.enqueue(new BaseResponseListCallBack<DataTransferModel>(this) {
-            @Override
-            protected void onSuccess(List<DataTransferModel> data, String SucMessage) {
-                if (data == null)
-                    return;
-
-                mBinding.mySrZlcd.setPointCount(data.size());
-            }
-
-            @Override
-            protected void onFinish() {
-                disMissLoading();
-            }
-        });
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK || data == null) {
-            return;
-        }
-        if (requestCode == PHOTOFLAG) {
-            String path = data.getStringExtra(CameraHelper.staticPath);
-            LogUtil.E("拍照获取路径" + path);
-            showLoadingDialog();
-            new QiNiuHelper(this).uploadSinglePic(new QiNiuHelper.QiNiuCallBack() {
-                @Override
-                public void onSuccess(String key) {
-                    updateUserPhoto(key);
-                }
-
-                @Override
-                public void onFal(String info) {
-                    disMissLoading();
-                }
-            }, path);
-
-        } else if (requestCode == 1) {
-            String path = data.getStringExtra(CameraHelper.staticPath);
-            new QiNiuHelper(this).uploadSingleFile(new QiNiuHelper.QiNiuFileCallBack() {
-                @Override
-                public void onSuccess(String key) {
-                    LogUtil.E("上传成功" + key);
-                    mBinding.myFML.addList(key);
-                }
-
-                @Override
-                public void onFal(String info) {
-                    LogUtil.E("上传失败" + info);
-                }
-
-                @Override
-                public void progress(String key, double percent) {
-                    Log.e("pppppp", "progress: 进度" + percent);
-
-                }
-
-                //完成
-                @Override
-                public void complete() {
-
-                }
-            }, path);
-//            uploadSingleFile
-        }
-    }
-
-    /**
-     * 更新头像
-     *
-     * @param key
-     */
-    private void updateUserPhoto(final String key) {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("userId", SPUtilHelper.getUserId());
-        map.put("photo", key);
-        map.put("token", SPUtilHelper.getUserToken());
-        Call call = RetrofitUtils.getBaseAPiService().successRequest("630059", StringUtils.getJsonToString(map));
-        addCall(call);
-        call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(this) {
-            @Override
-            protected void onSuccess(IsSuccessModes data, String SucMessage) {
-                UITipDialog.showSuccess(MainActivity.this, "头像更改成功");
-                ImgUtils.loadQiniuLogo(MainActivity.this, key, mBinding.imAvatar);
-            }
-
-            @Override
-            protected void onReqFailure(String errorCode, String errorMessage) {
-                UITipDialog.showFail(MainActivity.this, errorMessage);
-            }
-
-            @Override
-            protected void onFinish() {
-                disMissLoading();
-            }
+                SignInActivity.open(this, false);
+            });
         });
     }
 }

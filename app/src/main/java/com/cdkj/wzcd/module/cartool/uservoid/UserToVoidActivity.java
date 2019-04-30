@@ -96,7 +96,6 @@ public class UserToVoidActivity extends AbsRefreshListActivity<UserToVoidBean> {
                 disMissLoading();
             }
         });
-
     }
 
 }

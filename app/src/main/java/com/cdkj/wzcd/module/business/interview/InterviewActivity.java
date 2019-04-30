@@ -3,21 +3,32 @@ package com.cdkj.wzcd.module.business.interview;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.View;
+import android.support.v7.widget.RecyclerView;
 
-import com.cdkj.baselibrary.base.AbsTabLayoutActivity;
+import com.cdkj.baselibrary.api.BaseResponseModel;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
+import com.cdkj.baselibrary.base.AbsRefreshListActivity;
+import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
+import com.cdkj.baselibrary.nets.RetrofitUtils;
+import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.wzcd.R;
+import com.cdkj.wzcd.adapter.InterviewListAdapter2;
+import com.cdkj.wzcd.api.MyApiServer;
+import com.cdkj.wzcd.model.ZXDetialsBean;
+import com.cdkj.wzcd.module.main.customer.ZRDDetialsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
 
 /**
  * 面签
  * Created by cdkj on 2018/5/30.
  */
 
-public class InterviewActivity extends AbsTabLayoutActivity {
+public class InterviewActivity extends AbsRefreshListActivity {
 
 
     public static void open(Context context) {
@@ -28,37 +39,89 @@ public class InterviewActivity extends AbsTabLayoutActivity {
         context.startActivity(intent);
     }
 
+
     @Override
     public void afterCreate(Bundle savedInstanceState) {
-        super.afterCreate(savedInstanceState);
         mBaseBinding.titleView.setMidTitle(getString(R.string.face_view));
-        mTabLayoutBinding.tablayout.setVisibility(View.GONE);
-
-//        mBaseBinding.titleView.setRightTitle("MQ");
-//        mBaseBinding.titleView.setRightFraClickListener(view -> {
-//            InterviewStartActivity.open(this,"BO201806121135203066628");
-
-//            Intent intent = new Intent(InterviewActivity.this, MainActivity.class);
-//            startActivity(intent);
-//        });
+        initRefreshHelper(10);
     }
 
     @Override
-    public List<Fragment> getFragments() {
-        List<Fragment> fragments = new ArrayList<>();
-        fragments.add(InterviewListFragment.getInstance());
-        fragments.add(InterviewListFragment.getInstance());
-
-        return fragments;
+    public RecyclerView.Adapter getListAdapter(List listData) {
+        InterviewListAdapter2 interviewListAdapter = new InterviewListAdapter2(listData);
+        interviewListAdapter.setOnItemClickListener((adapter, view, position) -> {
+//            InterviewStartActivity.open(mActivity, interviewListAdapter.getItem(position).getCode());
+//            CreditDetailActivity.open(mActivity,interviewListAdapter.getItem(position).getCode());
+            ZXDetialsBean.ListBean item = interviewListAdapter.getItem(position);
+            ZRDDetialsActivity.open(this, item);
+        });
+        return interviewListAdapter;
     }
 
     @Override
-    public List<String> getFragmentTitles() {
-        List<String> titles = new ArrayList<>();
-        titles.add(getString(R.string.help_do_thing));
-        titles.add(getString(R.string.my_apply));
-        return titles;
+    public void getListRequest(int pageIndex, int limit, boolean isShowDialog) {
+        Map<String, Object> map = RetrofitUtils.getNodeListMap();
+        List<String> curNodeCodeList = new ArrayList<>();
+        curNodeCodeList.add("b01");
+        curNodeCodeList.add("b01x");
+        map.put("intevCurNodeCodeList", curNodeCodeList);
+        map.put("limit", limit + "");
+        map.put("start", pageIndex + "");
+        map.put("userId", SPUtilHelper.getUserId());
+        map.put("teamCode", SPUtilHelper.getTeamCode());
+
+        if (isShowDialog) showLoadingDialog();
+
+        Call<BaseResponseModel<ZXDetialsBean>> nodeList = RetrofitUtils.createApi(MyApiServer.class).getCreditList2("632148", StringUtils.getJsonToString(map));
+        addCall(nodeList);
+
+        nodeList.enqueue(new BaseResponseModelCallBack<ZXDetialsBean>(this) {
+            @Override
+            protected void onSuccess(ZXDetialsBean data, String SucMessage) {
+                mRefreshHelper.setData(data.getList(), "暂无面签记录", 0);
+
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mRefreshHelper != null) {
+            mRefreshHelper.onDefaultMRefresh(true);
+        }
+    }
+
+
+//    @Override
+//    public void afterCreate(Bundle savedInstanceState) {
+//        super.afterCreate(savedInstanceState);
+//        mBaseBinding.titleView.setMidTitle(getString(R.string.face_view));
+//        mTabLayoutBinding.tablayout.setVisibility(View.GONE);
+//
+//    }
+//
+//    @Override
+//    public List<Fragment> getFragments() {
+//        List<Fragment> fragments = new ArrayList<>();
+//        fragments.add(InterviewListFragment.getInstance());
+//        fragments.add(InterviewListFragment.getInstance());
+//
+//        return fragments;
+//    }
+//
+//    @Override
+//    public List<String> getFragmentTitles() {
+//        List<String> titles = new ArrayList<>();
+//        titles.add(getString(R.string.help_do_thing));
+//        titles.add(getString(R.string.my_apply));
+//        return titles;
+//    }
 
 
 }

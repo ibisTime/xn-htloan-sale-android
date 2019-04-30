@@ -38,9 +38,10 @@ public class DataDictionaryHelper {
 
     private static Call call;
 
-    public static String getValueOnTheKey(String key, List<DataDictionary> data){
-
-        for (DataDictionary dataDictionary : data){
+    public static String getValueOnTheKey(String key, List<DataDictionary> data) {
+        if (data == null || data.size() == 0)
+            return "";
+        for (DataDictionary dataDictionary : data) {
             if (TextUtils.equals(key, dataDictionary.getDkey()))
                 return dataDictionary.getDvalue();
         }
@@ -48,7 +49,7 @@ public class DataDictionaryHelper {
         return "";
     }
 
-    public static void getValueOnTheKeyRequest(Context context, String parentKey, String key, DataDictionaryInterface dataDictionaryInterface){
+    public static void getValueOnTheKeyRequest(Context context, String parentKey, String key, DataDictionaryInterface dataDictionaryInterface) {
         Map<String, String> map = new HashMap<>();
         map.put("dkey", key);
         map.put("orderColumn", "");
@@ -79,13 +80,13 @@ public class DataDictionaryHelper {
         });
     }
 
-    public interface DataDictionaryInterface{
+    public interface DataDictionaryInterface {
 
         void onSuccess(DataDictionary data);
 
     }
 
-    public static void getDataDictionaryRequest(Context context, String parentKey, String key, DataDictionaryListInterface listInterface){
+    public static void getDataDictionaryRequest(Context context, String parentKey, String key, DataDictionaryListInterface listInterface) {
         Map<String, String> map = new HashMap<>();
         map.put("dkey", key);
         map.put("orderColumn", "");
@@ -114,13 +115,13 @@ public class DataDictionaryHelper {
         });
     }
 
-    public interface DataDictionaryListInterface{
+    public interface DataDictionaryListInterface {
 
         void onSuccess(List<DataDictionary> list);
 
     }
 
-    private static void clearCall(){
+    private static void clearCall() {
         if (call != null)
             call.cancel();
     }

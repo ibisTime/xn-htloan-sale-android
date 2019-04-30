@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/mydt_kh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="卡号"
+                app:txt_title="4651365563312165232"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/mydt_fkrq"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="放款日期"
+                app:txt_title="2017-10-10"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/mydt_yhzdr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="银行账单日"
+                app:txt_title="25"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_gshkr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="公司还款日"
+                app:txt_title="20"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_sqhkrq"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="首期还款日期"
+                app:txt_title="2017-11-10"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_sqygje"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="首期月供金额"
+                app:txt_title="200000"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_mqygje"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="每期月供金额"
+                app:txt_title="6000"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_skzh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="收款账号"
+                app:txt_title="4522121212121466"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myMl_skpz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="收款凭证">
+
+            </com.cdkj.wzcd.view.MyMultipleLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>

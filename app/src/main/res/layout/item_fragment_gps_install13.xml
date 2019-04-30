@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/mydt_gpssph"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="GPS设备号"
+                app:txt_title="A1234"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/mydt_gpslx"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="GPS类型"
+                app:txt_title="有线"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/mydt_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="安装位置"
+                app:txt_title="中控"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_azsj"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="安装时间"
+                app:txt_title="2017-11-10"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_azry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="安装人员"
+                app:txt_title="安装人员"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myMl_sbtp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="设备图片"></com.cdkj.wzcd.view.MyMultipleLayout>
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myMl_aztp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="安装图片"></com.cdkj.wzcd.view.MyMultipleLayout>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_bz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="备注"
+                app:txt_title="说的ad阿萨德"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <View
+                style="@style/style_split_line_horizontal"
+                android:layout_height="10dp" />
+        </LinearLayout>
+
+    </ScrollView>
+</layout>

@@ -4,13 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.ColorRes;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.cdkj.baselibrary.R;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
-import com.cdkj.baselibrary.utils.glidetransforms.GlideCircleBorderTransform;
 import com.cdkj.baselibrary.utils.glidetransforms.GlideCircleTransform;
 import com.yalantis.ucrop.util.GlideApp;
 
@@ -109,7 +108,8 @@ public class ImgUtils {
     public static void loadQiNiuBorderLogo(Context context, String url, ImageView imageView, @ColorRes int borderColor) {
         try {
 /*.skipMemoryCache(true)   .diskCacheStrategy(DiskCacheStrategy.NONE)*/
-            GlideApp.with(context).load(MyCdConfig.QINIU_URL + url).error(R.drawable.photo_default).transform(new GlideCircleBorderTransform(context, 2, ContextCompat.getColor(context, borderColor))).into(imageView);
+//            GlideApp.with(context).load(MyCdConfig.QINIU_URL + url).error(R.drawable.photo_default).transform(new GlideCircleBorderTransform(context, 2, ContextCompat.getColor(context, borderColor))).into(imageView);
+            GlideApp.with(context).load(MyCdConfig.QINIU_URL + url).error(R.drawable.photo_default).transform(new CircleCrop()).into(imageView);
 
         } catch (Exception e) {
 

@@ -9,7 +9,6 @@ import android.view.View;
 
 import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
-import com.cdkj.baselibrary.model.DataDictionary;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
@@ -44,10 +43,6 @@ public class CreditDetailActivity extends AbsBaseLoadActivity {
     private String creditCode;
     private CreditModel mData;
 
-    // 角色
-    private List<DataDictionary> mRole = new ArrayList<>();
-    // 关系
-    private List<DataDictionary> mRelation = new ArrayList<>();
 
     private CreditUserAdapter mAdapter;
     private List<CreditUserModel> mList = new ArrayList<>();
@@ -85,39 +80,16 @@ public class CreditDetailActivity extends AbsBaseLoadActivity {
     }
 
     public void initAdapter() {
-
-        DataDictionaryHelper.getDataDictionaryRequest(this, DataDictionaryHelper.credit_user_loan_role, "", data -> {
-
-            if (data == null || data.size() == 0) {
-                return;
-            }
-
-            mRole.addAll(data);
-
-            DataDictionaryHelper.getDataDictionaryRequest(this, DataDictionaryHelper.credit_user_relation, "", data1 -> {
-
-                if (data1 == null || data1.size() == 0) {
-                    return;
-                }
-
-                mRelation.addAll(data1);
-
-                mAdapter = new CreditUserAdapter(mList, mRole, mRelation);
-                mAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    CreditUserModel model = mAdapter.getItem(position);
-
-                    CreditUserActivity.open(this, model, position, false, mRole, mRelation);
-
-
-                });
-
-                mBinding.rvZxr.setLayoutManager(getLinearLayoutManager(false));
-                mBinding.rvZxr.setAdapter(mAdapter);
-
-                getCredit();
-            });
-
+        mAdapter = new CreditUserAdapter(mList);
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            CreditUserModel model = mAdapter.getItem(position);
+            CreditUserActivity.open(this, model, position, false);
         });
+
+        mBinding.rvZxr.setLayoutManager(getLinearLayoutManager(false));
+        mBinding.rvZxr.setAdapter(mAdapter);
+
+        getCredit();
 
     }
 

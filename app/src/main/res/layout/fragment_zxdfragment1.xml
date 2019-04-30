@@ -1,0 +1,98 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fillViewport="true"
+        tools:context="com.cdkj.wzcd.module.main.customer.zxdxq.ZXDFragment1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="业务编号"
+                app:txt_title="Baz142665">
+            </com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="客户姓名"
+                ></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_company"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="业务公司"
+                app:txt_title="乌鲁木齐销售公司"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_manager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="区域经理"
+                app:txt_title="大狗屎"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_team"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="业务团队"
+                app:txt_title="狗狗二分队"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_xdzy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="信贷专员"
+                app:txt_title="信贷狗"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_ywnq"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="业务内勤"
+                app:txt_title="内勤狗"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_money"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="贷款金额"
+                app:txt_title="1000"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_bank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="贷款银行"
+                app:txt_title="狗狗银行"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="档案存放位置"
+                app:txt_title="狗窝"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_catalog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="档案目录"
+                app:txt_title="1-申请人及相关人员身份证件-2份,1-申请人及相关人员身份证件-2份,1-申请人及相关人员身份证件-2份,1-申请人及相关人员身份证件-2份,1-申请人及相关人员身份证件-2份,1-申请人及相关人员身份证件-2份,1-申请人及相关人员身份证件-2份,1-申请人及相关人员身份证件-2份,1-申请人及相关人员身份证件-2份,1-申请人及相关人员身份证件-2份,1-申请人及相关人员身份证件-2份,1-申请人及相关人员身份证件-2份,1-申请人及相关人员身份证件-2份,1-申请人及相关人员身份证件-2份,"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+        </LinearLayout>
+    </ScrollView>
+</layout>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fillViewport="true"
+        tools:context="com.cdkj.wzcd.module.main.customer.zrdxq.ZRLoanFragment1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDt_dkyh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="*贷款银行"
+                app:txt_title="暂无"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MySelectLayout2
+                android:id="@+id/mySL_dkqx"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_select_content="暂无"
+                app:txt_select_title="贷款期限 ">
+
+            </com.cdkj.wzcd.view.MySelectLayout2>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDt_yhlv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="银行利率"
+                app:txt_title="暂无"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_dkje"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="贷款金额">
+
+            </com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MySelectLayout2
+                android:id="@+id/mySL_dkcp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_select_content="请选择"
+                app:txt_select_title="*贷款产品 ">
+
+            </com.cdkj.wzcd.view.MySelectLayout2>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_nhlv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="*年化利率"
+                app:txt_title="暂无"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/mydt_gpsfy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="*GPS费用"
+                app:txt_title="暂无"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/mydt_gzfy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="*公正费用"
+                app:txt_title="暂无"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/mydt_fdll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="*返点利率"
+                app:txt_title="暂无"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/mydt_qzll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="*前置利率"
+                app:txt_title="暂无"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_sfje"
+                app:inputType="money"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*首付金额"></com.cdkj.wzcd.view.MyEditLayout2>
+
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_sfbl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*首付比例"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_syyg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*首月月供"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_ygje"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*月供金额"></com.cdkj.wzcd.view.MyEditLayout2>
+
+
+            <com.cdkj.wzcd.view.MySelectLayout2
+                android:id="@+id/mySL_sfrz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_select_content="请选择"
+                app:txt_select_title="*是否融资"></com.cdkj.wzcd.view.MySelectLayout2>
+
+            <com.cdkj.wzcd.view.MySelectLayout2
+                android:id="@+id/mySL_sfdz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_select_content="请选择"
+                app:txt_select_title="*是否垫资"></com.cdkj.wzcd.view.MySelectLayout2>
+
+
+            <com.cdkj.wzcd.view.MySelectLayout2
+                android:id="@+id/mySL_sfangps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_select_content="请选择"
+                app:txt_select_title="*是否安装GPS"></com.cdkj.wzcd.view.MySelectLayout2>
+
+
+            <com.cdkj.wzcd.view.MySelectLayout2
+                android:id="@+id/mySL_sfdy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_select_content="请选择"
+                app:txt_select_title="*是否抵押"></com.cdkj.wzcd.view.MySelectLayout2>
+
+            <com.cdkj.wzcd.view.MySelectLayout2
+                android:id="@+id/mySL_sfwsxb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_select_content="请选择"
+                app:txt_select_title="*是否我司续保"></com.cdkj.wzcd.view.MySelectLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_ygbzj"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*月供保证金"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_lybzj"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*履约保证金"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_fwf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*服务费"></com.cdkj.wzcd.view.MyEditLayout2>
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>

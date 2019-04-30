@@ -1,6 +1,6 @@
 package com.cdkj.baselibrary.interfaces;
 
-import com.cdkj.baselibrary.model.UserLoginModel;
+import android.widget.TextView;
 
 /**
  * Created by cdkj on 2017/8/8.
@@ -8,7 +8,7 @@ import com.cdkj.baselibrary.model.UserLoginModel;
 
 public interface SendCodeInterface {
 
-    void CodeSuccess(String msg);    //成功
+    void CodeSuccess(String msg,TextView view);    //成功
 
     void CodeFailed(String code, String msg);   //失败
 

@@ -12,8 +12,8 @@ public class CreditUserModel implements Serializable {
     private String creditCode;
     private String authPdf;
     private String idNo;
-    private String idNoFront;
-    private String idNoReverse;
+    private String idFront;
+    private String idReverse;
     private String interviewPic;
     private String loanRole;
     private String mobile;
@@ -22,6 +22,44 @@ public class CreditUserModel implements Serializable {
     private String creditCardOccupation;
     private String bankCreditResultPdf;
     private String bankCreditResultRemark;
+    //再下个界面填写的数据
+    private String bankCreditReport;//
+    private String creditNote;
+    private String bankResult;
+    private String dataCreditReport;
+
+
+    public String getBankCreditReport() {
+        return bankCreditReport;
+    }
+
+    public void setBankCreditReport(String bankCreditReport) {
+        this.bankCreditReport = bankCreditReport;
+    }
+
+    public String getCreditNote() {
+        return creditNote;
+    }
+
+    public void setCreditNote(String creditNote) {
+        this.creditNote = creditNote;
+    }
+
+    public String getBankResult() {
+        return bankResult;
+    }
+
+    public void setBankResult(String bankResult) {
+        this.bankResult = bankResult;
+    }
+
+    public String getDataCreditReport() {
+        return dataCreditReport;
+    }
+
+    public void setDataCreditReport(String dataCreditReport) {
+        this.dataCreditReport = dataCreditReport;
+    }
 
     public String getCreditCardOccupation() {
         return creditCardOccupation;
@@ -79,20 +117,20 @@ public class CreditUserModel implements Serializable {
         this.idNo = idNo;
     }
 
-    public String getIdNoFront() {
-        return idNoFront;
+    public String getIdFront() {
+        return idFront;
     }
 
-    public void setIdNoFront(String idNoFront) {
-        this.idNoFront = idNoFront;
+    public void setIdFront(String idFront) {
+        this.idFront = idFront;
     }
 
-    public String getIdNoReverse() {
-        return idNoReverse;
+    public String getIdReverse() {
+        return idReverse;
     }
 
-    public void setIdNoReverse(String idNoReverse) {
-        this.idNoReverse = idNoReverse;
+    public void setIdReverse(String idReverse) {
+        this.idReverse = idReverse;
     }
 
     public String getInterviewPic() {

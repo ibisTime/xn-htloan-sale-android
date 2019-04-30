@@ -74,7 +74,6 @@ public class MyVideoLayout extends LinearLayout {
 
     private void setData() {
         mBinding.tvTitle.setText(tvTitle);
-
     }
 
     public void setTitle(String title) {
@@ -132,6 +131,18 @@ public class MyVideoLayout extends LinearLayout {
 
     public void setList(List<LocalMedia> list) {
         selectList = list;
+        adapter.setList(selectList);
+        adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 只展示不能添加
+     *
+     * @param list
+     */
+    public void setListByRequest(List<LocalMedia> list) {
+        selectList = list;
+        adapter.setRequest(true);
         adapter.setList(selectList);
         adapter.notifyDataSetChanged();
     }

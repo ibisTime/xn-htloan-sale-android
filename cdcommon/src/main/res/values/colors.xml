@@ -6,7 +6,7 @@
 
     <!--title组建 -->
     <color name="gray_bg">#f6f6f6</color>
-    <color name="title_bg">#1d1d1d</color>
+    <color name="title_bg">#028EFF</color>
     <color name="title_left_tv">#ffffff</color>
     <color name="title_right_tv">#ffffff</color>
     <color name="title_mid_tv">#ffffff</color>
@@ -77,5 +77,7 @@
     <color name="text_black_cd">#333333</color>
     <!--<color name="page_bg">#f5f5f9</color>-->
     <color name="page_bg">#eeeeee</color>
+
+    <color name="app_indicator_color">#2F93ED</color>
 
 </resources>

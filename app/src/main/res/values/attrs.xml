@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <!--这个放在外面的事抽取出来的   因为不能有两个相同的 name-->
+    <attr name="txt_title" format="string" />
+    <attr name="title" format="string" />
+
+    <attr name="txt_select_title" format="string" />
+    <attr name="txt_select_content" format="string" />
 
     <declare-styleable name="MyTitleBarLayout">
-        <attr name="txt_title" format="string" />
+        <attr name="txt_title" />
     </declare-styleable>
 
     <declare-styleable name="MySquareRowLayout">
         <attr name="txt_content" format="string" />
+        <attr name="txt_type" format="string" />
         <attr name="img_content" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="MySelectLayout">
-        <attr name="txt_select_title" format="string" />
-        <attr name="txt_select_content" format="string" />
+        <attr name="txt_select_title" />
+        <attr name="txt_select_content" />
+    </declare-styleable>
+
+    <declare-styleable name="MySelectLayout2">
+        <attr name="txt_select_title" />
+        <attr name="txt_select_content" />
     </declare-styleable>
 
     <declare-styleable name="MyNormalLayout">
@@ -20,6 +32,7 @@
         <attr name="txt_normal_content" format="string" />
         <attr name="txt_normal_hint" format="string"></attr>
         <attr name="img_normal_right" format="reference"></attr>
+        <attr name="is_show_right_img" format="boolean"></attr>
     </declare-styleable>
 
     <declare-styleable name="MyListItemTitleLayout">
@@ -37,18 +50,27 @@
         <attr name="txt_confirm_content_right" format="string"></attr>
     </declare-styleable>
 
+    <attr name="txt_input_title" format="string"></attr>
+    <attr name="txt_input_title_right" format="string"></attr>
+    <attr name="txt_input_hint" format="string"></attr>
+    <attr name="inputType" format="string">
+        <enum name="phone" value="0" /> <!-- 电话 -->
+        <enum name="id" value="1" /> <!-- 身份证类型 -->
+        <enum name="text" value="2" /> <!-- 文本 -->
+        <enum name="money" value="3" /> <!-- 金钱类型 -->
+    </attr>
+
     <declare-styleable name="MyEditLayout">
-        <attr name="txt_input_title" format="string"></attr>
-        <attr name="txt_input_title_right" format="string"></attr>
-        <attr name="txt_input_hint" format="string"></attr>
-        <attr name="inputType" format="string">
-
-            <enum name="phone" value="0"/> <!-- 电话 -->
-            <enum name="id" value="1"/> <!-- 身份证类型 -->
-            <enum name="text" value="2"/> <!-- 文本 -->
-            <enum name="money" value="3"/> <!-- 金钱类型 -->
-
-        </attr>
+        <attr name="txt_input_title"></attr>
+        <attr name="txt_input_title_right"></attr>
+        <attr name="txt_input_hint"></attr>
+        <attr name="inputType"></attr>
+    </declare-styleable>
+    <declare-styleable name="MyEditLayout2">
+        <attr name="txt_input_title"></attr>
+        <attr name="txt_input_title_right"></attr>
+        <attr name="txt_input_hint"></attr>
+        <attr name="inputType"></attr>
     </declare-styleable>
 
     <declare-styleable name="MyImageLayout">
@@ -57,10 +79,16 @@
         <attr name="isSingle" format="boolean"></attr>
         <attr name="txt_image_hint_right" format="string"></attr>
     </declare-styleable>
-    
+
+    <declare-styleable name="MyDoubleTitle">
+        <attr name="txt_mintop_title" format="string"></attr>
+        <attr name="txt_title" />
+        <attr name="is_title_single" format="boolean"></attr>
+    </declare-styleable>
+
     <declare-styleable name="MyVideoLayout">
         <attr name="title" />
-        
+
     </declare-styleable>
 
     <declare-styleable name="MyLayout">
@@ -73,7 +101,7 @@
     </declare-styleable>
 
     <declare-styleable name="MyFileMultipleLayout">
-        <attr name="title" format="string"></attr>
+        <attr name="title"></attr>
         <attr name="txt_file_hint" format="string"></attr>
     </declare-styleable>
 

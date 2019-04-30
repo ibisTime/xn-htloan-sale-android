@@ -15,6 +15,8 @@ import com.cdkj.wzcd.model.FaceSignBean;
 import com.cdkj.wzcd.model.GpsApplyModel;
 import com.cdkj.wzcd.model.GpsModel;
 import com.cdkj.wzcd.model.LoanProductModel;
+import com.cdkj.wzcd.model.MessageSystemBean;
+import com.cdkj.wzcd.model.MessageTobeBean;
 import com.cdkj.wzcd.model.NodeListModel;
 import com.cdkj.wzcd.model.NodeListModelFace;
 import com.cdkj.wzcd.model.NodeModel;
@@ -24,10 +26,12 @@ import com.cdkj.wzcd.model.SuccessBean;
 import com.cdkj.wzcd.model.TeamBean;
 import com.cdkj.wzcd.model.TencentSignModel;
 import com.cdkj.wzcd.model.TodoModel;
+import com.cdkj.wzcd.model.ZXDetialsBean;
 import com.cdkj.wzcd.model.ZrdModel;
 
 import java.util.Map;
 
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -42,7 +46,7 @@ import retrofit2.http.QueryMap;
 public interface MyApiServer {
 
     /**
-     * 提交接口
+     * 提交接口  成功的接口  通用成功接口
      *
      * @param code
      * @param json
@@ -51,6 +55,17 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseModel<SuccessBean>> success(@Field("code") String code, @Field("json") String json);
+
+    /**
+     * rxjava用法  返回  被观察者
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<SuccessBean>> success2(@Field("code") String code, @Field("json") String json);
 
     /**
      * 获取待办事项
@@ -164,7 +179,6 @@ public interface MyApiServer {
     Call<BaseResponseModel<NodeListModel>> getNode(@Field("code") String code, @Field("json") String json);
 
 
-
     //--------------------------------------------征信API--------------------------------------------
 
     /**
@@ -177,6 +191,39 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseModel<ResponseInListModel<CreditModel>>> getCreditList(@Field("code") String code, @Field("json") String json);
+
+    /**
+     * 获征信列表
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<ZXDetialsBean>> getCreditList2(@Field("code") String code, @Field("json") String json);
+
+    /**
+     * 获征信详情
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<ZXDetialsBean.ListBean>> getCredit2(@Field("code") String code, @Field("json") String json);
+
+    /**
+     * 获征信详情
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<ZXDetialsBean.ListBean>> getCredit3(@Field("code") String code, @Field("json") String json);
 
     /**
      * 获征信详情
@@ -333,6 +380,17 @@ public interface MyApiServer {
     Call<BaseResponseModel<FaceSignBean>> getFaceSign(@Field("code") String code, @Field("json") String json);
 
     /**
+     * 获取面签详情
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<ZXDetialsBean.ListBean>> getFaceSign2(@Field("code") String code, @Field("json") String json);
+
+    /**
      * 获取腾讯云录制视频
      *
      * @return
@@ -351,7 +409,7 @@ public interface MyApiServer {
     @POST("api")
     Call<BaseResponseModel<String>> getRoomId(@Field("code") String code, @Field("json") String json);
 
-  /**
+    /**
      * 获取房间id
      *
      * @param code
@@ -410,5 +468,37 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseListModel<TeamBean>> getTeamData(@Field("code") String code, @Field("json") String json);
+
+    /**
+     * 获取系统公告消息
+     *
+     * @param code
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<MessageSystemBean>> getMessage(@Field("code") String code, @Field("json") String json);
+
+    /**
+     * 获取待办消息
+     *
+     * @param code
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<MessageTobeBean>> getTobeThing(@Field("code") String code, @Field("json") String json);
+
+    /**
+     * 获取客户数据
+     *
+     * @param code
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<ZXDetialsBean>> getCustomerData(@Field("code") String code, @Field("json") String json);
+
+
 }
 

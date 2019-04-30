@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fillViewport="true"
+        tools:context="com.cdkj.wzcd.module.main.customer.CreditPeopleDetailsActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:text="姓名"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="主贷人工行征信附件"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <View
+                style="@style/style_split_line_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:text="手机号"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="13333333333"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <View
+                style="@style/style_split_line_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+
+            <com.cdkj.wzcd.view.MyImageLayout
+                android:id="@+id/myIl_idCard_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isSingle="false"
+                app:txt_image_hint="身份证正面"
+                app:txt_image_hint_right="身份证反面"
+                app:txt_image_title="身份证">
+
+            </com.cdkj.wzcd.view.MyImageLayout>
+
+            <com.cdkj.wzcd.view.MyImageLayout
+                android:id="@+id/my_Il_zxcxsqs_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isSingle="true"
+                app:txt_image_hint="征信授权书"
+                app:txt_image_title="征信查询授权书">
+
+            </com.cdkj.wzcd.view.MyImageLayout>
+
+            <com.cdkj.wzcd.view.MyImageLayout
+                android:id="@+id/my_Il_mq_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isSingle="true"
+                app:txt_image_hint="面签照片"
+                app:txt_image_title="面签照片">
+
+            </com.cdkj.wzcd.view.MyImageLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNL_ghzxfj"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:is_show_right_img="true"
+                app:txt_normal_title="工行征信附件"></com.cdkj.wzcd.view.MyNormalLayout>
+
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNL_tdzxfj"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:is_show_right_img="true"
+                app:txt_normal_title="同盾征信附件"></com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNL_lmzxfj"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:is_show_right_img="true"
+                app:txt_normal_title="立木征信附件"></com.cdkj.wzcd.view.MyNormalLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>

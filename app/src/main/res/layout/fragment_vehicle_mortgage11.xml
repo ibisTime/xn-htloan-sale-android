@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/mydt_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="抵押代理人"
+                app:txt_title="张三"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyImageLayout
+                android:id="@+id/myIl_idCard"
+                app:txt_image_title="抵押代理人身份证复印件"
+                app:txt_image_hint="身份证正面"
+                app:txt_image_hint_right="身份证反面"
+                app:isSingle="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.cdkj.wzcd.view.MyImageLayout>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/mydt_dydd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="抵押地点"
+                app:txt_title="背景"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/mydt_yhzm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="银行账单日"
+                app:txt_title="25"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_yhhkr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="银行还款日"
+                app:txt_title="25"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_gshkr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="公司还款日"
+                app:txt_title="20"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_bcsm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="补充说明"
+                app:txt_title="是否将刊发就卡萨快递费呢卡少女难舍难分吗你们萨芬三方史蒂夫撒旦法与萨芬十三分"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_cph"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="车牌号"
+                app:txt_title="123456"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyImageLayout
+                android:id="@+id/myIl_jdcdjzs"
+                app:txt_image_title="机动车登记证书"
+                app:txt_image_hint="机动车登记证书"
+                app:txt_image_hint_right="机动车登记证书"
+                app:isSingle="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.cdkj.wzcd.view.MyImageLayout>
+
+            <com.cdkj.wzcd.view.MyImageLayout
+                android:id="@+id/myIl_pd"
+                app:txt_image_title="批单"
+                app:txt_image_hint="批单"
+                app:txt_image_hint_right="批单"
+                app:isSingle="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.cdkj.wzcd.view.MyImageLayout>
+
+            <com.cdkj.wzcd.view.MyImageLayout
+                android:id="@+id/myIl_cys"
+                app:txt_image_title="车钥匙"
+                app:txt_image_hint="车钥匙"
+                app:txt_image_hint_right="车钥匙"
+                app:isSingle="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.cdkj.wzcd.view.MyImageLayout>
+
+            <com.cdkj.wzcd.view.MyImageLayout
+                android:id="@+id/myIl_dbsmj"
+                app:txt_image_title="大本扫描件"
+                app:txt_image_hint="大本扫描件"
+                app:txt_image_hint_right="大本扫描件"
+                app:isSingle="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.cdkj.wzcd.view.MyImageLayout>
+
+            <com.cdkj.wzcd.view.MyImageLayout
+                android:id="@+id/myIl_clxszsmj"
+                app:txt_image_title="车辆行驶证扫描件"
+                app:txt_image_hint="车辆行驶证扫描件"
+                app:txt_image_hint_right="车辆行驶证扫描件"
+                app:isSingle="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.cdkj.wzcd.view.MyImageLayout>
+
+            <com.cdkj.wzcd.view.MyImageLayout
+                android:id="@+id/myIl_wszmsmj"
+                app:txt_image_title="完税证明扫描件"
+                app:txt_image_hint="完税证明扫描件"
+                app:txt_image_hint_right="完税证明扫描件"
+                app:isSingle="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.cdkj.wzcd.view.MyImageLayout>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_tjsj"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="提交时间 "
+                app:txt_title="2017-10-01"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_tjsm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="提交说明"
+                app:txt_title="提交说明"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>

@@ -26,10 +26,8 @@ public abstract class AbsBaseLoadActivity extends BaseActivity {
         mBaseBinding = DataBindingUtil.setContentView(this, R.layout.activity_abs_base_load);
 
 
-        mBaseBinding.contentView.addComtentView(addMainView());
-
         initTitleView();
-
+        mBaseBinding.contentView.addComtentView(addMainView());
         afterCreate(savedInstanceState);
     }
 

@@ -1,0 +1,35 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.cdkj.wzcd.module.main.MessageFragment">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="消息"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <com.cdkj.baselibrary.views.LineViewPagerIndicator
+            android:id="@+id/viewindicator"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/white"></com.cdkj.baselibrary.views.LineViewPagerIndicator>
+
+
+        <com.cdkj.baselibrary.views.EnabledViewpager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </com.cdkj.baselibrary.views.EnabledViewpager>
+
+    </LinearLayout>
+</layout>

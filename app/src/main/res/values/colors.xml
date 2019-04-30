@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1d1d1d</color>
-    <color name="colorPrimaryDark">#1d1d1d</color>
-    <color name="colorAccent">#1d1d1d</color>
+    <color name="colorPrimary">#028EFF</color>
+    <color name="colorPrimaryDark">#028EFF</color>
+    <color name="colorAccent">#028EFF</color>
 
     <!--<color name="colorPrimary">#3F51B5</color>-->
     <!--<color name="colorPrimaryDark">#303F9F</color>-->
     <!--<color name="colorAccent">#FF4081</color>-->
-
+    <color name="app_main_txt_select_un">#616161</color>
+    <color name="app_main_txt_select">#2F93ED</color>
     <color name="statusBarColor">#1d1d1d</color>
 
     <color name="bgColorBlue">#028eff</color>
@@ -36,5 +37,8 @@
     <color name="color_myItemNormal_content_txt">#333333</color>
 
     <color name="color_f6">#f6f6f6</color>
+    <color name="color_orange">#FF9D4D</color>
+    <color name="color_red">#ff5076</color>
+
 
 </resources>

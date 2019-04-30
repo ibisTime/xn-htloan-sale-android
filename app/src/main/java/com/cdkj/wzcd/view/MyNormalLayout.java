@@ -26,6 +26,7 @@ public class MyNormalLayout extends LinearLayout {
     private String txtHint;
     private String txtContent;
     private int resourceId;
+    private boolean isShowRightImg;
 
     public MyNormalLayout(Context context) {
         this(context, null);
@@ -42,6 +43,7 @@ public class MyNormalLayout extends LinearLayout {
         txtTitle = typedArray.getString(R.styleable.MyNormalLayout_txt_normal_title);
         txtHint = typedArray.getString(R.styleable.MyNormalLayout_txt_normal_hint);
         txtContent = typedArray.getString(R.styleable.MyNormalLayout_txt_normal_content);
+        isShowRightImg = typedArray.getBoolean(R.styleable.MyNormalLayout_is_show_right_img, false);
         resourceId = typedArray.getResourceId(R.styleable.MyNormalLayout_img_normal_right, 0);
 
         typedArray.recycle();
@@ -59,9 +61,11 @@ public class MyNormalLayout extends LinearLayout {
         mBinding.tvTitle.setText(txtTitle);
         mBinding.tvContent.setHint(txtHint);
         mBinding.tvContent.setText(txtContent);
-        mBinding.ivRight.setImageResource(resourceId);
-
+        if (isShowRightImg) {
+            mBinding.ivRight.setVisibility(VISIBLE);
+        }
         if (resourceId != 0) {
+            mBinding.ivRight.setImageResource(resourceId);
             mBinding.ivRight.setVisibility(VISIBLE);
         }
     }
@@ -70,13 +74,13 @@ public class MyNormalLayout extends LinearLayout {
     private void init(Context context) {
         this.context = context;
         mBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.layout_my_normal, this, true);
-
     }
 
     public void setText(String content) {
         if (!TextUtils.isEmpty(content))
             mBinding.tvContent.setText(content);
     }
+
     public String check() {
 
         if (TextUtils.isEmpty(mBinding.tvContent.getText().toString().trim())) {

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        tools:context="com.cdkj.wzcd.module.main.customer.CreditCardDetailsActivity">
+
+        <LinearLayout
+            android:id="@+id/ll_code"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:text="业务编号"
+                android:textColor="@color/text_black_cd"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="9897856"
+                android:textColor="@color/text_black_cd"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_mory_gary" />
+        </LinearLayout>
+
+        <View
+            style="@style/style_split_line_horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:text="主贷人"
+                android:textColor="@color/text_black_cd"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="张三"
+                android:textColor="@color/text_black_cd"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/style_split_line_horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:text="经办银行"
+                android:textColor="@color/text_black_cd"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_bank"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="中国银行"
+                android:textColor="@color/text_black_cd"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/style_split_line_horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:text="业务种类"
+                android:textColor="@color/text_black_cd"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="新车/二手车"
+                android:textColor="@color/text_black_cd"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/style_split_line_horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:text="贷款金额"
+                android:textColor="@color/text_black_cd"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_money"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="1000元"
+                android:textColor="@color/text_black_cd"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/style_split_line_horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:text="当前节点"
+                android:textColor="@color/text_black_cd"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_jiedian"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="资料传递"
+                android:textColor="@color/text_black_cd"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/style_split_line_horizontal"
+            android:layout_height="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical"
+            android:text="征信人列表"
+            android:textColor="@color/text_black_cd"
+            android:textSize="16sp" />
+
+        <View
+            style="@style/style_split_line_horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp" />
+
+
+        <!--<com.scwang.smartrefresh.layout.SmartRefreshLayout-->
+            <!--android:id="@+id/refreshLayout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@color/gray_bg"-->
+            <!--app:srlAccentColor="@android:color/tertiary_text_dark"-->
+            <!--app:srlEnablePreviewInEditMode="true"-->
+            <!--app:srlPrimaryColor="@color/gray_bg">-->
+            <!--&lt;!&ndash;srlAccentColor srlPrimaryColor 将会改变 Header 和 Footer 的主题颜色&ndash;&gt;-->
+            <!--&lt;!&ndash;srlEnablePreviewInEditMode 可以开启和关闭预览功能&ndash;&gt;-->
+            <!--<com.scwang.smartrefresh.layout.header.ClassicsHeader-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content" />-->
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
+            <!--<com.scwang.smartrefresh.layout.footer.ClassicsFooter-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content" />-->
+        <!--</com.scwang.smartrefresh.layout.SmartRefreshLayout>-->
+
+
+    </LinearLayout>
+</layout>

@@ -1,15 +1,15 @@
 ext {
     android = [
-            compileSdkVersion: 27,
+            compileSdkVersion: 28,
             buildToolsVersion: "27.0.2",
-            minSdkVersion    : 19,
-            targetSdkVersion : 26,
+            minSdkVersion    : 16,
+            targetSdkVersion : 27,
             versionCode      : 5,
             versionName      : "1.2.2",
     ]
 
     cdcommon = [
-            compileSdkVersion: 27,
+            compileSdkVersion: 28,
             buildToolsVersion: "27.0.2",
             minSdkVersion    : 15,
             targetSdkVersion : 26,

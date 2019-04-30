@@ -38,7 +38,7 @@ android {
         dexInProcess true
         preDexLibraries true
         javaMaxHeapSize "6g"//越大越好
-        incremental true
+//        incremental true
     }
 
     signingConfigs {
@@ -90,6 +90,7 @@ def releaseTime() {
 
 
 dependencies {
+
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
@@ -101,8 +102,7 @@ dependencies {
 
     // 腾讯云 实时音视频
     compile 'com.tencent.ilivesdk:ilivesdk:1.8.5'
-
+    compile 'android.arch.lifecycle:extensions:1.1.1'
     annotationProcessor rootProject.ext.arouterCompiler
     implementation rootProject.ext.arouterApi
 }
-

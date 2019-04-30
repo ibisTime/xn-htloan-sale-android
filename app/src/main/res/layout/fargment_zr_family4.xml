@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fillViewport="true"
+        tools:context="com.cdkj.wzcd.module.main.customer.zrdxq.ZRLoanFragment1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.cdkj.wzcd.view.MySelectLayout2
+                android:id="@+id/mySL_hyzk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_select_content="请选择"
+                app:txt_select_title="*婚姻状况"></com.cdkj.wzcd.view.MySelectLayout2>
+
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_jtrk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="家庭人口"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_jtdh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*家庭电话"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_jtzycc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*家庭主要财产(元)"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_jtzyccsm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*家庭主要财产说明"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_hjd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*户籍地"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_hjdyb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="户籍地邮编"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_jzd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*居住地"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_jzdyb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*居住地邮编"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myML_hkb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="户口本"></com.cdkj.wzcd.view.MyMultipleLayout>
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myML_jhz_lhz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="结婚证/离婚证"></com.cdkj.wzcd.view.MyMultipleLayout>
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myML_gfht_fcb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="购房合同/房产产本"></com.cdkj.wzcd.view.MyMultipleLayout>
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myML_gffp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="购房发票"></com.cdkj.wzcd.view.MyMultipleLayout>
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myML_jzzm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="居住证明"></com.cdkj.wzcd.view.MyMultipleLayout>
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myML_zjfzm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="自建房证明"></com.cdkj.wzcd.view.MyMultipleLayout>
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myML_jfzp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="家访照片"></com.cdkj.wzcd.view.MyMultipleLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>

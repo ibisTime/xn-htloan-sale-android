@@ -5,7 +5,10 @@ import android.content.Context;
 import com.cdkj.baselibrary.CdApplication;
 import com.cdkj.baselibrary.R;
 import com.cdkj.baselibrary.api.BaseResponseListModel;
+import com.cdkj.baselibrary.model.eventmodels.EventFinishAll;
 import com.cdkj.baselibrary.utils.LogUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.lang.ref.SoftReference;
 import java.util.List;
@@ -130,6 +133,7 @@ public abstract class BaseResponseListCallBack<T> implements Callback<BaseRespon
      * @param
      */
     protected void onLoginFailure(Context context, String errorMessage) {
+        EventBus.getDefault().post(new EventFinishAll());
         NetHelper.onLoginFailure(context, errorMessage);
     }
 

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.cdkj.wzcd.view.MyVideoLayout
+                    android:id="@+id/myVl_bankVideo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="*银行视频">
+
+                </com.cdkj.wzcd.view.MyVideoLayout>
+
+                <com.cdkj.wzcd.view.MyVideoLayout
+                    android:id="@+id/myVl_companyVideo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="*公司视频">
+
+                </com.cdkj.wzcd.view.MyVideoLayout>
+
+                <com.cdkj.wzcd.view.MyVideoLayout
+                    android:id="@+id/myVl_otherVideo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="其它视频(选填)">
+
+                </com.cdkj.wzcd.view.MyVideoLayout>
+
+                <com.cdkj.wzcd.view.MyMultipleLayout
+                    android:id="@+id/myMl_advanceFundAmountPdf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="资金划账授权书"></com.cdkj.wzcd.view.MyMultipleLayout>
+
+                <com.cdkj.wzcd.view.MyMultipleLayout
+                    android:id="@+id/myMl_bankPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="银行面签照片"></com.cdkj.wzcd.view.MyMultipleLayout>
+
+                <com.cdkj.wzcd.view.MyMultipleLayout
+                    android:id="@+id/myMl_companyContract"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="公司合同(选填)"></com.cdkj.wzcd.view.MyMultipleLayout>
+
+                <com.cdkj.wzcd.view.MyMultipleLayout
+                    android:id="@+id/myMl_bankContract"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="银行合同(选填)"></com.cdkj.wzcd.view.MyMultipleLayout>
+
+                <com.cdkj.wzcd.view.MyMultipleLayout
+                    android:id="@+id/myMl_interviewOtherPdf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="其它资料(选填)"></com.cdkj.wzcd.view.MyMultipleLayout>
+
+                <com.cdkj.wzcd.view.MyEditLayout
+                    android:id="@+id/myEL_msg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:txt_input_hint="审核说明"
+                    app:txt_input_title="审核说明">
+
+                </com.cdkj.wzcd.view.MyEditLayout>
+
+                <com.cdkj.wzcd.view.MyConfirmBtn
+                    android:id="@+id/myCb_load"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:txt_confirm_content="通过"
+                    app:txt_confirm_content_right="不通过"></com.cdkj.wzcd.view.MyConfirmBtn>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/ll_percent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#50000000"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.cdkj.baselibrary.views.CircleProgressView
+                android:id="@+id/cp_percent"
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
+
+            <TextView
+                android:id="@+id/tv_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text=""
+                android:textColor="@color/colorPrimary" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</layout>

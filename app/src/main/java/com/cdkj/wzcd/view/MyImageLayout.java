@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import com.cdkj.baselibrary.activitys.ImageSelectActivity;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.utils.ImgUtils;
+import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.baselibrary.utils.ToastUtil;
 import com.cdkj.wzcd.R;
 import com.cdkj.wzcd.databinding.LayoutMyImageBinding;
@@ -40,6 +41,7 @@ public class MyImageLayout extends LinearLayout {
     private String txtHint;
     private String txtTitle;
     private boolean isSingle;
+    private boolean isRequest;
 
     private String txtHintRight;
 
@@ -98,7 +100,9 @@ public class MyImageLayout extends LinearLayout {
         mBinding.ivImg.setOnClickListener(view -> {
 
             if (TextUtils.isEmpty(FlImgUrl)) {
-
+                if (isRequest) {
+                    return;
+                }
                 if (mActivity == null)
                     return;
 //                    ToastUtil.show(context, "请先setActivity");
@@ -128,6 +132,9 @@ public class MyImageLayout extends LinearLayout {
         mBinding.ivImgRight.setOnClickListener(view -> {
 
             if (TextUtils.isEmpty(FlImgRightUrl)) {
+                if (isRequest) {
+                    return;
+                }
 
                 if (mActivity == null)
                     return;
@@ -139,7 +146,7 @@ public class MyImageLayout extends LinearLayout {
 
                 List<LocalMedia> list = new ArrayList<>();
                 LocalMedia localMedia = new LocalMedia();
-                localMedia.setPath(MyCdConfig.QINIU_URL + FlImgUrl);
+                localMedia.setPath(MyCdConfig.QINIU_URL + FlImgRightUrl);
                 list.add(localMedia);
                 // 预览图片 可自定长按保存路径
                 PictureSelector.create(mActivity)
@@ -233,7 +240,7 @@ public class MyImageLayout extends LinearLayout {
      * @param url
      */
     public void setFlImgByRequest(String url) {
-
+        isRequest = true;
         mBinding.llHint.setVisibility(GONE);
 
         FlImgUrl = url;
@@ -246,8 +253,30 @@ public class MyImageLayout extends LinearLayout {
      *
      * @param url
      */
-    public void setFlImgRightByRequest(String url) {
+    public void setAllImgByRequest(String url) {
+        isRequest = true;
+        List<String> strings = StringUtils.splitAsPicList(url);
+        if (strings != null && strings.size() > 0) {
+            setFlImgByRequest(strings.get(0));
+        } else {
 
+        }
+        if (strings != null && strings.size() > 1) {
+            setFlImgRightByRequest(strings.get(1));
+        } else {
+
+        }
+
+
+    }
+
+    /**
+     * 加载图片并取消点击事件和隐藏View
+     *
+     * @param url
+     */
+    public void setFlImgRightByRequest(String url) {
+        isRequest = true;
         mBinding.llHintRight.setVisibility(GONE);
 
         FlImgRightUrl = url;

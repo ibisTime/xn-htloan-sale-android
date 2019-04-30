@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/mydt_bdrq"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="保单日期"
+                app:txt_title="2017-10-10"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/mydt_bddqr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="保单到期日"
+                app:txt_title="2019-10-10"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/mydt_lhrq"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="落户日期"
+                app:txt_title="2017-10-11"></com.cdkj.wzcd.view.MyDoubleTitle>
+
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myMl_fp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="发票">
+
+            </com.cdkj.wzcd.view.MyMultipleLayout>
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myMl_jqx"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="交强险">
+
+            </com.cdkj.wzcd.view.MyMultipleLayout>
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myMl_syx"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="商业险">
+
+            </com.cdkj.wzcd.view.MyMultipleLayout>
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myMl_qtzl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="其他资料">
+
+            </com.cdkj.wzcd.view.MyMultipleLayout>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_dyrq"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="抵押日期"
+                app:txt_title="2017-10-10">
+
+            </com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyMultipleLayout
+                android:id="@+id/myMl_ldbsmj"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="绿大本扫描件">
+
+            </com.cdkj.wzcd.view.MyMultipleLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>

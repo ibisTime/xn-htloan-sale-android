@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fillViewport="true"
+        tools:context="com.cdkj.wzcd.module.main.customer.zrdxq.ZRLoanFragment1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_mz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="姓名"
+                app:txt_title=""></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_dh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="*电话"
+                app:txt_title=""></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MyDoubleTitle
+                android:id="@+id/myDT_sfz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_mintop_title="*身份证"
+                app:txt_title=""></com.cdkj.wzcd.view.MyDoubleTitle>
+
+            <com.cdkj.wzcd.view.MySelectLayout2
+                android:id="@+id/mySL_xb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_select_content="请选择"
+                app:txt_select_title="*性别"></com.cdkj.wzcd.view.MySelectLayout2>
+
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_nl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:inputType="phone"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="年龄"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_mz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*民族"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MySelectLayout2
+                android:id="@+id/mySL_zzmm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_select_content="请选择"
+                app:txt_select_title="*政治面貌"></com.cdkj.wzcd.view.MySelectLayout2>
+
+            <com.cdkj.wzcd.view.MySelectLayout2
+                android:id="@+id/mySL_xl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_select_content="请选择"
+                app:txt_select_title="*学历"></com.cdkj.wzcd.view.MySelectLayout2>
+
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_zy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*职业"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_zc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*职称"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MySelectLayout2
+                android:id="@+id/mySL_ywjz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_select_content="请选择"
+                app:txt_select_title="*有无驾照"></com.cdkj.wzcd.view.MySelectLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_xycl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="现有车辆"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_zysrly"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*主要收入来源"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <View
+                style="@style/style_split_line_horizontal"
+                android:layout_height="10dp" />
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_jjlxr1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*紧急联系人1"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MySelectLayout2
+                android:id="@+id/mySL_yzdrgx1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_select_content="请选择"
+                app:txt_select_title="*与主贷人关系"></com.cdkj.wzcd.view.MySelectLayout2>
+
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_sjhm1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*手机号码"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <View
+                style="@style/style_split_line_horizontal"
+                android:layout_height="10dp" />
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_jjlxr2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*紧急联系人2"></com.cdkj.wzcd.view.MyEditLayout2>
+
+            <com.cdkj.wzcd.view.MySelectLayout2
+                android:id="@+id/mySL_yzdrgx2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_select_content="请选择"
+                app:txt_select_title="*与主贷人关系"></com.cdkj.wzcd.view.MySelectLayout2>
+
+
+            <com.cdkj.wzcd.view.MyEditLayout2
+                android:id="@+id/myEL_sjhm2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_input_hint="请输入"
+                app:txt_input_title="*手机号码"></com.cdkj.wzcd.view.MyEditLayout2>
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>

@@ -2,6 +2,7 @@ package com.cdkj.baselibrary.interfaces;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.widget.TextView;
 
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.dialog.UITipDialog;
@@ -30,20 +31,20 @@ public class SendPhoneCodePresenter {
     }
 
     //处理登录逻辑
-    public void sendCodeRequest(String phone, String bizType, String kind, Context context) {
+    public void sendCodeRequest(String phone, String bizType, String kind, TextView view ,Context context) {
         this.mContext = context;
         if (TextUtils.isEmpty(phone)) {
             UITipDialog.showFail(context, "请输入手机号");
             return;
         }
 
-        request(phone, bizType, kind);
+        request(phone, bizType, kind,view);
     }
 
     /**
      * 请求
      */
-    private void request(String phone, String bizType, String kind) {
+    private void request(String phone, String bizType, String kind,TextView view) {
 
         HashMap<String, String> hashMap = new HashMap<>();
 
@@ -60,7 +61,7 @@ public class SendPhoneCodePresenter {
             @Override
             protected void onSuccess(IsSuccessModes data, String SucMessage) {
                 if (data.isSuccess()) {
-                    mListener.CodeSuccess("验证码已经发送请注意查收");
+                    mListener.CodeSuccess("验证码已经发送请注意查收",view);
                 } else {
                     mListener.CodeFailed("", "验证码发送失败");
                 }

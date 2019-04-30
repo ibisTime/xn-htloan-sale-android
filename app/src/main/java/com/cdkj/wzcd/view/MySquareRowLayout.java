@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
@@ -23,9 +24,11 @@ public class MySquareRowLayout extends LinearLayout {
     private TextView tvContent;
     private ImageView ivContent;
     private TextView tvRedPoint;
+    private TextView tvType;
 
     private int imgContentId;
     private String txtContent;
+    private String txtType;
 
     public MySquareRowLayout(Context context) {
         this(context, null);
@@ -40,6 +43,7 @@ public class MySquareRowLayout extends LinearLayout {
 
         final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.MySquareRowLayout, 0, 0);
         txtContent = typedArray.getString(R.styleable.MySquareRowLayout_txt_content);
+        txtType = typedArray.getString(R.styleable.MySquareRowLayout_txt_type);
         imgContentId = typedArray.getResourceId(R.styleable.MySquareRowLayout_img_content, R.drawable.default_pic);
 
         typedArray.recycle();
@@ -50,16 +54,25 @@ public class MySquareRowLayout extends LinearLayout {
     }
 
     private void setData() {
+
         tvContent.setText(txtContent);
         ivContent.setImageResource(imgContentId);
+        if (!TextUtils.isEmpty(txtType)) {
+            tvType.setText(txtType);
+            tvType.setVisibility(VISIBLE);
+        } else {
+            tvType.setText("null");
+            tvType.setVisibility(INVISIBLE);
+        }
     }
 
-    public void setPointCount(int count){
+    public void setPointCount(int count) {
 
-        tvRedPoint.setText(count+"");
-        if (count == 0){
+        tvRedPoint.setText(count + "");
+        if (count == 0) {
             tvRedPoint.setVisibility(GONE);
-        }else {
+
+        } else {
             tvRedPoint.setVisibility(VISIBLE);
         }
     }
@@ -71,6 +84,7 @@ public class MySquareRowLayout extends LinearLayout {
 
         tvContent = findViewById(R.id.tv_content);
         ivContent = findViewById(R.id.iv_content);
+        tvType = findViewById(R.id.tv_type);
         tvRedPoint = findViewById(R.id.tv_red_point);
     }
 }

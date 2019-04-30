@@ -12,7 +12,6 @@ import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsRefreshListFragment;
 import com.cdkj.baselibrary.dialog.UITipDialog;
-import com.cdkj.baselibrary.model.DataDictionary;
 import com.cdkj.baselibrary.model.IsSuccessModes;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
@@ -21,7 +20,7 @@ import com.cdkj.wzcd.adapter.CreditListAdapter;
 import com.cdkj.wzcd.api.MyApiServer;
 import com.cdkj.wzcd.model.CreditModel;
 import com.cdkj.wzcd.model.SearchModel;
-import com.cdkj.wzcd.util.DataDictionaryHelper;
+import com.cdkj.wzcd.module.main.customer.ZRDDetialsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +40,6 @@ public class CreditListFragment extends AbsRefreshListFragment {
     private String isPass;
     private boolean isFirstRequest;
 
-    // 业务种类
-    private List<DataDictionary> mType = new ArrayList<>();
 
     private String searchKey = "";
     private String searchValue = "";
@@ -63,14 +60,14 @@ public class CreditListFragment extends AbsRefreshListFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (getUserVisibleHint()){
+        if (getUserVisibleHint()) {
             mRefreshHelper.onDefaultMRefresh(true);
         }
     }
 
     @Override
     protected void lazyLoad() {
-        if (mRefreshBinding != null){
+        if (mRefreshBinding != null) {
             mRefreshHelper.onDefaultMRefresh(true);
         }
 
@@ -89,7 +86,7 @@ public class CreditListFragment extends AbsRefreshListFragment {
 
             initRefreshHelper(MyCdConfig.LIST_LIMIT);
 
-            if (isFirstRequest){
+            if (isFirstRequest) {
                 mRefreshHelper.onDefaultMRefresh(true);
             }
 
@@ -99,15 +96,12 @@ public class CreditListFragment extends AbsRefreshListFragment {
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
 
-        CreditListAdapter mAdapter = new CreditListAdapter(listData, mType, (view, code) -> {
-            showDoubleWarnListen("您确定要撤回此条征信调查单吗?", view1 -> {
-                creditCancel(code);
-            });
-        });
+        CreditListAdapter mAdapter = new CreditListAdapter(listData);
+
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             CreditModel model = mAdapter.getItem(position);
-
-            CreditDetailActivity.open(mActivity, model.getCode());
+//            CreditDetailActivity.open(mActivity, model.getCode());
+            ZRDDetialsActivity.open(mActivity, model.getCode());
         });
 
         return mAdapter;
@@ -116,56 +110,50 @@ public class CreditListFragment extends AbsRefreshListFragment {
     @Override
     public void getListRequest(int pageIndex, int limit, boolean isShowDialog) {
 
-        DataDictionaryHelper.getDataDictionaryRequest(mActivity, DataDictionaryHelper.budget_orde_biz_typer, "", data -> {
+        Map<String, Object> map = RetrofitUtils.getRequestMap();
+        List<String> curNodeCodeList = new ArrayList<>();
+//            curNodeCodeList.add("001_01");
+//            curNodeCodeList.add("001_02");
+//            curNodeCodeList.add("001_03");
+//            curNodeCodeList.add("001_04");
+//            curNodeCodeList.add("001_05");
+//            curNodeCodeList.add("001_06");
+//            curNodeCodeList.add("001_07");
+        curNodeCodeList.add("a1");
+        curNodeCodeList.add("a2");
+        curNodeCodeList.add("a3");
+        curNodeCodeList.add("ax1");
 
-            if (data == null || data.size() == 0){
-                return;
+        map.put("curNodeCodeList", curNodeCodeList);
+        map.put("roleCode", SPUtilHelper.getRoleCode());
+        map.put("teamCode", SPUtilHelper.getTeamCode());
+        map.put("userId", SPUtilHelper.getUserId());
+        map.put("token", SPUtilHelper.getUserToken());
+//            map.put("isPass", isPass);
+        map.put("start", pageIndex + "");
+        map.put("limit", limit + "");
+//            map.put(searchKey, searchValue);
+
+        if (isShowDialog) showLoadingDialog();
+
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getCreditList("632115", StringUtils.getJsonToString(map));
+        addCall(call);
+
+        call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CreditModel>>(mActivity) {
+            @Override
+            protected void onSuccess(ResponseInListModel<CreditModel> data, String SucMessage) {
+                mRefreshHelper.setData(data.getList(), "暂无资信", 0);
             }
 
-            mType.addAll(data);
-
-            Map<String, Object> map = RetrofitUtils.getRequestMap();
-
-            List<String> curNodeCodeList = new ArrayList<>();
-            curNodeCodeList.add("001_01");
-            curNodeCodeList.add("001_02");
-            curNodeCodeList.add("001_03");
-            curNodeCodeList.add("001_04");
-            curNodeCodeList.add("001_05");
-            curNodeCodeList.add("001_06");
-            curNodeCodeList.add("001_07");
-
-            map.put("curNodeCodeList", curNodeCodeList);
-            map.put("roleCode", SPUtilHelper.getRoleCode());
-            map.put("teamCode", SPUtilHelper.getTeamCode());
-            map.put("userId", SPUtilHelper.getUserId());
-            map.put("isPass", isPass);
-            map.put("start", pageIndex + "");
-            map.put("limit", limit + "");
-            map.put(searchKey, searchValue);
-
-            if (isShowDialog) showLoadingDialog();
-
-            Call call = RetrofitUtils.createApi(MyApiServer.class).getCreditList("632115", StringUtils.getJsonToString(map));
-            addCall(call);
-
-            call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CreditModel>>(mActivity) {
-                @Override
-                protected void onSuccess(ResponseInListModel<CreditModel> data, String SucMessage) {
-                    mRefreshHelper.setData(data.getList(), "暂无资信", 0);
-                }
-
-                @Override
-                protected void onFinish() {
-                    disMissLoading();
-                }
-            });
-
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
         });
 
     }
 
-    private void creditCancel(String code){
+    private void creditCancel(String code) {
 
         Map<String, String> map = RetrofitUtils.getRequestMap();
 
@@ -199,12 +187,12 @@ public class CreditListFragment extends AbsRefreshListFragment {
     }
 
     @org.greenrobot.eventbus.Subscribe
-    public void doSearch(SearchModel searchModel){
+    public void doSearch(SearchModel searchModel) {
 
         if (searchModel == null)
             return;
 
-        if (getUserVisibleHint()){
+        if (getUserVisibleHint()) {
             searchKey = searchModel.getSearchKey();
             searchValue = searchModel.getSearchValue();
 

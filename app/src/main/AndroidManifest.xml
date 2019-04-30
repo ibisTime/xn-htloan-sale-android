@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.cdkj.wzcd">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -9,11 +10,12 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/logo"
+        android:icon="@mipmap/logo2"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,10 +26,13 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".module.user.SignInActivity" />
         <activity android:name=".module.business.credit.BssCreditListActivity" />
+        <activity android:name=".module.business.credit.BssCreditListActivity2" />
         <activity android:name=".module.business.credit.audit.AuditCreditActivity" />
         <activity android:name=".module.business.join_approval.JoinApplyListActivity" />
         <activity android:name=".module.business.interview.InterviewActivity" />
+        <activity android:name=".module.business.interview.InterviewExamineActivity" />
         <activity android:name=".module.business.interview.InterviewStartActivity" />
+        <activity android:name=".module.business.interview.InterviewStartDetialsActivity" />
         <activity android:name=".module.business.gps_install.GPSInstallListActivity" />
         <activity android:name=".module.business.gps_install.GPSInstallInfoActivity" />
         <activity android:name=".module.business.gps_install.GPSInfoAddActivity" />
@@ -40,7 +45,7 @@
         <activity android:name=".module.business.cllh.CllhInputMessageActivity" />
         <activity android:name=".module.business.cldy.BssCldyListActivity" />
         <activity android:name=".module.business.cldy.CldyInputMessageActivity" />
-        <activity android:name=".module.datatransfer.DataTransferListFragment" />
+        <!-- <activity android:name=".module.datatransfer.DataTransferListFragment" /> -->
         <activity android:name=".module.datatransfer.SendActivity" />
         <activity android:name=".module.datatransfer.SendAndExamineActivity" />
         <activity android:name=".module.cartool.uservoid.UserToVoidActivity" />
@@ -81,7 +86,28 @@
         <activity android:name=".module.datatransfer.DataDetialsActivity" />
         <activity android:name=".module.business.cldy.NqlrActivity" />
         <activity android:name=".module.business.cldy.DysqActivity" />
-        <activity android:name=".module.business.cldy.LrdyActivity"></activity>
+        <activity android:name=".module.business.cldy.LrdyActivity" />
+        <activity android:name=".module.main.customer.CustomerDetailsActivity" />
+        <activity android:name=".module.main.customer.CreditCardDetailsActivity" />
+        <activity android:name=".module.main.customer.CreditPeopleDetailsActivity" />
+        <activity android:name=".module.main.customer.EnclosureActivity" />
+        <activity android:name=".module.main.customer.LocalUpEnclosureActivity" />
+        <activity android:name=".module.main.customer.RelationEnclosureActivity" />
+        <activity android:name=".module.main.customer.RepaymentListActivity" />
+        <!-- WebViewMessageActivity -->
+        <activity android:name=".common.WebViewMessageActivity" />
+        <activity android:name=".module.main.customer.LogActivity" />
+        <activity android:name=".module.main.message.ZXPDActivity" />
+        <activity android:name=".module.main.user.UpDataPhoneActivity" />
+        <activity android:name=".module.main.customer.ZRDDetialsActivity" />
+        <activity android:name=".module.main.customer.ToBeActivity" />
+        <activity android:name=".module.home.front.ZXLRActivity" />
+        <activity android:name=".module.home.front.ZXLRDetails" />
+        <activity android:name=".module.home.front.ZXLRInputActivity" />
+        <activity android:name=".module.home.front.ZXSHActivity" />
+        <activity android:name=".module.home.front.ZXSHDetails" />
+        <activity android:name=".module.main.customer.zrdxq.ZRActivity" />
+        <activity android:name=".module.main.customer.zrdxq.DQZRListActivity"></activity>
     </application>
 
 </manifest>

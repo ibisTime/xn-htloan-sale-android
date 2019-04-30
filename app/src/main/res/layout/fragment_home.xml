@@ -1,0 +1,783 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.cdkj.wzcd.module.home.HomeFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/title_height"
+                android:background="@color/title_bg">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="车贷"
+                    android:textColor="@color/title_mid_tv"
+                    android:textSize="@dimen/top_center_title_size" />
+
+                <FrameLayout
+                    android:id="@+id/fl_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right|center_vertical">
+
+                    <TextView
+                        android:id="@+id/tv_top_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginRight="15dp"
+                        android:gravity="center"
+                        android:text="切换账号"
+                        android:textColor="@color/title_right_tv"
+                        android:textSize="16sp" />
+
+                </FrameLayout>
+
+            </FrameLayout>
+
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <com.cdkj.wzcd.view.MyFileMultipleLayout
+                        android:id="@+id/my_FML"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:title="选择"></com.cdkj.wzcd.view.MyFileMultipleLayout>
+
+                    <!--用户头像-->
+                    <LinearLayout
+                        android:id="@+id/ll_user"
+                        android:layout_width="match_parent"
+                        android:layout_height="110dp"
+                        android:background="@mipmap/main_title_bg"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <RelativeLayout
+                            android:id="@+id/rl_photo"
+                            android:layout_width="58dp"
+                            android:layout_height="58dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="15dp">
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/common_user_photo_bg" />
+
+                            <FrameLayout
+                                android:layout_width="55dp"
+                                android:layout_height="55dp"
+                                android:layout_centerInParent="true">
+
+                                <TextView
+                                    android:id="@+id/tv_avatar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/corner_user_photo"
+                                    android:gravity="center"
+                                    android:textColor="@color/colorPrimary"
+                                    android:textSize="22sp"
+                                    android:visibility="gone" />
+
+                                <ImageView
+                                    android:id="@+id/im_avatar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/photo_default" />
+
+                            </FrameLayout>
+
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/tv_red_point"
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/common_list_count"
+                                    android:gravity="center"
+                                    android:text="0"
+                                    android:textColor="@color/white"
+                                    android:textSize="9sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_nick"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/white"
+                                    android:textSize="18sp"
+                                    tools:text="昵称" />
+
+                                <TextView
+                                    android:id="@+id/tv_role"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="2dp"
+                                    android:textColor="@color/white"
+                                    android:textSize="12sp"
+                                    tools:text="信贷专员" />
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tv_company"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                tools:text="公司" />
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="15dp"
+                            android:background="@mipmap/more_white"
+                            android:visibility="gone" />
+
+
+                    </LinearLayout>
+
+                    <View style="@style/style_split_line_horizontal_broad" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="vertical">
+
+                            <com.cdkj.wzcd.view.MyTitleBarLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:txt_title="贷前准入"></com.cdkj.wzcd.view.MyTitleBarLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:weightSum="3">
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_zxfq"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:img_content="@mipmap/home_zxfq"
+                                    app:txt_content="征信发起"
+                                    app:txt_type="业务员">
+
+                                </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                                <View style="@style/style_split_line_vertical" />
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_zxlr"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:img_content="@mipmap/home_zxlr"
+                                    app:txt_content="征信录入"
+                                    app:txt_type="内勤">
+
+                                </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                                <View style="@style/style_split_line_vertical" />
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_zxsh"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:img_content="@mipmap/home_zxsh"
+                                    app:txt_content="征信审核"
+                                    app:txt_type="审核岗">
+
+                                </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:weightSum="3">
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_mqlr"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:img_content="@mipmap/home_mqlr"
+                                    app:txt_content="面签录入"
+                                    app:txt_type="内勤">
+
+                                </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                                <View style="@style/style_split_line_vertical" />
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_mqsh"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:img_content="@mipmap/home_mqsh"
+                                    app:txt_content="面签审核"
+                                    app:txt_type="审核岗">
+
+                                </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                                <View style="@style/style_split_line_vertical" />
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:weightSum="3">
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_zrsq2"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:img_content="@mipmap/home_zrsq"
+                                    app:txt_content="准入申请"
+                                    app:txt_type="业务员">
+
+                                </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                                <View style="@style/style_split_line_vertical" />
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_shg"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:img_content="@mipmap/home_shg"
+                                    app:txt_content="准入审核"
+                                    app:txt_type="审核岗">
+
+                                </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                                <View style="@style/style_split_line_vertical" />
+
+                            </LinearLayout>
+
+                            <!--老的先gone掉-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:weightSum="3">
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_credit"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:img_content="@mipmap/home_zxfq"
+                                    app:txt_content="征信发起"
+                                    app:txt_type="业务员">
+
+                                </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                                <View style="@style/style_split_line_vertical" />
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_zrsq"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:visibility="gone"
+                                    app:img_content="@mipmap/main_dqzr"
+                                    app:txt_content="准入申请">
+
+
+                                </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                                <View
+                                    android:id="@+id/line_zrsq"
+                                    style="@style/style_split_line_vertical"
+                                    android:visibility="gone" />
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_mq"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:img_content="@mipmap/main_fbh"
+                                    app:txt_content="面签系统"
+                                    app:txt_type="内勤">
+
+
+                                </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                                <View style="@style/style_split_line_vertical" />
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_gpsaz"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:img_content="@mipmap/main_gpsaz"
+                                    app:txt_content="GPS安装">
+
+
+                                </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                                <View
+                                    android:id="@+id/line_gpsaz"
+                                    style="@style/style_split_line_vertical" />
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_loan"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:visibility="gone"
+                                    app:img_content="@mipmap/main_fbh"
+                                    app:txt_content="银行放款">
+
+
+                                </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                            </LinearLayout>
+
+                            <!--老的先gone掉-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:weightSum="3">
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_cllh"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:img_content="@mipmap/main_zk"
+                                    app:txt_content="发保合"></com.cdkj.wzcd.view.MySquareRowLayout>
+
+                                <View
+                                    android:id="@+id/line_cllh"
+                                    style="@style/style_split_line_vertical" />
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_cldy"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:img_content="@mipmap/main_cwdz"
+                                    app:txt_content="车辆抵押">
+
+
+                                </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                                <View style="@style/style_split_line_vertical" />
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_audit"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:visibility="gone"
+                                    app:img_content="@mipmap/main_fpbpp"
+                                    app:txt_content="结清审核">
+
+                                </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                                <View
+                                    android:id="@+id/line_audit"
+                                    style="@style/style_split_line_vertical"
+                                    android:visibility="gone" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <View style="@style/style_split_line_horizontal_broad" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.cdkj.wzcd.view.MyTitleBarLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:txt_title="贷中执行">
+
+                        </com.cdkj.wzcd.view.MyTitleBarLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="horizontal"
+                            android:weightSum="3">
+
+                            <com.cdkj.wzcd.view.MySquareRowLayout
+                                android:id="@+id/mySr_zlcd2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                app:img_content="@mipmap/home_zlcd"
+                                app:txt_content="资料传递">
+
+                            </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                            <View style="@style/style_split_line_vertical" />
+
+                            <com.cdkj.wzcd.view.MySquareRowLayout
+                                android:id="@+id/mySr_fbh"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                app:img_content="@mipmap/home_fbh"
+                                app:txt_content="发保合">
+
+                            </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                            <View style="@style/style_split_line_vertical" />
+                            <com.cdkj.wzcd.view.MySquareRowLayout
+                                android:id="@+id/mySr_gpsaz2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                app:img_content="@mipmap/home_gpsaz"
+                                app:txt_content="GPS安装">
+
+                            </com.cdkj.wzcd.view.MySquareRowLayout>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="horizontal"
+                            android:weightSum="3">
+
+                            <com.cdkj.wzcd.view.MySquareRowLayout
+                                android:id="@+id/mySr_yhfk"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                app:img_content="@mipmap/home_yhfk"
+                                app:txt_content="银行放款">
+
+                            </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                            <View style="@style/style_split_line_vertical" />
+
+                            <com.cdkj.wzcd.view.MySquareRowLayout
+                                android:id="@+id/mySr_cldy2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                app:img_content="@mipmap/home_cldy"
+                                app:txt_content="车辆抵押">
+
+                            </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                            <View style="@style/style_split_line_vertical" />
+
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View style="@style/style_split_line_horizontal_broad" />
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.cdkj.wzcd.view.MyTitleBarLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:txt_title="贷后跟踪">
+
+                        </com.cdkj.wzcd.view.MyTitleBarLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="horizontal"
+                            android:weightSum="3">
+
+                            <com.cdkj.wzcd.view.MySquareRowLayout
+                                android:id="@+id/mySr_jssh"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                app:img_content="@mipmap/home_jssh"
+                                app:txt_content="结算审核">
+
+                            </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                            <View style="@style/style_split_line_vertical" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View style="@style/style_split_line_horizontal_broad" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_util"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="vertical">
+
+                            <com.cdkj.wzcd.view.MyTitleBarLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:txt_title="车贷工具">
+
+                            </com.cdkj.wzcd.view.MyTitleBarLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:weightSum="3">
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_ywfjc"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:img_content="@mipmap/home_ywfjc"
+                                    app:txt_content="业务附件池"
+                                    app:txt_type="内勤"></com.cdkj.wzcd.view.MySquareRowLayout>
+
+                                <View style="@style/style_split_line_vertical" />
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_ywzf"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:img_content="@mipmap/home_ywzf"
+                                    app:txt_content="业务作废"
+                                    app:txt_type="业务员/内勤">
+
+                                </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                                <View style="@style/style_split_line_vertical" />
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_gpssl2"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:img_content="@mipmap/home_gpssl"
+                                    app:txt_content="GPS申领"
+                                    app:txt_type="内勤">
+
+                                </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:weightSum="3">
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_mqgl"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:img_content="@mipmap/home_mqgl"
+                                    app:txt_content="面签管理"></com.cdkj.wzcd.view.MySquareRowLayout>
+
+                                <View style="@style/style_split_line_vertical" />
+
+                            </LinearLayout>
+
+                            <!--老的先gone掉-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:weightSum="3">
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_fpbpp"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:img_content="@mipmap/main_fpbpp"
+                                    app:txt_content="发票不匹配">
+
+
+                                </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                            </LinearLayout>
+                            <!--老的先gone掉-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:weightSum="3">
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_khzf"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:img_content="@mipmap/main_khzf"
+                                    app:txt_content="客户作废">
+
+
+                                </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                                <View style="@style/style_split_line_vertical" />
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_gpssl"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:img_content="@mipmap/main_gpssl"
+                                    app:txt_content="GPS申领">
+
+
+                                </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                                <View style="@style/style_split_line_vertical" />
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_lskh"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:img_content="@mipmap/main_lskh"
+                                    app:txt_content="历史客户">
+
+
+                                </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                                <View style="@style/style_split_line_vertical" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <!--老的先gone掉  资料传递-->
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="vertical">
+
+                            <com.cdkj.wzcd.view.MyTitleBarLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:txt_title="资料传递">
+
+                            </com.cdkj.wzcd.view.MyTitleBarLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:weightSum="3">
+
+                                <com.cdkj.wzcd.view.MySquareRowLayout
+                                    android:id="@+id/mySr_zlcd"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:img_content="@mipmap/main_zlcd"
+                                    app:txt_content="资料传递">
+
+
+                                </com.cdkj.wzcd.view.MySquareRowLayout>
+
+                                <View style="@style/style_split_line_vertical" />
+
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                        <View style="@style/style_split_line_horizontal_broad" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

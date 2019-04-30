@@ -1,0 +1,165 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        tools:context="com.cdkj.wzcd.module.main.UserFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:text="我的"
+                android:textColor="@color/white" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/icon_user_titlebg" />
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="8dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="30dp">
+
+                        <ImageView
+                            android:id="@+id/iv_head"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_marginLeft="20dp"
+                            android:src="@mipmap/home_zxfq" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_toRightOf="@+id/iv_head"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="真实姓名:"
+                                    android:textColor="@color/text_black_cd"
+                                    android:textSize="17sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_real_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:text="张三"
+                                    android:textColor="@color/text_black_cd"
+                                    android:textSize="17sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="角色姓名:"
+                                    android:textColor="@color/text_666"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_role_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:text="李四"
+                                    android:textColor="@color/text_666"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:id="@+id/tv_message"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="杭州余杭公司设计部开发设计"
+                                android:textColor="@color/text_666"
+                                android:textSize="14sp" />
+
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+            </FrameLayout>
+
+
+        </LinearLayout>
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_loginName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_normal_content="啊啊"
+            app:txt_normal_title="登录名"></com.cdkj.wzcd.view.MyNormalLayout>
+
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:is_show_right_img="true"
+            app:txt_normal_content="13333333333"
+            app:txt_normal_title="手机号"></com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNl_upPsw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:is_show_right_img="true"
+            app:txt_normal_title="修改登录密码"></com.cdkj.wzcd.view.MyNormalLayout>
+
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/shape_bg_blue_round_stroke"
+            android:text="切换账号"
+            android:textColor="@color/colorPrimary" />
+    </LinearLayout>
+</layout>

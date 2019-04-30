@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fillViewport="true"
+        tools:context="com.cdkj.wzcd.module.home.front.ZXLRDetails">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNL_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_content="张三"
+                app:txt_normal_title="客户姓名"></com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNL_bank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_content=""
+                app:txt_normal_title="贷款银行"></com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNL_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_content=""
+                app:txt_normal_title="业务种类"></com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNL_money"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_content="00"
+                app:txt_normal_title="贷款金额"></com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNL_ywgs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_content="-乌鲁木齐业务六部-陶键"
+                app:txt_normal_title="业务归属"></com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNL_zpgs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_content="-乌鲁木齐业务六部"
+                app:txt_normal_title="指派归属"></com.cdkj.wzcd.view.MyNormalLayout>
+
+            <com.cdkj.wzcd.view.MyNormalLayout
+                android:id="@+id/myNL_current_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_normal_content="-乌鲁木齐业务六部"
+                app:txt_normal_title="当前状态"></com.cdkj.wzcd.view.MyNormalLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+
+
+            <com.cdkj.wzcd.view.MyConfirmBtn
+                android:id="@+id/myCb_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:txt_confirm_content="确定录入"></com.cdkj.wzcd.view.MyConfirmBtn>
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>

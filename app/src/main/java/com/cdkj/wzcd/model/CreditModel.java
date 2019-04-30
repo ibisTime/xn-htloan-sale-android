@@ -22,6 +22,7 @@ public class CreditModel {
 
     private String code;
     private String loanBankCode;
+    private String loanBankName;
     private String loanAmount;
     private String bizType;
     private String status;
@@ -33,8 +34,35 @@ public class CreditModel {
     private String xszReverse;
     private String operatorName;
     private String note;
+    private String companyName;
+    private String saleUserName;
+    private String teamName;
     private CreditUserModel creditUser;
     private List<CreditUserModel> creditUserList;
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getSaleUserName() {
+        return saleUserName;
+    }
+
+    public void setSaleUserName(String saleUserName) {
+        this.saleUserName = saleUserName;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
 
     public String getNote() {
         return note;
@@ -42,6 +70,14 @@ public class CreditModel {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getLoanBankName() {
+        return loanBankName;
+    }
+
+    public void setLoanBankName(String loanBankName) {
+        this.loanBankName = loanBankName;
     }
 
     public String getOperatorName() {

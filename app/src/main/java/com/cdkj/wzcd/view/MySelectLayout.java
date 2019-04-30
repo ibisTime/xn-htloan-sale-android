@@ -137,16 +137,22 @@ public class MySelectLayout extends LinearLayout {
 
     public void setContentByKey(String key) {
 
-        int i = 0;
+        if (mKeyList == null) {
+            return;
+        }
 
+        int i = 0;
         for (String str : mKeyList) {
             if (TextUtils.equals(str, key)) {
+                mKey = key;
                 selectIndex = i;
             }
             i++;
         }
-
-        mBinding.tvContent.setText(mValueList[selectIndex]);
+        if (selectIndex >= 0) {
+            mBinding.tvContent.setText(mValueList[selectIndex]);
+            mValue = mValueList[selectIndex];
+        }
     }
 
     /**
@@ -165,6 +171,7 @@ public class MySelectLayout extends LinearLayout {
         mySelectInterface = selectInterface;
 
         mIsRequest = true;
+        initData();
     }
 
     public void setData(List<DataDictionary> data, MySelectInterface selectInterface) {
@@ -172,6 +179,7 @@ public class MySelectLayout extends LinearLayout {
         mySelectInterface = selectInterface;
 
         mIsRequest = false;
+        initData();
     }
 
     private void init(Context context) {
@@ -193,7 +201,7 @@ public class MySelectLayout extends LinearLayout {
 
                 getRequest();
             } else {
-                if (mData == null||mData.size()==0){
+                if (mData == null || mData.size() == 0) {
                     UITipDialog.showFail(context, "暂无可选列表");
                     return;
                 }
@@ -238,10 +246,12 @@ public class MySelectLayout extends LinearLayout {
         });
     }
 
-    private void showSelect() {
+    private void initData() {
+        if (mData == null || mData.size() == 0) {
+            return;
+        }
         mKeyList = new String[mData.size()];
         mValueList = new String[mData.size()];
-
 
         int index = 0;
         for (DataDictionary model : mData) {
@@ -250,7 +260,11 @@ public class MySelectLayout extends LinearLayout {
             index++;
         }
 
-        if (index == 0) {
+
+    }
+
+    private void showSelect() {
+        if (mKeyList == null || mKeyList.length == 0) {
             return;
         }
 

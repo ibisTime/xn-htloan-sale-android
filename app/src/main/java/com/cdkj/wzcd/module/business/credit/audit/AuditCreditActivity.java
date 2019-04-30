@@ -139,39 +139,18 @@ public class AuditCreditActivity extends AbsBaseLoadActivity {
 
 
     public void initListAdapter() {
+        mAdapter = new CreditUserAdapter(mList);
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            CreditUserModel model = mAdapter.getItem(position);
 
-        DataDictionaryHelper.getDataDictionaryRequest(this, DataDictionaryHelper.credit_user_loan_role, "",data -> {
-
-            if (data == null || data.size() == 0){
-                return;
-            }
-
-            mRole.addAll(data);
-
-            DataDictionaryHelper.getDataDictionaryRequest(this, DataDictionaryHelper.credit_user_relation, "",data1 -> {
-
-                if (data1 == null || data1.size() == 0){
-                    return;
-                }
-
-                mRelation.addAll(data1);
-
-                mAdapter = new CreditUserAdapter(mList, mRole, mRelation);
-                mAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    CreditUserModel model = mAdapter.getItem(position);
-
-                    AuditUserActivity.open(this, model, position, mRole, mRelation);
-
-                });
-
-                mBinding.rvZxr.setLayoutManager(getLinearLayoutManager(false));
-                mBinding.rvZxr.setAdapter(mAdapter);
-
-                getCredit();
-
-            });
+            AuditUserActivity.open(this, model, position, mRole, mRelation);
 
         });
+
+        mBinding.rvZxr.setLayoutManager(getLinearLayoutManager(false));
+        mBinding.rvZxr.setAdapter(mAdapter);
+
+        getCredit();
 
 
     }

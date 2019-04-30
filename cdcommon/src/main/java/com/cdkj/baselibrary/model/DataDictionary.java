@@ -28,6 +28,15 @@ public class DataDictionary implements Serializable {
     private String type;
     private String updateDatetime;
     private String updater;
+    private String parentKey;
+
+    public String getParentKey() {
+        return parentKey;
+    }
+
+    public void setParentKey(String parentKey) {
+        this.parentKey = parentKey;
+    }
 
     public String getDkey() {
         return dkey;

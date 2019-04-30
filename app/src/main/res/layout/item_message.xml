@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="15dp"
+        android:text="车贷b端正式上线"
+        android:textColor="@color/text_black_cd"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="15dp"
+        android:text="2019-10-10 20:20:00"
+        android:textColor="@color/text_666"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_date"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:text="系统公告"
+        android:textColor="@color/text_666"
+        android:textSize="14sp" />
+
+    <View
+        style="@style/style_split_line_horizontal"
+        android:layout_below="@+id/tv_date"
+        android:layout_marginTop="10dp" />
+
+</RelativeLayout>

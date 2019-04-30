@@ -96,8 +96,8 @@ public class AuditUserActivity extends AbsBaseLoadActivity {
         mBinding.mySlRelation.setTextByRequest(DataDictionaryHelper.getValueOnTheKey(model.getRelation(), relation));
 
         mBinding.myElId.setTextByRequest(model.getIdNo());
-        mBinding.myIlIdCard.setFlImgByRequest(model.getIdNoFront());
-        mBinding.myIlIdCard.setFlImgRightByRequest(model.getIdNoReverse());
+        mBinding.myIlIdCard.setFlImgByRequest(model.getIdFront());
+        mBinding.myIlIdCard.setFlImgRightByRequest(model.getIdReverse());
         mBinding.myMlCredit.setListDataByRequest(model.getAuthPdf());
         mBinding.myMlInterview.setListDataByRequest(model.getInterviewPic());
 

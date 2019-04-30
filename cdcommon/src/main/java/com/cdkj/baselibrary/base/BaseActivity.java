@@ -178,7 +178,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         commonDialog.show();
     }
 
-    protected void showSingleChoiceDialog(String[] str, SingleChoiceInterface singleChoiceInterface){
+    protected void showSingleChoiceDialog(String[] str, SingleChoiceInterface singleChoiceInterface) {
 
         if (isFinishing())
             return;
@@ -190,7 +190,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 str, -1, (dialog, which) -> {
 
                     if (singleChoiceInterface != null)
-                        singleChoiceInterface.onClick(dialog,which);
+                        singleChoiceInterface.onClick(dialog, which);
 
                     dialog.dismiss();
                 }).setNegativeButton("取消", null).show();
@@ -313,6 +313,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * * 获取版本号
+     *
      * @return 当前应用的版本号
      */
     public int getVersionCode() {
@@ -329,6 +330,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * * 获取版本名
+     *
      * @return 当前应用的版本名
      */
     public String getVersionName() {

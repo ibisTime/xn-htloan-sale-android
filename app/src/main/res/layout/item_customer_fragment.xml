@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNL_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_normal_content=""
+            app:txt_normal_title="">
+
+        </com.cdkj.wzcd.view.MyNormalLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="张三"
+                android:textColor="@color/text_black_cd"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/shape_orange_bg_round"
+                android:paddingLeft="5dp"
+                android:paddingTop="3dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="3dp"
+                tools:text="新车"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tv_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="10.7万"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="经办银行:"
+                android:textColor="@color/text_666"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_bank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="工商银行"
+                android:textColor="@color/text_666"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="开始时间:"
+                android:textColor="@color/text_666"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="2018-10-09 10:00:00"
+                android:textColor="@color/text_666"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <View
+            style="@style/style_split_line_horizontal"
+            android:layout_height="10dp" />
+    </LinearLayout>
+</layout>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        tools:context="com.cdkj.wzcd.module.main.customer.RelationEnclosureActivity">
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNL_fjmc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:is_show_right_img="true"
+            app:txt_normal_hint="(行驶正面/反面/二手车报告/主贷人...)"
+            app:txt_normal_title="附件名称"></com.cdkj.wzcd.view.MyNormalLayout>
+
+        <com.cdkj.wzcd.view.MyNormalLayout
+            android:id="@+id/myNL_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:is_show_right_img="true"
+            app:txt_normal_hint="(图片/视频/网页)"
+            app:txt_normal_title="资源类型"></com.cdkj.wzcd.view.MyNormalLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="资源链接"
+            android:textColor="@color/text_666" />
+
+        <EditText
+            android:id="@+id/et_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:background="@null"
+            android:gravity="left"
+            android:hint="多个url时,逗号隔开"
+            android:minLines="5"
+            android:textSize="14sp" />
+
+        <com.cdkj.wzcd.view.MyConfirmBtn
+            android:id="@+id/myCb_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:txt_confirm_content="确定"></com.cdkj.wzcd.view.MyConfirmBtn>
+
+    </LinearLayout>
+</layout>
